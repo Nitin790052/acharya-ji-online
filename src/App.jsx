@@ -16,21 +16,40 @@ import Media from "./pages/Media";
 import BookPuja from "./pages/pujaServices/BookPuja";
 import Career from "./pages/Career";
 import GrihaPraveshPuja from "./pages/pujaServices/GirhaPraveshPuja";
-import Login from "./pages/Login";
-import VendorRegister from "./pages/VendorRegister";
+import Login from "../src/app/vendor/login/Login";
+import VendorRegister from "../src/app/vendor/pages/VendorRegister";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import  {AuthProvider}  from "@/contexts/AuthContexts";
-import VendorRoute from "../src/routes/VendorRoute";
-import VendorDashboardLayout from "./components/layout/VendorDashboardLayout";
-import VendorDashboardRouter from "./routes/VendorDashboardRouter";
-import MyPujaServices from "./vendors/pandit/MyPujaServices";
-import Bookings from "./vendors/pandit/Bookings";
-import AvailabilityCalendar from "./vendors/pandit/AvailabilityCalender";
-import WalletEarning from "./vendors/pandit/WalletEarning";
-import ReviewsRating from "./vendors/pandit/ReviewsRating";
-import Notifications from "./vendors/pandit/Notifications";
-import ProfileKyc from "./vendors/pandit/ProfileKyc";
+import  {AuthProvider}  from "@/app/vendor/auth/AuthContext";
+import VendorDashboardLayout from "../src/app/vendor/layout/VendorDashboardLayout";
+import MyPujaServices from "../src/app/vendor/pages/vendors/pandit/MyPujaServices";
+import Bookings from "../src/app/vendor/pages/vendors/pandit/Bookings";
+import AvailabilityCalendar from "../src/app/vendor/pages/vendors/pandit/AvailabilityCalender";
+import WalletEarning from "../src/app/vendor/pages/vendors/pandit/WalletEarning";
+import ReviewsRating from "../src/app/vendor/pages/vendors/pandit/ReviewsRating";
+import Notifications from "../src/app/vendor/pages/vendors/pandit/Notifications";
+import ProfileKyc from "../src/app/vendor/pages/vendors/pandit/ProfileKyc";
+import VendorRouteGuard from "./app/vendor/routes/VendorRouteGuard";
+import VendorDashboardRouter from "./app/vendor/routes/VendorDashboardRouter";
+import MyConsultations from "./app/vendor/pages/vendors/astrologer/MyConsultations";
+import ReportsKundli from "./app/vendor/pages/vendors/astrologer/ReportsKundli";
+import GeneratorKundliReports from "./app/vendor/pages/vendors/astrologer/GenerateKundliReports";
+import AvailabilitySchedule from "./app/vendor/pages/vendors/astrologer/AvailabilitySchedule";
+import WalletEarnings from "./app/vendor/pages/vendors/astrologer/WalletEarnings";
+import ReviewsRatings from "./app/vendor/pages/vendors/astrologer/ReviewsRatings";
+import ChatCenter from "./app/vendor/pages/vendors/astrologer/ChatCenter";
+import ProfileBranding from "./app/vendor/pages/vendors/astrologer/ProfileBranding";
+import AstroNotifications from "./app/vendor/pages/vendors/astrologer/AstroNotifications";
+import Orders from "./app/vendor/pages/vendors/poojaSamagri/Orders";
+import Products from "./app/vendor/pages/vendors/poojaSamagri/Products";
+import PujaKits from "./app/vendor/pages/vendors/poojaSamagri/Pujakits";
+import Inventory from "./app/vendor/pages/vendors/poojaSamagri/Inventory";
+import OffersCoupons from "./app/vendor/pages/vendors/poojaSamagri/OffersCoupons";
+import ShippingDelivery from "./app/vendor/pages/vendors/poojaSamagri/ShippingDelivery";
+import ReviewsPuja from "./app/vendor/pages/vendors/poojaSamagri/ReviewsPuja";
+import WalletPuja from "./app/vendor/pages/vendors/poojaSamagri/WalletPuja";
+import NotificationPuja from "./app/vendor/pages/vendors/poojaSamagri/Notifications";
+import StoreProfile from "./app/vendor/pages/vendors/poojaSamagri/StoreProfile";
 
 const queryClient = new QueryClient();
 
@@ -78,24 +97,52 @@ const App = () => (
             <Route path="/vendorRegister" element={<VendorRegister />} />
             {/* DASHBOARD ROUTES */}
  
- <Route
-  path="/dashboard/vendor"
+<Route
+  path="/vendor/dashboard"
   element={
-    <VendorRoute>
+    <VendorRouteGuard>
       <VendorDashboardLayout />
-    </VendorRoute>
+    </VendorRouteGuard>
   }
 >
+
+  {/* Default dashboard page */}
   <Route index element={<VendorDashboardRouter />} />
-  {/*Pnadit routes*/}
-  <Route path="/dashboard/vendor/services" element={<MyPujaServices/>} />
-  <Route path="/dashboard/vendor/bookings" element={<Bookings/>} />
-  <Route path="/dashboard/vendor/calendar" element={<AvailabilityCalendar/>} />
-  <Route path="/dashboard/vendor/wallet" element={<WalletEarning/>} />
-  <Route path="/dashboard/vendor/reviews" element={<ReviewsRating/>} />
-  <Route path="/dashboard/vendor/notifications" element={<Notifications/>} />
-  <Route path="/dashboard/vendor/settings" element={<ProfileKyc/>} />
+
+  {/* Pnadit category (RELATIVE PATHS ONLY) */}
+  <Route path="services" element={<MyPujaServices />} />
+  <Route path="bookings" element={<Bookings />} />
+  <Route path="calendar" element={<AvailabilityCalendar />} />
+  <Route path="wallet" element={<WalletEarning />} />
+  <Route path="reviews" element={<ReviewsRating />} />
+  <Route path="notifications" element={<Notifications />} />
+  <Route path="settings" element={<ProfileKyc />} />
+
+  {/* Astrologor category (RELATIVE PATHS ONLY) */}
+  <Route path="consultations" element={<MyConsultations />} />
+  <Route path="reports" element={<ReportsKundli />} />
+  <Route path="generate" element={<GeneratorKundliReports />} />
+  <Route path="availability" element={<AvailabilitySchedule />} />
+  <Route path="wallet" element={<WalletEarnings />} />
+  <Route path="reviews" element={<ReviewsRatings />} />
+  <Route path="chatCenter" element={<ChatCenter />} />
+  <Route path="astroNotifications" element={<AstroNotifications />} />
+  <Route path="profile" element={<ProfileBranding />} />
+
+   {/* Seller category (RELATIVE PATHS ONLY) */}
+  <Route path="orders_puja" element={<Orders />} />
+  <Route path="products_puja" element={<Products />} />
+  <Route path="pujaKits_puja" element={<PujaKits />} />
+  <Route path="inventory_puja" element={<Inventory />} />
+  <Route path="offers_puja" element={<OffersCoupons />} />
+  <Route path="delivery_puja" element={<ShippingDelivery />} />
+  <Route path="settlement_puja" element={<WalletPuja/>}/>
+  <Route path="ratings_puja" element={<ReviewsPuja/>}/>
+  <Route path="notifications_puja" element={<NotificationPuja/>}/>
+  <Route path="settings_puja" element={<StoreProfile/>}/>
 </Route>
+
+
 
 {/* 
       <Route path="/dashboard/user" element={<UserRoute />}>
