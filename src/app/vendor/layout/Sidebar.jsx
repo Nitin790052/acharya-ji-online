@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { House, ClipboardList, Grid2x2, Wallet, Compass, LayoutGrid, Bell, Settings, Info, X, LogOut ,User, ChevronRight,Calendar,Star,FileChartLine, MessageSquare, Truck, Wallet2, BellIcon, Settings2, Package, Tag, HouseIcon, LayoutGridIcon, ClipboardListIcon, Users, BarChart} from "lucide-react";
 import  {useAuth}  from "@/app/vendor/auth/AuthContext";
-import path from "path";
 
 
 const Sidebar = ({ closeSidebar }) => {

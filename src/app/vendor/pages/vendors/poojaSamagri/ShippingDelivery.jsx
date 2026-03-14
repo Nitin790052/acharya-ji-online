@@ -31,7 +31,6 @@ const ShippingDelivery = () => {
     totalShipments: 245,
     pendingDeliveries: 12,
     deliveredToday: 38,
-    returnRequests: 8,
     
     courierPartners: [
       { id: 1, name: 'BlueDart', value: 'bluedart', shipments: 89, rating: 4.7 },

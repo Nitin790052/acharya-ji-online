@@ -86,7 +86,7 @@ import PendingOrders from "./app/user/pages/orders/PendingOrders";
 import ProcessingOrders from "./app/user/pages/orders/ProcessingOrders";
 import CancelledOrders from "./app/user/pages/orders/CancelledOrders";
 import CompletedOrders from "./app/user/pages/orders/CompletedOrders";
-import Invoice from "./app/user/pages/invoice/invoice";
+import Invoice from "./app/user/pages/invoice/Invoice";
 import ViewInvoice from "./app/user/components/ViewInvoice";
 import NotFound from "./pages/NotFound";
 import TalkToAstrologer from "./pages/astrologyServices/TalkToAstrologer";
@@ -101,6 +101,13 @@ const queryClient = new QueryClient();
 const GlobalFloatingButtons = () => {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
+    const isDashboard = location.pathname.includes("/dashboard") || 
+                       location.pathname.startsWith("/user") || 
+                       location.pathname.startsWith("/vendor") ||
+                       location.pathname === "/login" ||
+                       location.pathname === "/vendorRegister";
+
+    if (isDashboard) return null;
 
     return (
         <>
