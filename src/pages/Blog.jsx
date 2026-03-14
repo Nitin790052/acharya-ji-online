@@ -1,8 +1,11 @@
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {X, Calendar,MapPin, Clock, Search, ChevronRight, BookOpen, Star, TrendingUp, MessageCircle, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  X, Calendar, MapPin, Clock, Search, ChevronRight, BookOpen, Star, TrendingUp,
+  MessageCircle, Phone, Bell, Moon, Shield, Leaf, Sparkles, Award, Sparkle
+} from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../assets/banners/image1.png"
+import bgImage from "../assets/banners/vedic_blog_hero_v1.png"
 import image1 from "../assets/blogPage/imageId1.png"
 import image2 from "../assets/blogPage/imageId2.png"
 import image3 from "../assets/blogPage/imageId3.png"
@@ -19,23 +22,14 @@ import image13 from "../assets/blogPage/imageId13.png"
 import image14 from "../assets/blogPage/imageId14.png"
 import image15 from "../assets/blogPage/imageId15.png"
 
-
-
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMedia,setSelectMedia] = useState(null);
+  const [selectedMedia, setSelectMedia] = useState(null);
 
   const categories = [
-    "All",
-    "Puja Vidhi",
-    "Astrology",
-    "Kundli & Dosh",
-    "Vastu Shastra",
-    "Healing & Spirituality",
-    "Gemstones & Remedies",
-    "Festivals & Muhurat",
-    "Mantras & Rituals"
+    "All", "Puja Vidhi", "Astrology", "Kundli & Dosh", "Vastu Shastra",
+    "Healing & Spirituality", "Gemstones & Remedies", "Festivals & Muhurat", "Mantras & Rituals"
   ];
 
   const featuredBlogs = [
@@ -65,33 +59,6 @@ const Blog = () => {
       category: "Kundli & Dosh",
       readTime: "10 min",
       date: "Jan 10, 2026"
-    },
-    {
-      id: 4,
-      title: "Navgraha Shanti Puja: Purpose & Procedure",
-      excerpt: "Detailed explanation of Navgraha Shanti Puja, its importance, rituals, and astrological benefits.",
-      image: image4,
-      category: "Puja Vidhi",
-      readTime: "9 min",
-      date: "Jan 08, 2026"
-    },
-    {
-      id: 5,
-      title: "Pitru Dosh: Causes, Effects & Remedies",
-      excerpt: "Know what Pitru Dosh is, how it affects life, and the effective Vedic remedies to reduce its impact.",
-      image: image5,
-      category: "Kundli & Dosh",
-      readTime: "7 min",
-      date: "Jan 05, 2026"
-    },
-    {
-      id: 6,
-      title: "Lakshmi Puja at Home: Step-by-Step Guide",
-      excerpt: "A simple step-by-step guide to perform Lakshmi Puja at home for wealth, peace, and prosperity.",
-      image: image6,
-      category: "Puja Vidhi",
-      readTime: "5 min",
-      date: "Jan 03, 2026"
     }
   ];
 
@@ -122,640 +89,324 @@ const Blog = () => {
       category: "Kundli & Dosh",
       readTime: "8 min",
       date: "Jan 4, 2026"
-    },
-    {
-      id: 10,
-      title: "Shani Sade Sati: Myth vs Truth",
-      excerpt: "Scientific explanation of Saturn's 7.5 year transit and how to navigate it positively.",
-      image: image10,
-      category: "Astrology",
-      readTime: "11 min",
-      date: "Jan 2, 2026"
-    },
-    {
-      id: 11,
-      title: "Best Gemstones for Career Growth",
-      excerpt: "Discover which gemstones align with your profession and boost success according to Vedic astrology.",
-      image: image11,
-      category: "Gemstones & Remedies",
-      readTime: "6 min",
-      date: "Dec 30, 2025"
-    },
-    {
-      id: 12,
-      title: "Vastu Tips for Peaceful Home",
-      excerpt: "Simple yet powerful Vastu corrections you can make without major renovations.",
-      image: image12,
-      category: "Vastu Shastra",
-      readTime: "7 min",
-      date: "Dec 28, 2025"
-    },
-    {
-      id: 13,
-      title: "Reiki Healing: Basics & Benefits",
-      excerpt: "Introduction to energy healing, chakra balancing and how Reiki can transform your life.",
-      image: image13,
-      category: "Healing & Spirituality",
-      readTime: "9 min",
-      date: "Dec 26, 2025"
-    },
-    {
-      id: 14,
-      title: "Diwali Lakshmi Puja Complete Vidhi",
-      excerpt: "Step-by-step guide for performing authentic Lakshmi Puja on Diwali for prosperity.",
-      image: image14,
-      category: "Festivals & Muhurat",
-      readTime: "10 min",
-      date: "Dec 24, 2025"
-    },
-    {
-      id: 15,
-      title: "Powerful Daily Mantras for Peace",
-      excerpt: "Essential mantras to chant daily for mental peace, positivity and spiritual growth.",
-      image: image15,
-      category: "Mantras & Rituals",
-      readTime: "5 min",
-      date: "Dec 22, 2025"
     }
-  ];
-
-  const popularReads = [
-    "Manglik Dosh: Complete Analysis & Remedies",
-    "Kaal Sarp Dosh Nivaran Puja",
-    "Marriage Muhurat Calendar 2026",
-    "Navratri Puja Guide for 9 Days",
-    "Office Vastu Mistakes to Avoid"
   ];
 
   const knowledgeSections = [
     {
-      icon: "🔔",
+      Icon: Bell,
       title: "Puja & Rituals",
       topics: ["Puja ka importance", "Vidhi & samagri", "Benefits & dosh nivaran"],
-      color: "from-orange-500 to-red-600"
+      color: "from-orange-500 to-red-600",
+      iconBg: "bg-orange-50",
+      iconColor: "text-orange-600"
     },
     {
-      icon: "🔮",
+      Icon: Moon,
       title: "Astrology & Kundli",
       topics: ["Kundli banana ka process", "Manglik / Kaal Sarp Dosh", "Dasha analysis"],
-      color: "from-purple-500 to-indigo-600"
+      color: "from-purple-500 to-indigo-600",
+      iconBg: "bg-purple-50",
+      iconColor: "text-purple-600"
     },
     {
-      icon: "🧿",
+      Icon: Shield,
       title: "Vastu Shastra",
       topics: ["Home vastu tips", "Office vastu mistakes", "Remedies without demolition"],
-      color: "from-blue-500 to-cyan-600"
+      color: "from-blue-500 to-cyan-600",
+      iconBg: "bg-blue-50",
+      iconColor: "text-blue-600"
     },
     {
-      icon: "🌿",
+      Icon: Leaf,
       title: "Healing & Mantras",
       topics: ["Reiki basics", "Chakra imbalance signs", "Powerful daily mantras"],
-      color: "from-green-500 to-emerald-600"
+      color: "from-green-500 to-emerald-600",
+      iconBg: "bg-green-50",
+      iconColor: "text-green-600"
     }
   ];
 
-  // Combine all articles for search and filter
   const allArticles = useMemo(() => [...featuredBlogs, ...latestArticles], []);
 
-  // Filter logic for both search and category
   const filteredArticles = useMemo(() => {
     let result = allArticles;
-
-    // 1. First apply category filter
-    if (activeCategory !== "All") {
-      result = result.filter(article => article.category === activeCategory);
-    }
-
-    // 2. Then apply search filter if search query exists
+    if (activeCategory !== "All") result = result.filter(article => article.category === activeCategory);
     if (searchQuery.trim() !== "") {
       const query = searchQuery.toLowerCase();
-      result = result.filter(article => 
+      result = result.filter(article =>
         article.title.toLowerCase().includes(query) ||
         article.excerpt.toLowerCase().includes(query) ||
         article.category.toLowerCase().includes(query)
       );
     }
-
     return result;
   }, [activeCategory, searchQuery, allArticles]);
 
-  // Separate filtered featured and latest articles
-  const filteredFeaturedBlogs = filteredArticles.filter(article => 
-    featuredBlogs.some(fb => fb.id === article.id)
-  );
-
-  const filteredLatestArticles = filteredArticles.filter(article => 
-    latestArticles.some(la => la.id === article.id)
-  );
-
-  // Check if no results found
+  const filteredFeaturedBlogs = filteredArticles.filter(article => featuredBlogs.some(fb => fb.id === article.id));
+  const filteredLatestArticles = filteredArticles.filter(article => latestArticles.some(la => la.id === article.id));
   const noResultsFound = filteredArticles.length === 0;
 
-  // Reset all filters
   const resetFilters = () => {
     setActiveCategory("All");
     setSearchQuery("");
   };
 
+  const BlogCard = ({ blog, isFeatured = false, index }) => (
+    <div
+      className="group/card h-full cursor-pointer animate-fade-in-up"
+      style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+      onClick={() => setSelectMedia(blog)}
+    >
+      <div className={`relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 hover:shadow-amber-200/30 flex flex-col`}>
+        <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
+
+          <div className={`relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg ${isFeatured ? 'h-48' : 'h-40'} z-10`}>
+            <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+            <div className="absolute top-3 left-3 px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 text-[10px] text-white font-medium uppercase tracking-wider">
+              {blog.category}
+            </div>
+          </div>
+
+          <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
+            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
+              {blog.title}
+            </h3>
+
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+              <Sparkle className="w-4 h-4 text-amber-500 group-hover/card:rotate-90 transition-transform duration-700" />
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+            </div>
+
+            <p className="text-gray-600 font-medium text-xs mb-4 line-clamp-2 leading-relaxed italic">
+              "{blog.excerpt}"
+            </p>
+
+            <div className="mt-auto flex items-center justify-between border-t border-amber-100 pt-4">
+              <span className="text-[10px] font-medium text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                {blog.date}
+              </span>
+              <span className="text-amber-600 text-[10px] font-medium uppercase tracking-widest flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5" />
+                {blog.readTime}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-red-50">
-        {/* Hero Section */}
-   <section className="relative py-12 sm:py-16 md:py-20 text-white overflow-hidden">
+      <div className="min-h-screen bg-[#FAF9F6] relative overflow-hidden">
+        {/* Divine Background Ornaments */}
+        <div className="absolute top-[10%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={bgImage}
-      alt="Background"
-      className="w-full h-full bg-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
+        {/* Hero Section (Matching About Page Style) */}
+        <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+          <div className="absolute inset-0">
+            <img src={bgImage} alt="Background" className="w-full h-full object-cover object-center" />
+            <div className="absolute inset-0 bg-black/30" />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <Sparkles className="w-3.5 h-3.5 text-[#FFC107]" />
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                Explore Sacred<br />
+                <span className="text-yellow-300">Spiritual Insights</span>
+              </h1>
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed drop-shadow max-w-2xl mx-auto mb-8">
+                Authentic insights on Puja, Astrology & Vedic traditions curated for your spiritual growth.
+              </p>
 
-    {/* ✅ SINGLE PROFESSIONAL OVERLAY (same as previous banners) */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55" />
-
-    {/* Soft depth lights (image blur nahi hogi) */}
-    <div className="absolute -top-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl opacity-50" />
-    <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl opacity-50" />
-  </div>
-
-  {/* Content */}
-  <div className="container mx-auto px-4 relative z-10">
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto text-center"
-    >
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-        Sacred Knowledge from<br />
-        <span className="text-yellow-300">Vedic Wisdom</span>
-      </h1>
-
-      <p className="text-lg md:text-xl text-orange-100 leading-relaxed mb-8 drop-shadow">
-        Authentic insights on Puja, Astrology, Kundli, Vastu & Spiritual Healing by experienced Acharyas
-      </p>
-
-      {/* Search Bar */}
-      <div className="max-w-2xl mx-auto">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-
-          <input
-            type="text"
-            placeholder="Search for puja vidhi, kundli dosh, vastu tips..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-10 py-4 rounded-full text-gray-900 font-medium shadow-xl focus:outline-none focus:ring-4 focus:ring-orange-300"
-          />
-
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-
-        {searchQuery && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-orange-200 mt-2 text-sm"
-          >
-            {filteredArticles.length} results found for "{searchQuery}"
-          </motion.p>
-        )}
-      </div>
-    </motion.div>
-  </div>
-
-</section>
-
-
-
-        {/* Categories */}
-        <section className="py-8 sticky top-0 bg-white/95 backdrop-blur-md z-40 border-b border-orange-100 shadow-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => {
-                    if (activeCategory === category) {
-                      setActiveCategory("All");
-                    } else {
-                      setActiveCategory(category);
-                    }
-                  }}
-                  className={`px-6 py-2.5 rounded-full font-bold whitespace-nowrap transition-all duration-300 flex items-center gap-1 ${
-                    activeCategory === category
-                      ? "bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-lg scale-105"
-                      : "bg-orange-100 text-orange-700 hover:bg-orange-200"
-                  }`}
-                >
-                  {category}
-                  {activeCategory === category && (
-                    <span className="ml-1">✕</span>
+              <div className="max-w-2xl mx-auto relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                <div className="relative">
+                  <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-orange-600" />
+                  <input
+                    type="text"
+                    placeholder="Search for puja vidhi, vastu tips..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-14 pr-10 py-2 rounded-xl bg-white/95 backdrop-blur-md text-gray-900 font-medium shadow-[0_15px_40px_-10px_rgba(0,0,0,0.3)] focus:outline-none border-2 border-amber-100/50 focus:border-amber-500 transition-all placeholder:text-gray-400"
+                  />
+                  {searchQuery && (
+                    <button onClick={() => setSearchQuery("")} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600 font-black">✕</button>
                   )}
-                </button>
-              ))}
-              {(activeCategory !== "All" || searchQuery) && (
-                <button
-                  onClick={resetFilters}
-                  className="px-6 py-2.5 rounded-full font-bold whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
-                >
-                  Reset Filters
-                </button>
-              )}
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Show message if no results found */}
-        {noResultsFound ? (
-          <section className="py-20">
-            <div className="container mx-auto px-4 text-center">
-              <div className="text-8xl mb-6"></div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                No articles found!
-              </h2>
-              <p className="text-gray-600 mb-8">
-                Try a different search term or select another category
-              </p>
-              <button
-                onClick={resetFilters}
-                className="bg-gradient-to-r from-orange-600 to-red-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition-shadow hover:scale-105 duration-300"
-              >
-                Show All Articles
-              </button>
+        {/* Categories Bar (Premium Sticky) */}
+        <section className="py-6 sticky top-0 bg-white/80 backdrop-blur-md z-40 border-b border-orange-100/50 shadow-sm overflow-x-auto">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center gap-3 min-w-max">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-2 border ${activeCategory === category
+                    ? "bg-[#2A1D13] text-amber-400 border-[#2A1D13] shadow-lg -translate-y-0.5"
+                    : "bg-white text-gray-600 border-orange-100 hover:border-orange-200 hover:bg-orange-50/50"
+                    }`}
+                >
+                  {category}
+                  {activeCategory === category && <Sparkles className="w-3 h-3 text-amber-400" />}
+                </button>
+              ))}
             </div>
-          </section>
-        ) : (
-          <>
-            {/* Featured Blogs */}
-            {filteredFeaturedBlogs.length > 0 && (
-              <section className="py-10">
-                <div className="container mx-auto px-4 max-w-7xl">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                  >
-                    <div className="inline-block px-4 py-2 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-full text-sm font-bold mb-4">
-                      Featured Articles
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent">
-                      Must-Read Spiritual Guides
-                    </h2>
-                  </motion.div>
+          </div>
+        </section>
 
-                  <div className="grid md:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 max-w-7xl py-12 md:py-16">
+          {noResultsFound ? (
+            <section className="py-12 md:py-16 text-center animate-fade-in">
+              <BookOpen className="w-20 h-20 text-orange-200 mx-auto mb-6" />
+              <h2 className="text-3xl font-black text-[#2A1D13] mb-4 uppercase tracking-tight">No articles found!</h2>
+              <p className="text-gray-500 font-medium mb-10 max-w-md mx-auto">We couldn't find any articles matching your search. Please try different keywords or category.</p>
+              <button onClick={resetFilters} className="bg-[#E8453C] hover:bg-black text-white px-10 py-4 rounded-xl font-medium text-xs uppercase tracking-widest transition-all">Show All Articles</button>
+            </section>
+          ) : (
+            <div className="space-y-16">
+              {/* Featured Section */}
+              {filteredFeaturedBlogs.length > 0 && (activeCategory === "All" || filteredFeaturedBlogs.some(b => b.category === activeCategory)) && (
+                <section>
+                  <div className="text-center mb-12 animate-fade-in-up">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-medium uppercase tracking-wider mb-4">
+                      <Star className="w-3.5 h-3.5" />
+                      <span>Featured Reading</span>
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] mb-4 uppercase tracking-tight">Must-Read <span className="text-orange-600">Guides</span></h2>
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                      <Sparkles className="w-5 h-5 text-orange-400" />
+                      <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredFeaturedBlogs.map((blog, idx) => (
-                      <motion.div
-                        key={blog.id}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="group cursor-pointer"
-                        onClick={()=>{
-                          console.log("media name",blog);
-                          setSelectMedia(blog);
-                        }}
-                      >
-                                             <div className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-orange-100 hover:border-orange-400 hover:scale-105 flex flex-col h-full">
-                       <div className="bg-gradient-to-br from-orange-500 to-red-600 h-48 flex items-center justify-center relative overflow-hidden">
-                         <div className="absolute inset-0 bg-cover" />
-                         <img src={blog.image} alt="" />
-                       </div>
-                       <div className="p-6 flex flex-col flex-grow">
-                         <div className="inline-block px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold mb-3">
-                           {blog.category}
-                         </div>
-                         <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors line-clamp-2 min-h-[3.5rem]">
-                           {blog.title}
-                         </h3>
-                         <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
-                           {blog.excerpt}
-                         </p>
-                         <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
-                           <div className="flex items-center gap-4">
-                             <span className="flex items-center gap-1">
-                               <Clock className="w-3.5 h-3.5" />
-                               {blog.readTime}
-                             </span>
-                             <span className="flex items-center gap-1">
-                               <Calendar className="w-3.5 h-3.5" />
-                               {blog.date}
-                             </span>
-                           </div>
-                           <ChevronRight className="w-5 h-5 text-orange-600 group-hover:translate-x-1 transition-transform" />
-                         </div>
-                       </div>
-                     </div>
-                      </motion.div>
+                      <BlogCard key={blog.id} blog={blog} isFeatured={true} index={idx} />
                     ))}
                   </div>
+                </section>
+              )}
+
+              {/* Latest Articles */}
+              <section>
+                <div className="text-center mb-12 animate-fade-in-up">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-medium uppercase tracking-wider mb-4">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Deep Wisdom</span>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] mb-4 uppercase tracking-tight">{searchQuery ? 'Search Results' : 'Latest Articles'}</h2>
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredLatestArticles.map((article, idx) => (
+                    <BlogCard key={article.id} blog={article} index={idx} />
+                  ))}
                 </div>
               </section>
-            )}
+            </div>
+          )}
+        </div>
 
-            {/* Knowledge Sections - Only show when not searching */}
-            {!searchQuery && (
-              <section className="py-10 bg-gradient-to-br from-orange-50 to-red-50">
-                <div className="container mx-auto px-4 max-w-7xl">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                  >
-                    <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-4">
-                      Knowledge Categories
-                    </h2>
-                    <div className="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-red-600 mx-auto rounded-full" />
-                  </motion.div>
+        {/* CTA Section (Matching About Page Perfectly) */}
+        <section className="py-12 md:py-16 bg-white border-t border-orange-50">
+          <div className="container mx-auto px-4 text-center max-w-5xl">
+            <div className="animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+                <Leaf className="w-3.5 h-3.5" />
+                <span>Spiritual Growth</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">Begin Your <span className="text-[#E8453C]">Divine Journey</span></h2>
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="w-10 h-[1.5px] bg-orange-200" />
+                <Sparkles className="w-5 h-5 text-orange-400" />
+                <div className="w-10 h-[1.5px] bg-orange-200" />
+              </div>
+              <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">
+                Get personalized guidance from experienced Acharyas following authentic Vedic traditions. Experience the profound impact of divine wisdom in your life.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to="/contact">
+                  <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center gap-2.5">
+                      <MessageCircle className="w-4 h-4" /> Talk to Expert
+                    </span>
+                  </button>
+                </Link>
+                <Link to="/contact">
+                  <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center gap-2.5">
+                      <Phone className="w-4 h-4" /> Contact Us
+                    </span>
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {knowledgeSections.map((section, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-100 hover:border-orange-400 hover:shadow-xl transition-all duration-300 cursor-pointer"
-                      >
-                        <div className="text-5xl mb-4 text-center">{section.icon}</div>
-                        <h3 className={`text-xl font-bold mb-4 text-center bg-gradient-to-r ${section.color} bg-clip-text text-transparent`}>
-                          {section.title}
-                        </h3>
-                        <ul className="space-y-2">
-                          {section.topics.map((topic, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                              <div className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 flex-shrink-0" />
-                              <span>{topic}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {/* Latest Articles with Sidebar */}
-            <section className="py-10">
-              <div className="container mx-auto px-4 max-w-7xl">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="mb-12"
-                >
-                  <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-4">
-                    {searchQuery ? `Search Results (${filteredArticles.length})` : `Latest Articles`}
-                  </h2>
-                  <div className="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-red-600 rounded-full" />
-                </motion.div>
-
-                <div className="grid lg:grid-cols-3 gap-8">
-                  {/* Articles Grid */}
-                  <div className={`${!searchQuery ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
-                    {filteredLatestArticles.length > 0 ? (
-                      <div className="grid md:grid-cols-2 gap-6">
-                        {filteredLatestArticles.map((article, idx) => (
-                          <motion.div
-                            key={article.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="group cursor-pointer"
-                          >
-                            <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-orange-300 flex flex-col h-full">
-  
-  {/* Image Container - Responsive Height */}
-  <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
-    <img 
-      src={article.image} 
-      alt={article.title}
-      className="absolute inset-0 w-full h-full bg-cover "
-    />
-    {/* Optional gradient overlay */}
-    <div className="" />
-  </div>
-  
-  {/* Content Section */}
-  <div className="p-4 sm:p-5 flex flex-col flex-grow">
-    <div className="inline-block px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold mb-3">
-      {article.category}
-    </div>
-    
-    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-2 min-h-[2.5rem] sm:min-h-[2.8rem]">
-      {article.title}
-    </h3>
-    
-    <p className="text-gray-600 text-sm mb-3 sm:mb-4 line-clamp-2 flex-grow">
-      {article.excerpt}
-    </p>
-    
-    <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
-      <span className="flex items-center gap-1">
-        <Clock className="w-3.5 h-3.5" />
-        {article.readTime}
-      </span>
-      <span className="text-xs">{article.date}</span>
-    </div>
-  </div>
-</div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    ) : (
-                      !noResultsFound && (
-                        <p className="text-center text-gray-500 py-8">
-                          No latest articles found for the selected filters
-                        </p>
-                      )
-                    )}
-                  </div>
-
-                  {/* Sidebar - Only show when not searching */}
-                  {!searchQuery && (
-                    <div className="space-y-6">
-                      {/* Popular Reads */}
-                      <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-100 sticky top-24"
-                      >
-                        <div className="flex items-center gap-2 mb-6">
-                          <TrendingUp className="w-5 h-5 text-orange-600" />
-                          <h3 className="text-xl font-bold text-gray-900">Popular Reads</h3>
-                        </div>
-                        <ul className="space-y-4">
-                          {popularReads.map((read, idx) => (
-                            <li key={idx}>
-                              <div className="group flex items-start gap-3 hover:bg-orange-50 p-3 rounded-xl transition-all cursor-pointer">
-                                <Star className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                                <span className="text-sm font-medium text-gray-700 group-hover:text-orange-600 transition-colors">
-                                  {read}
-                                </span>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    </div>
-                  )}
+        {/* Modal Lightbox */}
+        {selectedMedia && (
+          <div onClick={() => setSelectMedia(null)} className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+            <button onClick={() => setSelectMedia(null)} className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all group overflow-hidden">
+              <X className="w-6 h-6 text-white group-hover:scale-125 transition-transform" />
+            </button>
+            <div onClick={(e) => e.stopPropagation()} className="bg-[#FCFBF7] rounded-[2rem] w-full max-w-4xl overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-amber-200 animate-scale-in">
+              <div className="relative h-64 sm:h-80 md:h-[400px]">
+                <img src={selectedMedia.image} alt={selectedMedia.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13] to-transparent" />
+                <div className="absolute bottom-10 left-10 right-10">
+                  <span className="bg-amber-500 text-white px-3 py-1 text-[10px] font-medium uppercase tracking-widest mb-4 inline-block rounded-full">Vedic Insight</span>
+                  <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight leading-tight drop-shadow-2xl">{selectedMedia.title}</h2>
                 </div>
               </div>
-            </section>
-
-            {/* Ask an Acharya Section */}
-            <section className="py-10 bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 text-white">
-              <div className="container mx-auto px-4 max-w-4xl text-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="text-6xl mb-5"></div>
-                  <h2 className="text-2xl md:text-3xl font-extrabold mb-3">
-                    Have a Question about Puja, Kundli or Dosh?
-                  </h2>
-                  <p className="text-xl text-orange-100 mb-7">
-                    Get personalized guidance from experienced Acharyas
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-4">
-                    <button className="bg-white text-orange-600 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2">
-                      <MessageCircle className="w-5 h-5" />
-                      Ask a Question
-                    </button>
-                    <button className="bg-yellow-400 text-orange-900 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2">
-                      <Phone className="w-5 h-5" />
-                      Talk to Astrologer
-                    </button>
-                    <button className="bg-purple-600 text-white px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2">
-                      <Calendar className="w-5 h-5" />
-                      Book Puja
-                    </button>
+              <div className="p-10 md:p-12">
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="h-[1px] w-12 bg-amber-200" />
+                  <Sparkle className="w-6 h-6 text-amber-500" />
+                  <div className="h-[1px] w-12 bg-amber-200" />
+                </div>
+                <p className="text-gray-700 text-lg md:text-xl font-medium leading-relaxed mb-10 italic text-center">"{selectedMedia.excerpt}"</p>
+                <div className="flex justify-center gap-10 mb-12 pb-8 border-b border-orange-100">
+                  <div className="text-center">
+                    <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest mb-2 block">Read Time</span>
+                    <span className="font-medium text-amber-600 text-base uppercase">{selectedMedia.readTime}</span>
                   </div>
-                </motion.div>
+                  <div className="text-center">
+                    <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest mb-2 block">Published</span>
+                    <span className="font-medium text-[#2A1D13] text-base uppercase">{selectedMedia.date}</span>
+                  </div>
+                  <div className="text-center">
+                    <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest mb-2 block">Category</span>
+                    <span className="font-medium text-amber-600 text-base uppercase">{selectedMedia.category}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <button className="flex-1 bg-[#E8453C] hover:bg-black text-white py-5 rounded-xl font-medium text-[10px] sm:text-xs uppercase tracking-[0.3em] shadow-2xl transition-all">Read Full Article</button>
+                  <button className="flex-1 bg-[#2A1D13] hover:bg-black text-white py-5 rounded-xl font-medium text-[10px] sm:text-xs uppercase tracking-[0.3em] shadow-2xl transition-all border border-amber-400/30">Consult Acharya</button>
+                </div>
               </div>
-            </section>
-
-            {/* Trust & Authority */}
-            <section className="py-12 bg-orange-50">
-              <div className="container mx-auto px-4 max-w-4xl">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white rounded-2xl p-8 shadow-lg border-2 border-orange-200 text-center"
-                >
-                  <BookOpen className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    Authentic Vedic Knowledge
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    All articles are written and reviewed by experienced Acharyas, astrologers and vastu experts following authentic Vedic scriptures. Our content is based on traditional wisdom combined with practical guidance for modern devotees.
-                  </p>
-                </motion.div>
-              </div>
-            </section>
-          </>
+            </div>
+          </div>
         )}
-        {/* Lightbox Modal */}
-    <AnimatePresence>
-  {selectedMedia && (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={() => setSelectMedia(null)}
-      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto"
-    >
-      {/* Close Button - Responsive Positioning */}
-      <button
-        onClick={() => setSelectMedia(null)}
-        className="fixed top-3 sm:top-4 md:top-5 right-3 sm:right-4 md:right-5 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition z-50"
-      >
-        <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-      </button>
-
-      {/* Modal Box - Responsive Sizing */}
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl"
-      >
-        {/* IMAGE SECTION - Responsive Height */}
-        <div className="relative h-64 sm:h-72 md:h-[22rem] lg:h-[30rem] xl:h-[34rem] bg-black flex items-center justify-center">
-          <img
-            src={selectedMedia.image}
-            alt={selectedMedia.title}
-            className="absolute inset-0 w-full h-full bg-cover "
-          />
-        </div>
-
-        {/* CONTENT SECTION - Responsive Padding */}
-        <div className="p-4 sm:p-5 md:p-6 lg:p-8">
-          {/* Category - Responsive Text */}
-          <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-orange-100 text-orange-700 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4">
-            {selectedMedia.category}
-          </span>
-
-          {/* Title - Responsive Text Size */}
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-            {selectedMedia.title}
-          </h2>
-
-          {/* Description - Responsive Text */}
-          <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-5 md:mb-6">
-            {selectedMedia.excerpt}
-          </p>
-
-          {/* Meta Info - Responsive Spacing */}
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-7 md:mb-8">
-            <span className="flex items-center gap-1 sm:gap-2">
-              <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-orange-600" />
-              {selectedMedia.readTime}
-            </span>
-            <span className="flex items-center gap-1 sm:gap-2">
-              <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-orange-600" />
-              {selectedMedia.date}
-            </span>
-          </div>
-
-          {/* CTA BUTTONS - Responsive Layout */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-5 md:pt-6 border-t border-gray-200">
-            <button className="w-full sm:flex-1 bg-gradient-to-r from-orange-600 to-red-600 text-white px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-4 rounded-full font-bold hover:shadow-xl hover:scale-[1.02] transition-all text-sm sm:text-base">
-              Read Full Article
-            </button>
-
-            <button className="w-full sm:flex-1 bg-yellow-400 text-orange-900 px-4 py-3 sm:px-5 sm:py-3 md:px-6 md:py-4 rounded-full font-bold hover:shadow-xl hover:scale-[1.02] transition-all text-sm sm:text-base">
-              Talk to Acharya
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
-
       </div>
     </Layout>
   );

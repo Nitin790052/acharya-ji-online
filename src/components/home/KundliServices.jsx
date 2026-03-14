@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Book, Heart, AlertCircle, Calendar, ArrowRight, Sparkles, Star, Zap, Shield } from 'lucide-react';
+import SectionHeader from '../common/SectionHeader';
 import GetFreeKundli from "../../assets/kundli/GetFreeKundli.png"
 import KundliMatching from "../../assets/kundli/KundliMatching.png"
 import ManglikDoshCheck from "../../assets/kundli/ManglikDoshCheck.jpg"
@@ -11,11 +12,11 @@ const KundliServices = () => {
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 150);
-    
+
     const interval = setInterval(() => {
       setActiveService((prev) => (prev + 1) % 4);
     }, 3000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -56,210 +57,198 @@ const KundliServices = () => {
       cta: 'Check Manglik Dosh',
       popular: false
     },
-    {
-      id: 4,
-      icon: Calendar,
-      title: 'Shani Sade Sati',
-      description: 'Know your Sade Sati period and receive protective remedies',
-      features: ['Current Phase', 'Impact Analysis', 'Timing Predictions', 'Remedial Measures'],
-      price: '₹399',
-      gradient: 'from-purple-900 to-indigo-900',
-      bgImage: ShaniSadeSati,
-      cta: 'Check Sade Sati',
-      popular: false
-    }
+
   ];
 
   return (
-    <div className="relative py-10 px-3 overflow-hidden bg-gradient-to-br from-cream via-white to-saffron-light/15">
+    <div className="relative py-10 px-3 overflow-hidden bg-white">
       <div className="absolute inset-0 opacity-3">
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle, #FF9933 0.6px, transparent 0.6px)`,
+          backgroundImage: `radial-gradient(circle, #E8453C 0.6px, transparent 0.6px)`,
           backgroundSize: '30px 30px'
         }} />
       </div>
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-saffron/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
+        <div className="absolute top-10 left-10 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(232,69,60,0.05)' }} />
+        <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(232,69,60,0.04)' }} />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className={`text-center mb-12 transition-all duration-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-          <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-saffron to-maroon text-white px-5 py-1.5 rounded-full text-xs font-semibold mb-5 shadow">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            Accurate Vedic Astrology
-          </div>
-          
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-saffron via-maroon to-gold bg-clip-text text-transparent">
-            Kundli Services
-          </h2>
-          
-          <p className="text-base text-gray-700 max-w-xl mx-auto leading-relaxed">
-            Get detailed astrological insights with <span className="font-bold text-maroon">authentic Vedic calculations</span>
-          </p>
-        </div>
+        <SectionHeader
+          badge="Accurate Vedic Astrology"
+          title="Kundli Services"
+          subtitle="Get detailed astrological insights with authentic Vedic calculations"
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isActive = activeService === index;
-            
+
             return (
               <div
                 key={service.id}
-                className={`relative transition-all duration-600 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-                }`}
+                className={`relative transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}
                 style={{ transitionDelay: `${index * 120}ms` }}
                 onMouseEnter={() => setActiveService(index)}
               >
-                <div className={`relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-400 h-full border group ${
-                  isActive ? 'border-saffron scale-[1.02]' : 'border-gray-100 scale-100'
-                }`}>
-                  
+                <div className="relative block h-full bg-[#FFFCF5] rounded-3xl overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/50 shadow-sm hover:shadow-[0_22px_50px_-12px_rgba(255,193,7,0.25)] transition-all duration-500 group">
+
                   {service.popular && (
-                    <div className="absolute top-3 right-3 z-20">
-                      <div className="bg-gradient-to-r from-green-500 to-green-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow flex items-center gap-1">
+                    <div className="absolute top-4 right-4 z-20">
+                      <div className="text-[#FFFCF5] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider bg-[#E8453C] flex items-center gap-1">
                         <Zap className="w-2.5 h-2.5" />
                         Popular
                       </div>
                     </div>
                   )}
 
-                  <div className="relative h-44 overflow-hidden">
-                    <div 
-                      className="absolute inset-0 bg-cover  bg-center transition-transform duration-400 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${service.bgImage}')` }}
-                    />
-                    
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-5`} />
-                    
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className={`w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 transform transition-all duration-400 ${
-                        isActive ? 'scale-105 rotate-6' : 'scale-100 rotate-0'
-                      }`}>
-                        <Icon className="w-8 h-8 text-white" strokeWidth={2} />
-                      </div>
-                    </div>
+                  {/* Decorative Header Area with Inset Image */}
+                  <div className="relative p-3 pb-0">
+                    <div className="relative h-44 md:h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style={{ backgroundImage: `url('${service.bgImage}')` }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
 
-                    <div className="absolute bottom-3 right-3">
-                      <div className="bg-white/90 backdrop-blur-sm text-maroon px-3 py-1.5 rounded-lg font-bold text-base shadow">
-                        {service.price}
+                      {/* Price Badge */}
+                      <div className="absolute bottom-3 right-3 z-10">
+                        <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg font-bold text-sm shadow" style={{ color: '#E8453C' }}>
+                          {service.price}
+                        </div>
                       </div>
+
+                      {/* Vedic Corner Brackets */}
+                      <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                      <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
                     </div>
                   </div>
 
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold text-maroon mb-2 font-serif">
-                      {service.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-3 text-xs leading-relaxed">
+                  {/* Elegant Content Area */}
+                  <div className="p-5 md:p-6 text-center relative flex flex-col items-center flex-grow">
+                    {/* Floating Icon Badge */}
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                      <div className="w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center border-4 border-[#FFFCF5] transition-transform duration-500 group-hover:scale-110">
+                        <Icon className="w-5 h-5 text-amber-500" strokeWidth={2.5} />
+                      </div>
+                    </div>
+
+                    <div className="mt-5 mb-3 w-full">
+                      <h3 className="text-lg md:text-xl font-bold text-[#4A3427] mb-1.5 tracking-tight group-hover:text-[#E8453C] transition-colors uppercase truncate px-2">
+                        {service.title}
+                      </h3>
+                      <div className="w-10 h-0.5 bg-[#FFC107] mx-auto group-hover:w-20 transition-all duration-500 rounded-full" />
+                    </div>
+
+                    <p className="text-[#6D5B4F] text-[11px] md:text-xs leading-relaxed mb-3 font-medium line-clamp-2 h-8">
                       {service.description}
                     </p>
 
-                    <div className="space-y-1.5 mb-4">
-                      {service.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 text-xs text-gray-700">
-                          <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center flex-shrink-0`}>
-                            <Shield className="w-2.5 h-2.5 text-white" strokeWidth={2.5} />
+                    {/* Features */}
+                    <div className="w-full space-y-1 mb-4 text-left">
+                      {service.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 text-[10px] text-[#6D5B4F]">
+                          <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-400/20">
+                            <Shield className="w-2 h-2 text-amber-500" strokeWidth={2.5} />
                           </div>
                           <span>{feature}</span>
                         </div>
                       ))}
                     </div>
 
-                    <button className={`w-full py-2.5 rounded-lg font-bold text-white bg-gradient-to-r ${service.gradient} hover:shadow transition-all duration-300 flex items-center justify-center gap-1.5 group-hover:gap-2 text-sm`}>
-                      {service.cta}
+                    {/* Vedic Button */}
+                    <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white group-hover:border-[#E8453C] transition-all duration-300 flex items-center justify-center gap-2">
+                      <span>{service.cta}</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
 
-                  {isActive && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-saffron/15 via-transparent to-transparent pointer-events-none rounded-2xl" />
-                  )}
-
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-800 pointer-events-none" />
+                  {/* Background Mandala-style Pattern (Subtle) */}
+                  <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none">
+                    <Sparkles className="w-40 h-40 text-[#FFC107]" />
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        <div className={`relative overflow-hidden rounded-2xl transition-all duration-800 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="absolute inset-0 bg-gradient-to-r from-saffron via-maroon to-gold" />
-          
-          <div className="absolute inset-0 opacity-15" style={{
+
+        {/* Premium Slim Horizontal CTA Strip */}
+        <div className={`mt-10 relative overflow-hidden rounded-2xl transition-all duration-700 delay-500 shadow-xl ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="absolute inset-0" style={{ backgroundColor: '#E8453C' }} />
+
+          {/* Subtle Background Pattern */}
+          <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{
             backgroundImage: `radial-gradient(circle, #FFFFFF 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
+            backgroundSize: '24px 24px'
           }} />
 
-          <div className="relative z-10 px-6 py-10 md:py-12 text-center">
-            <div className="max-w-3xl mx-auto">
-              <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold mb-5">
-                <Star className="w-3.5 h-3.5 animate-spin-slow" />
-                Get Started Today
-              </div>
+          {/* Golden Accents */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 transform -translate-x-1/2 translate-y-1/2"></div>
 
-              <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
+          <div className="relative z-10 px-6 py-5 md:py-6 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
+            {/* Left Side: Text Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-2 border border-white/20">
+                <Star className="w-3 h-3 text-amber-300 animate-pulse" />
+                Trusted by 50K+ Users
+              </div>
+              <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-1">
                 Unlock Your Destiny with Vedic Wisdom
               </h3>
-              
-              <p className="text-base text-gold-light mb-6 leading-relaxed">
-                Join <span className="font-bold text-white">50,000+ satisfied users</span> who discovered their life path through our accurate Kundli analysis
+              <p className="text-sm text-white/90">
+                Discover your life path through accurate Kundli analysis
               </p>
+            </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <button className="group bg-white text-maroon px-8 py-3 rounded-lg font-bold text-base shadow-lg hover:shadow-gold transition-all duration-300 flex items-center gap-2.5 hover:scale-[1.02]">
-                  <Book className="w-5 h-5" />
-                  Generate Kundli Now
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-                </button>
+            {/* Middle: Horizontal Action Buttons */}
+            <div className="flex-shrink-0 flex sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <button className="flex-1 sm:flex-none group bg-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 hover:bg-slate-50 border border-white" style={{ color: '#E8453C' }}>
+                <Book className="w-4 h-4" />
+                Get Free Kundli
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
 
-                <button className="group border border-white text-white px-6 py-3 rounded-lg font-bold text-base backdrop-blur-sm hover:bg-white hover:text-maroon transition-all duration-300 flex items-center gap-1.5">
-                  <Heart className="w-4 h-4" />
-                  Match Kundli
-                </button>
+              <button
+                className="flex-1 sm:flex-none group px-5 py-2.5 rounded-xl font-bold text-sm text-white backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 border border-white/40 hover:bg-white/10"
+              >
+                <Heart className="w-4 h-4 text-amber-300" />
+                Match Kundli
+              </button>
+            </div>
+
+            {/* Right Side: Trust Horizontal Strip */}
+            <div className="flex-shrink-0 hidden xl:flex text-white gap-8 border-l border-white/20 pl-10 py-1">
+              <div className="flex flex-col items-center justify-center">
+                <span className="text-lg font-black text-amber-300 mb-0.5">100%</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-white/80">Accurate</span>
               </div>
-
-              <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-white/90 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <Shield className="w-4 h-4" />
-                  <span>100% Accurate</span>
+              <div className="flex flex-col items-center justify-center">
+                <span className="text-lg font-black text-amber-300 mb-0.5">24/7</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-white/80">Support</span>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="flex text-amber-300 mb-1">
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Zap className="w-4 h-4" />
-                  <span>Instant Results</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Star className="w-4 h-4 fill-white" />
-                  <span>4.9/5 Rated</span>
-                </div>
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-white/80">4.9/5 Rated</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-5 mt-8 transition-all duration-800 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {[
-            { number: '50K+', label: 'Happy Users' },
-            { number: '100%', label: 'Accurate Reports' },
-            { number: '24/7', label: 'Support Available' },
-            { number: '₹0', label: 'Basic Kundli Free' }
-          ].map((stat, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-5 text-center shadow-lg border border-gray-100 hover:border-saffron transition-all duration-300 hover:transform hover:scale-[1.02]"
-            >
-              <div className="text-3xl font-bold bg-gradient-to-r from-saffron to-maroon bg-clip-text text-transparent mb-1.5">
-                {stat.number}
-              </div>
-              <div className="text-gray-600 text-xs font-semibold">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+          {/* Subtle Mobile Stats (only visible on smaller screens when the right side is hidden) */}
+          <div className="xl:hidden border-t border-white/10 px-6 py-3 bg-black/10 flex justify-between items-center text-[11px] text-white/90">
+            <div className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-amber-300" /> <span>100% Accurate</span></div>
+            <div className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-300" /> <span>Free Basic</span></div>
+            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-amber-300 fill-amber-300" /> <span>4.9/5 Rated</span></div>
+          </div>
         </div>
       </div>
 

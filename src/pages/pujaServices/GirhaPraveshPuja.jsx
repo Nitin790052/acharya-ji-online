@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { Home, Clock, CheckCircle, Star, Phone, Calendar, Users, Shield, ArrowRight, X } from 'lucide-react';
+import { Home, Clock, CheckCircle, Star, Phone, Calendar, Users, Shield, ArrowRight, X, Sparkles, Award, BookOpen, MapPin, Heart, Sparkle, ChevronRight } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import banner from "../../assets/banners/bannerGirhaPage.png"
+import banner from "@/assets/banners/bannerGirhaPage.png"
+import homeImg from "@/assets/grihaPraveshPuja/home_visit.png"
+import onlineImg from "@/assets/grihaPraveshPuja/online_puja.png"
+import muhuratImg from "@/assets/grihaPraveshPuja/muhurat.png"
+import { Link } from "react-router-dom";
 
 export default function GrihaPraveshPuja() {
   const [showBookingModal, setShowBookingModal] = useState(false);
@@ -29,707 +33,496 @@ export default function GrihaPraveshPuja() {
     });
   };
 
+  const [muhuratData, setMuhuratData] = useState({
+    name: '',
+    phone: '',
+    dob: '',
+    time: '',
+    place: ''
+  });
+
+  const handleMuhuratChange = (e) => {
+    setMuhuratData({ ...muhuratData, [e.target.name]: e.target.value });
+  };
+
   const handleMuhuratSubmit = (e) => {
     e.preventDefault();
     alert('Muhurat consultation request submitted! Our Acharya will contact you soon.');
     setShowMuhuratModal(false);
   };
 
-  const BookingModal = ({ show, onClose }) => {
-    if (!show) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-orange-600">Book Griha Pravesh Puja</h3>
-              <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                <X size={24} />
-              </button>
-            </div>
-            <form onSubmit={handleBookingSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your full name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="+91 98765 43210"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                <input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your city"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-                <input
-                  type="date"
-                  name="preferredDate"
-                  value={formData.preferredDate}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Puja Mode</label>
-                <select
-                  name="pujaType"
-                  value={formData.pujaType}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                >
-                  <option value="home">Home Visit Puja</option>
-                  <option value="online">Online Puja (Live Video)</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Additional Message (Optional)</label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows="3"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Any special requirements or questions..."
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors shadow-md hover:shadow-lg"
-              >
-                Submit Booking Request
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const MuhuratModal = ({ show, onClose }) => {
-    if (!show) return null;
-    const [muhuratData, setMuhuratData] = useState({
-      name: '',
-      phone: '',
-      dob: '',
-      time: '',
-      place: ''
-    });
-
-    const handleMuhuratChange = (e) => {
-      setMuhuratData({ ...muhuratData, [e.target.name]: e.target.value });
-    };
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-orange-600">Muhurat Consultation</h3>
-              <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                <X size={24} />
-              </button>
-            </div>
-            <form onSubmit={handleMuhuratSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={muhuratData.name}
-                  onChange={handleMuhuratChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your full name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={muhuratData.phone}
-                  onChange={handleMuhuratChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="+91 98765 43210"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                <input
-                  type="date"
-                  name="dob"
-                  value={muhuratData.dob}
-                  onChange={handleMuhuratChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Time of Birth (If known)</label>
-                <input
-                  type="time"
-                  name="time"
-                  value={muhuratData.time}
-                  onChange={handleMuhuratChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Place of Birth</label>
-                <input
-                  type="text"
-                  name="place"
-                  value={muhuratData.place}
-                  onChange={handleMuhuratChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="City, State"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors shadow-md hover:shadow-lg"
-              >
-                Get Muhurat Consultation
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <Layout>
-        <div className="min-h-screen bg-white">
-      {/* Sticky Booking Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <button
-          onClick={() => setShowBookingModal(true)}
-          className="bg-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-orange-700 transition-all transform hover:scale-105 flex items-center gap-2"
-        >
-          <Calendar size={20} />
-          Book Puja Now
-        </button>
-      </div>
+      <div className="min-h-[80vh]">
+        <div className="min-h-screen bg-background">
 
-      {/* Hero Section */}
-   <section className="relative py-32 px-4 text-white overflow-hidden">
-
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={banner}
-      alt="Griha Pravesh Puja"
-      className="w-full h-full bg-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
-
-    {/* ✅ Single Professional Overlay */}
-    <div className="absolute inset-0 bg-gradient-to-b
-                    from-black/65 via-black/45 to-black/65" />
-
-    {/* Soft brand glow (same system as other banners) */}
-    <div className="absolute -top-32 -right-32 w-96 h-96 bg-orange-500/15 blur-3xl" />
-    <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-yellow-400/10 blur-3xl" />
-  </div>
-
-  {/* Content (UNCHANGED) */}
-  <div className="max-w-4xl mx-auto text-center relative z-10">
-    <h1 className="text-4xl md:text-5xl font-bold mb-4
-                   drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-      Griha Pravesh Puja
-    </h1>
-
-    <p className="text-xl md:text-2xl mb-8 text-orange-100
-                  drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-      Shanti, Sukh aur Samriddhi ke liye Vaidik Vidhi se Puja
-    </p>
-
-    <button
-      onClick={() => setShowBookingModal(true)}
-      className="bg-white text-orange-600 px-8 py-4 rounded-lg
-                 font-bold text-lg hover:bg-orange-50 transition-all
-                 shadow-xl hover:shadow-2xl inline-flex items-center gap-2
-                 transform hover:scale-105"
-    >
-      Book Griha Pravesh Puja
-      <ArrowRight size={20} />
-    </button>
-  </div>
-
-</section>
-
-
-      {/* What is Griha Pravesh Puja */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">What is Griha Pravesh Puja?</h2>
-          <div className="bg-orange-50 p-8 rounded-lg">
-            <p className="text-gray-800 text-lg mb-6 leading-relaxed">
-              Griha Pravesh Puja ek mahatvapurna vaidik vidhi hai jo naye ghar mein pehli baar pravesh karne se pehle ki jaati hai. 
-              Yeh puja ghar ko shuddh karke positive energy aur divine blessings ko invite karti hai.
-            </p>
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-600 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-700">Naye ghar mein construction ke dauran bani negative energies ko door karti hai</span>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-600 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-700">Vastu dosh nivaran aur ghar ki suraksha ke liye zaroori</span>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-600 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-700">Parivar mein sukh, shanti, aur samriddhi laane ke liye</span>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle className="w-6 h-6 text-green-600 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-700">Devtaon ka aashirwad praapt karne ke liye</span>
-              </div>
+          {/* Hero Section - Matching About Us deeply */}
+          <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+            <div className="absolute inset-0">
+              <img src={banner} alt="Griha Pravesh" className="w-full h-full object-cover object-top" />
+              <div className="absolute inset-0 bg-black/30" />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Types of Griha Pravesh */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Types of Griha Pravesh Puja</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <Home className="text-blue-600" size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-blue-600 mb-3 text-center">Apurna Griha Pravesh</h3>
-              <div className="mb-3">
-                <p className="font-semibold text-gray-700">When to perform:</p>
-                <p className="text-gray-600">Jab ghar poori tarah complete na ho</p>
-              </div>
-              <p className="text-gray-700">
-                Construction ke dauran ya jab ghar abhi mukammal nahi hua ho, tab yeh vidhi ki jaati hai. 
-                Is puja ke baad aap ghar mein temporarily reh sakte hain.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-2 border-orange-400 relative">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <div className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  Most Popular
+            <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
+              <div className="max-w-4xl mx-auto text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                  <Award className="w-4 h-4 text-[#FFC107]" />
+                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
                 </div>
-              </div>
-              <div className="bg-orange-100 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <CheckCircle className="text-orange-600" size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-orange-600 mb-3 text-center">Sapurna Griha Pravesh</h3>
-              <div className="mb-3">
-                <p className="font-semibold text-gray-700">When to perform:</p>
-                <p className="text-gray-600">Jab ghar fully ready ho</p>
-              </div>
-              <p className="text-gray-700">
-                Jab ghar ka construction pura ho gaya ho aur sabhi kaam complete ho, tab yeh mukhya Griha Pravesh puja ki jaati hai. 
-                Yeh sabse important aur comprehensive puja hoti hai.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="bg-green-100 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <ArrowRight className="text-green-600" size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-green-600 mb-3 text-center">Dwandwah Griha Pravesh</h3>
-              <div className="mb-3">
-                <p className="font-semibold text-gray-700">When to perform:</p>
-                <p className="text-gray-600">Purana ghar chhod kar naya ghar</p>
-              </div>
-              <p className="text-gray-700">
-                Jab aap apna purana ghar chhod kar naye ghar mein shift ho rahe ho, tab yeh puja ki jaati hai. 
-                Yeh transition ko smooth aur shubh banata hai.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Shubh Muhurat */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-            <div className="flex items-center mb-4 md:mb-0">
-              <Clock className="w-10 h-10 text-orange-600 mr-4" />
-              <h2 className="text-3xl font-bold text-gray-900">Shubh Muhurat & Timing</h2>
-            </div>
-            <button
-              onClick={() => setShowMuhuratModal(true)}
-              className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition flex items-center gap-2"
-            >
-              <Calendar className="w-5 h-5" />
-              Get Muhurat Consultation
-            </button>
-          </div>
-          
-          <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-8 rounded-lg border-l-4 border-orange-600">
-            <p className="text-gray-800 text-lg mb-6">
-              Griha Pravesh ke liye sahi muhurat ka chayan bahut hi mahatvapurna hai. Hamare anubhavi Acharya aapki kundli, 
-              nakshatra aur graha sthiti dekhkar sabse shubh muhurat nirdharit karte hain.
-            </p>
-            
-            <div className="grid md:grid-cols-3 gap-6 mt-8">
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-3">
-                  <Star className="w-6 h-6 text-blue-600" />
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2">Kundli Analysis</h4>
-                <p className="text-gray-600 text-sm">Aapki date of birth aur nakshatra ke anusaar muhurat</p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2">Tithi Check</h4>
-                <p className="text-gray-600 text-sm">Shubh tithi aur nakshatra ka nirdharan</p>
-              </div>
-              
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-3">
-                  <Shield className="w-6 h-6 text-purple-600" />
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2">Grah Dosh Avoid</h4>
-                <p className="text-gray-600 text-sm">Grah dosh avoid karke sabse suitable time</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Puja Samagri */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Puja Samagri Arrangement</h2>
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <div className="flex items-start mb-6">
-              <CheckCircle className="w-8 h-8 text-green-600 mr-4 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Complete Samagri Arrangement</h3>
-                <p className="text-gray-700">
-                  Acharya Ji Online ki taraf se complete puja samagri ki vyavastha ki jaati hai. Aapko kisi bhi cheez ki chinta karne ki zaroorat nahi hai.
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                  Invite Prosperity with <br />
+                  <span className="text-yellow-300">Authentic Griha Pravesh</span>
+                </h1>
+                <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
+                  Perform sacred vaidik rituals with experienced Acharyas to purify your new space and ensure a peaceful new beginning for your family.
                 </p>
               </div>
             </div>
-            
-            <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
-              <h4 className="font-bold text-gray-900 mb-4 text-center">Complete Puja Samagri List</h4>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="text-gray-700">Kalash, nariyal, supari</span>
+          </section>
+
+          {/* Intro Section - Sacred Journey Style from About Us */}
+          <section className="py-12 md:py-16 overflow-x-hidden relative">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -z-10" />
+            <div className="container mx-auto px-4">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+                <div className="animate-fade-in-left">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[11px] font-bold uppercase tracking-wider mb-5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Sacred Introduction</span>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 leading-tight">
+                    Why Perform <span className="text-orange-600">Griha Pravesh</span> Puja?
+                  </h2>
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                    <Sparkles className="w-5 h-5 text-orange-400" />
+                    <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                  </div>
+                  <div className="space-y-3 text-gray-700 font-medium text-sm md:text-base">
+                    <p className="leading-relaxed"><strong className="text-orange-600 font-semibold">Ghar Pravesh</strong> is not just a ceremony; it's a spiritual purification process that removes negative energy and invites divine protection.</p>
+                    <p className="leading-relaxed">According to Vastu Shastra, performing this ritual on a shubh muhurat ensures that the residents live in harmony, health, and abundance.</p>
+                  </div>
+                  <div className="mt-6 grid grid-cols-2 gap-3">
+                    {['Cleanses negative energy', 'Vastu Dosh correction', 'Invites Lakshmi ji', 'Family Happiness'].map((item) => (
+                      <div key={item} className="flex items-center gap-2.5">
+                        <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-3.5 h-3.5 text-orange-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-800">{item}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="text-gray-700">Hawan samagri aur samidha</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="text-gray-700">Agarbatti, dhoop, kapoor</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="text-gray-700">Moli, chunri, phool mala</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="text-gray-700">Gangajal, panchamrit</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                  <span className="text-gray-700">Fruits aur mishtan for prasad</span>
+                <div className="relative group flex justify-center animate-fade-in-right">
+                  <div className="relative w-[96%] max-w-lg mx-auto p-1.5 md:p-2 bg-gradient-to-br from-amber-100 to-amber-300 rounded-[2rem] shadow-[0_20px_50px_-15px_rgba(217,119,6,0.25)]">
+                    <div className="w-full h-[315px] sm:h-[375px] md:h-[445px] rounded-3xl overflow-hidden border-[3px] border-white relative z-10">
+                      <img src={banner} alt="Puja Vidhi" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
+                    </div>
+                    {/* Achievement Badge style from About Us */}
+                    <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-2.5 md:p-3 rounded-2xl shadow-xl border border-amber-100 z-20 flex items-center gap-3">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-50 flex items-center justify-center border border-amber-200">
+                        <Shield className="w-5 h-5 md:w-6 md:h-6 text-amber-600" />
+                      </div>
+                      <div className="text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-wide">
+                        100% Authentic<br /><span className="text-amber-600">Vedic Rituals</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Puja Process */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Puja Process - Step by Step</h2>
-          <div className="space-y-4">
-            {[
-              { step: 1, title: 'Ganesh Puja', desc: 'Vighn vinashak Ganesh ji ki aradhana' },
-              { step: 2, title: 'Kalash Sthapana', desc: 'Mangal kalash ki sthapana' },
-              { step: 3, title: 'Navgraha Shanti', desc: 'Navgraha dosh nivaran' },
-              { step: 4, title: 'Havan', desc: 'Vaidik havan vidhi' },
-              { step: 5, title: 'Vastu Shanti', desc: 'Ghar ki Vastu shanti' },
-              { step: 6, title: 'Aarti & Prasad', desc: 'Samapan aarti aur prasad vitaran' }
-            ].map((item) => (
-              <div key={item.step} className="flex items-start bg-orange-50 p-6 rounded-lg hover:shadow-md transition-shadow">
-                <div className="bg-orange-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mr-6 flex-shrink-0">
-                  {item.step}
+          {/* Offerings Section - Using the service card style from About Us */}
+          <section className="py-12 md:py-16 bg-[#FAF9F6] relative overflow-hidden">
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #d97706 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <Star className="w-3.5 h-3.5" />
+                  <span>Our Service Modes</span>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-700">{item.desc}</p>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Modes of <span className="text-orange-600">Griha Pravesh</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" />
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 max-w-[70rem] mx-auto">
+                {[
+                  {
+                    title: "Home Visit Puja",
+                    items: ["Experienced Acharya", "Full Samagri Included", "Traditional Mantra Vidhi", "Personal Connection"],
+                    icon: Home,
+                    image: homeImg,
+                    desc: "Pandit ji conducts the ritual at your home."
+                  },
+                  {
+                    title: "Online Video Puja",
+                    items: ["Live Interactive Session", "Step-by-Step Guidance", "Global Accessibility", "Perfect for Busy Schedules"],
+                    icon: Users,
+                    image: onlineImg,
+                    desc: "Perform rituals via HD live video call."
+                  },
+                  {
+                    title: "Muhurat Consultation",
+                    items: ["Personalized Kundli Check", "Nakshatra Alignment", "Exact Timing Guidance", "Family Shanti Analysis"],
+                    icon: Clock,
+                    image: muhuratImg,
+                    desc: "Find the most auspicious time for entry."
+                  }
+                ].map((service, idx) => (
+                  <div key={idx} className="group/card h-full animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                    <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl flex flex-col">
+                      <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24" />
 
-      {/* Mode of Puja */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Mode of Puja</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-md border-t-4 border-orange-500">
-              <Home className="w-12 h-12 text-orange-600 mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Home Visit Puja</h3>
-              <p className="text-gray-700 mb-4">
-                Hamare anubhavi Acharya aapke ghar aakar puja karwate hain
-              </p>
-              <ul className="space-y-2 text-gray-600 mb-6">
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Pan-India availability</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Complete puja samagri arrangement</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Scheduled timing pe punctual arrival</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Personal guidance and blessings</span>
-                </li>
-              </ul>
-              <button
-                onClick={() => setShowBookingModal(true)}
-                className="w-full bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition"
+                        <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-36 md:h-44 z-10 flex items-center justify-center bg-amber-50 group-hover/card:bg-white transition-all duration-500">
+                          <img
+                            src={service.image}
+                            alt={service.title}
+                            className="absolute inset-0 w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-[1.5s]"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#1A130F]/50 via-transparent to-transparent opacity-60" />
+                        </div>
+
+                        <div className="flex flex-col flex-grow px-4 pb-5 text-center relative z-20">
+                          <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-1.5 tracking-wide uppercase transition-colors group-hover/card:text-amber-600">
+                            {service.title}
+                          </h3>
+                          <div className="flex items-center justify-center gap-3 mb-4">
+                            <div className="h-[1.5px] w-8 bg-gradient-to-r from-transparent via-amber-200 to-amber-500" />
+                            <Sparkle className="w-5 h-5 text-amber-500 fill-amber-500/10" />
+                            <div className="h-[1.5px] w-8 bg-gradient-to-l from-transparent via-amber-200 to-amber-500" />
+                          </div>
+                          <ul className="space-y-2 mb-5 text-left">
+                            {service.items.slice(0, 3).map((item, i) => (
+                              <li key={i} className="flex items-center gap-3">
+                                <div className="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover/card:bg-amber-600">
+                                  <CheckCircle className="w-3.5 h-3.5 text-amber-600 group-hover/card:text-white" />
+                                </div>
+                                <span className="text-xs font-bold text-[#4A3427]/80 group-hover/card:text-[#2A1D13]">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="mt-auto">
+                            <button onClick={() => service.title.includes('Muhurat') ? setShowMuhuratModal(true) : setShowBookingModal(true)} className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2A1D13] text-amber-400 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 hover:bg-orange-600 hover:text-white shadow-lg">
+                              <span>Book Selection</span>
+                              <ChevronRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Why Choose Us - Using the boxy style from About Us */}
+          <section className="py-12 md:py-16 bg-[#FFFDF7] relative overflow-hidden">
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-[10px] font-extrabold uppercase tracking-[0.2em] mb-4">
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>The Standard of Purity</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 uppercase">Why Book With <span className="text-orange-600">Us</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {[
+                  { icon: Shield, title: "Verified Acharyas", desc: "Learned pandits with deep shastra knowledge." },
+                  { icon: CheckCircle, title: "Complete Samagri", desc: "We provide everything needed for puja." },
+                  { icon: Clock, title: "Punctual Service", desc: "Respecting your shubh muhurat timings." },
+                  { icon: Heart, title: "Sacred Devotion", desc: "Every ritual performed with full sincerity." },
+                  { icon: Sparkles, title: "Transparent Pricing", desc: "No hidden costs, clear donation slabs." },
+                  { icon: Users, title: "Customer Support", desc: "Dedicated guidance for your spiritual journey." }
+                ].map((item, idx) => (
+                  <div key={idx} className="group bg-white p-5 md:p-6 transition-all duration-500 border-2 border-orange-100 flex items-start gap-4 md:gap-5 rounded-none relative overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(255,165,0,0.15)] animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                    <div className="absolute top-0 right-0 w-2 h-0 group-hover:h-full bg-orange-500 transition-all duration-500" />
+                    <div className="w-16 h-16 bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-600 transition-all duration-500">
+                      <item.icon className="w-8 h-8 text-orange-600 group-hover:text-white transition-all" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-extrabold text-[#4A3427] mb-2 leading-tight group-hover:text-orange-600 transition-colors">{item.title}</h3>
+                      <p className="text-gray-500 text-sm font-semibold leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Belief Section Style - Simple but Deep */}
+          <section className="py-12 md:py-16 bg-[#FFFCF5]">
+            <div className="container mx-auto px-4 max-w-4xl text-center animate-fade-in-up">
+              <h2 className="text-3xl md:text-4xl font-black text-[#4A3427] mb-6 uppercase tracking-widest">Ghar ka <span className="text-orange-600">Aashirwad</span></h2>
+              <div className="relative flex justify-center items-center mb-8">
+                <div className="absolute w-24 h-[1px] bg-orange-200 left-1/2 -translate-x-[160%]" />
+                <div className="relative group">
+                  <Shield className="w-16 h-16 text-orange-600/20" />
+                  <Sparkles className="w-5 h-5 text-orange-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                </div>
+                <div className="absolute w-24 h-[1px] bg-orange-200 left-1/2 translate-x-[60%]" />
+              </div>
+              <div className="max-w-3xl mx-auto italic text-lg md:text-2xl text-gray-700 font-semibold leading-relaxed relative">
+                <span className="text-5xl text-orange-100 absolute -top-4 -left-6 font-serif">"</span>
+                Naye ghar mein pravesh sirf ek physical shift nahi hai, ye ek naye jeevan ki shuruaat hai. Hamara lakshya hai ki aapke naye ghar mein har kona sakaratmak urja se bhar jaye.
+                <span className="text-5xl text-orange-100 absolute -bottom-10 -right-6 font-serif">"</span>
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials - Matching About Us deeply */}
+          <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 text-green-700 rounded-full text-[10px] font-extrabold uppercase tracking-[0.2em] mb-4">
+                  <Star className="w-3.5 h-3.5 fill-green-700" />
+                  <span>Devotee Experiences</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-[#4A3427] mb-6">What Our <span className="text-orange-600">Yajamans Say</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+                {[
+                  { name: "Rahul Deshmukh", text: "Acharya ji performed the puja with so much patience and explained every ritual. My home feels peaceful now.", location: "Pune, India" },
+                  { name: "Sneha Kapur", text: "The online puja experience was surprisingly emotional and authentic. Excellent coordination and timing.", location: "London, UK" },
+                  { name: "Vikram Negi", text: "Truly learned Acharya. The samagri list was perfect and the whole process was very systematic.", location: "Dehradun, India" }
+                ].map((review, idx) => (
+                  <div key={idx} className="bg-[#FFFDF7] p-6 md:p-7 border border-orange-100 shadow-lg rounded-2xl relative hover:border-orange-400 transition-all animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                    <div className="absolute -top-4 -left-2 text-6xl text-orange-100 font-serif">"</div>
+                    <div className="flex gap-1 mb-4 relative z-10">
+                      {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />)}
+                    </div>
+                    <p className="text-gray-600 font-medium text-sm mb-6 leading-relaxed italic relative z-10">"{review.text}"</p>
+                    <div className="border-t border-orange-100 pt-4">
+                      <h4 className="font-extrabold text-[#4A3427] text-sm uppercase">{review.name}</h4>
+                      <p className="text-xs text-orange-600 font-semibold">{review.location}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CTA Section - Matching About Us deeply */}
+          <section className="py-12 md:py-16 bg-white border-t border-orange-50">
+            <div className="container mx-auto px-4 text-center max-w-5xl animate-fade-in-up">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 uppercase">Bless Your New <br /><span className="text-[#E8453C]">Aashiyana</span> Today</h2>
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="w-10 h-[1.5px] bg-orange-200" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-10 h-[1.5px] bg-orange-200" />
+              </div>
+              <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">Don't compromise on your first entry. Book a verified Acharya for a shastra-based Griha Pravesh that brings success and health.</p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <button onClick={() => setShowBookingModal(true)} className="group relative bg-[#E8453C] hover:bg-black text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="relative flex items-center gap-2"><Calendar className="w-3.5 h-3.5" /> Book 2026 Muhurat</span>
+                </button>
+                <button onClick={() => setShowMuhuratModal(true)} className="group relative bg-[#F59E0B] hover:bg-black text-white px-7 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="relative flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Call Acharya Ji</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* Booking Modal */}
+          {showBookingModal && (
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+              <div className="absolute inset-0" onClick={() => setShowBookingModal(false)} />
+              <div
+                className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-scale-in"
               >
-                Book Home Visit Puja
-              </button>
+                <div className="absolute top-0 right-0 w-4 h-4 bg-orange-600 rounded-tr-2xl" />
+                <div className="p-8">
+                  <div className="flex justify-between items-center mb-8">
+                    <h3 className="text-2xl font-black text-[#2A1D13] uppercase tracking-tight">Book <span className="text-orange-600">Griha Pravesh</span></h3>
+                    <button onClick={() => setShowBookingModal(false)} className="text-gray-400 hover:text-orange-600 transition-colors">
+                      <X size={24} />
+                    </button>
+                  </div>
+                  <form onSubmit={handleBookingSubmit} className="space-y-5">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] pl-1">Full Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full bg-white border border-gray-400 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none transition-all placeholder:text-gray-300 rounded-none shadow-sm"
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] pl-1">Phone Number *</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full bg-white border border-gray-400 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none placeholder:text-gray-300 rounded-none shadow-sm"
+                        placeholder="+91 98765 43210"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] pl-1">Email Address *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full bg-white border border-gray-400 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none placeholder:text-gray-300 rounded-none shadow-sm"
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] pl-1">City *</label>
+                        <input
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full bg-white border border-gray-400 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none placeholder:text-gray-300 rounded-none shadow-sm"
+                          placeholder="Enter city"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] pl-1">Puja Date *</label>
+                        <input
+                          type="date"
+                          name="preferredDate"
+                          value={formData.preferredDate}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full bg-white border border-gray-400 px-5 py-4 font-normal text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] pl-1">Puja Mode *</label>
+                      <select
+                        name="pujaType"
+                        value={formData.pujaType}
+                        onChange={handleInputChange}
+                        className="w-full bg-white border border-gray-400 px-5 py-4 font-normal text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm appearance-none"
+                      >
+                        <option value="home">Home Visit Puja</option>
+                        <option value="online">Online Puja (Live Video)</option>
+                      </select>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full bg-orange-600 hover:bg-black text-white font-black text-xs uppercase tracking-[0.3em] py-5 shadow-2xl transition-all duration-300 rounded-none mt-4"
+                    >
+                      Confirm Booking Request
+                    </button>
+                  </form>
+                </div>
+              </div>
             </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-md border-t-4 border-blue-500">
-              <Users className="w-12 h-12 text-blue-600 mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Online Puja (Live Video)</h3>
-              <p className="text-gray-700 mb-4">
-                Live video call ke through aap puja mein participate kar sakte hain
-              </p>
-              <ul className="space-y-2 text-gray-600 mb-6">
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>NRI clients ke liye perfect option</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Real-time puja ke saath connection</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Step-by-step guidance available</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Recording available for future reference</span>
-                </li>
-              </ul>
-              <button
-                onClick={() => setShowBookingModal(true)}
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+          )}
+
+          {/* Muhurat Modal */}
+          {showMuhuratModal && (
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
+              <div className="absolute inset-0" onClick={() => setShowMuhuratModal(false)} />
+              <div
+                className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-scale-in"
               >
-                Book Online Puja
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Book With Us */}
-      <section className="py-16 px-4 bg-orange-600 text-white">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-10 text-center">Why Book With Acharya Ji Online?</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="flex items-start">
-              <CheckCircle className="w-6 h-6 mr-3 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold mb-1">Experienced Vedic Acharyas</h4>
-                <p className="text-orange-100">10+ years experience ke qualified pandits</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <CheckCircle className="w-6 h-6 mr-3 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold mb-1">Shastra-based Vidhi</h4>
-                <p className="text-orange-100">Poori tarah se vedic scriptures ke anusaar</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <CheckCircle className="w-6 h-6 mr-3 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold mb-1">Transparent Pricing</h4>
-                <p className="text-orange-100">Koi hidden charges nahi, clear pricing</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <CheckCircle className="w-6 h-6 mr-3 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold mb-1">On-time & Professional</h4>
-                <p className="text-orange-100">Samay ka palan aur professional conduct</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <CheckCircle className="w-6 h-6 mr-3 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold mb-1">Pan-India Service</h4>
-                <p className="text-orange-100">Across India aur NRI clients ke liye available</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <CheckCircle className="w-6 h-6 mr-3 mt-1 flex-shrink-0" />
-              <div>
-                <h4 className="font-semibold mb-1">Thousands of Happy Families</h4>
-                <p className="text-orange-100">5000+ successful Griha Pravesh pujas</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">What Our Clients Say</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: 'Rajesh Sharma', location: 'Delhi', text: 'Hamare Griha Pravesh ke baad se ghar mein positive energy aur shanti mehsoos ho rahi hai. Acharya ji ne bahut hi sahi tarike se puja karwayi.' },
-              { name: 'Priya Mehta', location: 'Mumbai', text: 'NRI hone ke karan humne online puja karwayi. Bahut hi professional aur systematic tarike se sabkuch hua. Highly recommended!' },
-              { name: 'Amit Verma', location: 'Bangalore', text: 'Muhurat se lekar puja samagri tak sab kuch Acharya Ji Online ne sambhala. Stress-free experience raha.' }
-            ].map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <div className="flex mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
-                <div className="border-t border-gray-200 pt-3">
-                  <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                  <p className="text-sm text-gray-600">{testimonial.location}</p>
+                <div className="absolute top-0 right-0 w-4 h-4 bg-orange-600 rounded-tr-2xl" />
+                <div className="p-8">
+                  <div className="flex justify-between items-center mb-8">
+                    <h3 className="text-2xl font-black text-[#2A1D13] uppercase tracking-tight">Kumbh <span className="text-orange-600">Muhurat</span></h3>
+                    <button onClick={() => setShowMuhuratModal(false)} className="text-gray-400 hover:text-orange-600 transition-colors">
+                      <X size={24} />
+                    </button>
+                  </div>
+                  <form onSubmit={handleMuhuratSubmit} className="space-y-5">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] pl-1">Full Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={muhuratData.name}
+                        onChange={handleMuhuratChange}
+                        required
+                        className="w-full bg-white border border-gray-200 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm"
+                        placeholder="Enter your name"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] pl-1">Phone Number *</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={muhuratData.phone}
+                        onChange={handleMuhuratChange}
+                        required
+                        className="w-full bg-white border border-gray-200 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm"
+                        placeholder="+91 98765 43210"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] pl-1">Date of Birth *</label>
+                        <input
+                          type="date"
+                          name="dob"
+                          value={muhuratData.dob}
+                          onChange={handleMuhuratChange}
+                          required
+                          className="w-full bg-white border border-gray-200 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] pl-1">Time of Birth</label>
+                        <input
+                          type="time"
+                          name="time"
+                          value={muhuratData.time}
+                          onChange={handleMuhuratChange}
+                          className="w-full bg-white border border-gray-200 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] pl-1">Place of Birth *</label>
+                      <input
+                        type="text"
+                        name="place"
+                        value={muhuratData.place}
+                        onChange={handleMuhuratChange}
+                        required
+                        className="w-full bg-white border border-gray-200 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none rounded-none shadow-sm"
+                        placeholder="City, State"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full bg-orange-600 hover:bg-black text-white font-black text-xs uppercase tracking-[0.3em] py-5 shadow-2xl transition-all duration-300 rounded-none mt-4"
+                    >
+                      Get Muhurat Consultation
+                    </button>
+                  </form>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
-      </section>
-
-      {/* FAQs */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {[
-              { q: 'Griha Pravesh kab nahi karna chahiye?', a: 'Kharamaas, pitru paksha, aur ashubh nakshatra mein Griha Pravesh nahi karna chahiye. Hamare Acharya aapki kundli dekh kar shubh muhurat suggest karte hain.' },
-              { q: 'Kya raat mein Griha Pravesh ho sakti hai?', a: 'Nahi, Griha Pravesh din ke samay, suryoday ke baad aur suryast se pehle karna shubh hota hai.' },
-              { q: 'Saturday ya Tuesday ko Griha Pravesh ho sakti hai?', a: 'Haan, agar tithi aur nakshatra shubh ho to Saturday ya Tuesday ko bhi Griha Pravesh kiya ja sakta hai. Muhurat sabse important hai.' },
-              { q: 'Puja ka duration kitna hota hai?', a: 'Sampurna Griha Pravesh Puja ka duration typically 2 se 3 ghante ka hota hai, vidhi ke anusaar.' },
-              { q: 'Kya online puja bhi effective hoti hai?', a: 'Haan, bilkul. Online puja mein bhi same vaidik vidhi follow ki jaati hai. Live video call ke through aap puja mein participate kar sakte hain.' },
-              { q: 'Ghar mein koi special arrangement chahiye?', a: 'Ek saaf aur pavitra jagah jahan hawan kiya ja sake, aur family members puja mein shamil ho sakein. Baki sab kuch hum sambhaltay hain.' }
-            ].map((faq, index) => (
-              <details key={index} className="bg-white p-6 rounded-lg shadow-md group">
-                <summary className="font-semibold text-gray-900 cursor-pointer list-none flex justify-between items-center">
-                  {faq.q}
-                  <span className="text-orange-600 group-open:rotate-180 transition-transform">▼</span>
-                </summary>
-                <p className="text-gray-700 mt-4 pl-4 border-l-4 border-orange-200">{faq.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-16 px-4 bg-gradient-to-r from-orange-600 to-red-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Apne Naye Ghar Mein Shubh Aarambh Karein</h2>
-          <p className="text-xl mb-8 text-orange-100">
-            Vaidik vidhi se Griha Pravesh Puja book karein aur divine blessings paayen
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setShowBookingModal(true)}
-              className="bg-white text-orange-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-50 transition shadow-lg"
-            >
-              Book Griha Pravesh Puja
-            </button>
-            <a
-              href="tel:+919876543210"
-              className="bg-orange-800 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-900 transition shadow-lg flex items-center justify-center"
-            >
-              <Phone className="w-5 h-5 mr-2" />
-              Talk to Acharya
-            </a>
-            <button
-              onClick={() => setShowMuhuratModal(true)}
-              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition shadow-lg flex items-center justify-center"
-            >
-              <Calendar className="w-5 h-5 mr-2" />
-              Get Muhurat
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Modals */}
-      <BookingModal show={showBookingModal} onClose={() => setShowBookingModal(false)} />
-      <MuhuratModal show={showMuhuratModal} onClose={() => setShowMuhuratModal(false)} />
-    </div>
+      </div>
     </Layout>
   );
 }

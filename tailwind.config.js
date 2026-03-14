@@ -112,6 +112,10 @@ module.exports = {
           "0%": { opacity: "0", transform: "translateY(30px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "fade-out": {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
         "slide-in-left": {
           "0%": { opacity: "0", transform: "translateX(-100%)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
@@ -120,13 +124,37 @@ module.exports = {
           "0%": { opacity: "0", transform: "translateX(100%)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
+        "slide-out-left": {
+          "0%": { opacity: "1", transform: "translateX(0)" },
+          "100%": { opacity: "0", transform: "translateX(-100%)" },
+        },
+        "slide-out-right": {
+          "0%": { opacity: "1", transform: "translateX(0)" },
+          "100%": { opacity: "0", transform: "translateX(100%)" },
+        },
         "scale-in": {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
+        "scale-out": {
+          "0%": { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0", transform: "scale(0.95)" },
+        },
+        "zoom-in": {
+          "0%": { opacity: "0", transform: "scale(0.5)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "zoom-out": {
+          "0%": { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0", transform: "scale(0.5)" },
+        },
         "float": {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
+        },
+        "rotate-slow": {
+          "from": { transform: "rotate(0deg)" },
+          "to": { transform: "rotate(360deg)" },
         },
         "glow-pulse": {
           "0%, 100%": { boxShadow: "0 0 20px hsl(var(--gold) / 0.3)" },
@@ -152,10 +180,17 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out forwards",
         "fade-in-up": "fade-in-up 0.6s ease-out forwards",
+        "fade-out": "fade-out 0.4s ease-out forwards",
         "slide-in-left": "slide-in-left 0.4s ease-out forwards",
         "slide-in-right": "slide-in-right 0.4s ease-out forwards",
+        "slide-out-left": "slide-out-left 0.4s ease-in forwards",
+        "slide-out-right": "slide-out-right 0.4s ease-in forwards",
         "scale-in": "scale-in 0.3s ease-out forwards",
+        "scale-out": "scale-out 0.3s ease-in forwards",
+        "zoom-in": "zoom-in 0.5s ease-out forwards",
+        "zoom-out": "zoom-out 0.5s ease-in forwards",
         float: "float 3s ease-in-out infinite",
+        "rotate-slow": "rotate-slow 20s linear infinite",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         shimmer: "shimmer 2s linear infinite",
         "divine-glow": "divine-glow 3s ease-in-out infinite",

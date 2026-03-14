@@ -1,224 +1,125 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Book, Droplets, Star, Users, ArrowRight, Sparkles, Clock, IndianRupee, ChevronLeft, ChevronRight } from 'lucide-react';
+import SectionHeader from '../common/SectionHeader';
 import grahPravesh from "../../assets/popularServices/GrihaPraveshPuja.png"
 import LakshmiPuja from "../../assets/popularServices/LakshmiPuja1.png"
 import NavgrahaShanti from "../../assets/popularServices/NavgrahaShantiPuja.png"
 import PitruDosh from "../../assets/popularServices/PitruDoshPuja1.png"
 import Rudrabhishek from "../../assets/popularServices/Rudrabhishek1.png"
-import satyaNarayankatha from "../../assets/popularServices/satyaNarayankatha1.png"
+import satyaNarayankatha from "../../assets/popularServices/satyanarayankatha1.png"
+const RED = '#E8453C';
 
 const PopularPujaServices = () => {
   const [activeCard, setActiveCard] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    setTimeout(() => setIsVisible(true), 200);
-  }, []);
+  useEffect(() => { setTimeout(() => setIsVisible(true), 200); }, []);
 
   const pujaServices = [
-    {
-      id: 1,
-      icon: Home,
-      name: 'Griha Pravesh Puja',
-      description: 'Invoke divine blessings for your new home with sacred rituals',
-      duration: '2-3 hours',
-      price: '₹5,100',
-      popular: true,
-      gradient: 'from-saffron to-saffron-dark',
-      bgGradient: 'from-saffron/10 to-saffron-dark/5',
-      iconColor: '#FF9933',
-      features: ['Vastu Shanti', 'Ganesh Puja', 'Navagraha Puja'],
-      Image:grahPravesh,
-    },
-    {
-      id: 2,
-      icon: Book,
-      name: 'Satyanarayan Katha',
-      description: 'Sacred storytelling ceremony for prosperity and harmony',
-      duration: '1.5-2 hours',
-      price: '₹3,100',
-      popular: true,
-      gradient: 'from-maroon to-maroon-dark',
-      bgGradient: 'from-maroon/10 to-maroon-dark/5',
-      iconColor: '#800000',
-      features: ['Prasad Distribution', 'Vedic Mantras', 'Complete Vidhi'],
-      Image:satyaNarayankatha,
-    },
-    {
-      id: 3,
-      icon: Droplets,
-      name: 'Rudrabhishek',
-      description: 'Sacred bathing ritual of Lord Shiva for blessings and peace',
-      duration: '1-1.5 hours',
-      price: '₹2,100',
-      popular: true,
-      gradient: 'from-gold to-gold-dark',
-      bgGradient: 'from-gold/10 to-gold-dark/5',
-      iconColor: '#FFD700',
-      features: ['Abhishekam', 'Rudra Mantras', 'Bel Patra Offering'],
-      Image:Rudrabhishek,
-    },
-    {
-      id: 4,
-      icon: Star,
-      name: 'Navgraha Shanti Puja',
-      description: 'Planetary peace ritual to harmonize cosmic influences',
-      duration: '2-2.5 hours',
-      price: '₹4,100',
-      popular: false,
-      gradient: 'from-orange-500 to-orange-600',
-      bgGradient: 'from-orange-500/10 to-orange-600/5',
-      iconColor: '#F97316',
-      features: ['Nine Planet Puja', 'Homa Ritual', 'Gemstone Guidance'],
-      Image:NavgrahaShanti,
-    },
-    {
-      id: 5,
-      icon: Users,
-      name: 'Pitru Dosh Puja',
-      description: 'Ancestral peace ritual for family harmony and prosperity',
-      duration: '2-3 hours',
-      price: '₹5,500',
-      popular: false,
-      gradient: 'from-purple-600 to-purple-700',
-      bgGradient: 'from-purple-600/10 to-purple-700/5',
-      iconColor: '#9333EA',
-      features: ['Tarpan Vidhi', 'Pind Daan', 'Brahmin Bhojan'],
-      Image:PitruDosh,
-    },
-    {
-      id: 6,
-      icon: Sparkles,
-      name: 'Lakshmi Puja',
-      description: 'Invoke goddess of wealth for prosperity and abundance',
-      duration: '1.5-2 hours',
-      price: '₹3,500',
-      popular: false,
-      gradient: 'from-pink-500 to-pink-600',
-      bgGradient: 'from-pink-500/10 to-pink-600/5',
-      iconColor: '#EC4899',
-      features: ['Wealth Rituals', 'Coins Offering', 'Aarti'],
-      Image:LakshmiPuja,
-    }
+    { id: 1, icon: Home, name: 'Griha Pravesh', description: 'Invoke divine blessings for your new home', duration: '2-3 hrs', price: '₹5,100', popular: true, Image: grahPravesh },
+    { id: 2, icon: Book, name: 'Satyanarayan Katha', description: 'Sacred storytelling for prosperity and harmony', duration: '1.5-2 hrs', price: '₹3,100', popular: true, Image: satyaNarayankatha },
+    { id: 3, icon: Droplets, name: 'Rudrabhishek', description: 'Sacred bathing ritual of Lord Shiva for peace', duration: '1-1.5 hrs', price: '₹2,100', popular: true, Image: Rudrabhishek },
+    { id: 4, icon: Star, name: 'Navgraha Shanti', description: 'Planetary peace ritual to harmonize influences', duration: '2-2.5 hrs', price: '₹4,100', popular: false, Image: NavgrahaShanti },
+    { id: 5, icon: Users, name: 'Pitru Dosh Puja', description: 'Ancestral peace ritual for family harmony', duration: '2-3 hrs', price: '₹5,500', popular: false, Image: PitruDosh },
+    { id: 6, icon: Sparkles, name: 'Lakshmi Puja', description: 'Invoke goddess of wealth for abundance', duration: '1.5-2 hrs', price: '₹3,500', popular: false, Image: LakshmiPuja },
   ];
 
-  const itemsPerSlide = 3;
-  const maxSlides = Math.ceil(pujaServices.length / itemsPerSlide);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % maxSlides);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + maxSlides) % maxSlides);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % pujaServices.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + pujaServices.length) % pujaServices.length);
 
   return (
-    <div className="relative py-10 px-3 sm:px-4 overflow-hidden bg-gradient-to-br from-cream via-white to-saffron-light/10">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `repeating-linear-gradient(45deg, #FF9933 0px, #FF9933 1px, transparent 1px, transparent 15px)`,
-        }} />
-      </div>
-
+    <div className="relative py-10 px-3 sm:px-4 overflow-hidden bg-white">
+      {/* Background patterns */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-48 h-48 bg-saffron/10 rounded-full blur-2xl animate-float-slow" />
-        <div className="absolute bottom-20 right-10 w-60 h-60 bg-maroon/10 rounded-full blur-2xl animate-float-slower" />
-        <div className="absolute top-1/2 left-1/2 w-56 h-56 bg-gold/10 rounded-full blur-2xl animate-float" />
+        <div className="absolute top-16 left-8 w-60 h-60 rounded-full blur-2xl" style={{ backgroundColor: 'rgba(232,69,60,0.08)' }} />
+        <div className="absolute bottom-16 right-8 w-80 h-80 rounded-full blur-2xl" style={{ backgroundColor: 'rgba(232,69,60,0.05)' }} />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className={`text-center mb-10 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-          <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-saffron to-maroon text-white px-4 py-1.5 rounded-full text-xs font-semibold mb-4 shadow">
-            <Sparkles className="w-3 h-3 animate-pulse" />
-            Most Booked Services
-          </div>
-          
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 bg-gradient-to-r from-saffron via-maroon to-gold bg-clip-text text-transparent">
-            Popular Puja Services
-          </h2>
-          
-          <p className="text-sm sm:text-base text-gray-700 max-w-xl mx-auto leading-relaxed">
-            Traditional rituals performed by <span className="font-bold text-maroon">experienced priests</span> with authentic Vedic mantras
-          </p>
-        </div>
+        {/* Header */}
+        <SectionHeader
+          badge="Most Booked Services"
+          title="Popular Puja Services"
+          subtitle="Traditional rituals performed by experienced priests with authentic Vedic mantras"
+        />
 
-        <div className="hidden lg:grid lg:grid-cols-3 gap-6 mb-8">
+        {/* Desktop Grid */}
+        <div
+          className="hidden lg:grid lg:grid-cols-3 gap-6 md:gap-8 mb-8"
+        >
           {pujaServices.map((puja, index) => {
             const Icon = puja.icon;
-            const isActive = activeCard === index;
-            
             return (
-              <div
-                key={puja.id}
-                className={`relative transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                }`}
-                style={{ transitionDelay: `${index * 80}ms` }}
-                onMouseEnter={() => setActiveCard(index)}
-              >
-                <div className={`relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 h-full border group ${
-                  isActive ? 'border-saffron scale-105' : 'border-gray-100 scale-100'
-                }`}>
-                  
+              <div key={puja.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.15}s`, animationFillMode: 'both' }}>
+                <div className="relative block h-full bg-[#FFFCF5] rounded-3xl overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/50 shadow-sm hover:shadow-[0_22px_50px_-12px_rgba(255,193,7,0.25)] transition-all duration-500 group">
                   {puja.popular && (
-                    <div className="absolute top-3 right-3 z-10">
-                      <div className="bg-gradient-to-r from-saffron to-maroon text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">
-                        Popular
-                      </div>
+                    <div className="absolute top-4 right-4 z-20">
+                      <div className="text-[#FFFCF5] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider bg-[#E8453C]">Popular</div>
                     </div>
                   )}
 
-                  <div className={`relative h-60  bg-gradient-to-br ${puja.bgGradient} overflow-hidden`}>
-                    <img src={puja.Image} alt="" />
-                    <div className="absolute inset-0 opacity-20" style={{
-                      backgroundImage: `radial-gradient(circle, ${puja.iconColor} 1px, transparent 1px)`,
-                      backgroundSize: '15px 15px'
-                    }} />
-                    
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${puja.gradient} flex items-center justify-center shadow-lg transform transition-all duration-300 ${
-                        isActive ? 'scale-110 rotate-6' : 'scale-100 rotate-0'
-                      }`}>
-                        <Icon className="w-8 h-8 text-white" strokeWidth={2} />
-                      </div>
+                  {/* Decorative Header Area with Inset Image */}
+                  <div className="relative p-3 pb-0">
+                    <div className="relative h-44 md:h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
+                      {puja.Image && (
+                        <img
+                          src={puja.Image}
+                          alt={puja.name}
+                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
+
+                      {/* Vedic Corner Brackets */}
+                      <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                      <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
                     </div>
                   </div>
 
-                  <div className="pt-4 px-4 pb-4">
-                    <h3 className="text-lg sm:text-xl font-bold text-maroon mb-2 text-center font-serif">
-                      {puja.name}
-                    </h3>
-                    
-                    <p className="text-gray-600 text-center mb-3 text-xs leading-relaxed">
+                  {/* Elegant Content Area */}
+                  <div className="p-5 md:p-6 text-center relative flex flex-col items-center flex-grow">
+                    {/* Floating Icon Badge */}
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                      <div className="w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center border-4 border-[#FFFCF5] transition-transform duration-500 group-hover:scale-110">
+                        <Icon className="w-5 h-5 text-amber-500" strokeWidth={2.5} />
+                      </div>
+                    </div>
+
+                    <div className="mt-5 mb-3 w-full">
+                      <h3 className="text-lg md:text-xl font-bold text-[#4A3427] mb-1.5 tracking-tight group-hover:text-[#E8453C] transition-colors uppercase truncate px-2">
+                        {puja.name}
+                      </h3>
+                      <div className="w-10 h-0.5 bg-[#FFC107] mx-auto group-hover:w-20 transition-all duration-500 rounded-full" />
+                    </div>
+
+                    <p className="text-[#6D5B4F] text-[11px] md:text-xs leading-relaxed mb-4 font-medium line-clamp-2 h-8">
                       {puja.description}
                     </p>
 
-                    <div className="space-y-1.5 mb-3">
-                      {puja.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 text-xs text-gray-600">
-                          <div className="w-1 h-1 rounded-full bg-gradient-to-r from-saffron to-maroon" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between mb-3 text-xs text-gray-600 border-t border-gray-100 pt-3">
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-saffron" />
+                    <div className="flex items-center justify-between w-full mb-6 font-bold text-[#E8453C]">
+                      <div className="flex items-center gap-1.5 text-xs bg-[#FFC107]/10 px-2.5 py-1 rounded-full border border-[#FFC107]/20">
+                        <Clock className="w-3.5 h-3.5" />
                         <span>{puja.duration}</span>
                       </div>
-                      <div className="flex items-center gap-0.5 font-bold text-maroon text-base">
+                      <div className="flex items-center gap-0.5 text-sm sm:text-base border border-[#E8453C]/20 px-2.5 py-1 rounded-full">
                         <IndianRupee className="w-3.5 h-3.5" />
                         <span>{puja.price.replace('₹', '')}</span>
                       </div>
                     </div>
 
-                    <button className={`w-full py-2.5 rounded-lg font-bold text-white bg-gradient-to-r ${puja.gradient} hover:shadow transition-all duration-300 flex items-center justify-center gap-1.5 text-sm group-hover:gap-2`}>
-                      Book Now
-                      <ArrowRight className="w-4 h-4" />
+                    {/* Vedic Button */}
+                    <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white group-hover:border-[#E8453C] transition-all duration-300">
+                      <div className="flex items-center justify-center gap-2">
+                        <span>Book Now</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </div>
                     </button>
+                  </div>
+
+                  {/* Background Mandala-style Pattern (Subtle) */}
+                  <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none">
+                    <Sparkles className="w-40 h-40 text-[#FFC107]" />
                   </div>
                 </div>
               </div>
@@ -226,66 +127,74 @@ const PopularPujaServices = () => {
           })}
         </div>
 
+        {/* Mobile Carousel */}
         <div className="lg:hidden relative">
           <div className="overflow-hidden">
-            <div 
-              className="flex transition-transform duration-300 ease-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
+            <div className="flex transition-transform duration-300 ease-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {pujaServices.map((puja) => {
                 const Icon = puja.icon;
-                
                 return (
                   <div key={puja.id} className="w-full flex-shrink-0 px-3">
-                    <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100">
+                    <div className="relative block h-full bg-[#FFFCF5] rounded-3xl overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/50 shadow-sm transition-all duration-500 group">
+
                       {puja.popular && (
-                        <div className="absolute top-3 right-3 z-10">
-                          <div className="bg-gradient-to-r from-saffron to-maroon text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">
-                            Popular
-                          </div>
+                        <div className="absolute top-4 right-4 z-20">
+                          <div className="text-[#FFFCF5] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider bg-[#E8453C]">Popular</div>
                         </div>
                       )}
 
-                      <div className={`relative h-28 bg-gradient-to-br ${puja.bgGradient}`}>
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                          <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${puja.gradient} flex items-center justify-center shadow-lg`}>
-                            <Icon className="w-8 h-8 text-white" strokeWidth={2} />
-                          </div>
+                      {/* Decorative Header Area with Inset Image */}
+                      <div className="relative p-3 pb-0">
+                        <div className="relative h-44 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
+                          {puja.Image && (
+                            <img
+                              src={puja.Image}
+                              alt={puja.name}
+                              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
+                          <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                          <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
                         </div>
                       </div>
 
-                      <div className="pt-12 px-4 pb-4">
-                        <h3 className="text-lg font-bold text-maroon mb-2 text-center font-serif">
-                          {puja.name}
-                        </h3>
-                        
-                        <p className="text-gray-600 text-center mb-3 text-xs">
+                      {/* Elegant Content Area */}
+                      <div className="p-4 md:p-6 text-center relative flex flex-col items-center flex-grow">
+                        <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                          <div className="w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center border-4 border-[#FFFCF5] transition-transform duration-500 group-hover:scale-110">
+                            <Icon className="w-5 h-5 text-[#E8453C]" strokeWidth={2.5} />
+                          </div>
+                        </div>
+
+                        <div className="mt-5 mb-3 w-full">
+                          <h3 className="text-lg font-bold text-[#4A3427] mb-1.5 tracking-tight group-hover:text-[#E8453C] transition-colors uppercase truncate px-2">
+                            {puja.name}
+                          </h3>
+                          <div className="w-10 h-0.5 bg-[#FFC107] mx-auto group-hover:w-20 transition-all duration-500 rounded-full" />
+                        </div>
+
+                        <p className="text-[#6D5B4F] text-[11px] leading-relaxed mb-4 font-medium line-clamp-2 h-8">
                           {puja.description}
                         </p>
 
-                        <div className="space-y-1.5 mb-3">
-                          {puja.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-1.5 text-xs text-gray-600">
-                              <div className="w-1 h-1 rounded-full bg-gradient-to-r from-saffron to-maroon" />
-                              <span>{feature}</span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="flex items-center justify-between mb-3 text-xs text-gray-600 border-t border-gray-100 pt-3">
-                          <div className="flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5 text-saffron" />
+                        <div className="flex items-center justify-between w-full mb-6 font-bold text-[#E8453C]">
+                          <div className="flex items-center gap-1.5 text-xs bg-[#FFC107]/10 px-2.5 py-1 rounded-full border border-[#FFC107]/20">
+                            <Clock className="w-3" />
                             <span>{puja.duration}</span>
                           </div>
-                          <div className="flex items-center gap-0.5 font-bold text-maroon text-base">
-                            <IndianRupee className="w-3.5 h-3.5" />
+                          <div className="flex items-center gap-0.5 text-sm border border-[#E8453C]/20 px-2.5 py-1 rounded-full">
+                            <IndianRupee className="w-3" />
                             <span>{puja.price.replace('₹', '')}</span>
                           </div>
                         </div>
 
-                        <button className={`w-full py-2.5 rounded-lg font-bold text-white bg-gradient-to-r ${puja.gradient} hover:shadow transition-all duration-300 flex items-center justify-center gap-1.5 text-sm`}>
-                          Book Now
-                          <ArrowRight className="w-4 h-4" />
+                        {/* Vedic Button */}
+                        <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white transition-all duration-300">
+                          <div className="flex items-center justify-center gap-2">
+                            <span>Book Now</span>
+                            <ArrowRight className="w-4 h-4" />
+                          </div>
                         </button>
                       </div>
                     </div>
@@ -295,90 +204,27 @@ const PopularPujaServices = () => {
             </div>
           </div>
 
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-maroon hover:bg-saffron hover:text-white transition-all z-10"
-          >
-            <ChevronLeft className="w-5 h-5" />
+          <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all z-10 hover:opacity-90 border border-[#FFC107]/20">
+            <ChevronLeft className="w-5 h-5 text-[#E8453C]" />
           </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-maroon hover:bg-saffron hover:text-white transition-all z-10"
-          >
-            <ChevronRight className="w-5 h-5" />
+          <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all z-10 hover:opacity-90 border border-[#FFC107]/20">
+            <ChevronRight className="w-5 h-5 text-[#E8453C]" />
           </button>
-
           <div className="flex justify-center gap-1.5 mt-4">
-            {[...Array(maxSlides)].map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentSlide ? 'w-6 bg-saffron' : 'w-1.5 bg-gray-300'
-                }`}
-              />
+            {[...Array(pujaServices.length)].map((_, idx) => (
+              <button key={idx} onClick={() => setCurrentSlide(idx)} className="h-1.5 rounded-full transition-all duration-300" style={{ backgroundColor: RED, width: idx === currentSlide ? '1.5rem' : '0.375rem', opacity: idx === currentSlide ? 1 : 0.3 }} />
             ))}
           </div>
         </div>
 
-        <div className={`text-center mt-8 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <button className="group inline-flex items-center gap-2 bg-gradient-to-r from-saffron to-maroon hover:from-saffron-dark hover:to-maroon-dark text-white px-8 py-3 rounded-lg font-bold shadow hover:shadow-lg transition-all duration-300 text-sm">
+        {/* Bottom CTA */}
+        <div className={`text-center mt-10 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <button className="group inline-flex items-center gap-2 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs shadow-[0_8px_25px_rgba(232,69,60,0.3)] hover:shadow-lg transition-all duration-300 hover:opacity-90 hover:-translate-y-1" style={{ backgroundColor: RED }}>
             View All Puja Services
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
           </button>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-        }
-        
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes float-slower {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        .animate-float-slow {
-          animation: float-slow 8s ease-in-out infinite;
-        }
-
-        .animate-float-slower {
-          animation: float-slower 10s ease-in-out infinite;
-        }
-
-        .from-saffron { --tw-gradient-from: #FF9933; }
-        .to-saffron-dark { --tw-gradient-to: #FF6600; }
-        .from-maroon { --tw-gradient-from: #800000; }
-        .to-maroon-dark { --tw-gradient-to: #5C0000; }
-        .from-gold { --tw-gradient-from: #FFD700; }
-        .to-gold-dark { --tw-gradient-to: #DAA520; }
-        .bg-cream { background-color: #FFF8E7; }
-        .bg-saffron-light { background-color: #FFCC99; }
-        .text-saffron { color: #FF9933; }
-        .text-maroon { color: #800000; }
-        .border-saffron { border-color: #FF9933; }
-        .from-saffron\/10 { --tw-gradient-from: rgba(255, 153, 51, 0.1); }
-        .to-saffron-dark\/5 { --tw-gradient-to: rgba(255, 102, 0, 0.05); }
-        .from-maroon\/10 { --tw-gradient-from: rgba(128, 0, 0, 0.1); }
-        .to-maroon-dark\/5 { --tw-gradient-to: rgba(92, 0, 0, 0.05); }
-        .from-gold\/10 { --tw-gradient-from: rgba(255, 215, 0, 0.1); }
-        .to-gold-dark\/5 { --tw-gradient-to: rgba(218, 165, 32, 0.05); }
-        .bg-saffron\/10 { background-color: rgba(255, 153, 51, 0.1); }
-        .bg-maroon\/10 { background-color: rgba(128, 0, 0, 0.1); }
-        .bg-gold\/10 { background-color: rgba(255, 215, 0, 0.1); }
-      `}</style>
     </div>
   );
 };

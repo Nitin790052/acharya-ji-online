@@ -48,7 +48,7 @@ const Notifications = () => {
   const [smsEnabled, setSmsEnabled] = useState(true);
   const [whatsappEnabled, setWhatsappEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  
+
   const initialNotifications = [
     {
       id: 1,
@@ -149,7 +149,7 @@ const Notifications = () => {
   }, []);
 
   const getFilteredNotifications = () => {
-    switch(filter) {
+    switch (filter) {
       case 'unread':
         return notifications.filter(n => !n.read);
       case 'read':
@@ -162,7 +162,7 @@ const Notifications = () => {
   };
 
   const markAsRead = (id) => {
-    setNotifications(prev => prev.map(n => 
+    setNotifications(prev => prev.map(n =>
       n.id === id ? { ...n, read: true } : n
     ));
   };
@@ -176,7 +176,7 @@ const Notifications = () => {
   };
 
   const togglePin = (id) => {
-    setNotifications(prev => prev.map(n => 
+    setNotifications(prev => prev.map(n =>
       n.id === id ? { ...n, critical: !n.critical } : n
     ));
   };
@@ -189,7 +189,7 @@ const Notifications = () => {
   const criticalCount = notifications.filter(n => n.critical).length;
 
   const getIconColor = (color) => {
-    switch(color) {
+    switch (color) {
       case 'green': return 'text-green-600 bg-green-50';
       case 'blue': return 'text-blue-600 bg-blue-50';
       case 'red': return 'text-red-600 bg-red-50';
@@ -201,7 +201,7 @@ const Notifications = () => {
   };
 
   const getTypeLabel = (type) => {
-    switch(type) {
+    switch (type) {
       case 'new_booking': return 'Booking';
       case 'payment': return 'Payment';
       case 'review': return 'Review';
@@ -223,50 +223,50 @@ const Notifications = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/*Main Header */}
-          <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40  
+      <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40  
                 px-3 py-1.5 border border-orange-100 mb-4">
-  
-  {/* Mobile: Column, Desktop: Row */}
-  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-    
-    {/* Title Section - Original size */}
-    <div className="text-left sm:text-left flex items-end gap-2">
-  <div>
-    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-semibold text-orange-900 uppercase
+
+        {/* Mobile: Column, Desktop: Row */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+
+          {/* Title Section - Original size */}
+          <div className="text-left sm:text-left flex items-end gap-2">
+            <div>
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-semibold text-orange-900 uppercase
                    leading-tight">
-       <div>
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Bell className="w-6 h-6 text-orange-500" />
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                    {unreadCount}
-                  </span>
-                )}
-              </div>
-             <h1 className="text-[26px] font-bold text-gray-800">Notifications</h1>
+                <div>
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <Bell className="w-6 h-6 text-orange-500" />
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                          {unreadCount}
+                        </span>
+                      )}
+                    </div>
+                    <h1 className="text-[26px] font-bold text-gray-800">Notifications</h1>
+                  </div>
+                </div>
+              </h1>
+              {/* Mobile: Below heading, Desktop: Right side */}
+              <p className="sm:hidden text-sm text-gray-600 mt-0.5">
+                Never miss important updates
+              </p>
             </div>
+
+            {/* Desktop: Right side of heading */}
+            <p className="hidden sm:block text-sm text-gray-600 mb-0.5">
+              Never miss important updates
+            </p>
           </div>
-    </h1>
-    {/* Mobile: Below heading, Desktop: Right side */}
-    <p className="sm:hidden text-sm text-gray-600 mt-0.5">
-         Never miss important updates
-    </p>
-  </div>
-  
-  {/* Desktop: Right side of heading */}
-  <p className="hidden sm:block text-sm text-gray-600 mb-0.5">
- Never miss important updates
-  </p>
-</div>
-     
-  </div>
-</div> 
+
+        </div>
+      </div>
       <div className="space-y-4 px-6 pb-6 pt-2">
         {/* Page Header */}
         <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-3">
-         
-          
+
+
           <div className="flex items-center gap-2">
             <button
               onClick={markAllAsRead}
@@ -284,7 +284,7 @@ const Notifications = () => {
             </button>
           </div>
         </div>
-        
+
         {/* Stats Overview */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <div className="bg-white rounded-lg border border-gray-200 p-3">
@@ -296,7 +296,7 @@ const Notifications = () => {
               <Bell className="w-5 h-5 text-gray-500" />
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg border border-gray-200 p-3">
             <div className="flex items-center justify-between">
               <div>
@@ -306,7 +306,7 @@ const Notifications = () => {
               <EyeOff className="w-5 h-5 text-red-500" />
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg border border-gray-200 p-3">
             <div className="flex items-center justify-between">
               <div>
@@ -316,7 +316,7 @@ const Notifications = () => {
               <Pin className="w-5 h-5 text-orange-500" />
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg border border-gray-200 p-3">
             <div className="flex items-center justify-between">
               <div>
@@ -329,7 +329,7 @@ const Notifications = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Settings & Filters */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Left Column - Filters & Settings */}
@@ -337,7 +337,7 @@ const Notifications = () => {
             {/* Filter Card */}
             <div className="bg-white rounded-lg border border-gray-200 p-3">
               <h3 className="text-[15px] font-bold text-gray-800 mb-3">Filter Notifications</h3>
-              
+
               <div className="space-y-2">
                 {[
                   { label: 'All Notifications', value: 'all', count: notifications.length },
@@ -348,11 +348,10 @@ const Notifications = () => {
                   <button
                     key={item.value}
                     onClick={() => setFilter(item.value)}
-                    className={`w-full px-3 py-2 text-sm rounded-lg border flex items-center justify-between ${
-                      filter === item.value
+                    className={`w-full px-3 py-2 text-sm rounded-lg border flex items-center justify-between ${filter === item.value
                         ? 'bg-orange-50 text-orange-600 border-orange-300'
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                    }`}
+                      }`}
                   >
                     <span>{item.label}</span>
                     <span className="px-1.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded">
@@ -361,7 +360,7 @@ const Notifications = () => {
                   </button>
                 ))}
               </div>
-              
+
               {/* Notification Types Filter */}
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <h4 className="text-sm font-medium text-gray-700 mb-2">By Type</h4>
@@ -377,7 +376,7 @@ const Notifications = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Settings Toggle */}
             <div className="bg-white rounded-lg border border-gray-200 p-3">
               <div className="flex items-center justify-between mb-3">
@@ -389,7 +388,7 @@ const Notifications = () => {
                   <Settings className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
-              
+
               {showSettings && (
                 <div className="space-y-3">
                   {/* SMS Toggle */}
@@ -400,16 +399,14 @@ const Notifications = () => {
                     </div>
                     <button
                       onClick={() => setSmsEnabled(!smsEnabled)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full ${
-                        smsEnabled ? 'bg-green-500' : 'bg-gray-300'
-                      }`}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full ${smsEnabled ? 'bg-green-500' : 'bg-gray-300'
+                        }`}
                     >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
-                        smsEnabled ? 'translate-x-6' : 'translate-x-1'
-                      }`} />
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${smsEnabled ? 'translate-x-6' : 'translate-x-1'
+                        }`} />
                     </button>
                   </div>
-                  
+
                   {/* WhatsApp Toggle */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -421,16 +418,14 @@ const Notifications = () => {
                     </div>
                     <button
                       onClick={() => setWhatsappEnabled(!whatsappEnabled)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full ${
-                        whatsappEnabled ? 'bg-green-500' : 'bg-gray-300'
-                      }`}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full ${whatsappEnabled ? 'bg-green-500' : 'bg-gray-300'
+                        }`}
                     >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
-                        whatsappEnabled ? 'translate-x-6' : 'translate-x-1'
-                      }`} />
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${whatsappEnabled ? 'translate-x-6' : 'translate-x-1'
+                        }`} />
                     </button>
                   </div>
-                  
+
                   {/* Sound Toggle */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -443,16 +438,14 @@ const Notifications = () => {
                     </div>
                     <button
                       onClick={() => setSoundEnabled(!soundEnabled)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full ${
-                        soundEnabled ? 'bg-blue-500' : 'bg-gray-300'
-                      }`}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full ${soundEnabled ? 'bg-blue-500' : 'bg-gray-300'
+                        }`}
                     >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
-                        soundEnabled ? 'translate-x-6' : 'translate-x-1'
-                      }`} />
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${soundEnabled ? 'translate-x-6' : 'translate-x-1'
+                        }`} />
                     </button>
                   </div>
-                  
+
                   {/* Critical Alerts */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -461,7 +454,7 @@ const Notifications = () => {
                     </div>
                     <div className="text-xs text-green-600">Always On</div>
                   </div>
-                  
+
                   <button className="w-full mt-2 px-3 py-1.5 text-sm bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded hover:from-orange-600 hover:to-orange-700">
                     Save Settings
                   </button>
@@ -469,21 +462,21 @@ const Notifications = () => {
               )}
             </div>
           </div>
-          
+
           {/* Right Column - Notifications List */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
               <div className="p-3 border-b border-gray-200">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <h3 className="text-[15px] font-bold text-gray-800">
-                    {filter === 'all' ? 'All Notifications' : 
-                     filter === 'unread' ? 'Unread Notifications' :
-                     filter === 'read' ? 'Read Notifications' : 'Critical Notifications'}
+                    {filter === 'all' ? 'All Notifications' :
+                      filter === 'unread' ? 'Unread Notifications' :
+                        filter === 'read' ? 'Read Notifications' : 'Critical Notifications'}
                     <span className="ml-2 text-sm font-normal text-gray-600">
                       ({getFilteredNotifications().length})
                     </span>
                   </h3>
-                  
+
                   <div className="flex items-center gap-2">
                     <button className="px-2.5 py-1.5 text-sm bg-white text-gray-800 rounded border border-gray-300 hover:bg-gray-50 flex items-center gap-2">
                       <RefreshCw className="w-4 h-4" />
@@ -496,24 +489,23 @@ const Notifications = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="divide-y divide-gray-100">
                 {getFilteredNotifications().length > 0 ? (
                   getFilteredNotifications().map((notification) => {
                     const Icon = notification.icon;
                     return (
-                      <div 
-                        key={notification.id} 
-                        className={`p-3 hover:bg-gray-50 transition-colors ${
-                          !notification.read ? 'bg-blue-50/30' : ''
-                        }`}
+                      <div
+                        key={notification.id}
+                        className={`p-3 hover:bg-gray-50 transition-colors ${!notification.read ? 'bg-blue-50/30' : ''
+                          }`}
                       >
                         <div className="flex items-start gap-3">
                           {/* Icon */}
                           <div className={`p-2 rounded-lg ${getIconColor(notification.color)}`}>
                             <Icon className="w-5 h-5" />
                           </div>
-                          
+
                           {/* Content */}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between mb-1">
@@ -542,7 +534,7 @@ const Notifications = () => {
                                   </span>
                                 </div>
                               </div>
-                              
+
                               <div className="flex items-center gap-1">
                                 <button
                                   onClick={() => togglePin(notification.id)}
@@ -563,11 +555,11 @@ const Notifications = () => {
                                 </button>
                               </div>
                             </div>
-                            
+
                             <div className="text-sm text-gray-700 mb-2">
                               {notification.message}
                             </div>
-                            
+
                             {/* Additional Info */}
                             <div className="flex flex-wrap items-center gap-3 text-sm">
                               {notification.customer && (
@@ -576,13 +568,13 @@ const Notifications = () => {
                                   {notification.customer}
                                 </div>
                               )}
-                              
+
                               {notification.amount && (
                                 <div className="font-medium text-green-700">
                                   {formatCurrency(notification.amount)}
                                 </div>
                               )}
-                              
+
                               {notification.rating && (
                                 <div className="flex items-center gap-1 text-yellow-600">
                                   <Star className="w-3 h-3 fill-yellow-500" />
@@ -590,7 +582,7 @@ const Notifications = () => {
                                 </div>
                               )}
                             </div>
-                            
+
                             {/* Actions */}
                             <div className="flex items-center gap-2 mt-3">
                               {!notification.read && (
@@ -602,21 +594,21 @@ const Notifications = () => {
                                   Mark as Read
                                 </button>
                               )}
-                              
+
                               {notification.type === 'new_booking' && (
                                 <button className="px-2.5 py-1 text-xs bg-green-50 text-green-700 rounded border border-green-200 hover:bg-green-100 flex items-center gap-1">
                                   <Calendar className="w-3 h-3" />
                                   View Booking
                                 </button>
                               )}
-                              
+
                               {notification.type === 'payment' && (
                                 <button className="px-2.5 py-1 text-xs bg-purple-50 text-purple-600 rounded border border-purple-200 hover:bg-purple-100 flex items-center gap-1">
                                   <CreditCard className="w-3 h-3" />
                                   View Payment
                                 </button>
                               )}
-                              
+
                               <button className="px-2.5 py-1 text-xs bg-gray-50 text-gray-700 rounded border border-gray-300 hover:bg-gray-100 flex items-center gap-1">
                                 <MoreVertical className="w-3 h-3" />
                                 More
@@ -633,13 +625,13 @@ const Notifications = () => {
                       <BellOff className="w-6 h-6 text-gray-400" />
                     </div>
                     <h3 className="text-[15px] font-semibold text-gray-800 mb-1">
-                      {filter === 'all' ? 'No notifications yet' : 
-                       filter === 'unread' ? 'No unread notifications' :
-                       filter === 'read' ? 'No read notifications' : 'No critical notifications'}
+                      {filter === 'all' ? 'No notifications yet' :
+                        filter === 'unread' ? 'No unread notifications' :
+                          filter === 'read' ? 'No read notifications' : 'No critical notifications'}
                     </h3>
                     <p className="text-sm text-gray-600 mb-4">
-                      {filter === 'all' ? 'You\'re all caught up!' : 
-                       'All caught up in this category'}
+                      {filter === 'all' ? 'You\'re all caught up!' :
+                        'All caught up in this category'}
                     </p>
                     {filter !== 'all' && (
                       <button
@@ -653,7 +645,7 @@ const Notifications = () => {
                 )}
               </div>
             </div>
-            
+
             {/* Notification Types Legend */}
             <div className="mt-4 bg-white rounded-lg border border-gray-200 p-3">
               <h4 className="text-sm font-medium text-gray-800 mb-3">Notification Types</h4>
@@ -686,17 +678,17 @@ const Notifications = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Quick Actions */}
         <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 rounded-lg border border-orange-200 p-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h4 className="text-sm font-medium text-gray-800 mb-1">📌 Critical Notifications</h4>
+              <h4 className="text-sm font-medium text-gray-800 mb-1 flex items-center gap-1.5"><Pin className="w-4 h-4 text-orange-600" /> Critical Notifications</h4>
               <p className="text-sm text-gray-600">
                 Pinned notifications stay at top. Critical alerts include new bookings, cancellations, and payment issues.
               </p>
             </div>
-            
+
             <div className="flex gap-2">
               <button className="px-3 py-1.5 text-sm bg-white text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center gap-2">
                 <MessageSquare className="w-4 h-4" />
@@ -709,7 +701,7 @@ const Notifications = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Help & Support */}
         <div className="bg-white rounded-lg border border-gray-200 p-3">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -719,7 +711,7 @@ const Notifications = () => {
                 Contact support if you're not receiving important alerts
               </p>
             </div>
-            
+
             <div className="flex gap-2">
               <button className="px-3 py-1.5 text-sm bg-white text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center gap-2">
                 <Mail className="w-4 h-4" />

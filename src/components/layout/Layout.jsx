@@ -1,5 +1,5 @@
-import  TopBar  from './TopBar';
-import  Navbar  from './Navbar';
+import TopBar from './TopBar';
+import Navbar from './Navbar';
 import { CartDrawer } from './CartDrawer';
 import { Footer } from './Footer';
 

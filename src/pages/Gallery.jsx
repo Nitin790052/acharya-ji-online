@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Play, MapPin, Calendar, ChevronRight, MessageCircle, Phone, Star, Search, Check } from "lucide-react";
+import { X, Play, MapPin, Calendar, ChevronRight, MessageCircle, Phone, Star, Search, Check, Award, Sparkles, Camera, Video, Clock, Leaf } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import banner from "../assets/banners/image4.png"
+import banner from "../assets/banners/vedic_gallery_hero_v1.png"
 import image1 from "../assets/galleryPage/imageId1.png";
 import image2 from "../assets/galleryPage/imageId2.png";
 import image3 from "../assets/galleryPage/imageId3.png";
@@ -33,368 +32,48 @@ import image27 from "../assets/galleryPage/imageId27.png";
 import image28 from "../assets/galleryPage/imageId28.png";
 import image29 from "../assets/galleryPage/imageId29.png";
 
-
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories = [
-    { id: "All", label: "All", icon: "" },
-    { id: "Puja Rituals", label: "Puja Rituals", icon: "" },
-    { id: "Home Puja", label: "Home Puja", icon: "" },
-    { id: "Online Puja", label: "Online Puja", icon: "" },
-    { id: "Temple Puja", label: "Temple Puja", icon: "" },
-    { id: "Festival Puja", label: "Festival Puja", icon: "" },
-    { id: "Astrology Sessions", label: "Astrology", icon: "" },
-    { id: "Vastu Visits", label: "Vastu", icon: "" },
-    { id: "Healing Sessions", label: "Healing", icon: "" },
-    { id: "Client Moments", label: "Client Moments", icon: "" },
-    { id: "Behind the Scenes", label: "Behind Scenes", icon: "" }
+    "All", "Puja Rituals", "Home Puja", "Online Puja", "Temple Puja", "Festival Puja",
+    "Astrology Sessions", "Vastu Visits", "Healing Sessions", "Client Moments", "Behind the Scenes"
   ];
 
   const galleryItems = [
-    // Puja Rituals
-    {
-      id: 1,
-      type: "image",
-      category: "Puja Rituals",
-      title: "Griha Pravesh Puja",
-      caption: "Complete Griha Pravesh ceremony with all Vedic rituals",
-      location: "South Delhi",
-      date: "Jan 15, 2026",
-      image: image1,
-      tags: ["griha pravesh", "new home", "puja"]
-    },
-    {
-      id: 2,
-      type: "image",
-      category: "Puja Rituals",
-      title: "Satyanarayan Katha",
-      caption: "Traditional Satyanarayan Puja performed with pure devotion",
-      location: "Noida",
-      date: "Jan 12, 2026",
-      image:image2,
-      tags: ["satyanarayan", "katha", "puja"]
-    },
-    {
-      id: 3,
-      type: "video",
-      category: "Puja Rituals",
-      title: "Rudrabhishek Puja Live",
-      caption: "Powerful Rudrabhishek ceremony for Lord Shiva",
-      location: "Gurugram",
-      date: "Jan 10, 2026",
-      image: image3,
-      tags: ["rudrabhishek", "shiva", "abhishek"]
-    },
-    {
-      id: 4,
-      type: "image",
-      category: "Puja Rituals",
-      title: "Navgraha Shanti Puja",
-      caption: "Planetary peace ceremony for harmony and prosperity",
-      location: "Delhi",
-      date: "Jan 8, 2026",
-      image: image4,
-      tags: ["navgraha", "shanti", "planets"]
-    },
-    {
-      id: 5,
-      type: "image",
-      category: "Puja Rituals",
-      title: "Havan Ceremony",
-      caption: "Sacred fire ritual for purification and blessings",
-      location: "Ghaziabad",
-      date: "Jan 6, 2026",
-      image: image5,
-      tags: ["havan", "yagya", "fire ritual"]
-    },
-
-    // Home Puja
-    {
-      id: 6,
-      type: "image",
-      category: "Home Puja",
-      title: "Family Puja at Home",
-      caption: "Acharya ji conducting puja with entire family",
-      location: "Dwarka, Delhi",
-      date: "Jan 14, 2026",
-      image: image6,
-      tags: ["family puja", "home", "blessing"]
-    },
-    {
-      id: 7,
-      type: "image",
-      category: "Home Puja",
-      title: "Lakshmi Puja Setup",
-      caption: "Beautiful puja arrangement at client's residence",
-      location: "Ghaziabad",
-      date: "Jan 11, 2026",
-      image: image7,
-      tags: ["lakshmi", "wealth", "prosperity"]
-    },
-    {
-      id: 8,
-      type: "image",
-      category: "Home Puja",
-      title: "Ganesh Puja at Home",
-      caption: "Removing obstacles with Lord Ganesh's blessings",
-      location: "Faridabad",
-      date: "Jan 9, 2026",
-      image: image8,
-      tags: ["ganesh", "obstacles", "home puja"]
-    },
-
-    // Online Puja
-    {
-      id: 9,
-      type: "video",
-      category: "Online Puja",
-      title: "Virtual Satyanarayan Puja",
-      caption: "Client joining live online puja from USA",
-      location: "Online Session",
-      date: "Jan 13, 2026",
-      image: image9,
-      tags: ["online puja", "virtual", "usa"]
-    },
-    {
-      id: 10,
-      type: "image",
-      category: "Online Puja",
-      title: "Online Puja Prasad",
-      caption: "Showing prasad to client through video call",
-      location: "Online",
-      date: "Jan 9, 2026",
-      image: image10,
-      tags: ["online", "prasad", "blessing"]
-    },
-    {
-      id: 11,
-      type: "video",
-      category: "Online Puja",
-      title: "Live Rudrabhishek Online",
-      caption: "International client attending puja from UK",
-      location: "Online",
-      date: "Jan 7, 2026",
-      image: image11,
-      tags: ["online", "international", "uk"]
-    },
-
-    // Temple Puja
-    {
-      id: 12,
-      type: "image",
-      category: "Temple Puja",
-      title: "Hanuman Temple Puja",
-      caption: "Special puja performed at ancient Hanuman temple",
-      location: "Connaught Place",
-      date: "Jan 7, 2026",
-      image: image12,
-      tags: ["hanuman", "temple", "devotion"]
-    },
-    {
-      id: 13,
-      type: "image",
-      category: "Temple Puja",
-      title: "Vishnu Temple Darshan",
-      caption: "Morning aarti and puja at Vishnu temple",
-      location: "ISKCON Delhi",
-      date: "Jan 5, 2026",
-      image: image13,
-      tags: ["vishnu", "temple", "aarti"]
-    },
-
-    // Festival Puja
-    {
-      id: 14,
-      type: "video",
-      category: "Festival Puja",
-      title: "Diwali Lakshmi Puja",
-      caption: "Grand Diwali celebration with traditional rituals",
-      location: "Multiple Homes",
-      date: "Nov 1, 2025",
-      image: image14,
-      tags: ["diwali", "lakshmi", "festival"]
-    },
-    {
-      id: 15,
-      type: "image",
-      category: "Festival Puja",
-      title: "Mahashivratri Celebration",
-      caption: "All-night vigil and Shiva abhishek",
-      location: "Various Temples",
-      date: "Feb 26, 2025",
-      image: image15,
-      tags: ["mahashivratri", "shiva", "festival"]
-    },
-    {
-      id: 16,
-      type: "image",
-      category: "Festival Puja",
-      title: "Navratri Celebration",
-      caption: "Nine days of divine worship and devotion",
-      location: "Delhi NCR",
-      date: "Oct 3, 2025",
-      image: image16,
-      tags: ["navratri", "durga", "festival"]
-    },
-
-    // Astrology Sessions
-    {
-      id: 17,
-      type: "image",
-      category: "Astrology Sessions",
-      title: "Kundli Reading Session",
-      caption: "Detailed horoscope analysis and guidance",
-      location: "Office",
-      date: "Jan 16, 2026",
-      image: image17,
-      tags: ["kundli", "astrology", "horoscope"]
-    },
-    {
-      id: 18,
-      type: "image",
-      category: "Astrology Sessions",
-      title: "Online Astrology Consultation",
-      caption: "One-on-one consultation via video call",
-      location: "Online",
-      date: "Jan 14, 2026",
-      image: image18,
-      tags: ["consultation", "online", "astrology"]
-    },
-    {
-      id: 19,
-      type: "image",
-      category: "Astrology Sessions",
-      title: "Marriage Matching",
-      caption: "Kundli matching for prospective bride and groom",
-      location: "Noida",
-      date: "Jan 12, 2026",
-      image: image19,
-      tags: ["marriage", "matching", "kundli"]
-    },
-
-    // Vastu Visits
-    {
-      id: 20,
-      type: "image",
-      category: "Vastu Visits",
-      title: "Home Vastu Inspection",
-      caption: "Complete vastu analysis of new apartment",
-      location: "Greater Noida",
-      date: "Jan 13, 2026",
-      image: image20,
-      tags: ["vastu", "home", "inspection"]
-    },
-    {
-      id: 21,
-      type: "image",
-      category: "Vastu Visits",
-      title: "Office Vastu Consultation",
-      caption: "Corporate office vastu corrections",
-      location: "Cyber City",
-      date: "Jan 11, 2026",
-      image: image21,
-      tags: ["office", "vastu", "business"]
-    },
-
-    // Healing Sessions
-    {
-      id: 22,
-      type: "image",
-      category: "Healing Sessions",
-      title: "Reiki Healing Session",
-      caption: "Energy healing and chakra balancing",
-      location: "Healing Center",
-      date: "Jan 15, 2026",
-      image: image22,
-      tags: ["reiki", "healing", "energy"]
-    },
-    {
-      id: 23,
-      type: "image",
-      category: "Healing Sessions",
-      title: "Crystal Therapy",
-      caption: "Gemstone healing and aura cleansing",
-      location: "South Delhi",
-      date: "Jan 12, 2026",
-      image: image23,
-      tags: ["crystal", "therapy", "healing"]
-    },
-
-    // Client Moments
-    {
-      id: 24,
-      type: "image",
-      category: "Client Moments",
-      title: "Happy Client Family",
-      caption: "After successful Griha Pravesh puja",
-      location: "Noida",
-      date: "Jan 16, 2026",
-      image: image24,
-      tags: ["client", "happy", "testimonial"]
-    },
-    {
-      id: 25,
-      type: "image",
-      category: "Client Moments",
-      title: "Blessings & Gratitude",
-      caption: "Client receiving blessings post-puja",
-      location: "Delhi",
-      date: "Jan 14, 2026",
-      image: image25,
-      tags: ["blessing", "gratitude", "client"]
-    },
-    {
-      id: 26,
-      type: "image",
-      category: "Client Moments",
-      title: "Five-Star Feedback",
-      caption: "Client sharing their wonderful experience",
-      location: "Gurugram",
-      date: "Jan 13, 2026",
-      image: image26,
-      tags: ["feedback", "review", "5star"]
-    },
-
-    // Behind the Scenes
-    {
-      id: 27,
-      type: "image",
-      category: "Behind the Scenes",
-      title: "Puja Preparation",
-      caption: "Arranging samagri before ceremony",
-      location: "Office",
-      date: "Jan 15, 2026",
-      image: image27,
-      tags: ["preparation", "samagri", "behind"]
-    },
-    {
-      id: 28,
-      type: "video",
-      category: "Behind the Scenes",
-      title: "Travel to Client Location",
-      caption: "Our team reaching client's home",
-      location: "En Route",
-      date: "Jan 13, 2026",
-      image: image28,
-      tags: ["travel", "team", "journey"]
-    },
-    {
-      id: 29,
-      type: "image",
-      category: "Behind the Scenes",
-      title: "Setting Up Havan Kund",
-      caption: "Preparing sacred fire pit for ritual",
-      location: "Client Home",
-      date: "Jan 10, 2026",
-      image: image29,
-      tags: ["setup", "havan", "preparation"]
-    }
+    { id: 1, type: "image", category: "Puja Rituals", title: "Griha Pravesh Puja", caption: "Complete Griha Pravesh ceremony with all Vedic rituals", location: "South Delhi", date: "Jan 15, 2026", image: image1, tags: ["griha pravesh", "new home", "puja"] },
+    { id: 2, type: "image", category: "Puja Rituals", title: "Satyanarayan Katha", caption: "Traditional Satyanarayan Puja performed with pure devotion", location: "Noida", date: "Jan 12, 2026", image: image2, tags: ["satyanarayan", "katha", "puja"] },
+    { id: 3, type: "video", category: "Puja Rituals", title: "Rudrabhishek Puja Live", caption: "Powerful Rudrabhishek ceremony for Lord Shiva", location: "Gurugram", date: "Jan 10, 2026", image: image3, tags: ["rudrabhishek", "shiva", "abhishek"] },
+    { id: 4, type: "image", category: "Puja Rituals", title: "Navgraha Shanti Puja", caption: "Planetary peace ceremony for harmony and prosperity", location: "Delhi", date: "Jan 8, 2026", image: image4, tags: ["navgraha", "shanti", "planets"] },
+    { id: 5, type: "image", category: "Puja Rituals", title: "Havan Ceremony", caption: "Sacred fire ritual for purification and blessings", location: "Ghaziabad", date: "Jan 6, 2026", image: image5, tags: ["havan", "yagya", "fire ritual"] },
+    { id: 6, type: "image", category: "Home Puja", title: "Family Puja at Home", caption: "Acharya ji conducting puja with entire family", location: "Dwarka, Delhi", date: "Jan 14, 2026", image: image6, tags: ["family puja", "home", "blessing"] },
+    { id: 7, type: "image", category: "Home Puja", title: "Lakshmi Puja Setup", caption: "Beautiful puja arrangement at client's residence", location: "Ghaziabad", date: "Jan 11, 2026", image: image7, tags: ["lakshmi", "wealth", "prosperity"] },
+    { id: 8, type: "image", category: "Home Puja", title: "Ganesh Puja at Home", caption: "Removing obstacles with Lord Ganesh's blessings", location: "Faridabad", date: "Jan 9, 2026", image: image8, tags: ["ganesh", "obstacles", "home puja"] },
+    { id: 9, type: "video", category: "Online Puja", title: "Virtual Satyanarayan Puja", caption: "Client joining live online puja from USA", location: "Online Session", date: "Jan 13, 2026", image: image9, tags: ["online puja", "virtual", "usa"] },
+    { id: 10, type: "image", category: "Online Puja", title: "Online Puja Prasad", caption: "Showing prasad to client through video call", location: "Online", date: "Jan 9, 2026", image: image10, tags: ["online", "prasad", "blessing"] },
+    { id: 11, type: "video", category: "Online Puja", title: "Live Rudrabhishek Online", caption: "International client attending puja from UK", location: "Online", date: "Jan 7, 2026", image: image11, tags: ["online", "international", "uk"] },
+    { id: 12, type: "image", category: "Temple Puja", title: "Hanuman Temple Puja", caption: "Special puja performed at ancient Hanuman temple", location: "Connaught Place", date: "Jan 7, 2026", image: image12, tags: ["hanuman", "temple", "devotion"] },
+    { id: 13, type: "image", category: "Temple Puja", title: "Vishnu Temple Darshan", caption: "Morning aarti and puja at Vishnu temple", location: "ISKCON Delhi", date: "Jan 5, 2026", image: image13, tags: ["vishnu", "temple", "aarti"] },
+    { id: 14, type: "video", category: "Festival Puja", title: "Diwali Lakshmi Puja", caption: "Grand Diwali celebration with traditional rituals", location: "Multiple Homes", date: "Nov 1, 2025", image: image14, tags: ["diwali", "lakshmi", "festival"] },
+    { id: 15, type: "image", category: "Festival Puja", title: "Mahashivratri Celebration", caption: "All-night vigil and Shiva abhishek", location: "Various Temples", date: "Feb 26, 2025", image: image15, tags: ["mahashivratri", "shiva", "festival"] },
+    { id: 16, type: "image", category: "Festival Puja", title: "Navratri Celebration", caption: "Nine days of divine worship and devotion", location: "Delhi NCR", date: "Oct 3, 2025", image: image16, tags: ["navratri", "durga", "festival"] },
+    { id: 17, type: "image", category: "Astrology Sessions", title: "Kundli Reading Session", caption: "Detailed horoscope analysis and guidance", location: "Office", date: "Jan 16, 2026", image: image17, tags: ["kundli", "astrology", "horoscope"] },
+    { id: 18, type: "image", category: "Astrology Sessions", title: "Online Astrology Consultation", caption: "One-on-one consultation via video call", location: "Online", date: "Jan 14, 2026", image: image18, tags: ["consultation", "online", "astrology"] },
+    { id: 19, type: "image", category: "Astrology Sessions", title: "Marriage Matching", caption: "Kundli matching for prospective bride and groom", location: "Noida", date: "Jan 12, 2026", image: image19, tags: ["marriage", "matching", "kundli"] },
+    { id: 20, type: "image", category: "Vastu Visits", title: "Home Vastu Inspection", caption: "Complete vastu analysis of new apartment", location: "Greater Noida", date: "Jan 13, 2026", image: image20, tags: ["vastu", "home", "inspection"] },
+    { id: 21, type: "image", category: "Vastu Visits", title: "Office Vastu Consultation", caption: "Corporate office vastu corrections", location: "Cyber City", date: "Jan 11, 2026", image: image21, tags: ["office", "vastu", "business"] },
+    { id: 22, type: "image", category: "Healing Sessions", title: "Reiki Healing Session", caption: "Energy healing and chakra balancing", location: "Healing Center", date: "Jan 15, 2026", image: image22, tags: ["reiki", "healing", "energy"] },
+    { id: 23, type: "image", category: "Healing Sessions", title: "Crystal Therapy", caption: "Gemstone healing and aura cleansing", location: "South Delhi", date: "Jan 12, 2026", image: image23, tags: ["crystal", "therapy", "healing"] },
+    { id: 24, type: "image", category: "Client Moments", title: "Happy Client Family", caption: "After successful Griha Pravesh puja", location: "Noida", date: "Jan 16, 2026", image: image24, tags: ["client", "happy", "testimonial"] },
+    { id: 25, type: "image", category: "Client Moments", title: "Blessings & Gratitude", caption: "Client receiving blessings post-puja", location: "Delhi", date: "Jan 14, 2026", image: image25, tags: ["blessing", "gratitude", "client"] },
+    { id: 26, type: "image", category: "Client Moments", title: "Five-Star Feedback", caption: "Client sharing their wonderful experience", location: "Gurugram", date: "Jan 13, 2026", image: image26, tags: ["feedback", "review", "5star"] },
+    { id: 27, type: "image", category: "Behind the Scenes", title: "Puja Preparation", caption: "Arranging samagri before ceremony", location: "Office", date: "Jan 15, 2026", image: image27, tags: ["preparation", "samagri", "behind"] },
+    { id: 28, type: "video", category: "Behind the Scenes", title: "Travel to Client Location", caption: "Our team reaching client's home", location: "En Route", date: "Jan 13, 2026", image: image28, tags: ["travel", "team", "journey"] },
+    { id: 29, type: "image", category: "Behind the Scenes", title: "Setting Up Havan Kund", caption: "Preparing sacred fire pit for ritual", location: "Client Home", date: "Jan 10, 2026", image: image29, tags: ["setup", "havan", "preparation"] }
   ];
 
-  // Filter logic
   const filteredGallery = galleryItems.filter(item => {
     const matchesCategory = activeCategory === "All" || item.category === activeCategory;
     const matchesSearch = searchQuery === "" ||
@@ -404,446 +83,219 @@ const Gallery = () => {
     return matchesCategory && matchesSearch;
   });
 
-  // Stats
   const stats = [
-    { icon: "", value: "500+", label: "Pujas Completed" },
-    { icon: "", value: "1000+", label: "Happy Clients" },
-    { icon: "", value: "4.9/5", label: "Average Rating" },
-    { icon: "", value: "50+", label: "Cities Served" }
+    { value: "500+", label: "Pujas Completed" },
+    { value: "1000+", label: "Happy Clients" },
+    { value: "4.9/5", label: "Average Rating" },
+    { value: "50+", label: "Cities Served" }
   ];
-
-  // Handler functions
-  const handleBookPuja = (item) => {
-    console.log("Booking puja:", item.title);
-    alert(`Booking request for: ${item.title}\n\nYou will be contacted by our team shortly!`);
-    // In production: navigate to booking page or open booking modal
-  };
-
-  const handleTalkToAcharya = () => {
-    console.log("Talk to Acharya clicked");
-    alert("Connecting to Acharya Ji...\n\nPhone: +91-XXXXXXXXXX\nWhatsApp: Available");
-    // In production: open WhatsApp or call functionality
-  };
-
-  const handleCategoryChange = (categoryId) => {
-    console.log("Category changed to:", categoryId);
-    setActiveCategory(categoryId);
-  };
-
-  const handleSearchChange = (query) => {
-    console.log("Search query:", query);
-    setSearchQuery(query);
-  };
-
-  const handleClearFilters = () => {
-    console.log("Clearing all filters");
-    setSearchQuery("");
-    setActiveCategory("All");
-  };
 
   return (
     <Layout>
-<div className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-red-50">
-      {/* Hero Section */}
-<section className="relative py-5 sm:py-7 md:py-8 text-white overflow-hidden">
+      <div className="min-h-screen bg-[#FCFBF7]">
+        <div className="absolute top-[10%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={banner}
-      alt="Banner"
-      className="w-full h-full bg-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
-
-    {/* ✅ SINGLE PROFESSIONAL OVERLAY (same as upar wala) */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55" />
-
-    {/* Subtle depth lights (image blur nahi hogi) */}
-    <div className="absolute -top-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl opacity-50" />
-    <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl opacity-50" />
-  </div>
-
-  {/* Content */}
-  <div className="container mx-auto px-4 relative z-10">
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto text-center"
-    >
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-5 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-        Sacred Moments &<br />
-        <span className="text-yellow-300">Divine Rituals</span>
-      </h1>
-
-      <p className="text-xl md:text-2xl text-orange-100 leading-relaxed mb-7 drop-shadow">
-        Real pujas, real blessings, real experiences
-      </p>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mb-7">
-        {stats.map((stat, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: idx * 0.1 }}
-            className="bg-black/30 backdrop-blur-md rounded-2xl p-3 border border-white/20 shadow-lg"
-          >
-            <div className="text-3xl mb-2">{stat.icon}</div>
-            <div className="text-2xl font-bold">{stat.value}</div>
-            <div className="text-sm text-orange-200">{stat.label}</div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Search */}
-      <div className="max-w-2xl mx-auto">
-        <input
-          type="text"
-          placeholder="Search by puja type, location, or tag..."
-          value={searchQuery}
-          onChange={(e) => handleSearchChange(e.target.value)}
-          className="w-full px-6 py-4 rounded-full text-gray-900 font-medium shadow-xl focus:outline-none focus:ring-4 focus:ring-orange-300"
-        />
-      </div>
-    </motion.div>
-  </div>
-
-</section>
-
-
-
-      {/* Category Filters */}
-      <section className="py-6 sticky top-0 bg-white/95 backdrop-blur-md z-40 border-b border-orange-100 shadow-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => handleCategoryChange(category.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all duration-300 ${
-                  activeCategory === category.id
-                    ? "bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-lg scale-105"
-                    : "bg-orange-100 text-orange-700 hover:bg-orange-200"
-                }`}
-              >
-                <span className="text-lg">{category.icon}</span>
-                <span>{category.label}</span>
-                {activeCategory === category.id && (
-                  <Check className="w-4 h-4" />
-                )}
-              </button>
-            ))}
+        <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+          <div className="absolute inset-0">
+            <img src={banner} alt="Background" className="w-full h-full object-cover object-center" />
+            <div className="absolute inset-0 bg-black/30" />
           </div>
-        </div>
-      </section>
-
-      {/* Results Info */}
-      {(searchQuery || activeCategory !== "All") && (
-        <div className="container mx-auto px-4 max-w-7xl py-6">
-          <div className="flex items-center justify-between flex-wrap gap-4 bg-orange-50 rounded-2xl p-4 border-2 border-orange-200">
-            <p className="text-gray-700">
-              {searchQuery && (
-                <span className="font-semibold">Search: "{searchQuery}"</span>
-              )}
-              {searchQuery && activeCategory !== "All" && " • "}
-              {activeCategory !== "All" && (
-                <span className="font-semibold">Category: {activeCategory}</span>
-              )}
-              {" → "}
-              <span className="font-bold text-orange-600">
-                {filteredGallery.length} {filteredGallery.length === 1 ? 'item' : 'items'} found
-              </span>
-            </p>
-            <button
-              onClick={handleClearFilters}
-              className="text-sm bg-orange-600 text-white px-4 py-2 rounded-full font-medium hover:bg-orange-700 transition-colors flex items-center gap-2"
-            >
-              <X className="w-4 h-4" />
-              Clear Filters
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Gallery Grid */}
-      <section className="py-10">
-  <div className="container mx-auto px-4 max-w-7xl">
-    {filteredGallery.length > 0 ? (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-        {filteredGallery.map((item, idx) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.05 }}
-            onClick={() => {
-              console.log("Opening modal for:", item.title);
-              setSelectedMedia(item);
-            }}
-            className="group cursor-pointer h-full"
-          >
-            {/* CARD */}
-            <div className="bg-white h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-orange-100 hover:border-orange-400 hover:scale-105 flex flex-col">
-              
-              {/* IMAGE / VIDEO */}
-              <div
-                className={`relative h-64 bg-gradient-to-br ${item.color} flex items-center justify-center text-8xl overflow-hidden`}
-              >
-                <div className="absolute inset-0 " />
-                <img src={item.image} alt="" className="w-full h-full object-cover" />
-
-                {/* Play Button */}
-                {item.type === "video" && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                      <Play
-                        className="w-8 h-8 text-orange-600 ml-1"
-                        fill="currentColor"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Category Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-orange-600">
-                  {item.category}
-                </div>
-
-                {/* Type Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs font-bold text-white">
-                  {item.type === "video" ? "Video" : "Photo"}
-                </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <Award className="w-4 h-4 text-[#FFC107]" />
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
               </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                Sacred Moments &<br />
+                <span className="text-yellow-300">Divine Rituals</span>
+              </h1>
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-8">
+                Experience the sanctity of Vedic traditions through our captured moments. Real pujas, real blessings, real spiritual journeys.
+              </p>
 
-              {/* CONTENT */}
-              <div className="p-5 flex flex-col flex-1">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors">
-                  {item.title}
-                </h3>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {item.caption}
-                </p>
-
-                {/* BOTTOM FIXED CONTENT */}
-                <div className="mt-auto">
-                  {/* Meta Info */}
-                  <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-orange-500" />
-                        {item.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 text-orange-500" />
-                        {item.date}
-                      </span>
-                    </div>
-
-                    <ChevronRight className="w-5 h-5 text-orange-600 group-hover:translate-x-1 transition-transform" />
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.slice(0, 3).map((tag, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-1 bg-orange-50 text-orange-600 rounded-full text-xs font-medium"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
+              <div className="max-w-lg mx-auto relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-600 rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-orange-600" />
+                  <input
+                    type="text"
+                    placeholder="Search archives..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/95 backdrop-blur-xl text-gray-900 font-bold shadow-2xl focus:outline-none border-2 border-transparent focus:border-amber-500 transition-all placeholder:text-gray-400 text-xs"
+                  />
+                  {searchQuery && (
+                    <button onClick={() => setSearchQuery("")} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600 font-black">✕</button>
+                  )}
                 </div>
               </div>
             </div>
-          </motion.div>
-        ))}
-      </div>
-    ) : (
-      /* NO RESULTS */
-      <div className="text-center py-20">
-        <div className="text-6xl mb-6"></div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">
-          No items found
-        </h3>
-        <p className="text-gray-600 mb-6">
-          Try adjusting your search or filter to find what you're looking for.
-        </p>
-        <button
-          onClick={handleClearFilters}
-          className="bg-gradient-to-r from-orange-600 to-red-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-xl transition-all"
-        >
-          View All Gallery
-        </button>
-      </div>
-    )}
-  </div>
-</section>
+          </div>
+        </section>
 
-
-      {/* CTA Section */}
-      <section className="py-10 bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 text-white">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-6xl mb-6"></div>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
-              Want Similar Puja for Your Family?
-            </h2>
-            <p className="text-xl text-orange-100 mb-8">
-              Book authentic Vedic puja with experienced Acharya Ji
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button 
-                onClick={() => handleBookPuja({ title: "Custom Puja" })}
-                className="bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
-              >
-                <MessageCircle className="w-5 h-5" />
-                Book Puja Now
-              </button>
-              <button 
-                onClick={handleTalkToAcharya}
-                className="bg-yellow-400 text-orange-900 px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
-              >
-                <Phone className="w-5 h-5" />
-                Talk to Acharya
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Trust Section */}
-      <section className="py-12 bg-orange-50">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-200 text-center hover:border-orange-400 transition-colors">
-              <div className="text-4xl mb-4"></div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">100% Authentic</h3>
-              <p className="text-gray-600 text-sm">All rituals performed as per Vedic scriptures</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-200 text-center hover:border-orange-400 transition-colors">
-              <div className="text-4xl mb-4"></div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Experienced Acharyas</h3>
-              <p className="text-gray-600 text-sm">10+ years of puja and astrology expertise</p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-200 text-center hover:border-orange-400 transition-colors">
-              <div className="text-4xl mb-4"></div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Trusted by 1000+</h3>
-              <p className="text-gray-600 text-sm">Families across India and abroad</p>
+        <section className="py-5 sticky top-0 bg-white/90 backdrop-blur-md z-40 border-b border-orange-100/50 shadow-sm overflow-x-auto [&::-webkit-scrollbar]:h-2.5 [&::-webkit-scrollbar-track]:bg-orange-50 [&::-webkit-scrollbar-thumb]:bg-orange-400/80 hover:[&::-webkit-scrollbar-thumb]:bg-orange-500 [&::-webkit-scrollbar-thumb]:rounded-full">
+          <div className="container mx-auto px-4">
+            <div className="flex gap-4 min-w-max justify-center">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-2 border ${activeCategory === category
+                    ? "bg-[#2A1D13] text-amber-400 border-[#2A1D13] shadow-lg -translate-y-0.5"
+                    : "bg-white text-gray-600 border-orange-100 hover:border-orange-200 hover:bg-orange-50/50"
+                    }`}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Lightbox Modal */}
-      <AnimatePresence>
+        <section className="py-12 md:py-16 relative">
+          <div className="container mx-auto px-4 max-w-7xl">
+            {filteredGallery.length === 0 ? (
+              <div className="text-center py-12 md:py-16 animate-fade-in">
+                <Camera className="w-20 h-20 text-orange-200 mx-auto mb-6" />
+                <h2 className="text-3xl font-black text-[#2A1D13] mb-4 uppercase tracking-tight">No moments found!</h2>
+                <p className="text-gray-500 font-medium mb-10 max-w-md mx-auto">We couldn't find any results matching your filters. Please try again.</p>
+                <button onClick={() => { setActiveCategory("All"); setSearchQuery(""); }} className="bg-[#E8453C] hover:bg-black text-white px-10 py-4 rounded-xl font-medium text-xs uppercase tracking-widest transition-all">Show All Moments</button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredGallery.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setSelectedMedia(item)}
+                    className="group/card cursor-pointer animate-fade-in-up"
+                    style={{ animationDelay: `${idx * 0.05}s`, animationFillMode: 'both' }}
+                  >
+                    <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl flex flex-col group-hover/card:bg-orange-500">
+                      <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500 text-center">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-100/40 rounded-full blur-[60px] -mr-16 -mt-16 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
+                        <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-56 z-10">
+                          <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                          <div className="absolute top-4 left-4 px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 text-[10px] text-white font-medium uppercase tracking-wider">
+                            {item.type === "video" ? <div className="flex items-center gap-1.5"><Video className="w-3 h-3" /> Video</div> : <div className="flex items-center gap-1.5"><Camera className="w-3 h-3" /> Photo</div>}
+                          </div>
+                          {item.type === "video" && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover/card:scale-110 transition-transform">
+                                <Play className="w-6 h-6 text-[#E8453C] ml-1" fill="currentColor" />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="px-5 pb-6 flex flex-col flex-1 relative z-20">
+                          <h3 className="text-lg font-black text-[#2A1D13] mb-2 line-clamp-1 uppercase tracking-wider group-hover/card:text-orange-600 transition-colors">
+                            {item.title}
+                          </h3>
+                          <div className="flex items-center justify-center gap-3 mb-4">
+                            <div className="h-[1.5px] w-8 bg-gradient-to-r from-transparent via-amber-200 to-amber-500 group-hover/card:w-12 transition-all duration-700" />
+                            <Sparkles className="w-5 h-5 text-amber-500" />
+                            <div className="h-[1.5px] w-8 bg-gradient-to-l from-transparent via-amber-200 to-amber-500 group-hover/card:w-12 transition-all duration-700" />
+                          </div>
+                          <p className="text-gray-500 font-medium text-xs mb-4 line-clamp-2 leading-relaxed italic">
+                            "{item.caption}"
+                          </p>
+                          <div className="mt-auto flex items-center justify-between border-t border-amber-100 pt-4">
+                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                              {item.location}
+                            </span>
+                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                              {item.date}
+                              <ChevronRight className="w-4 h-4 text-orange-600 group-hover/card:translate-x-1 transition-transform ml-1" />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="py-12 md:py-16 bg-white border-t border-orange-50">
+          <div className="container mx-auto px-4 text-center max-w-5xl">
+            <div className="animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Sacred Connections</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">Begin Your <span className="text-[#E8453C]">Divine Journey</span></h2>
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="w-10 h-[1.5px] bg-orange-200" />
+                <Sparkles className="w-5 h-5 text-orange-400" />
+                <div className="w-10 h-[1.5px] bg-orange-200" />
+              </div>
+              <p className="text-gray-600 mb-12 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">
+                Book your personalized Vedic rituals and experience the profound impact of authentic spiritual ceremonies performed with devotion.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="relative flex items-center gap-2.5">
+                    <MessageCircle className="w-4 h-4" /> Book Puja Now
+                  </span>
+                </button>
+                <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="relative flex items-center gap-2.5">
+                    <Phone className="w-4 h-4" /> Consult Expert
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {selectedMedia && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => {
-              console.log("Closing modal");
-              setSelectedMedia(null);
-            }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-y-auto"
+          <div
+            onClick={() => setSelectedMedia(null)}
+            className="fixed inset-0 bg-[#1A130F]/95 backdrop-blur-md z-[100] flex items-center justify-center p-4 scrollbar-hide animate-fade-in"
           >
-            <button
-              onClick={() => setSelectedMedia(null)}
-              className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors z-10"
-            >
-              <X className="w-6 h-6 text-white" />
+            <button onClick={() => setSelectedMedia(null)} className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-[#E8453C] rounded-full flex items-center justify-center transition-all duration-300 z-[110] shadow-2xl border border-white/20 group">
+              <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform" />
             </button>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+            <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-3xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto my-8"
+              className="bg-white rounded-[2rem] overflow-hidden max-w-5xl w-full max-h-[90vh] shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col md:flex-row animate-scale-in"
             >
-              {/* Media Preview */}
-              <div className={`relative h-96 bg-gradient-to-br ${selectedMedia.color} flex items-center justify-center text-9xl`}>
-                <div className="absolute inset-0 " />
-                <img src={selectedMedia.image} alt="" className="w-full h-full bg-cover"/>
-                {selectedMedia.type === "video" && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <button 
-                      onClick={() => console.log("Play video:", selectedMedia.title)}
-                      className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl hover:scale-110 transition-transform"
-                    >
-                      <Play className="w-10 h-10 text-orange-600 ml-1" fill="currentColor" />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="p-8">
-                <div className="inline-block px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-bold mb-4">
-                  {selectedMedia.category}
-                </div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">{selectedMedia.title}</h2>
-                <p className="text-gray-700 text-lg mb-6 leading-relaxed">{selectedMedia.caption}</p>
-                
-                {/* Meta Info */}
-                <div className="flex flex-wrap gap-6 mb-6 text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-orange-600" />
-                    <span className="font-medium">{selectedMedia.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-orange-600" />
-                    <span className="font-medium">{selectedMedia.date}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Star className="w-5 h-5 text-orange-600" />
-                    <span className="font-medium">{selectedMedia.type === "video" ? "Video" : "Photo"}</span>
-                  </div>
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {selectedMedia.tags.map((tag, i) => (
-                    <span key={i} className="px-4 py-2 bg-orange-50 text-orange-600 rounded-full text-sm font-medium">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-wrap gap-4 pt-6 border-t border-gray-200">
-                  <button 
-                    onClick={() => handleBookPuja(selectedMedia)}
-                    className="flex-1 bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-4 rounded-full font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    Book This Puja
-                  </button>
-                  <button 
-                    onClick={handleTalkToAcharya}
-                    className="flex-1 bg-yellow-400 text-orange-900 px-6 py-4 rounded-full font-bold hover:shadow-xl transition-all flex items-center justify-center gap-2"
-                  >
-                    <Phone className="w-5 h-5" />
-                    Talk to Acharya
-                  </button>
+              <div className="w-full md:w-3/5 h-[300px] md:h-auto relative bg-[#1A130F]">
+                <img src={selectedMedia.image} alt={selectedMedia.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13] to-transparent opacity-60" />
+                <div className="absolute bottom-8 left-8 right-8 text-white">
+                  <span className="bg-amber-500 text-white px-3 py-1 text-[10px] font-medium uppercase tracking-widest mb-3 inline-block rounded-full">Sacred Vision</span>
+                  <h2 className="text-3xl font-black uppercase tracking-tight leading-tight drop-shadow-2xl">{selectedMedia.title}</h2>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+              <div className="w-full md:w-2/5 p-8 md:p-10 overflow-y-auto bg-white flex flex-col justify-center">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-[1.5px] bg-amber-500" />
+                  <span className="text-xs font-black text-amber-600 uppercase tracking-[0.2em]">{selectedMedia.category}</span>
+                </div>
+                <p className="text-gray-700 text-lg font-medium leading-relaxed mb-8 italic">"{selectedMedia.caption}"</p>
+                <div className="space-y-4 mb-10 border-t border-orange-50 pt-8">
+                  <div className="flex items-center justify-between pb-3 border-b border-orange-50 text-[10px] font-medium text-gray-400 uppercase tracking-widest">
+                    <span>Location & Date</span>
+                    <span className="font-black text-[#2A1D13] text-sm uppercase flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-orange-600" /> {selectedMedia.location} • {selectedMedia.date}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <button className="w-full bg-[#E8453C] hover:bg-black text-white py-5 rounded-xl font-medium text-[10px] uppercase tracking-[0.3em] transition-all">Book Similar Puja</button>
+                  <button onClick={() => setSelectedMedia(null)} className="w-full bg-[#2A1D13] hover:bg-black text-white py-5 rounded-xl font-medium text-[10px] uppercase tracking-[0.3em] transition-all border border-amber-400/30">Back to Gallery</button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
     </Layout>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Building2, Gem, Circle, Leaf, ArrowRight, Sparkles, Shield, Star, CheckCircle } from 'lucide-react';
+import SectionHeader from '../common/SectionHeader';
 import Gemstones from "../../assets/vastuRamadies/Gemstones.jpg"
-import healing  from "../../assets/vastuRamadies/healing.png"
+import healing from "../../assets/vastuRamadies/healing.png"
 import HomeVastu from "../../assets/vastuRamadies/Home Vastu.jpg"
 import OfficeVastu from "../../assets/vastuRamadies/Office Vastu.jpg"
 import Rudraksha from "../../assets/vastuRamadies/Rudraksha.jpg"
@@ -51,193 +52,164 @@ const VastuRemediesHealing = () => {
       popular: false,
       benefits: ['Protection', 'Fortune', 'Power']
     },
-    {
-      id: 4,
-      icon: Circle,
-      title: 'Rudraksha',
-      description: 'Sacred beads for spiritual growth, peace, and divine blessings',
-      features: ['Original Nepali', 'Multiple Mukhi', 'Energized', 'Certificate'],
-      price: 'From ₹500',
-      gradient: 'from-orange-700 to-red-800',
-      bgImage: Rudraksha,
-      popular: false,
-      benefits: ['Peace', 'Focus', 'Blessing']
-    },
-    {
-      id: 5,
-      icon: Leaf,
-      title: 'Reiki & Chakra Healing',
-      description: 'Balance your energy centers for holistic wellness and inner peace',
-      features: ['Chakra Balance', 'Energy Healing', 'Aura Cleansing', 'Stress Relief'],
-      price: '₹1,999',
-      gradient: 'from-green-600 to-emerald-700',
-      bgImage: healing,
-      popular: false,
-      benefits: ['Wellness', 'Balance', 'Healing']
-    }
+
   ];
 
   return (
-    <div className="relative py-10 px-3 overflow-hidden bg-gradient-to-br from-cream via-saffron-light/15 to-gold-light/20">
-      <div className="absolute inset-0 opacity-8">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle, #FF9933 0.8px, transparent 0.8px)`,
-          backgroundSize: '24px 24px'
-        }} />
-      </div>
-
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-16 left-8 w-60 h-60 bg-saffron/15 rounded-full mix-blend-multiply filter blur-2xl opacity-25 animate-float-slow" />
-        <div className="absolute bottom-16 right-8 w-64 h-64 bg-maroon/15 rounded-full mix-blend-multiply filter blur-2xl opacity-25 animate-float-slower" />
-        <div className="absolute top-1/2 left-1/2 w-60 h-60 bg-gold/15 rounded-full mix-blend-multiply filter blur-2xl opacity-25 animate-float" />
-      </div>
+    <div className="relative py-10 px-3 overflow-hidden bg-gray-50/40">
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className={`text-center mb-12 transition-all duration-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-          <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-saffron to-maroon text-white px-5 py-1.5 rounded-full text-xs font-semibold mb-5 shadow">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            Transform Your Life
-          </div>
-          
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-saffron via-maroon to-gold bg-clip-text text-transparent">
-            Vastu, Remedies & Healing
-          </h2>
-          
-          <p className="text-base text-gray-700 max-w-2xl mx-auto leading-relaxed">
-            Ancient wisdom meets modern solutions for <span className="font-bold text-maroon">holistic well-being</span> and prosperity
-          </p>
-        </div>
+        <SectionHeader
+          badge="Transform Your Life"
+          title="Vastu, Remedies & Healing"
+          subtitle="Ancient wisdom meets modern solutions for holistic well-being and prosperity"
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
           {services.map((service, index) => {
             const Icon = service.icon;
-            const isHovered = hoveredCard === index;
-            
+
             return (
               <div
                 key={service.id}
-                className={`relative transition-all duration-600 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-                } ${index === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
+                className={`relative transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'} ${index === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
                 style={{ transitionDelay: `${index * 80}ms` }}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-400 h-full border border-gray-100 hover:border-saffron group">
-                  
+                <div className="relative block h-full bg-[#FFFCF5] rounded-3xl overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/50 shadow-sm hover:shadow-[0_22px_50px_-12px_rgba(255,193,7,0.25)] transition-all duration-500 group">
+
                   {service.popular && (
-                    <div className="absolute top-3 right-3 z-20">
-                      <div className="bg-gradient-to-r from-saffron to-maroon text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow flex items-center gap-1 animate-pulse">
+                    <div className="absolute top-4 right-4 z-20">
+                      <div className="text-[#FFFCF5] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider bg-[#E8453C] flex items-center gap-1 animate-pulse">
                         <Star className="w-2.5 h-2.5 fill-white" />
                         Trending
                       </div>
                     </div>
                   )}
 
-                  <div className="relative h-48 overflow-hidden">
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-600 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${service.bgImage}')` }}
-                    />
-                    
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-10 group-hover:opacity-30 transition-opacity duration-400`} />
-                    
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className={`w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 shadow-xl transform transition-all duration-400 ${
-                        isHovered ? 'scale-105 rotate-6' : 'scale-100 rotate-0'
-                      }`}>
-                        <Icon className="w-10 h-10 text-white" strokeWidth={1.8} />
+                  {/* Decorative Header Area with Inset Image */}
+                  <div className="relative p-3 pb-0">
+                    <div className="relative h-44 md:h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style={{ backgroundImage: `url('${service.bgImage}')` }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
+
+
+                      {/* Price Badge */}
+                      <div className="absolute top-3 right-3 z-10">
+                        <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg font-bold text-sm shadow" style={{ color: '#E8453C' }}>
+                          {service.price}
+                        </div>
+                      </div>
+
+                      {/* Vedic Corner Brackets */}
+                      <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                      <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[#FFC107] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                    </div>
+                  </div>
+
+                  {/* Elegant Content Area */}
+                  <div className="p-5 md:p-6 text-center relative flex flex-col items-center flex-grow">
+                    {/* Floating Icon Badge */}
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                      <div className="w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center border-4 border-[#FFFCF5] transition-transform duration-500 group-hover:scale-110">
+                        <Icon className="w-5 h-5 text-amber-500" strokeWidth={2.5} />
                       </div>
                     </div>
 
-                    <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1.5">
+                    <div className="mt-5 mb-3 w-full">
+                      <h3 className="text-lg md:text-xl font-bold text-[#4A3427] mb-1.5 tracking-tight group-hover:text-[#E8453C] transition-colors uppercase truncate px-2">
+                        {service.title}
+                      </h3>
+                      <div className="w-10 h-0.5 bg-[#FFC107] mx-auto group-hover:w-20 transition-all duration-500 rounded-full" />
+                    </div>
+
+                    <p className="text-[#6D5B4F] text-[11px] md:text-xs leading-relaxed mb-3 font-medium line-clamp-2 h-8">
+                      {service.description}
+                    </p>
+
+                    {/* Benefits Badges */}
+                    <div className="flex flex-wrap justify-center gap-1.5 mb-3 w-full">
                       {service.benefits.map((benefit, idx) => (
-                        <div
-                          key={idx}
-                          className="bg-white/90 backdrop-blur-sm text-gray-800 px-2 py-0.5 rounded-full text-[10px] font-semibold shadow"
-                        >
+                        <div key={idx} className="bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wide shadow-sm">
                           {benefit}
                         </div>
                       ))}
                     </div>
-                  </div>
 
-                  <div className="p-5">
-                    <div className="flex items-start justify-between mb-2.5">
-                      <h3 className="text-xl font-bold text-maroon font-serif flex-1">
-                        {service.title}
-                      </h3>
-                      <div className={`bg-gradient-to-r ${service.gradient} text-white px-2.5 py-1 rounded-lg font-bold text-xs shadow whitespace-nowrap ml-2`}>
-                        {service.price}
-                      </div>
-                    </div>
-                    
-                    <p className="text-gray-600 mb-3 text-xs leading-relaxed">
-                      {service.description}
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-1.5 mb-4">
-                      {service.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-1.5 text-xs text-gray-700">
-                          <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                    {/* Features */}
+                    <div className="w-full grid grid-cols-2 gap-1.5 mb-4 text-left">
+                      {service.features.slice(0, 4).map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 text-[10px] text-[#6D5B4F] ml-6">
+                          <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-400/20">
+                            <CheckCircle className="w-2 h-2 text-amber-500" strokeWidth={2.5} />
+                          </div>
                           <span className="truncate">{feature}</span>
                         </div>
                       ))}
                     </div>
 
-                    <button className={`w-full py-2.5 rounded-lg font-bold text-white bg-gradient-to-r ${service.gradient} hover:shadow transition-all duration-300 flex items-center justify-center gap-1.5 group-hover:gap-2 text-sm`}>
-                      Consult Expert
+                    {/* Vedic Button */}
+                    <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white group-hover:border-[#E8453C] transition-all duration-300 flex items-center justify-center gap-2">
+                      <span>Consult Expert</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-800 pointer-events-none" />
-                  
-                  {isHovered && (
-                    <div className={`absolute inset-0 bg-gradient-to-t from-saffron/8 to-transparent pointer-events-none rounded-2xl`} />
-                  )}
+                  {/* Background Mandala-style Pattern (Subtle) */}
+                  <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none">
+                    <Sparkles className="w-40 h-40 text-[#FFC107]" />
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        <div className={`bg-gradient-to-r from-saffron via-maroon to-gold rounded-2xl p-6 md:p-10 text-center shadow-xl transition-all duration-800 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold mb-5">
-              <Shield className="w-3.5 h-3.5" />
+
+        <div className={`rounded-3xl p-6 md:p-8 text-center shadow-xl transition-all duration-700 delay-500 relative overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ backgroundColor: '#E8453C' }}>
+          <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+
+          <div className="max-w-3xl mx-auto relative z-10">
+            <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4">
+              <Shield className="w-3 h-3" />
               Certified & Authentic
             </div>
 
-            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
+            <h3 className="font-serif text-xl md:text-2xl font-black text-white mb-2 uppercase tracking-tight">
               Why Choose Our Services?
             </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
               {[
-                { icon: Shield, title: '100% Authentic', desc: 'Certified products & genuine guidance' },
-                { icon: Star, title: 'Expert Consultation', desc: '20+ years experienced consultants' },
-                { icon: CheckCircle, title: 'Proven Results', desc: '10,000+ satisfied clients' }
+                { icon: Shield, title: '100% Authentic', desc: 'Certified & Genuine' },
+                { icon: Star, title: 'Expert Advice', desc: '20+ Years Exp.' },
+                { icon: CheckCircle, title: 'Proven Results', desc: '10K+ Happy Seekers' }
               ].map((item, idx) => {
                 const ItemIcon = item.icon;
                 return (
-                  <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                    <ItemIcon className="w-8 h-8 text-white mx-auto mb-2.5" />
-                    <h4 className="text-white font-bold text-base mb-1.5">{item.title}</h4>
-                    <p className="text-white/80 text-xs">{item.desc}</p>
+                  <div key={idx} className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-all text-left flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <ItemIcon className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-black text-xs uppercase tracking-wide mb-0.5">{item.title}</h4>
+                      <p className="text-white/70 text-[10px] font-medium leading-tight">{item.desc}</p>
+                    </div>
                   </div>
                 );
               })}
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
-              <button className="group bg-white text-maroon px-8 py-3 rounded-lg font-bold text-base shadow-lg hover:shadow-gold transition-all duration-300 flex items-center gap-2.5 hover:scale-[1.02]">
-                <Sparkles className="w-5 h-5" />
+              <button className="group bg-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg transition-all duration-300 flex items-center gap-2 hover:scale-105" style={{ color: '#E8453C' }}>
+                <Sparkles className="w-4 h-4" />
                 Get Free Consultation
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
-              <button className="group border border-white text-white px-6 py-3 rounded-lg font-bold text-base backdrop-blur-sm hover:bg-white hover:text-maroon transition-all duration-300 flex items-center gap-1.5">
+              <button className="group border border-white/30 text-white px-6 py-2.5 rounded-xl font-bold text-sm backdrop-blur-sm hover:bg-white transition-all duration-300 flex items-center gap-1.5 hover:text-[#E8453C]">
                 <Shield className="w-4 h-4" />
                 View Certificates
               </button>
@@ -245,24 +217,24 @@ const VastuRemediesHealing = () => {
           </div>
         </div>
 
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-5 mt-8 transition-all duration-800 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 transition-all duration-800 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           {[
-            { number: '10K+', label: 'Happy Clients', icon: Star },
-            { number: '100%', label: 'Satisfaction Rate', icon: CheckCircle },
-            { number: '20+', label: 'Years Experience', icon: Shield },
-            { number: '5000+', label: 'Remedies Provided', icon: Sparkles }
+            { number: '10K+', label: 'Clients', icon: Star },
+            { number: '100%', label: 'Satisfaction', icon: CheckCircle },
+            { number: '20+', label: 'Experience', icon: Shield },
+            { number: '5K+', label: 'Remedies', icon: Sparkles }
           ].map((stat, index) => {
             const StatIcon = stat.icon;
             return (
               <div
                 key={index}
-                className="bg-white rounded-xl p-5 text-center shadow border border-gray-100 hover:border-saffron transition-all duration-300 hover:transform hover:scale-[1.02]"
+                className="bg-white rounded-2xl p-4 text-center shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md group"
               >
-                <StatIcon className="w-7 h-7 mx-auto mb-2.5 text-saffron" />
-                <div className="text-3xl font-bold bg-gradient-to-r from-saffron to-maroon bg-clip-text text-transparent mb-1.5">
+                <StatIcon className="w-5 h-5 mx-auto mb-2 transition-transform group-hover:scale-110" style={{ color: '#E8453C' }} />
+                <div className="text-xl font-black mb-0.5 tracking-tight" style={{ color: '#E8453C' }}>
                   {stat.number}
                 </div>
-                <div className="text-gray-600 text-xs font-semibold">
+                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                   {stat.label}
                 </div>
               </div>

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { 
-  Video, MessageSquare, Calendar, Clock, 
+import {
+  Video, MessageSquare, Calendar, Clock,
   User, Phone, Camera, Mic, MicOff,
   X, MoreVertical, FileText, Edit,
   Download, RefreshCw, CheckCircle,
-  XCircle, AlertCircle, ChevronRight, 
-  Star, Home, Globe, Building, 
-  Plus, Filter, Search, History, 
-  BookOpen, Send, Volume2, Share2, 
-  CalendarDays, DollarSign, MapPin, 
-  ExternalLink, PhoneCall, PhoneForwarded
+  XCircle, AlertCircle, ChevronRight,
+  Star, Home, Globe, Building,
+  Plus, Filter, Search, History,
+  BookOpen, Send, Volume2, Share2,
+  CalendarDays, DollarSign, MapPin,
+  ExternalLink, PhoneCall, PhoneForwarded, Lightbulb, Save
 } from 'lucide-react';
 
 const MyConsultations = () => {
@@ -214,7 +214,7 @@ const MyConsultations = () => {
   };
 
   const getStatusBadge = (status) => {
-    switch(status) {
+    switch (status) {
       case 'confirmed':
         return <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200 text-xs font-medium">
           <CheckCircle className="w-3 h-3" /> Confirmed
@@ -249,7 +249,7 @@ const MyConsultations = () => {
   };
 
   const getTypeIcon = (type) => {
-    switch(type) {
+    switch (type) {
       case 'video': return <Video className="w-4 h-4 text-blue-600" />;
       case 'chat': return <MessageSquare className="w-4 h-4 text-green-600" />;
       default: return <Video className="w-4 h-4" />;
@@ -257,7 +257,7 @@ const MyConsultations = () => {
   };
 
   const getServiceTypeIcon = (serviceType) => {
-    switch(serviceType) {
+    switch (serviceType) {
       case 'home': return <Home className="w-4 h-4 text-orange-600" />;
       case 'online': return <Globe className="w-4 h-4 text-blue-600" />;
       case 'temple': return <Building className="w-4 h-4 text-purple-600" />;
@@ -288,15 +288,15 @@ const MyConsultations = () => {
                 <p className="text-sm text-gray-600 mt-0.5">{consultation.service}</p>
               </div>
             </div>
-            
+
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setShowActions(!showActions)}
                 className="p-1 hover:bg-gray-100 rounded text-gray-500"
               >
                 <MoreVertical className="w-4 h-4" />
               </button>
-              
+
               {showActions && (
                 <div className="absolute right-0 top-6 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-40">
                   <button className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 flex items-center gap-2">
@@ -344,13 +344,13 @@ const MyConsultations = () => {
               <DollarSign className="w-4 h-4 text-gray-600" />
               <span className="font-medium text-gray-800">₹{consultation.amount}</span>
             </div>
-            
+
             {/* Action Buttons */}
             <div className="flex items-center gap-1.5">
               {tab === 'upcoming' && (
                 <>
                   {consultation.type === 'video' && (
-                    <button 
+                    <button
                       onClick={() => startCall(consultation)}
                       className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded text-xs hover:from-blue-600 hover:to-blue-700"
                     >
@@ -366,11 +366,11 @@ const MyConsultations = () => {
                   )}
                 </>
               )}
-              
+
               {tab === 'ongoing' && (
                 <>
                   {consultation.type === 'video' && (
-                    <button 
+                    <button
                       onClick={() => startCall(consultation)}
                       className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-red-500 to-red-600 text-white rounded text-xs hover:from-red-600 hover:to-red-700 animate-pulse"
                     >
@@ -386,9 +386,9 @@ const MyConsultations = () => {
                   )}
                 </>
               )}
-              
+
               {(tab === 'completed' || tab === 'cancelled' || tab === 'missed') && (
-                <button 
+                <button
                   onClick={() => setSelectedConsultation(consultation)}
                   className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded text-xs hover:from-orange-600 hover:to-orange-700"
                 >
@@ -408,10 +408,10 @@ const MyConsultations = () => {
       {/* Header Section - Exact Same Styling */}
       <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40  
                     px-3 py-1.5 border border-orange-100">
-        
+
         {/* Mobile: Column, Desktop: Row */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-          
+
           {/* Title Section */}
           <div className="text-left sm:text-left flex items-end gap-2">
             <div>
@@ -424,13 +424,13 @@ const MyConsultations = () => {
                 Manage all client consultations
               </p>
             </div>
-            
+
             {/* Desktop: Right side of heading */}
             <p className="hidden sm:block text-sm text-gray-600 mb-0.5">
               Manage all client consultations
             </p>
           </div>
-          
+
           {/* Right Section */}
           <div className="flex justify-end sm:justify-end mt-1 sm:mt-0">
             <button
@@ -455,18 +455,16 @@ const MyConsultations = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`p-3 rounded-lg border transition-all text-left ${
-                activeTab === tab.id
+              className={`p-3 rounded-lg border transition-all text-left ${activeTab === tab.id
                   ? 'bg-gradient-to-r from-orange-500/80 to-orange-400/80 text-white border-orange-400'
                   : 'bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 border-gray-200 hover:border-orange-300'
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-medium">{tab.label}</p>
-                  <p className={`text-xl font-bold mt-0.5 ${
-                    activeTab === tab.id ? 'text-white' : 'text-gray-800'
-                  }`}>
+                  <p className={`text-xl font-bold mt-0.5 ${activeTab === tab.id ? 'text-white' : 'text-gray-800'
+                    }`}>
                     {tab.count}
                   </p>
                 </div>
@@ -494,7 +492,7 @@ const MyConsultations = () => {
                 />
               </div>
             </div>
-            
+
             {/* Desktop Filters */}
             <div className="hidden sm:flex gap-2">
               <select
@@ -543,9 +541,9 @@ const MyConsultations = () => {
         {/* Consultations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {consultations[activeTab]?.map(consultation => (
-            <ConsultationCard 
-              key={consultation.id} 
-              consultation={consultation} 
+            <ConsultationCard
+              key={consultation.id}
+              consultation={consultation}
               tab={activeTab}
             />
           ))}
@@ -559,10 +557,10 @@ const MyConsultations = () => {
             <h3 className="text-base font-medium text-gray-700 mb-1.5">No consultations found</h3>
             <p className="text-sm text-gray-500 mb-4 max-w-md mx-auto">
               {activeTab === 'upcoming' ? 'You have no upcoming consultations' :
-               activeTab === 'ongoing' ? 'No active consultations' :
-               activeTab === 'completed' ? 'No completed consultations yet' :
-               activeTab === 'cancelled' ? 'No cancelled consultations' :
-               'No missed consultations'}
+                activeTab === 'ongoing' ? 'No active consultations' :
+                  activeTab === 'completed' ? 'No completed consultations yet' :
+                    activeTab === 'cancelled' ? 'No cancelled consultations' :
+                      'No missed consultations'}
             </p>
           </div>
         )}
@@ -604,7 +602,7 @@ const MyConsultations = () => {
                     <p className="text-white text-lg">Connected to {selectedConsultation.client}</p>
                     <p className="text-gray-400">Platform: {selectedConsultation.platform}</p>
                   </div>
-                  
+
                   {/* Self view */}
                   <div className="absolute bottom-4 right-4 w-32 h-24 bg-gray-800 rounded border-2 border-white">
                     <div className="w-full h-full flex items-center justify-center">
@@ -621,7 +619,7 @@ const MyConsultations = () => {
                   <button className="p-3 rounded-full bg-gray-700 hover:bg-gray-600 text-white">
                     <Camera className="w-5 h-5" />
                   </button>
-                  <button 
+                  <button
                     onClick={endCall}
                     className="p-4 rounded-full bg-red-600 hover:bg-red-700 text-white"
                   >
@@ -646,13 +644,13 @@ const MyConsultations = () => {
                   className="w-full h-32 px-3 py-2 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-orange-500 focus:border-transparent mb-3"
                   rows={4}
                 />
-                
+
                 <div className="space-y-2 mb-4">
-                  <button className="w-full text-left px-3 py-2 text-sm bg-gray-50 hover:bg-gray-100 rounded border border-gray-200">
-                    💡 AI Note Suggestions
+                  <button className="w-full text-left px-3 py-2 text-sm bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 flex items-center gap-2">
+                    <Lightbulb className="w-4 h-4 text-yellow-500" /> AI Note Suggestions
                   </button>
-                  <button className="w-full text-left px-3 py-2 text-sm bg-gray-50 hover:bg-gray-100 rounded border border-gray-200">
-                    💾 Save Transcript
+                  <button className="w-full text-left px-3 py-2 text-sm bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 flex items-center gap-2">
+                    <Save className="w-4 h-4 text-blue-500" /> Save Transcript
                   </button>
                 </div>
 
@@ -683,7 +681,7 @@ const MyConsultations = () => {
             <div className="p-5">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-gray-800">Consultation Details</h2>
-                <button 
+                <button
                   onClick={() => setSelectedConsultation(null)}
                   className="p-1 hover:bg-gray-100 rounded text-gray-500"
                 >
@@ -717,7 +715,7 @@ const MyConsultations = () => {
                     <span className="font-medium">{selectedConsultation.date}, {selectedConsultation.time}</span>
                   </div>
                 </div>
-                
+
                 <div className="space-y-1">
                   <label className="text-xs text-gray-500">Duration</label>
                   <div className="flex items-center gap-1.5">
@@ -725,7 +723,7 @@ const MyConsultations = () => {
                     <span className="font-medium">{selectedConsultation.duration}</span>
                   </div>
                 </div>
-                
+
                 <div className="space-y-1">
                   <label className="text-xs text-gray-500">Type</label>
                   <div className="flex items-center gap-1.5">
@@ -733,7 +731,7 @@ const MyConsultations = () => {
                     <span className="font-medium capitalize">{selectedConsultation.type}</span>
                   </div>
                 </div>
-                
+
                 <div className="space-y-1">
                   <label className="text-xs text-gray-500">Amount</label>
                   <div className="flex items-center gap-1.5">
@@ -757,7 +755,7 @@ const MyConsultations = () => {
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-sm font-medium text-gray-700">Client History</h4>
-                  <button 
+                  <button
                     onClick={() => setShowClientHistory(true)}
                     className="text-xs text-orange-600 hover:text-orange-700 font-medium"
                   >

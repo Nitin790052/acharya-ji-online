@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import {  Clock, CheckCircle, MessageCircle, Users, Award, Star, Home, Video } from 'lucide-react';
+import {
+  Clock, CheckCircle, MessageCircle, Users, Award, Star, Home, Video,
+  Sparkles, Sparkle, Shield, Calendar, Phone, MapPin, ChevronRight, BookOpen, X
+} from 'lucide-react';
+import { Link } from "react-router-dom";
 import { Layout } from '@/components/layout/Layout';
 import banner from "../../assets/banners/bannerBookPuja.png"
 import image1 from "../../assets/bookPooja/image1.png"
@@ -9,7 +13,6 @@ import image4 from "../../assets/bookPooja/image4.png"
 import image5 from "../../assets/bookPooja/image5.png"
 import image6 from "../../assets/bookPooja/image6.png"
 import image7 from "../../assets/bookPooja/image7.png"
-
 
 const pujaServices = [
   {
@@ -22,7 +25,7 @@ const pujaServices = [
     benefits: 'घर में सकारात्मक ऊर्जा, शांति और समृद्धि',
     whoPerforms: 'नया घर लेने वाले परिवार',
     price: 'Starting from ₹5,100',
-    image:image1,
+    image: image1,
   },
   {
     id: 'satyanarayan-katha',
@@ -34,7 +37,7 @@ const pujaServices = [
     benefits: 'मनोकामना पूर्ति, परिवार में सुख-शांति',
     whoPerforms: 'सभी परिवार जो भगवान की कृपा चाहते हैं',
     price: 'Starting from ₹2,100',
-    image:image2,
+    image: image2,
   },
   {
     id: 'rudrabhishek',
@@ -46,7 +49,7 @@ const pujaServices = [
     benefits: 'रोग निवारण, मानसिक शांति, शत्रु नाश',
     whoPerforms: 'भगवान शिव के भक्त, रोग निवारण चाहने वाले',
     price: 'Starting from ₹3,100',
-    image:image3,
+    image: image3,
   },
   {
     id: 'navgraha-shanti',
@@ -58,19 +61,19 @@ const pujaServices = [
     benefits: 'ग्रह दोष निवारण, जीवन में संतुलन',
     whoPerforms: 'कुंडली में ग्रह दोष वाले लोग',
     price: 'Starting from ₹5,100',
-    image:image4,
+    image: image4,
   },
   {
     id: 'pitru-dosh',
     name: 'Pitru Dosh Puja',
     description: 'पितरों की शांति और पितृ दोष निवारण',
     duration: '2-3 hours',
-    modes: ['Online', 'Home Visit'],
-    whenToPerform: 'अमावस्या, श्राद्ध पक्ष',
     benefits: 'पितृ दोष दूर होना, पारिवारिक समस्याओं का समाधान',
+    whenToPerform: 'अमावस्या, श्राद्ध पक्ष',
     whoPerforms: 'कुंडली में पितृ दोष वाले लोग',
+    modes: ['Online', 'Home Visit'],
     price: 'Starting from ₹4,100',
-    image:image5,
+    image: image5,
   },
   {
     id: 'vivah-puja',
@@ -82,7 +85,7 @@ const pujaServices = [
     benefits: 'सुखी वैवाहिक जीवन, आशीर्वाद',
     whoPerforms: 'विवाह करने वाले परिवार',
     price: 'Starting from ₹11,000',
-    image:image6,
+    image: image6,
   },
   {
     id: 'havan-yagya',
@@ -94,7 +97,7 @@ const pujaServices = [
     benefits: 'वातावरण शुद्धि, इच्छा पूर्ति',
     whoPerforms: 'सभी भक्तगण',
     price: 'Starting from ₹3,100',
-    image:image7,
+    image: image7,
   }
 ];
 
@@ -121,6 +124,8 @@ const acharyas = [
 
 export default function BookPuja() {
   const [selectedPuja, setSelectedPuja] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -130,802 +135,700 @@ export default function BookPuja() {
     mode: '',
     message: ''
   });
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState({});
+
+  const bookingSteps = [
+    { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें" },
+    { n: "2", t: "Date & Time", s: "Pick a slot", d: "तारीख और समय" },
+    { n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें" },
+    { n: "4", t: "Priest Match", s: "Expert assigned", d: "आचार्य नियुक्ति" },
+    { n: "5", t: "Ritual Done", s: "Divine blessings", d: "पूजा संपन्न" }
+  ];
+
+  const validateStep = (step) => {
+    let newErrors = {};
+    if (step === 1) {
+      if (!formData.pujaType) newErrors.pujaType = "Please select a puja";
+    } else if (step === 2) {
+      if (!formData.date) newErrors.date = "Please select a date";
+      if (!formData.mode) newErrors.mode = "Please select a mode";
+    } else if (step === 3) {
+      if (!formData.name) newErrors.name = "Name is required";
+      if (!formData.mobile || formData.mobile.length < 10) newErrors.mobile = "Valid mobile number is required";
+      if (!formData.city) newErrors.city = "City is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const nextStep = () => {
+    if (validateStep(currentStep)) {
+      if (currentStep === 3) {
+        // Automatically move to step 4 (Simulated match)
+        setCurrentStep(4);
+        setTimeout(() => {
+          handleSubmit();
+        }, 3000);
+      } else {
+        setCurrentStep(prev => prev + 1);
+      }
+    }
+  };
+
+  const prevStep = () => {
+    setCurrentStep(prev => prev - 1);
+  };
 
   const handlePujaSelect = (puja) => {
     setSelectedPuja(puja);
     setFormData({ ...formData, pujaType: puja.name });
+    setErrors({});
+    setCurrentStep(2); // Start at Step 2 if coming from a specific puja card
     setShowBookingForm(true);
-    window.scrollTo({ top: document.getElementById('booking-section').offsetTop - 100, behavior: 'smooth' });
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = () => {
-    if (!formData.name || !formData.mobile || !formData.city || !formData.pujaType || !formData.mode) {
-      alert('कृपया सभी आवश्यक जानकारी भरें');
-      return;
-    }
-    console.log('Booking Data:', formData);
     setSubmitted(true);
+    setCurrentStep(5);
     setTimeout(() => {
       setSubmitted(false);
       setShowBookingForm(false);
       setSelectedPuja(null);
+      setCurrentStep(1);
       setFormData({
-        name: '',
-        mobile: '',
-        city: '',
-        pujaType: '',
-        date: '',
-        mode: '',
-        message: ''
+        name: '', mobile: '', city: '', pujaType: '', date: '', mode: '', message: ''
       });
-    }, 3000);
+    }, 4000);
   };
 
   return (
     <Layout>
-<div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-      
-      {/* Hero Section */}
-<div className="relative py-10 sm:py-14 md:py-16 px-4 text-white overflow-hidden
-                min-h-[300px] md:min-h-[400px] flex items-center">
-
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={banner}
-      alt="Banner"
-      className="w-full h-full bg-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
-
-    {/* ✅ Single Professional Overlay */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/60" />
-
-    {/* Soft premium glow (optional but clean) */}
-    <div className="absolute -top-32 -right-32 w-96 h-96 bg-yellow-400/10 blur-3xl opacity-50" />
-    <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-orange-400/10 blur-3xl opacity-50" />
-  </div>
-
-  {/* Content */}
-  <div className="relative z-10 max-w-5xl mx-auto text-center px-4 w-full">
-    <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl
-                   font-bold mb-4 md:mb-6 leading-tight
-                   drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-      Book Authentic Puja with Experienced Acharyas
-    </h1>
-
-    <p className="text-lg sm:text-xl md:text-2xl text-orange-100
-                  mb-6 font-medium drop-shadow">
-      Sacred Rituals Performed as per Vedic Shastras
-    </p>
-
-    <p className="text-base sm:text-lg text-orange-50
-                  mb-8 md:mb-10 max-w-3xl mx-auto opacity-90">
-      Online & Home Visit Puja Services available across India
-    </p>
-
-    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-      <button
-        onClick={() =>
-          document
-            .getElementById("puja-selection")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="bg-white text-orange-600 px-6 sm:px-8 py-3 sm:py-4
-                   rounded-xl font-bold hover:bg-orange-50
-                   transition-all duration-300 shadow-xl
-                   hover:shadow-2xl transform hover:scale-105
-                   text-base sm:text-lg">
-        Book Puja Now
-      </button>
-
-      <button
-        className="border-2 border-white/80 text-white
-                   px-6 sm:px-8 py-3 sm:py-4 rounded-xl
-                   font-bold hover:bg-white/10 backdrop-blur-sm
-                   transition-all duration-300 hover:border-white
-                   transform hover:scale-105 text-base sm:text-lg">
-        Talk to Expert
-      </button>
-    </div>
-  </div>
-</div>
-
-
-      {/* How It Works Section */}
-      <div className="py-10 px-4 bg-white relative overflow-hidden">
-  {/* Background Pattern */}
-  <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 via-amber-50/10 to-yellow-50/5"></div>
-  
-  <div className="max-w-6xl mx-auto relative z-10">
-    <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 bg-clip-text text-transparent mb-6">
-      How It Works
-    </h2>
-    <p className="text-gray-600 text-center max-w-2xl mx-auto mb-10 text-base">
-      Simple 5-step process to book your puja service
-    </p>
-    
-    {/* Steps Container */}
-    <div className="relative">
-      {/* Connecting Line for Desktop */}
-      <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-200 via-amber-200 to-orange-200"></div>
-      
-      {/* Steps Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 md:gap-4">
-        {/* Step 1 */}
-        <div className="relative">
-          <div className="flex flex-col items-center">
-            {/* Step Number Circle */}
-            <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
-              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">1</span>
-              {/* Active Glow */}
-              <div className="absolute inset-0 rounded-full border-2 border-orange-300 animate-ping opacity-30"></div>
+      <div className="min-h-[80vh]">
+        <div className="min-h-screen bg-background">
+          {/* Hero Section */}
+          <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+            <div className="absolute inset-0">
+              <img src={banner} alt="Background" className="w-full h-full object-cover object-top" />
+              <div className="absolute inset-0 bg-black/30" />
             </div>
-            
-            {/* Step Content */}
-            <div className="text-center">
-              <h3 className="font-bold text-lg md:text-xl text-gray-800 mb-1.5">Select Puja</h3>
-              <p className="text-gray-600 text-sm md:text-base">अपनी पूजा चुनें</p>
-              <p className="text-gray-500 text-xs mt-1">Browse our puja catalog</p>
-            </div>
-          </div>
-          
-          {/* Arrow for Mobile */}
-          <div className="sm:hidden flex justify-center mt-4">
-            <div className="w-8 h-8 text-orange-400 rotate-90">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-          
-          {/* Arrow for Desktop (Right) */}
-          <div className="hidden md:block absolute top-8 -right-2 lg:-right-4 xl:-right-6">
-            <div className="w-8 h-8 text-orange-300">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 2 */}
-        <div className="relative">
-          <div className="flex flex-col items-center">
-            <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
-              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">2</span>
-            </div>
-            
-            <div className="text-center">
-              <h3 className="font-bold text-lg md:text-xl text-gray-800 mb-1.5">Choose Date & Time</h3>
-              <p className="text-gray-600 text-sm md:text-base">तारीख और समय</p>
-              <p className="text-gray-500 text-xs mt-1">Pick your convenient slot</p>
-            </div>
-          </div>
-          
-          <div className="sm:hidden flex justify-center mt-4">
-            <div className="w-8 h-8 text-orange-400 rotate-90">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-          
-          <div className="hidden md:block absolute top-8 -right-2 lg:-right-4 xl:-right-6">
-            <div className="w-8 h-8 text-orange-300">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 3 */}
-        <div className="relative">
-          <div className="flex flex-col items-center">
-            <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
-              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">3</span>
-            </div>
-            
-            <div className="text-center">
-              <h3 className="font-bold text-lg md:text-xl text-gray-800 mb-1.5">Provide Details</h3>
-              <p className="text-gray-600 text-sm md:text-base">जानकारी दें</p>
-              <p className="text-gray-500 text-xs mt-1">Fill booking form</p>
-            </div>
-          </div>
-          
-          <div className="sm:hidden flex justify-center mt-4">
-            <div className="w-8 h-8 text-orange-400 rotate-90">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-          
-          <div className="hidden md:block absolute top-8 -right-2 lg:-right-4 xl:-right-6">
-            <div className="w-8 h-8 text-orange-300">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 4 */}
-        <div className="relative">
-          <div className="flex flex-col items-center">
-            <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
-              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">4</span>
-            </div>
-            
-            <div className="text-center">
-              <h3 className="font-bold text-lg md:text-xl text-gray-800 mb-1.5">Acharya Assigned</h3>
-              <p className="text-gray-600 text-sm md:text-base">आचार्य नियुक्ति</p>
-              <p className="text-gray-500 text-xs mt-1">Expert priest assigned</p>
-            </div>
-          </div>
-          
-          <div className="sm:hidden flex justify-center mt-4">
-            <div className="w-8 h-8 text-orange-400 rotate-90">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-          
-          <div className="hidden md:block absolute top-8 -right-2 lg:-right-4 xl:-right-6">
-            <div className="w-8 h-8 text-orange-300">
-              <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 5 */}
-        <div className="relative">
-          <div className="flex flex-col items-center">
-            <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-lg">
-              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">5</span>
-              {/* Success Check for last step */}
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center border-2 border-white">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <h3 className="font-bold text-lg md:text-xl text-gray-800 mb-1.5">Puja Performed</h3>
-              <p className="text-gray-600 text-sm md:text-base">पूजा संपन्न</p>
-              <p className="text-gray-500 text-xs mt-1">Receive blessings</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    {/* CTA Button */}
-    {/* <div className="text-center mt-12">
-      <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-3 px-8 rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
-        Start Your Puja Journey
-      </button>
-      <p className="text-gray-500 text-sm mt-3">Simple, fast, and divine experience</p>
-    </div> */}
-  </div>
-</div>
-
-      {/* Puja Selection Section */}
-  <div id="puja-selection" className="py-10 px-4 relative overflow-hidden">
-  {/* Background Pattern */}
-  <div className="absolute inset-0 bg-gradient-to-br from-orange-50/40 via-yellow-50/30 to-amber-50/20"></div>
-  
-  {/* Floating Elements */}
-  <div className="absolute top-10 left-5 w-32 h-32 bg-gradient-to-br from-orange-200/20 to-yellow-200/10 rounded-full blur-xl"></div>
-  <div className="absolute bottom-10 right-5 w-40 h-40 bg-gradient-to-br from-amber-200/20 to-orange-200/10 rounded-full blur-xl"></div>
-  <div className="absolute top-1/3 right-10 w-20 h-20 bg-gradient-to-br from-yellow-200/15 to-orange-200/10 rounded-full blur-lg"></div>
-  <div className="absolute bottom-1/4 left-10 w-24 h-24 bg-gradient-to-br from-amber-200/15 to-yellow-200/10 rounded-full blur-lg"></div>
-  
-  {/* Subtle Dot Pattern */}
-  <div className="absolute inset-0 opacity-[0.03]" style={{
-    backgroundImage: `radial-gradient(circle at 1px 1px, #f97316 1px, transparent 1px)`,
-    backgroundSize: '30px 30px'
-  }}></div>
-
-  <div className="max-w-6xl mx-auto relative z-10">
-    <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 bg-clip-text text-transparent mb-8 relative">
-      Select Your Puja Service
-      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full"></div>
-    </h2>
-    
-    {/* Cards Container with Max Height and Scroll */}
-    <div className="relative">
-      <div 
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[700px] overflow-y-auto pr-2"
-        style={{
-          scrollbarWidth: 'thin',
-          scrollbarColor: '#fb923c #fef3c7'
-        }}
-      >
-       {pujaServices.map((puja) => (
-  <div 
-    key={puja.id}
-    className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border-t-4 border-orange-500 transition-all duration-300 ease-out transform hover:scale-[1.03] hover:shadow-2xl hover:border-red-500 hover:z-10 relative group"
-    style={{
-      backgroundImage: `url('${puja.image}')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat'
-    }}
-  >
-    {/* Background Overlay for Readability */}
-    <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-white/70 rounded-xl"></div>
-    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent rounded-xl"></div>
-    
-    {/* Card Top Gradient Accent */}
-    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-amber-400 to-orange-400 z-10"></div>
-    
-    <div className="p-6 relative z-10">
-      <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors duration-300">{puja.name}</h3>
-      <p className="text-gray-600 text-sm mb-4 group-hover:text-gray-800 transition-colors duration-300">{puja.description}</p>
-      
-      <div className="space-y-2 mb-4">
-        <div className="flex items-center gap-2 text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
-          <Clock className="w-4 h-4 text-orange-600 group-hover:text-red-500 transition-colors duration-300" />
-          <span>Duration: {puja.duration}</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <div className="flex gap-1 flex-wrap">
-            {puja.modes.includes('Online') && (
-              <span className="bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 mb-1 group-hover:from-blue-100 group-hover:to-blue-200 group-hover:text-blue-800 transition-all duration-300 shadow-sm">
-                <Video className="w-3.5 h-3.5 group-hover:scale-110 transition-transform duration-300" />
-                Online
-              </span>
-            )}
-            {puja.modes.includes('Home Visit') && (
-              <span className="bg-gradient-to-r from-green-50 to-green-100 text-green-700 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 mb-1 group-hover:from-green-100 group-hover:to-green-200 group-hover:text-green-800 transition-all duration-300 shadow-sm">
-                <Home className="w-3.5 h-3.5 group-hover:scale-110 transition-transform duration-300" />
-                Home Visit
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-gray-100 pt-4 mb-4 group-hover:border-orange-100 transition-colors duration-300">
-        <p className="text-orange-600 font-bold text-lg group-hover:text-red-600 transition-colors duration-300">
-          <span className="text-sm text-gray-500 font-normal">Starting from</span> {puja.price}
-        </p>
-      </div>
-
-      <button
-        onClick={() => handlePujaSelect(puja)}
-        className="w-full bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold py-3.5 rounded-lg hover:from-orange-600 hover:to-red-600 hover:text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg group-hover:shadow-orange-200"
-      >
-        Book This Puja
-      </button>
-    </div>
-    
-    {/* Hover Glow Effect */}
-    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-orange-400/0 via-orange-300/0 to-transparent opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none z-0"></div>
-  </div>
-))}
-      </div>
-      
-      {/* Scroll Indicator - Only shows when there are more than 6 cards */}
-      {pujaServices.length > 6 && (
-        <div className="mt-4 text-center">
-          <div className="inline-flex items-center gap-2 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-            <span className="animate-bounce">↓</span>
-            <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent font-medium">
-              Scroll for more puja services
-            </span>
-            <span className="animate-bounce">↓</span>
-          </div>
-        </div>
-      )}
-    </div>
-    
-    {/* Total Services Count */}
-    <div className="text-center mt-6 pt-4 border-t border-orange-100">
-      <p className="text-gray-600 text-sm">
-        Showing <span className="font-semibold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">{Math.min(pujaServices.length, 6)}</span> of <span className="font-semibold bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">{pujaServices.length}</span> puja services
-      </p>
-    </div>
-  </div>
-</div>
-
-<style jsx>{`
-  /* Custom Scrollbar Styling */
-  .overflow-y-auto::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .overflow-y-auto::-webkit-scrollbar-track {
-    background: linear-gradient(180deg, #fef3c7, #ffedd5);
-    border-radius: 4px;
-  }
-  
-  .overflow-y-auto::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #fb923c, #f59e0b, #ea580c);
-    border-radius: 4px;
-  }
-  
-  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #f97316, #eab308, #c2410c);
-  }
-  
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-5px);
-    }
-  }
-  
-  .animate-bounce {
-    animation: bounce 1.5s infinite;
-  }
-`}</style>
-
-     
-
-      {/* Booking Form Section */}
-      {showBookingForm && (
-  <section id="booking-section" className="py-12 px-4 bg-white">
-    <div className="max-w-6xl mx-auto">
-
-      {/* GRID WRAPPER */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-
-        {/* ================= LEFT SIDE ================= */}
-        {/* WHY HAVAN & YAGYA */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-orange-100 lg:sticky lg:top-24">
-          <h2 className="text-2xl font-bold text-gray-800 mb-5">
-            Why Havan & Yagya?
-          </h2>
-
-          <div className="space-y-5 text-sm sm:text-base">
-
-            <div>
-              <h4 className="font-semibold text-orange-600 mb-1">
-                कब करनी चाहिए?
-              </h4>
-              <p className="text-gray-700">
-                किसी भी शुभ अवसर पर
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-orange-600 mb-1">
-                कौन लोग करवाते हैं?
-              </h4>
-              <p className="text-gray-700">
-                सभी भक्तगण
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-orange-600 mb-1">
-                क्या लाभ होते हैं?
-              </h4>
-              <p className="text-gray-700">
-                वातावरण शुद्धि, नकारात्मक ऊर्जा का नाश, इच्छापूर्ति
-              </p>
-            </div>
-
-          </div>
-        </div>
-
-        {/* ================= RIGHT SIDE ================= */}
-        {/* BOOKING FORM */}
-        <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl shadow-xl p-6 sm:p-8 border-2 border-orange-200">
-
-          <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-            Complete Your Booking
-          </h2>
-
-          {submitted ? (
-            <div className="bg-green-50 border-2 border-green-200 rounded-lg p-8 text-center">
-              <CheckCircle className="w-20 h-20 text-green-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-green-800 mb-2">
-                Booking Confirmed!
-              </h3>
-              <p className="text-green-700">
-                आपकी पूजा बुकिंग सफलतापूर्वक हो गई है
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-5">
-
-              {/* Full Name */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Full Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  placeholder="आपका पूरा नाम"
-                />
-              </div>
-
-              {/* Mobile + City */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Mobile Number <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                    placeholder="10 digit mobile"
-                  />
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                  <Award className="w-4 h-4 text-[#FFC107]" />
+                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
                 </div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                  Book Authentic Puja with<br />
+                  <span className="text-yellow-300">Experienced Acharyas</span>
+                </h1>
+                <p className="text-lg md:text-xl text-amber-100 leading-relaxed mb-10 max-w-2xl mx-auto font-medium drop-shadow">
+                  Sacred Rituals Performed as per Vedic Shastras. Online & Home Visit Puja Services available across India with verified experts.
+                </p>
 
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    City / Location <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                    placeholder="आपका शहर"
-                  />
-                </div>
-              </div>
-
-              {/* Puja Type */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Puja Type <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="pujaType"
-                  value={formData.pujaType}
-                  readOnly
-                  className="w-full px-4 py-3 border-2 border-orange-300 rounded-lg bg-orange-50 font-semibold text-orange-800"
-                />
-              </div>
-
-              {/* Date + Mode */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Preferred Date
-                  </label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Mode <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    name="mode"
-                    value={formData.mode}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                <div className="flex flex-wrap justify-center gap-4">
+                  <button
+                    onClick={() => document.getElementById("puja-selection")?.scrollIntoView({ behavior: "smooth" })}
+                    className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none"
                   >
-                    <option value="">Select Mode</option>
-                    {selectedPuja.modes.map((mode) => (
-                      <option key={mode} value={mode}>
-                        {mode}
-                      </option>
-                    ))}
-                  </select>
+                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center gap-2 font-black"><Calendar className="w-5 h-5" /> Book Puja Now</span>
+                  </button>
+                  <button
+                    className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none"
+                  >
+                    <span className="relative flex items-center gap-2 font-black"><Phone className="w-5 h-5 text-yellow-300" /> Talk to Expert</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* How It Works Section */}
+          <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -z-10" />
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="text-center mb-12 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Our Process</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">How It <span className="text-orange-600">Works</span></h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
                 </div>
               </div>
 
-              {/* Message */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Additional Message (Optional)
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="4"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 resize-none"
-                  placeholder="कोई विशेष जानकारी..."
-                />
+              <div className="relative max-w-5xl mx-auto">
+                <div className="hidden md:block absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-orange-200 to-transparent"></div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-8 md:gap-4">
+                  {[
+                    { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें" },
+                    { n: "2", t: "Date & Time", s: "Pick a slot", d: "तारीख और समय" },
+                    { n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें" },
+                    { n: "4", t: "Priest Match", s: "Expert assigned", d: "आचार्य नियुक्ति" },
+                    { n: "5", t: "Ritual Done", s: "Divine blessings", d: "पूजा संपन्न" }
+                  ].map((step, idx) => (
+                    <div key={idx} className="relative flex flex-col items-center animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                      <div className="relative w-20 h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-none flex flex-col items-center justify-center mb-5 border-4 border-white shadow-xl z-10">
+                        <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">{step.n}</span>
+                        {idx === 0 && <div className="absolute inset-0 rounded-none border-2 border-orange-300 animate-ping opacity-30"></div>}
+                        {idx === 4 && (
+                          <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-none flex items-center justify-center border-2 border-white shadow-md">
+                            <CheckCircle className="w-4 h-4 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-center">
+                        <h3 className="font-bold text-[#4A3427] text-sm uppercase tracking-wider mb-1">{step.t}</h3>
+                        <p className="text-orange-600 text-xs font-semibold mb-1">{step.d}</p>
+                        <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">{step.s}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Puja Selection Section */}
+          <section id="puja-selection" className="py-12 md:py-16 bg-[#FAF9F6] relative overflow-hidden">
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #d97706 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
+              <div className="text-center mb-12 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <Star className="w-3.5 h-3.5" />
+                  <span>Divine Selection</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Select Your <span className="text-orange-600">Puja Service</span></h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                </div>
               </div>
 
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={handleSubmit}
-                  className="flex-1 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold py-4 rounded-lg shadow-lg"
-                >
-                  Confirm Puja Booking
-                </button>
-
-                <button
-                  onClick={handleSubmit}
-                  className="flex-1 bg-green-600 text-white font-bold py-4 rounded-lg shadow-lg"
-                >
-                  Request Callback
-                </button>
+              <div className="relative">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar p-2">
+                  {pujaServices.map((puja, idx) => (
+                    <div
+                      key={puja.id}
+                      className="bg-white rounded-none shadow-xl hover:shadow-2xl border border-orange-100 hover:border-orange-400 transition-all duration-500 overflow-hidden flex flex-col group animate-fade-in-up"
+                      style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}
+                    >
+                      <div className="relative h-52 overflow-hidden shrink-0">
+                        <img src={puja.image} alt={puja.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+                        <div className="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg flex items-center gap-1.5">
+                          <Star className="w-3 h-3 fill-white" /> Vedic
+                        </div>
+                        <div className="absolute bottom-6 left-6 right-6">
+                          <h3 className="text-2xl font-bold text-white leading-tight uppercase tracking-tight group-hover:text-orange-300 transition-colors drop-shadow-lg">{puja.name}</h3>
+                        </div>
+                      </div>
+                      <div className="p-6 flex flex-col flex-grow">
+                        <p className="text-gray-500 text-sm font-semibold mb-4 line-clamp-2 leading-relaxed italic">"{puja.description}"</p>
+                        <div className="flex flex-col gap-3 mb-6">
+                          <div className="flex items-center gap-2 text-xs font-bold text-[#4A3427] bg-[#FFFAF3] w-max px-3 py-1.5 border border-orange-100 uppercase tracking-widest">
+                            <Clock className="w-4 h-4 text-orange-600" />
+                            <span>{puja.duration}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {puja.modes.map((mode, i) => (
+                              <span key={i} className={`inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 uppercase tracking-widest ${mode === 'Online' ? 'bg-blue-50 text-blue-700 border border-blue-100' : 'bg-green-50 text-green-700 border border-green-100'}`}>
+                                {mode === 'Online' ? <Video className="w-3 h-3" /> : <Home className="w-3 h-3" />}
+                                {mode}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="mt-auto pt-5 border-t border-orange-50 flex items-center justify-between">
+                          <div className="flex flex-col">
+                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] mb-1">Starting From</span>
+                            <span className="text-xl font-black text-[#2A1D13] uppercase">{puja.price.replace('Starting from ', '')}</span>
+                          </div>
+                          <button
+                            onClick={() => handlePujaSelect(puja)}
+                            className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-6 py-3 shadow-lg transition-all duration-300 rounded-none"
+                          >
+                            Book Now
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {pujaServices.length > 6 && (
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 bg-orange-50 px-6 py-2.5 rounded-none shadow-sm animate-bounce cursor-default border border-orange-100">
+                      <span>↓ Scroll for more services ↓</span>
+                    </div>
+                  </div>
+                )}
               </div>
+            </div>
+          </section>
 
+          {/* Booking Modal */}
+          {showBookingForm && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+              <div
+                onClick={() => setShowBookingForm(false)}
+                className="absolute inset-0 bg-black/70 backdrop-blur-md"
+              />
+              
+              <div
+                className="relative w-full max-w-5xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[95vh] md:max-h-[90vh] rounded-none animate-scale-in"
+              >
+                {/* Close Button */}
+                <button 
+                  onClick={() => setShowBookingForm(false)}
+                  className="absolute top-4 right-4 z-50 text-gray-400 hover:text-orange-600 transition-colors bg-white/80 p-1 backdrop-blur-sm"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                {/* Step Indicator Header - Matching User's Image */}
+                <div className="bg-[#FAF9F6] border-b border-orange-100 p-6 md:p-8 shrink-0">
+                  <div className="relative max-w-4xl mx-auto">
+                    {/* Progress Line */}
+                    <div className="absolute top-10 left-[10%] right-[10%] h-[1.5px] bg-orange-100 hidden md:block">
+                      <div 
+                        className="h-full bg-orange-500 transition-all duration-500"
+                        style={{ width: `${((currentStep - 1) / 4) * 100}%` }}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-5 gap-2 relative z-10">
+                      {bookingSteps.map((step, idx) => {
+                        const stepNum = idx + 1;
+                        const isActive = currentStep === stepNum;
+                        const isCompleted = currentStep > stepNum;
+
+                        return (
+                          <div key={idx} className="flex flex-col items-center">
+                            <div 
+                              className={`w-10 h-10 md:w-16 md:h-16 flex items-center justify-center border-4 border-white shadow-lg relative transition-all duration-300 ${
+                                isActive ? 'bg-white' : isCompleted ? 'bg-orange-50' : 'bg-white/50'
+                              }`}
+                            >
+                              {isCompleted ? (
+                                <div className="absolute -bottom-1 -right-1 w-5 h-5 md:w-7 md:h-7 bg-green-500 flex items-center justify-center border-2 border-white shadow-md">
+                                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                                </div>
+                              ) : null}
+                              <span className={`text-lg md:text-2xl font-bold ${
+                                isActive ? 'text-orange-600' : isCompleted ? 'text-orange-400' : 'text-gray-300'
+                              }`}>
+                                {step.n}
+                              </span>
+                              {isActive && (
+                                <div className="absolute inset-0 border-2 border-orange-300 animate-pulse opacity-40"></div>
+                              )}
+                            </div>
+                            <div className="mt-3 text-center hidden md:block">
+                              <h4 className={`text-[10px] font-black uppercase tracking-widest mb-0.5 ${isActive ? 'text-orange-600' : 'text-[#4A3427]'}`}>
+                                {step.t}
+                              </h4>
+                              <p className="text-orange-600 text-[9px] font-bold uppercase mb-0.5">{step.d}</p>
+                              <p className="text-gray-400 text-[8px] font-bold uppercase tracking-[0.2em]">{step.s}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+                  {/* Sidebar Info - Hidden on mobile for brevity */}
+                  <div className="hidden lg:block w-72 bg-[#2A1D13] p-10 text-white relative">
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 bg-orange-600 flex items-center justify-center mb-8">
+                        <Award className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-8 uppercase tracking-tighter border-b border-white/10 pb-4">Booking Info</h3>
+                      
+                      <div className="space-y-8">
+                        <div>
+                          <p className="text-orange-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                            <Star className="w-3 h-3" /> Selected
+                          </p>
+                          <p className="text-lg font-bold text-white uppercase leading-tight">{formData.pujaType || "Not Selected"}</p>
+                        </div>
+                        
+                        {formData.date && (
+                          <div>
+                            <p className="text-orange-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                              <Clock className="w-3 h-3" /> Scheduled
+                            </p>
+                            <p className="text-white font-bold">{formData.date}</p>
+                          </div>
+                        )}
+
+                        <div className="pt-10">
+                          <p className="text-[10px] text-amber-100/50 font-bold leading-relaxed italic uppercase tracking-[0.1em]">
+                            Vedic Rituals performed by verified Acharyas.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step Content Area */}
+                  <div className="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar bg-white">
+                    {currentStep === 1 && (
+                      <div className="space-y-6 animate-fade-in">
+                        <div className="mb-8">
+                          <h2 className="text-3xl font-bold text-[#2A1D13] uppercase tracking-tight">Select <span className="text-orange-600">Puja</span></h2>
+                          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Which service do you require?</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {pujaServices.map((puja) => (
+                            <button
+                              key={puja.id}
+                              onClick={() => {
+                                setSelectedPuja(puja);
+                                setFormData(prev => ({ ...prev, pujaType: puja.name }));
+                                setErrors({});
+                              }}
+                              className={`p-4 text-left border-2 transition-all duration-300 flex items-center gap-4 group ${
+                                formData.pujaType === puja.name 
+                                ? 'border-orange-500 bg-orange-50/50' 
+                                : 'border-gray-100 hover:border-orange-200'
+                              }`}
+                            >
+                              <div className="w-12 h-12 shrink-0 bg-white shadow-md overflow-hidden">
+                                <img src={puja.image} alt="" className="w-full h-full object-cover" />
+                              </div>
+                              <div className="flex-1">
+                                <h4 className={`text-sm font-black uppercase tracking-tight ${formData.pujaType === puja.name ? 'text-orange-600' : 'text-[#4A3427]'}`}>
+                                  {puja.name}
+                                </h4>
+                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{puja.price}</p>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                        {errors.pujaType && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.pujaType}</p>}
+                        <div className="pt-8 flex justify-end">
+                          <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-10 py-4 shadow-xl transition-all duration-300">Continue</button>
+                        </div>
+                      </div>
+                    )}
+
+                    {currentStep === 2 && (
+                      <div className="space-y-8 animate-fade-in">
+                        <div className="mb-8">
+                          <h2 className="text-3xl font-bold text-[#2A1D13] uppercase tracking-tight">Date & <span className="text-orange-600">Mode</span></h2>
+                          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Pick a slot for {selectedPuja?.name}</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Select Preferred Date *</label>
+                            <input 
+                              type="date" 
+                              name="date" 
+                              value={formData.date} 
+                              onChange={handleChange} 
+                              className={`w-full bg-orange-50/30 border ${errors.date ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} 
+                            />
+                            {errors.date && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.date}</p>}
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Puja Mode *</label>
+                            <div className="grid grid-cols-1 gap-3">
+                              {selectedPuja?.modes.map(mode => (
+                                <button
+                                  key={mode}
+                                  onClick={() => setFormData(prev => ({ ...prev, mode }))}
+                                  className={`flex items-center gap-4 p-4 border-2 transition-all duration-300 ${
+                                    formData.mode === mode 
+                                    ? 'border-orange-500 bg-orange-50/50' 
+                                    : 'border-gray-100 hover:border-orange-100'
+                                  }`}
+                                >
+                                  <div className={`w-10 h-10 flex items-center justify-center ${formData.mode === mode ? 'bg-orange-600 text-white' : 'bg-white text-orange-600'}`}>
+                                    {mode === 'Online' ? <Video className="w-5 h-5" /> : <Home className="w-5 h-5" />}
+                                  </div>
+                                  <div className="text-left">
+                                    <h4 className="text-sm font-black uppercase tracking-tight">{mode}</h4>
+                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">{mode === 'Online' ? 'Connect via Video' : 'Acharya at Home'}</p>
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                            {errors.mode && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.mode}</p>}
+                          </div>
+                        </div>
+
+                        <div className="pt-8 flex justify-between">
+                          <button onClick={prevStep} className="text-gray-400 hover:text-orange-600 font-black text-xs uppercase tracking-[0.2em]">← Back</button>
+                          <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-10 py-4 shadow-xl">Continue</button>
+                        </div>
+                      </div>
+                    )}
+
+                    {currentStep === 3 && (
+                      <div className="space-y-6 animate-fade-in">
+                        <div className="mb-8">
+                          <h2 className="text-3xl font-bold text-[#2A1D13] uppercase tracking-tight">Your <span className="text-orange-600">Details</span></h2>
+                          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Enter your contact information</p>
+                        </div>
+
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-1.5">
+                              <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Full Name *</label>
+                              <input type="text" name="name" value={formData.name} onChange={handleChange} className={`w-full bg-orange-50/30 border ${errors.name ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} placeholder="Yogesh Sharma" />
+                              {errors.name && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.name}</p>}
+                            </div>
+                            <div className="space-y-1.5">
+                              <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Mobile No *</label>
+                              <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={`w-full bg-orange-50/30 border ${errors.mobile ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} placeholder="9876543210" />
+                              {errors.mobile && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.mobile}</p>}
+                            </div>
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">City/Location *</label>
+                            <input type="text" name="city" value={formData.city} onChange={handleChange} className={`w-full bg-orange-50/30 border ${errors.city ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} placeholder="New Delhi" />
+                            {errors.city && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.city}</p>}
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Special Requests (Optional)</label>
+                            <textarea name="message" value={formData.message} onChange={handleChange} rows="2" className="w-full bg-orange-50/30 border border-gray-100 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none resize-none" placeholder="Any specific requirements?"></textarea>
+                          </div>
+                        </div>
+
+                        <div className="pt-8 flex justify-between">
+                          <button onClick={prevStep} className="text-gray-400 hover:text-orange-600 font-black text-xs uppercase tracking-[0.2em]">← Back</button>
+                          <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-10 py-4 shadow-xl">Submit Booking</button>
+                        </div>
+                      </div>
+                    )}
+
+                    {currentStep === 4 && (
+                      <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in">
+                        <div className="relative mb-12">
+                          <div className="w-32 h-32 bg-orange-50 rounded-full flex items-center justify-center animate-[spin_4s_linear_infinite]">
+                            <div className="absolute inset-0 border-t-4 border-orange-600 rounded-full"></div>
+                          </div>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Users className="w-12 h-12 text-orange-600 animate-pulse" />
+                          </div>
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-black text-[#2A1D13] uppercase tracking-tighter mb-4">
+                          Matching <span className="text-orange-600">Expert Acharya</span>
+                        </h2>
+                        <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.3em] max-w-sm mx-auto leading-relaxed">
+                          Finding the most suitable verified expert for your {formData.pujaType}...
+                        </p>
+                        
+                        <div className="mt-12 flex items-center gap-2 justify-center">
+                          <span className="w-2 h-2 bg-orange-600 animate-bounce"></span>
+                          <span className="w-2 h-2 bg-orange-600 animate-bounce [animation-delay:0.2s]"></span>
+                          <span className="w-2 h-2 bg-orange-600 animate-bounce [animation-delay:0.4s]"></span>
+                        </div>
+                      </div>
+                    )}
+
+                    {currentStep === 5 && (
+                      <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in">
+                        <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mb-8 shadow-inner">
+                          <CheckCircle className="w-14 h-14 text-green-600 animate-[bounce_1s_ease-in-out_infinite]" />
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] uppercase tracking-tight mb-6">Booking <span className="text-green-600">Confirmed!</span></h2>
+                        <div className="space-y-4 mb-10">
+                          <p className="text-[#4A3427] font-bold text-lg leading-relaxed">
+                            आपकी पूजा सफलतापूर्वक बुक हो गई है।
+                          </p>
+                          <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] max-w-md mx-auto">
+                            Our spiritual desk will contact you at <span className="text-orange-600">{formData.mobile}</span> within 15-30 minutes for final scheduling and priest assignment.
+                          </p>
+                        </div>
+                        
+                        <div 
+                          className="bg-[#FFFAF3] p-4 border border-orange-100 w-full max-w-sm animate-fade-in"
+                          style={{ animationDelay: '0.5s', animationFillMode: 'both' }}
+                        >
+                          <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-[#2A1D13]">
+                            <span>Booking ID</span>
+                            <span className="text-orange-600">#{Math.random().toString(36).substr(2, 8).toUpperCase()}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
-        </div>
 
-      </div>
-    </div>
-  </section>
-)}
-
-
-      {/* Puja Samagri Section */}
-      <div className="py-10 px-4 bg-gradient-to-br from-amber-50 to-orange-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent mb-8">
-            Puja Samagri - We Take Care of Everything
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-lg p-5">
-              <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
-              <h3 className="font-bold text-lg mb-2">Samagri Included</h3>
-              <p className="text-gray-600 text-sm">सभी आवश्यक सामग्री शामिल</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-5">
-              <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
-              <h3 className="font-bold text-lg mb-2">Provided by Acharya</h3>
-              <p className="text-gray-600 text-sm">आचार्य द्वारा व्यवस्था</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-5">
-              <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
-              <h3 className="font-bold text-lg mb-2">Home Delivery</h3>
-              <p className="text-gray-600 text-sm">घर पर डिलीवरी उपलब्ध</p>
-            </div>
-          </div>
-          <p className="mt-8 text-gray-700 text-lg font-semibold">
-            All required puja samagri will be arranged as per Vedic guidelines
-          </p>
-        </div>
-      </div>
-
-      {/* Our Acharyas Section */}
-      <div className="py-10 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent mb-4">
-            Our Experienced Acharyas
-          </h2>
-          <p className="text-center text-gray-600 mb-10 text-lg">
-            Learned in Vedas, Puranas & Traditional Rituals
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {acharyas.map((acharya, index) => (
-              <div key={index} className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg shadow-lg p-3 text-center border-2 border-orange-200">
-                <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" />
+          {/* Puja Samagri Section */}
+          <section className="py-12 md:py-16 bg-[#FFFDF7] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -mr-32 -mt-32" />
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="text-center mb-12 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>Quality Assurance</span>
                 </div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">{acharya.name}</h3>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Award className="w-5 h-5 text-orange-600" />
-                  <span className="text-gray-700 font-semibold">{acharya.experience}</span>
-                </div>
-                <p className="text-gray-600 mb-3">{acharya.expertise}</p>
-                <div className="flex items-center justify-center gap-1">
-                  <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                  <span className="font-bold text-gray-800">{acharya.rating}</span>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Puja <span className="text-orange-600">Samagri</span></h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkle className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  { t: "Samagri Included", s: "सभी आवश्यक सामग्री शामिल", d: "Pure and authenticated samagri provided for every ritual type." },
+                  { t: "Verified Sources", s: "आचार्य द्वारा व्यवस्था", d: "Directly sourced from trusted Vedic material suppliers." },
+                  { t: "On-Time Arrival", s: "घर पर उपलब्धता", d: "Materials delivered to your doorstep 1 hour before the puja." }
+                ].map((item, idx) => (
+                  <div key={idx} className="bg-white p-8 text-center border-b-4 border-orange-200 hover:border-orange-500 hover:shadow-2xl transition-all duration-500 group rounded-none animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                    <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-6 group-hover:scale-110 transition-transform" />
+                    <h3 className="font-bold text-[#4A3427] mb-2 uppercase tracking-tight text-lg">{item.t}</h3>
+                    <p className="text-orange-600 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">{item.s}</p>
+                    <p className="text-gray-400 text-xs font-semibold leading-relaxed">{item.d}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-12 bg-white border-2 border-dashed border-orange-200 p-6 text-center max-w-3xl mx-auto rounded-none">
+                <p className="text-[#4A3427] text-lg font-bold italic tracking-wide uppercase text-sm">
+                  "All required puja samagri will be arranged as per strict Vedic guidelines"
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Our Acharyas Section */}
+          <section className="py-12 md:py-16 bg-white">
+            <div className="container mx-auto px-4 max-w-5xl">
+              <div className="text-center mb-12 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <Users className="w-3.5 h-3.5" />
+                  <span>Verified Experts</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Our Trusted <span className="text-orange-600">Acharyas</span></h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {acharyas.map((acharya, index) => (
+                  <div
+                    key={index}
+                    className="bg-[#FFFAF3] p-6 text-center border border-orange-100 shadow-xl hover:shadow-2xl transition-all duration-500 relative group rounded-none animate-fade-in-up"
+                    style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+                  >
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-orange-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-20 h-20 bg-white rounded-none mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform border-4 border-[#FFFAF3] outline outline-1 outline-orange-200">
+                      <Users className="w-10 h-10 text-orange-600" />
+                    </div>
+                    <h3 className="font-bold text-[#4A3427] mb-1.5 uppercase tracking-widest text-base">{acharya.name}</h3>
+                    <div className="flex items-center justify-center gap-1.5 mb-2 text-[9px] font-bold text-orange-600 uppercase tracking-widest bg-orange-50 py-1 px-3 w-max mx-auto border border-orange-100">
+                      <Award className="w-3.5 h-3.5" />
+                      <span>{acharya.experience} Exp</span>
+                    </div>
+                    <p className="text-gray-500 font-semibold text-[10px] mb-4 uppercase tracking-widest leading-relaxed h-8 flex items-center justify-center">{acharya.expertise}</p>
+                    <div className="flex items-center justify-center gap-1 relative z-10 pt-4 border-t border-orange-100">
+                      {[...Array(5)].map((_, i) => <Star key={i} className={`w-3.5 h-3.5 ${i < Math.floor(acharya.rating) ? "fill-amber-500 text-amber-500" : "text-gray-300"}`} />)}
+                      <span className="font-bold text-gray-800 ml-1 text-xs">{acharya.rating}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="py-12 md:py-16 bg-[#FAF9F6] relative overflow-hidden">
+            <div className="container mx-auto px-4 max-w-5xl relative z-10">
+              <div className="text-center mb-12 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Knowledge Base</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Got <span className="text-orange-600">Questions?</span></h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { q: "Online puja kaise hoti hai?", a: "Online puja में आचार्य जी video call के माध्यम से पूजा करते हैं। आप अपने घर से ही देख सकते हैं और पूजा में शामिल हो सकते हैं।" },
+                  { q: "Home visit puja में क्या include होता है?", a: "Home visit में आचार्य जी आपके घर आकर पूजा करते हैं। सभी आवश्यक सामग्री और पूजा की पूर्ण विधि शामिल है।" },
+                  { q: "Kitne din pehle book karna chahiye?", a: "सामान्य पूजा के लिए 2-3 दिन पहले और विशेष आयोजनों के लिए 7-10 दिन पहले बुक करना बेहतर है।" },
+                  { q: "Puja के बाद क्या follow करना होता है?", a: "आचार्य जी पूजा के बाद आपको प्रसाद और विशेष आशीर्वाद निर्देश देंगे जिनका पालन करना शुभ होता है।" }
+                ].map((faq, idx) => (
+                  <div
+                    key={idx}
+                    className={`group bg-white p-8 border border-orange-100 hover:border-orange-500 transition-all duration-500 relative rounded-none animate-fade-in-${idx % 2 === 0 ? 'left' : 'right'}`}
+                  >
+                    <div className="absolute top-0 right-0 w-8 h-8 bg-orange-50 flex items-center justify-center group-hover:bg-orange-600 transition-colors rounded-none" />
+                    <h3 className="text-base font-bold text-[#4A3427] mb-2 uppercase tracking-tight leading-tight group-hover:text-orange-600 transition-colors">"{faq.q}"</h3>
+                    <p className="text-gray-400 text-[10px] font-semibold uppercase tracking-[0.15em] leading-relaxed italic">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Final CTA Section */}
+          <section className="py-12 md:py-16 bg-white border-t border-orange-50">
+            <div className="container mx-auto px-4 text-center max-w-5xl">
+              <div className="animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Sacred Connections</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">Begin Your <span className="text-[#E8453C]">Divine Journey</span></h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                </div>
+                <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">
+                  Experience the sacred traditions with digital convenience and ancient wisdom. Book your personalized Vedic rituals today.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <button
+                    onClick={() => document.getElementById('puja-selection').scrollIntoView({ behavior: 'smooth' })}
+                    className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative z-10 flex items-center gap-3"><Calendar className="w-5 h-5" /> Book Now</span>
+                  </button>
+                  <button className="group relative bg-white hover:bg-orange-50 text-[#F59E0B] border-2 border-[#F59E0B] px-10 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all duration-300 overflow-hidden">
+                    <span className="relative flex items-center gap-3"><Phone className="w-5 h-5" /> Contact Us</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
-
-      {/* FAQ Section */}
-      <div className="py-8 sm:py-10 px-4 bg-gradient-to-br from-orange-50 to-amber-50">
-  <div className="max-w-5xl mx-auto">
-
-    {/* Heading */}
-    <h2 className="text-3xl sm:text-4xl font-extrabold text-center 
-      bg-gradient-to-r from-orange-600 to-amber-500 
-      bg-clip-text text-transparent mb-12">
-      Frequently Asked Questions
-    </h2>
-
-    {/* FAQ Grid */}
-    <div className="grid gap-4 md:gap-6">
-
-      {/* FAQ Card */}
-      <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 sm:p-7 border border-orange-100">
-        <h3 className="font-bold text-lg sm:text-xl text-gray-800 mb-3">
-          Online puja kaise hoti hai?
-        </h3>
-        <p className="text-gray-600 leading-relaxed">
-          Online puja में आचार्य जी video call के माध्यम से पूजा करते हैं। आप अपने घर से ही देख सकते हैं और पूजा में शामिल हो सकते हैं। Sankalp आपके नाम से लिया जाता है।
-        </p>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 sm:p-7 border border-orange-100">
-        <h3 className="font-bold text-lg sm:text-xl text-gray-800 mb-3">
-          Home visit puja में क्या include होता है?
-        </h3>
-        <p className="text-gray-600 leading-relaxed">
-          Home visit में आचार्य जी आपके घर आकर पूजा करते हैं। सभी आवश्यक सामग्री, मंत्र उच्चारण, हवन (यदि हो), और पूजा की पूर्ण विधि शामिल है।
-        </p>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 sm:p-7 border border-orange-100">
-        <h3 className="font-bold text-lg sm:text-xl text-gray-800 mb-3">
-          Kitne din pehle book karna chahiye?
-        </h3>
-        <p className="text-gray-600 leading-relaxed">
-          सामान्य पूजा के लिए 2-3 दिन पहले बुकिंग करें। विशेष पूजा या शादी जैसे बड़े आयोजनों के लिए 7-10 दिन पहले बुक करना बेहतर है।
-        </p>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 sm:p-7 border border-orange-100">
-        <h3 className="font-bold text-lg sm:text-xl text-gray-800 mb-3">
-          Puja के बाद क्या follow करना होता है?
-        </h3>
-        <p className="text-gray-600 leading-relaxed">
-          आचार्य जी पूजा के बाद आपको प्रसाद और विशेष निर्देश देंगे। कुछ पूजाओं में post-puja rituals या niyam पालन की सलाह दी जाती है।
-        </p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-      {/* Final CTA Section */}
-      <div className="bg-gradient-to-r from-orange-200 to-amber-300 text-black py-10 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Begin Your Sacred Ritual with Faith & Authenticity
-          </h2>
-          <p className="text-xl text-orange-700 mb-8">
-            Experienced Acharyas | Vedic Traditions | Pan-India Service
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button 
-              onClick={() => document.getElementById('puja-selection').scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-orange-600 px-10 py-4 rounded-lg font-bold hover:bg-orange-50 transition-all shadow-xl text-lg"
-            >
-              Book Puja Now
-            </button>
-            <button className="bg-green-600 text-white px-10 py-4 rounded-lg font-bold hover:bg-green-700 transition-all shadow-xl flex items-center gap-2 text-lg">
-              <MessageCircle className="w-6 h-6" />
-              Talk to Expert
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #FFFAF3; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #FFC107; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #E8453C; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+      `}</style>
     </Layout>
-    );
+  );
 }

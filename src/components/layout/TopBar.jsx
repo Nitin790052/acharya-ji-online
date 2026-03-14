@@ -1,9 +1,6 @@
-import { motion } from 'framer-motion';
-import { ShoppingCart, User, Phone, Headphones, Calendar } from 'lucide-react';
+import { ShoppingCart, User, Phone, Headphones, Calendar, Building } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-
- 
 // Hindu calendar months and current month festivals
 const hinduMonths = [
   { name: 'Chaitra', festivals: ['Gudi Padwa', 'Ugadi', 'Chaitra Navratri'] },
@@ -43,12 +40,12 @@ const getCurrentHinduMonth = () => {
     { startMonth: 9, startDay: 23, endMonth: 10, endDay: 21, monthIndex: 7 }, // Kartika (Oct 23 - Nov 21)
     { startMonth: 10, startDay: 22, endMonth: 11, endDay: 21, monthIndex: 8 }, // Margashirsha (Nov 22 - Dec 21)
   ];
- 
+
 
   // Find current Hindu month
   for (let mapping of hinduCalendarMap) {
     const { startMonth, startDay, endMonth, endDay, monthIndex } = mapping;
-    
+
     // Handle year boundary (Dec-Jan case)
     if (startMonth > endMonth) {
       if ((month === startMonth && day >= startDay) || (month === endMonth && day <= endDay)) {
@@ -56,9 +53,9 @@ const getCurrentHinduMonth = () => {
       }
     } else {
       // Normal case
-      if ((month === startMonth && day >= startDay) || 
-          (month === endMonth && day <= endDay) ||
-          (month > startMonth && month < endMonth)) {
+      if ((month === startMonth && day >= startDay) ||
+        (month === endMonth && day <= endDay) ||
+        (month > startMonth && month < endMonth)) {
         return hinduMonths[monthIndex];
       }
     }
@@ -71,7 +68,7 @@ const getCurrentHinduMonth = () => {
 // Mock cart context
 const useCart = () => ({
   totalItems: 3,
-  setIsCartOpen: () => {}
+  setIsCartOpen: () => { }
 });
 
 // Button component
@@ -91,109 +88,99 @@ export default function TopBar() {
   const { totalItems, setIsCartOpen } = useCart();
   const currentHinduMonth = getCurrentHinduMonth();
   const navigate = useNavigate();
-  
+
   return (
-    <motion.div
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-1 border-b border-orange-500/20"
+    <div
+      className="bg-black/90 backdrop-blur-md text-white py-1 border-b border-amber-500/20 sticky top-0 z-50 shadow-lg shadow-black/20 animate-[slide-in-top_0.3s_ease-out]"
     >
-      <div className="container mx-auto px-4 py-1 lg:px-5 lg:py-0.5">
+      <div className="container mx-auto px-2 sm:px-3 md:px-4 py-0">
         <div className="flex items-center justify-between">
-          
-          {/* Left Side - Hindu Month & Festivals (Single Line) */}
-          <div className="hidden md:flex items-center gap-2 text-xs text-gray-300">
-            <a 
-              href="/panchang" 
-              className="flex items-center gap-2 hover:text-amber-300 transition-colors duration-300 cursor-pointer group"
-            >
-              <div className="p-1 rounded-md bg-gradient-to-br from-purple-500/20 to-indigo-500/20 group-hover:from-purple-500/30 group-hover:to-indigo-500/30">
-                <Calendar className="w-3.5 h-3.5 text-purple-400" />
-              </div>
-              <span className="text-amber-300 font-bold">{currentHinduMonth.name}</span>
-              <span className="text-gray-500">•</span>
-              <span className="text-gray-200 truncate max-w-[250px]">
-                {currentHinduMonth.festivals.slice(0, 2).join(', ')}
-                {currentHinduMonth.festivals.length > 2 && '...'}
-              </span>
-            </a>
-          </div>
 
-          {/* Mobile - Month & Festivals (Single Line) */}
-          <div className="md:hidden flex items-center gap-1.5 text-xs text-gray-300">
-            <a 
-              href="/panchang" 
-              className="flex items-center gap-1.5 hover:text-amber-300 transition-colors"
-            >
-              <Calendar className="w-3.5 h-3.5 text-purple-400" />
-              <span className="text-amber-300 font-semibold text-[10px]">{currentHinduMonth.name}</span>
-              <span className="text-gray-500 text-[10px]">•</span>
-              <span className="text-[9px] text-gray-400 truncate max-w-[100px]">
-                {currentHinduMonth.festivals[0]}
-              </span>
-            </a>
-          </div>
-
-          {/* Right Side - Action Buttons */}
+          {/* Left Side - Hindu Month & Festivals - PREMIUM VEDIC CARD */}
           <div className="flex items-center gap-2">
-            
-            {/* Book Consultation Button - Emerald Green Background */}
+            <a
+              href="/panchang"
+              className="flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-950/20 border border-amber-500/20 hover:bg-amber-950/30 hover:border-amber-500/40 transition-all duration-300 group"
+            >
+              <div className="p-1 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-500/20 group-hover:from-amber-500/30 group-hover:to-orange-500/30">
+                <Calendar className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
+              </div>
+
+              {/* Desktop View */}
+              <div className="hidden md:flex items-center gap-2 text-xs">
+                <span className="text-amber-400 font-bold uppercase tracking-wider">{currentHinduMonth.name}</span>
+                <span className="w-1 h-1 rounded-full bg-amber-500/40" />
+                <span className="text-gray-300 truncate max-w-[150px] lg:max-w-[250px]">
+                  {currentHinduMonth.festivals.slice(0, 1).join(', ')}
+                </span>
+              </div>
+
+              {/* Mobile View */}
+              <div className="md:hidden flex items-center gap-1.5 text-[10px] sm:text-xs">
+                <span className="text-amber-400 font-bold">{currentHinduMonth.name}</span>
+                <span className="text-gray-500">•</span>
+                <span className="text-gray-400 truncate max-w-[70px] xs:max-w-[90px]">
+                  {currentHinduMonth.festivals[0]}
+                </span>
+              </div>
+            </a>
+          </div>
+
+          {/* Right Side - Action Buttons - FULLY RESPONSIVE */}
+          <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2">
+
+            {/* Book Consultation - Saffron Glow */}
             <Button
               size="sm"
-              className="hidden sm:flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-0.5 h-6 text-[11px] rounded-full shadow-md hover:shadow-lg transition-all duration-300 border border-emerald-700"
+              className="hidden xs:flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold px-3 py-1 h-6 sm:h-7 text-[8px] sm:text-[10px] rounded-full shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all duration-300 hover:scale-105 border border-amber-400/20"
             >
-              <Headphones className="w-3 h-3" />
-              <span>Book Consultation</span>
-            </Button>
-
-            {/* Support Button - Sky Blue Background */}
+              <Headphones className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span className="hidden sm:inline">Book Consultation</span>
+              <span className="sm:hidden">Book</span>
+            </Button>            {/* User Login - Crimson Theme */}
             <Button
               variant="ghost"
               size="sm"
-              className="hidden lg:flex items-center gap-1.5 bg-sky-600 hover:bg-sky-700 text-white border border-sky-700 px-2.5 py-0.5 h-6 text-[11px] rounded-md transition-all duration-300 hover:text-gold-light"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-700 hover:to-rose-800 text-white border border-red-500/20 px-3 py-1 h-6 sm:h-7 text-[8px] sm:text-[10px] rounded-full shadow-md transition-all duration-300 hover:scale-105"
+              onClick={() => navigate("/user_login")}
             >
-              <Phone className="w-3 h-3" />
-              <span>Support</span>
+              <User className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span className="hidden sm:inline">User Login</span>
+              <span className="sm:hidden">User</span>
             </Button>
 
-            {/* Divider */}
-            <div className="w-px h-5 bg-gray-600 hidden sm:block" />
-
-            {/* Login/Register Button - Violet Background */}
+            {/* Vendor Login - Dark Professional */}
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center gap-1.5 bg-violet-600 hover:bg-violet-700 text-white border border-violet-700 px-2.5 py-0.5 h-6 text-[11px] rounded-md transition-all duration-300 hover:text-gold-light"
-              onClick={()=>navigate("/login")}
+              className="flex items-center gap-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-gray-300 hover:text-white border border-white/10 px-3 py-1 h-6 sm:h-7 text-[8px] sm:text-[10px] rounded-full shadow-inner transition-all duration-300 hover:scale-105"
+              onClick={() => navigate("/login")}
             >
-              <User className="w-3 h-3" />
-              <span className="hidden sm:inline">Login / Register</span>
-              <span className="sm:hidden">Login</span>
+              <Building className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span className="hidden sm:inline">Vendor Login</span>
+              <span className="sm:hidden">Vendor</span>
             </Button>
 
-            {/* Cart Button - Orange/Red Background */}
+            {/* Cart - Golden Glow */}
             <Button
               variant="ghost"
               size="sm"
-              className="relative flex items-center gap-1.5 bg-orange-600 hover:bg-orange-700 text-gray-50 border border-orange-700 px-2.5 py-0.5 h-6 text-[11px] rounded-md transition-all duration-300 hover:text-white"
+              className="relative flex items-center gap-1.5 bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 hover:from-yellow-500 hover:via-amber-600 hover:to-orange-600 text-black font-bold px-3 py-1 h-6 sm:h-7 text-[8px] sm:text-[10px] rounded-full shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] transition-all duration-300 hover:scale-105"
               onClick={() => setIsCartOpen(true)}
             >
-              <ShoppingCart className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Cart</span>
+              <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">Cart</span>
               {totalItems > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold shadow-lg"
+                <span
+                  className="absolute top-0 -right-1 bg-red-600 text-white text-[9px] sm:text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black shadow-lg border border-white/20 animate-scale-in"
                 >
                   {totalItems}
-                </motion.span>
+                </span>
               )}
             </Button>
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

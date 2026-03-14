@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Calendar, Phone, Users, Heart, Award, Globe, Shield, Sparkles, BookOpen, Star, CheckCircle, Clock, MapPin, ChevronRight } from "lucide-react";
+import { Calendar, Phone, Users, Heart, Award, Shield, Sparkle, Sparkles, BookOpen, Star, CheckCircle, Clock, MapPin, ChevronRight } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../assets/banners/image2.png"
+import bgImage from "../assets/banners/about_hero_acharya.png"
 import about from "../assets/aboutImage/acharyaji.jpg"
-import OurMission from "../assets/aboutPage/OurMission.png"
-import OurVision from "../assets/aboutPage/OurVision.png"
 import PujaServices1 from "../assets/aboutPage/PujaServices1.png"
 import Vastu from "../assets/aboutPage/Vastu.png"
 import AstrologyServices from "../assets/aboutPage/AstrologyServices.png"
@@ -15,34 +12,27 @@ import Healing_Wellness from "../assets/aboutPage/Healing&Wellness.png"
 const AboutUs = () => {
   const [hoveredService, setHoveredService] = useState(null);
 
-  const stats = [
-    { value: '50,000+', label: 'Happy Devotees', icon: Users },
-    { value: '10+', label: 'Years Experience', icon: Award },
-    { value: '100+', label: 'Verified Acharyas', icon: Users },
-    { value: 'Pan-India', label: 'Service Coverage', icon: Globe }
-  ];
-
   const services = [
     {
-      Image:PujaServices1,
+      Image: PujaServices1,
       title: "Puja Services",
       items: ["Griha Pravesh Puja", "Satyanarayan Katha", "Rudrabhishek", "Navgraha Shanti", "Marriage & Vivah Puja", "Pitru Dosh Puja", "Havan & Yagya"],
       color: "from-orange-500 to-red-600"
     },
     {
-      Image:AstrologyServices,
+      Image: AstrologyServices,
       title: "Astrology Services",
       items: ["Kundli Making & Matching", "Manglik / Kaal Sarp / Pitru Dosh", "Career, Marriage & Business", "Numerology & Tarot", "Shani Sade Sati Analysis"],
       color: "from-purple-500 to-indigo-600"
     },
     {
-      Image:Vastu,
+      Image: Vastu,
       title: "Vastu & Spiritual Products",
       items: ["Home & Office Vastu", "Feng Shui", "Gemstones & Rudraksha", "Yantra", "Energized Spiritual Products"],
       color: "from-blue-500 to-cyan-600"
     },
     {
-      Image:Healing_Wellness,
+      Image: Healing_Wellness,
       title: "Healing & Wellness",
       items: ["Reiki Healing", "Crystal Healing", "Chakra & Aura Cleansing", "Meditation Guidance"],
       color: "from-green-500 to-emerald-600"
@@ -68,435 +58,340 @@ const AboutUs = () => {
   ];
 
   const whyChoose = [
-    { icon: "", title: "100% Authentic Vedic Rituals", desc: "Traditional vidhi followed" },
-    { icon: "", title: "Verified Acharyas", desc: "Experienced spiritual experts" },
-    { icon: "", title: "At-home & Online Services", desc: "Convenience at your doorstep" },
-    { icon: "", title: "Proper Mantra & Vidhi", desc: "Shastra-based procedures" },
-    { icon: "", title: "Transparent Consultation", desc: "Clear pricing & guidance" },
-    { icon: "", title: "Thousands Satisfied", desc: "Trusted by devotees nationwide" }
+    { icon: Sparkles, title: "100% Authentic Vedic Rituals", desc: "Traditional vidhi followed" },
+    { icon: Users, title: "Verified Acharyas", desc: "Experienced spiritual experts" },
+    { icon: MapPin, title: "At-home & Online Services", desc: "Convenience at your doorstep" },
+    { icon: BookOpen, title: "Proper Mantra & Vidhi", desc: "Shastra-based procedures" },
+    { icon: Phone, title: "Transparent Consultation", desc: "Clear pricing & guidance" },
+    { icon: Heart, title: "Thousands Satisfied", desc: "Trusted by devotees nationwide" }
   ];
 
   return (
-   <Layout>
-     {/* Yeh wrapper div min-height 80vh set karega */}
-     <div className="min-h-[80vh]">
-       <div className="min-h-screen bg-background">
-        {/* Hero Section */}
-    <section className="relative py-10 sm:py-14 md:py-20 text-white overflow-hidden">
-
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={bgImage}
-      alt="Background"
-      className="w-full h-full bg-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
-
-    {/* ✅ Single Professional Overlay */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/55" />
-
-    {/* Soft depth glow (optional but premium) */}
-    <div className="absolute -top-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl opacity-50" />
-    <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl opacity-50" />
-  </div>
-
-  {/* Content */}
-  <div className="container mx-auto px-4 relative z-10">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto text-center"
-    >
-      <span className="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-medium mb-4 backdrop-blur-sm">
-        About Us
-      </span>
-
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-        Preserving Sanatan Traditions with<br />
-        <span className="text-yellow-300">Authentic Vedic Wisdom</span>
-      </h1>
-
-      <p className="text-lg md:text-xl text-orange-100 leading-relaxed drop-shadow">
-        A trusted spiritual platform offering authentic puja services, Vedic astrology,
-        vastu consultation, and healing solutions — performed by experienced and learned Acharyas.
-      </p>
-    </motion.div>
-  </div>
-
-</section>
-
-
-        {/* Stats Section */}
-        <section className="pt-20 pb-8 -mt-10 relative z-10">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-2xl shadow-amber-100 p-3 grid grid-cols-2 md:grid-cols-4 gap-8"
-            >
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="text-xl md:text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">
-                    {stat.value}
-                  </div>
-                  <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Story Section - Who We Are */}
-        <section className="py-5 overflow-x-hidden">
-          <div className="container mx-auto px-4 ">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
-                <span className="inline-block px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium mb-4">
-                  Our Story
-                </span>
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent mb-6">
-                  Bridging Tradition and Convenience
-                </h2>
-                <p className="text-gray-700 mb-4 leading-relaxed">
-                  <strong className="text-orange-600">Acharya Ji Online</strong> is a digital spiritual platform dedicated to bringing Sanatan Dharma closer to every household. We connect devotees with experienced priests, astrologers, and spiritual experts for authentic pujas, astrology services, vastu solutions, and spiritual guidance — both online and at your location.
-                </p>
-                <p className="text-gray-700 mb-6 leading-relaxed">
-                  What started as a small initiative to connect families with local priests has grown into a comprehensive platform serving thousands of devotees across India. Our team of verified priests, religious scholars, and dedicated support staff ensures that every ritual carries the sanctity and authenticity it deserves.
-                </p>
-                <div className="space-y-3">
-                  {[
-                    'Authentic Vedic rituals',
-                    'Verified Acharyas',
-                    'Transparent pricing',
-                    'Personalized guidance'
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-orange-600" />
-                      <span className="text-gray-800 font-medium">{item}</span>
-                    </div>
-                  ))}
+    <Layout>
+      <div className="min-h-[80vh]">
+        <div className="min-h-screen bg-background">
+          {/* Hero Section */}
+          <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+            <div className="absolute inset-0">
+              <img src={bgImage} alt="Background" className="w-full h-full object-cover " />
+              <div className="absolute inset-0 bg-black/30" />
+            </div>
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                  <Award className="w-4 h-4 text-[#FFC107]" />
+                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
                 </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-               <div className="w-full h-[400px] sm:h-[400px] md:h-[530px] rounded-2xl overflow-hidden border-4 border-orange-200 relative">
-  {/* Background Image */}
-  <img
-    src={about}
-    alt=""
-    className="absolute inset-0 w-full h-full object-cover"
-  />
-
-  {/* Dark + Orange Overlay */}
-  {/* <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-orange-900/30 to-red-900/40" /> */}
-
-  {/* Center Animated Icon */}
-  <div className="absolute inset-0 flex items-center justify-center">
-    {/* <motion.div
-      animate={{ scale: [1, 1.08, 1] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      className="w-24 h-24 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-2xl border-4 border-white/30"
-    >
-      <span className="text-3xl sm:text-5xl">🙏</span>
-    </motion.div> */}
-  </div>
-</div>
-
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Vision & Mission */}
-        <section className="py-10 bg-gradient-to-br from-orange-50 to-red-50">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-4">
-                Our Vision & Mission
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                The principles that guide everything we do
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-8 mb-4">
-             <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  className="relative bg-white rounded-2xl p-8 shadow-lg border-2 border-orange-200 overflow-hidden"
->
-  {/* Background Image */}
-  <div className="absolute inset-0 opacity-30">
-    <img
-      src={OurVision}
-      alt=""
-      className="w-full h-full bg-cover"
-    />
-  </div>
-
-  {/* Content */}
-  <div className="relative z-10">
-    <div className="text-6xl mb-6 text-center"></div>
-    <h3 className="text-2xl font-bold text-orange-600 mb-4 text-center">
-      Our Vision
-    </h3>
-    <p className="text-gray-700 leading-relaxed text-center">
-      To make authentic Sanatan rituals and Vedic knowledge accessible to everyone, anywhere in the world.
-    </p>
-  </div>
-</motion.div>
-
-
-              <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ delay: 0.2 }}
-  className="relative bg-white rounded-2xl p-8 shadow-lg border-2 border-red-200 overflow-hidden"
->
-  {/* Background Image */}
-  <div className="absolute inset-0 opacity-30">
-    <img
-      src={OurMission}
-      alt=""
-      className="w-full h-full bg-cover"
-    />
-  </div>
-
-  {/* Content */}
-  <div className="relative z-10">
-    <div className="text-6xl mb-6 text-center"></div>
-
-    <h3 className="text-2xl font-bold text-red-600 mb-4 text-center">
-      Our Mission
-    </h3>
-
-    <ul className="space-y-3">
-      {[
-        "Preserve traditional puja vidhi",
-        "Provide accurate astrology & kundli services",
-        "Offer trusted spiritual and vastu solutions",
-        "Spread peace, positivity & dharmic values"
-      ].map((item, idx) => (
-        <li key={idx} className="flex items-start gap-3">
-          <ChevronRight className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-          <span className="text-gray-700 font-medium">{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-</motion.div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* What We Offer */}
-        <section className="py-10">
-          <div className="container mx-auto px-4 max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-4">
-                What We Offer
-              </h2>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-red-600 mx-auto mb-6 rounded-full" />
-              <p className="text-gray-600 max-w-3xl mx-auto">
-                Comprehensive spiritual services aligned with your needs
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map((service, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  onMouseEnter={() => setHoveredService(idx)}
-                  onMouseLeave={() => setHoveredService(null)}
-                  className="group relative"
-                >
-                  <div className={`bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100 hover:border-orange-300 transition-all duration-300 h-full ${hoveredService === idx ? 'scale-105 shadow-2xl' : ''}`}>
-                    <div className="w-full h-40 border-2 border-x-orange-500 border-y-maroon rounded-sm"><img src={service.Image} alt="" className="w-full h-full inset-0 bg-cover" /></div> 
-                    <h3 className={`text-xl font-bold mb-4 text-center bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>
-                      {service.title}
-                    </h3>
-                    <ul className="space-y-2">
-                      {service.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                          <div className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why Choose Us */}
-        <section className="py-10 bg-gradient-to-br from-red-50 to-orange-50">
-          <div className="container mx-auto px-4 max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-4">
-                Why Choose Acharya Ji Online
-              </h2>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-red-600 mx-auto mb-6 rounded-full" />
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {whyChoose.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-100 hover:border-orange-400 hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="text-5xl mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Core Values */}
-        <section className="py-7 bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 text-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-10"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Our Core Values
-              </h2>
-              <p className="text-orange-100 max-w-2xl mx-auto">
-                The principles that guide everything we do
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {values.map((value, index) => (
-                <motion.div
-                  key={value.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white/10 rounded-2xl p-4 text-center backdrop-blur-sm border border-white/20"
-                >
-                  <div className="w-10 h-10 rounded-full bg-yellow-400 mx-auto mb-4 flex items-center justify-center">
-                    <value.icon className="w-8 h-8 text-orange-900" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">{value.title}</h3>
-                  <p className="text-orange-100">{value.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Our Belief */}
-        <section className="py-10 bg-gradient-to-br from-orange-50 to-red-50">
-          <div className="container mx-auto px-4 max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-7xl mb-6"></div>
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-6">Our Belief</h2>
-              <p className="text-xl text-gray-700 leading-relaxed">
-                We believe that spirituality is not superstition — it is science rooted in ancient wisdom. Every puja, mantra, and ritual performed through Acharya Ji Online follows proper shastra-based vidhi to bring peace, prosperity, and positivity.
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-10">
-          <div className="container mx-auto px-4 text-center max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-7xl mb-6"></div>
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-500 bg-clip-text text-transparent mb-6">
-                Begin Your Spiritual Journey With Us
-              </h2>
-              <p className="text-gray-600 mb-10 text-lg">
-                Join thousands of satisfied families who trust Acharya Ji Online for their spiritual needs
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/puja/online">
-                  <button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    Book Puja Now
-                  </button>
-                </Link>
-                <Link to="/astrology">
-                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
-                    Talk to Astrologer
-                  </button>
-                </Link>
-                <Link to="/kundli">
-                  <button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" />
-                    Generate Free Kundli
-                  </button>
-                </Link>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                  Preserving Sanatan Traditions with<br />
+                  <span className="text-yellow-300">Authentic Vedic Wisdom</span>
+                </h1>
+                <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow">
+                  A trusted spiritual platform offering authentic puja services, Vedic astrology, vastu consultation, and healing solutions — performed by experienced and learned Acharyas.
+                </p>
               </div>
-            </motion.div>
-          </div>
-        </section>
+            </div>
+          </section>
+
+          {/* Our Sacred Journey */}
+          <section className="py-12 md:py-16 overflow-x-hidden relative">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -z-10" />
+            <div className="container mx-auto px-4">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+                <div className="lg:order-1 order-1 animate-slide-in-left">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-[11px] font-bold uppercase tracking-wider mb-5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Our Sacred Journey</span>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 leading-tight">
+                    Bridging Ancient <span className="text-orange-600">Tradition</span> with Modern <span className="text-orange-600">Convenience</span>
+                  </h2>
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                    <Sparkles className="w-5 h-5 text-orange-400" />
+                    <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                  </div>
+                  <div className="space-y-3 text-gray-700 font-medium text-sm md:text-base">
+                    <p className="leading-relaxed"><strong className="text-orange-600 font-semibold">Acharya Ji Online</strong> is a digital bridge to spiritual fulfillment, bringing the sanctity of Vedic rituals directly to your home.</p>
+                    <p className="leading-relaxed">Our journey began with a simple vision: to preserve the authenticity of Sanatan Dharma while embracing the ease of technology.</p>
+                  </div>
+                  <div className="mt-6 grid grid-cols-2 gap-3">
+                    {['Authentic Vedic rituals', 'Verified Acharyas', 'Transparent Pricing', 'Personalized Guidance'].map((item) => (
+                      <div key={item} className="flex items-center gap-2.5">
+                        <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-3.5 h-3.5 text-orange-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-800">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="relative group lg:order-2 order-2 flex justify-center animate-slide-in-right">
+                  <div className="relative w-[96%] max-w-lg mx-auto p-1.5 md:p-2 bg-gradient-to-br from-amber-100 to-amber-300 rounded-[2rem] shadow-[0_20px_50px_-15px_rgba(217,119,6,0.25)] hover:shadow-[0_20px_50px_-15px_rgba(217,119,6,0.4)] transition-shadow duration-500">
+                    <div className="absolute -inset-1 border border-amber-300 rounded-[2.2rem] -z-10 group-hover:bg-amber-100/30 transition-all duration-500" />
+                    <div className="w-full h-[315px] sm:h-[375px] md:h-[445px] rounded-3xl overflow-hidden border-[3px] border-white relative z-10">
+                      <img src={about} alt="Acharya Ji" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
+                    </div>
+                    {/* Years of Experience Badge */}
+                    <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-2.5 md:p-3 rounded-2xl shadow-xl border border-amber-100 z-20 flex items-center gap-3 group-hover:-translate-y-2 transition-transform duration-500">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-50 flex items-center justify-center border border-amber-200 shadow-inner">
+                        <span className="text-amber-600 font-extrabold text-sm md:text-lg">20+</span>
+                      </div>
+                      <div className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight uppercase tracking-wide pr-2">
+                        Years Of<br /><span className="text-amber-600">Experience</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* What We Offer */}
+          <section className="py-12 md:py-16 bg-[#FAF9F6] relative overflow-hidden">
+            {/* Subtle Temple Pattern Background */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #d97706 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+                  <Star className="w-3.5 h-3.5" />
+                  <span>Our Offerings</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">What We <span className="text-orange-600">Offer</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 max-w-[90rem] mx-auto">
+                {services.map((service, idx) => (
+                  <div
+                    key={idx}
+                    className="group/card h-full animate-fade-in-up"
+                    style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}
+                  >
+                    {/* Thin & Sharp Premium Border - Visible all sides */}
+                    <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 hover:shadow-amber-200/30 flex flex-col">
+                      <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+                        {/* Divine Background Ornaments */}
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
+
+                        {/* Compact Image Frame */}
+                        <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-36 md:h-40 z-10">
+                          <img
+                            src={service.Image}
+                            alt={service.title}
+                            className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110 group-hover/card:rotate-1"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#1A130F]/80 via-transparent to-transparent opacity-60 group-hover/card:opacity-40 transition-opacity duration-700" />
+
+                          {/* Corner Accents */}
+                          <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-white/60 rounded-tl-xl group-hover/card:border-amber-400 transition-all duration-500" />
+                          <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-white/40 rounded-br-xl group-hover/card:border-amber-400 transition-all duration-500" />
+                        </div>
+
+                        {/* Card Content (Compact) */}
+                        <div className="flex flex-col flex-grow px-4 pb-5 text-center relative z-20">
+                          <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-1.5 tracking-wide uppercase transition-colors group-hover/card:text-amber-600">
+                            {service.title}
+                          </h3>
+
+                          {/* Refined Ornamental Divider */}
+                          <div className="flex items-center justify-center gap-3 mb-4">
+                            <div className="h-[1.5px] w-8 bg-gradient-to-r from-transparent via-amber-200 to-amber-500 group-hover/card:w-12 transition-all duration-700" />
+                            <Sparkle className="w-5 h-5 text-amber-500 fill-amber-500/10 group-hover/card:rotate-90 transition-transform duration-700" />
+                            <div className="h-[1.5px] w-8 bg-gradient-to-l from-transparent via-amber-200 to-amber-500 group-hover/card:w-12 transition-all duration-700" />
+                          </div>
+
+                          <ul className="space-y-2 mb-5 text-left">
+                            {service.items.slice(0, 3).map((item, i) => (
+                              <li key={i} className="flex items-center gap-3">
+                                <div className="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover/card:bg-amber-600">
+                                  <CheckCircle className="w-3.5 h-3.5 text-amber-600 group-hover/card:text-white" />
+                                </div>
+                                <span className="text-xs font-bold text-[#4A3427]/80 group-hover/card:text-[#2A1D13] transition-colors">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          {/* Sleek Action Button */}
+                          <div className="mt-auto">
+                            <Link
+                              to="/services"
+                              className="group/btn relative w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2A1D13] text-amber-400 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 hover:bg-amber-600 hover:text-white shadow-lg group-hover/card:-translate-y-1"
+                            >
+                              <span>Explore Details</span>
+                              <ChevronRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Why Choose Us */}
+          <section className="py-12 md:py-16 bg-[#FFFDF7] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -mr-32 -mt-32" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-100/30 rounded-full blur-3xl -ml-32 -mb-32" />
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 text-orange-600 rounded-full text-[10px] font-extrabold uppercase tracking-[0.2em] mb-4">
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>The Acharya Ji Standard</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6">Why Choose <span className="text-orange-600">Us</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {whyChoose.map((item, idx) => (
+                  <div key={idx} className="group bg-white p-5 md:p-6 hover:shadow-[0_20px_40px_-15px_rgba(255,165,0,0.15)] transition-all duration-500 border-2 border-orange-100 flex items-start gap-4 md:gap-5 rounded-none relative overflow-hidden animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                    <div className="absolute top-0 right-0 w-2 h-0 group-hover:h-full bg-orange-500 transition-all duration-500" />
+                    <div className="w-16 h-16 rounded-none bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-600 transition-all duration-500 shadow-inner">
+                      <item.icon className="w-8 h-8 text-orange-600 group-hover:text-white transition-all transform group-hover:scale-110" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-extrabold text-[#4A3427] mb-2 leading-tight group-hover:text-orange-600 transition-colors">{item.title}</h3>
+                      <p className="text-gray-500 text-sm font-semibold leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Core Values */}
+          <section className="py-12 md:py-16 bg-white">
+            <div className="container mx-auto px-4 max-w-6xl">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <h2 className="text-3xl md:text-4xl font-black text-[#4A3427] mb-2">Our <span className="text-orange-600">Core Values</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-3 gap-4 md:gap-5 max-w-5xl mx-auto">
+                {values.map((value, index) => (
+                  <div key={value.title} className="bg-[#FFFAF3] p-4 py-6 text-center border-b-[6px] border-orange-500 shadow-md hover:shadow-2xl transition-all duration-500 rounded-none relative group overflow-hidden animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}>
+                    <div className="absolute top-4 right-4 text-orange-200/50 group-hover:text-orange-400 transition-all duration-700"><Sparkles className="w-5 h-5" /></div>
+                    <div className="w-14 h-14 rounded-sm bg-white mx-auto mb-5 flex items-center justify-center shadow-md group-hover:shadow-xl transition-all duration-500 border border-orange-100/50 relative">
+                      <div className="absolute inset-0 bg-orange-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left opacity-10" />
+                      <value.icon className="w-7 h-7 text-orange-600 group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <h3 className="text-lg font-black text-[#4A3427] mb-3 uppercase tracking-wider group-hover:text-orange-600 transition-colors">{value.title}</h3>
+                    <p className="text-gray-600 font-semibold leading-relaxed text-xs">{value.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="py-12 md:py-16 bg-[#FFFCF5]">
+            <div className="container mx-auto px-4 max-w-4xl text-center">
+              <div className="animate-fade-in-up">
+                <h2 className="text-3xl md:text-4xl font-black text-[#4A3427] mb-6 uppercase tracking-widest">Our <span className="text-orange-600">Belief</span></h2>
+
+                {/* Center Icon Section */}
+                <div className="relative flex justify-center items-center mb-8">
+                  <div className="absolute w-24 h-[1px] bg-orange-200 left-1/2 -translate-x-[160%]" />
+                  <div className="relative group">
+                    <Shield className="w-20 h-20 text-orange-600 opacity-10 absolute inset-0 -z-10 animate-pulse" />
+                    <Shield className="w-16 h-16 text-orange-600/20" />
+                    <Sparkles className="w-5 h-5 text-orange-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                  </div>
+                  <div className="absolute w-24 h-[1px] bg-orange-200 left-1/2 translate-x-[60%]" />
+                </div>
+
+                <div className="max-w-3xl mx-auto italic text-lg md:text-2xl text-gray-700 font-semibold leading-relaxed relative">
+                  <span className="text-5xl text-orange-100 absolute -top-4 -left-6 font-serif">"</span>
+                  We believe that spirituality is not superstition — it is science rooted in ancient wisdom. Every puja, mantra, and ritual follows proper shastra-based vidhi to bring peace, prosperity, and positivity.
+                  <span className="text-5xl text-orange-100 absolute -bottom-10 -right-6 font-serif">"</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials */}
+          <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-full blur-3xl -mr-32 -mt-32" />
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 text-green-700 rounded-full text-[10px] font-extrabold uppercase tracking-[0.2em] mb-4">
+                  <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-green-700" /> Devotee Experiences</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-[#4A3427] mb-6">Hear From Our <span className="text-orange-600">Yajamans</span></h2>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+                {[
+                  { name: "Rahul Sharma", text: "Acharya Ji performed the Griha Pravesh puja with such devotion and authenticity. It brought immense peace to our new home.", location: "Delhi, India" },
+                  { name: "Priya Patel", text: "The astrological guidance was incredibly accurate and helpful during a difficult career transition. Highly recommended.", location: "Mumbai, India" },
+                  { name: "Amit Kumar", text: "Very transparent booking process and the pandit ji explained every mantra's meaning. It was a truly spiritual experience.", location: "Bangalore, India" }
+                ].map((review, idx) => (
+                  <div key={idx} className="bg-[#FFFDF7] p-6 md:p-7 border border-orange-100 shadow-lg rounded-2xl relative animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
+                    <div className="absolute -top-4 -left-2 text-6xl text-orange-100 font-serif">"</div>
+                    <div className="flex gap-1 mb-4 relative z-10">
+                      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />)}
+                    </div>
+                    <p className="text-gray-600 font-medium text-sm mb-6 leading-relaxed relative z-10 italic">"{review.text}"</p>
+                    <div className="border-t border-orange-100 pt-4">
+                      <h4 className="font-extrabold text-[#4A3427] text-sm">{review.name}</h4>
+                      <p className="text-xs text-orange-600 font-semibold">{review.location}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CTA Section */}
+          <section className="py-12 md:py-16 bg-white border-t border-orange-50">
+            <div className="container mx-auto px-4 text-center max-w-5xl">
+              <div className="animate-fade-in-up">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">Begin Your <span className="text-[#E8453C]">Spiritual Journey</span> With Us</h2>
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <div className="w-10 h-[1.5px] bg-orange-200" />
+                </div>
+                <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">Join thousands of satisfied families who trust Acharya Ji Online for their sacred rituals and divine spiritual guidance.</p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Link to="/puja/online">
+                    <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                      <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="relative flex items-center gap-2"><Calendar className="w-3.5 h-3.5" /> Book Puja Now</span>
+                    </button>
+                  </Link>
+                  <Link to="/astrology">
+                    <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-7 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                      <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="relative flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Consult Expert</span>
+                    </button>
+                  </Link>
+                  <Link to="/kundli">
+                    <button className="group relative bg-[#1E293B] hover:bg-[#0F172A] text-white px-7 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                      <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="relative flex items-center gap-2"><BookOpen className="w-3.5 h-3.5" /> Free Kundli</span>
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-     </div>
-   </Layout>
+    </Layout>
   );
 };
 

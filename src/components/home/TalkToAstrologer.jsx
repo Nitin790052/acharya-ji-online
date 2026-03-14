@@ -1,334 +1,219 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, MessageCircle, Star, Award, TrendingUp, Heart, Briefcase, ChevronLeft, ChevronRight, Sparkles, Video } from 'lucide-react';
+import { Phone, MessageCircle, Star, Award, TrendingUp, ChevronLeft, ChevronRight, Sparkles, Video } from 'lucide-react';
+import SectionHeader from '../common/SectionHeader';
 import image1 from "../../assets/astrologors/AcharyaVikramJoshi.jpg"
 import image2 from "../../assets/astrologors/DrPriyaMishra.jpg"
 import image3 from "../../assets/astrologors/PanditRajeshSharma.png"
-import image4 from "../../assets/astrologors/PanditSureshPandey.jpg"
+
+
+const RED = '#E8453C';
 
 const TalkToAstrologer = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [hoveredCard, setHoveredCard] = useState(null);
 
+  const astrologers = [
+    { id: 1, name: 'Pandit Rajesh Sharma', image: image1, experience: '15+ Years', rating: 4.9, reviews: 2847, specialization: ['Vedic Astrology', 'Kundli Analysis', 'Gemstone Consultation'], languages: ['Hindi', 'English', 'Sanskrit'], online: true, consultations: '5000+', expertise: ['Career', 'Marriage', 'Business'] },
+    { id: 2, name: 'Dr. Priya Mishra', image: image2, experience: '12+ Years', rating: 4.8, reviews: 1923, specialization: ['Tarot Reading', 'Numerology', 'Palmistry'], languages: ['Hindi', 'English', 'Marathi'], online: true, consultations: '3500+', expertise: ['Career', 'Marriage', 'Health'] },
+    { id: 3, name: 'Acharya Vikram Joshi', image: image3, experience: '20+ Years', rating: 5.0, reviews: 3421, specialization: ['KP Astrology', 'Prashna Kundali', 'Vastu'], languages: ['Hindi', 'English', 'Gujarati'], online: true, consultations: '7500+', expertise: ['Business', 'Career', 'Finance'] },
+  ];
+
+
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 150);
-    
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % astrologers.length);
-    }, 5000);
-    
+    const interval = setInterval(() => setCurrentSlide((prev) => (prev + 1) % astrologers.length), 5000);
     return () => clearInterval(interval);
   }, []);
 
-  const astrologers = [
-    {
-      id: 1,
-      name: 'Pandit Rajesh Sharma',
-      image: image1,
-      experience: '15+ Years',
-      rating: 4.9,
-      reviews: 2847,
-      specialization: ['Vedic Astrology', 'Kundli Analysis', 'Gemstone Consultation'],
-      languages: ['Hindi', 'English', 'Sanskrit'],
-      online: true,
-      consultations: '5000+',
-      expertise: ['Career', 'Marriage', 'Business']
-    },
-    {
-      id: 2,
-      name: 'Dr. Priya Mishra',
-      image: image2,
-      experience: '12+ Years',
-      rating: 4.8,
-      reviews: 1923,
-      specialization: ['Tarot Reading', 'Numerology', 'Palmistry'],
-      languages: ['Hindi', 'English', 'Marathi'],
-      online: true,
-      consultations: '3500+',
-      expertise: ['Career', 'Marriage', 'Health']
-    },
-    {
-      id: 3,
-      name: 'Acharya Vikram Joshi',
-      image: image3,
-      experience: '20+ Years',
-      rating: 5.0,
-      reviews: 3421,
-      specialization: ['KP Astrology', 'Prashna Kundali', 'Vastu'],
-      languages: ['Hindi', 'English', 'Gujarati'],
-      online: true,
-      consultations: '7500+',
-      expertise: ['Business', 'Career', 'Finance']
-    },
-    {
-      id: 4,
-      name: 'Pandit Suresh Pandey',
-      image: image4,
-      experience: '18+ Years',
-      rating: 4.9,
-      reviews: 2156,
-      specialization: ['Lal Kitab', 'Remedies', 'Match Making'],
-      languages: ['Hindi', 'English', 'Punjabi'],
-      online: false,
-      consultations: '4200+',
-      expertise: ['Marriage', 'Love', 'Family']
-    }
-  ];
-
-  const services = [
-    {
-      icon: Briefcase,
-      title: 'Career Guidance',
-      description: 'Job, promotion, career change predictions',
-      color: '#FF9933',
-      gradient: 'from-saffron to-orange-600'
-    },
-    {
-      icon: Heart,
-      title: 'Marriage & Love',
-      description: 'Match making, relationship compatibility',
-      color: '#800000',
-      gradient: 'from-maroon to-red-700'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Business & Finance',
-      description: 'Business growth, investment guidance',
-      color: '#FFD700',
-      gradient: 'from-gold to-yellow-600'
-    }
-  ];
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % astrologers.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + astrologers.length) % astrologers.length);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % astrologers.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + astrologers.length) % astrologers.length);
 
   return (
-    <div className="relative py-10 px-3 overflow-hidden bg-gradient-to-br from-maroon via-maroon-dark to-saffron-dark">
-      <div className="absolute inset-0 opacity-15">
-        {[...Array(40)].map((_, i) => (
+    <div className="relative py-12 md:py-10 overflow-hidden bg-white">
+      {/* Artistic Background Design */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Base Split: White (Left) to Light Yellow (Right) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white to-[#FFFBEA]" />
+
+        {/* Decorative Right-Side Elements */}
+        <div className="absolute top-0 right-0 w-[45%] h-full">
+          {/* Soft Glow */}
+          <div className="absolute inset-0 bg-gradient-to-l from-orange-50/50 to-transparent" />
+
+          {/* Premium Artistic Shape */}
+          <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#FFF3D0]/40 rounded-full blur-[120px] mix-blend-multiply" />
+
+          {/* Subtle Texture Overlay (Diagonal Lines) */}
           <div
-            key={i}
-            className="absolute w-0.5 h-0.5 bg-gold rounded-full animate-twinkle"
+            className="absolute inset-0 opacity-[0.07]"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              backgroundImage: `repeating-linear-gradient(45deg, #F59E0B 0, #F59E0B 1px, transparent 0, transparent 20px)`,
+              maskImage: 'linear-gradient(to left, black, transparent)'
             }}
           />
-        ))}
-      </div>
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-16 right-8 w-80 h-80 bg-saffron/15 rounded-full blur-2xl animate-pulse-slow" />
-        <div className="absolute bottom-16 left-8 w-64 h-64 bg-gold/15 rounded-full blur-2xl animate-pulse-slower" />
+          {/* Floating Mandala Dot pattern */}
+          <div
+            className="absolute bottom-[-5%] right-[-5%] w-96 h-96 opacity-[0.05]"
+            style={{
+              backgroundImage: `radial-gradient(#B45309 2px, transparent 2px)`,
+              backgroundSize: '40px 40px'
+            }}
+          />
+        </div>
+
+        {/* Left Side Cleanliness - Subtle underline glow for the section header area */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-slate-50 rounded-full blur-[100px] opacity-60" />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className={`text-center mb-12 transition-all duration-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-          <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-gold to-saffron text-maroon px-5 py-1.5 rounded-full text-xs font-semibold mb-5 shadow animate-glow">
-            <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
-            Live Consultation Available
-          </div>
-          
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 text-white">
-            Talk to <span className="bg-gradient-to-r from-gold via-saffron to-gold bg-clip-text text-transparent">Expert Astrologers</span>
-          </h2>
-          
-          <p className="text-base text-gold-light max-w-xl mx-auto leading-relaxed">
-            Get personalized guidance from <span className="font-bold text-gold">verified astrologers</span> available 24/7
-          </p>
-        </div>
+        {/* Header */}
+        <SectionHeader
+          badge="Live Consultation Available"
+          title="Talk to Expert Astrologers"
+          subtitle="Get personalized guidance from verified astrologers available 24/7"
+        />
 
-        <div className={`grid grid-cols-1 md:grid-cols-3 gap-5 mb-12 transition-all duration-800 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={index}
-                className="relative group"
-                style={{ transitionDelay: `${index * 80}ms` }}
-              >
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:border-gold/50 transition-all duration-300 hover:transform hover:scale-[1.02]">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-3 group-hover:rotate-6 transition-transform duration-300`}>
-                    <Icon className="w-6 h-6 text-white" strokeWidth={1.8} />
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-white mb-1.5 font-serif">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-gold-light text-xs">
-                    {service.description}
-                  </p>
 
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-800 rounded-xl" />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* Astrologer Cards */}
+        <div className={`transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
 
-        <div className={`transition-all duration-800 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h3 className="text-2xl font-bold text-center text-white mb-8 font-serif">
-            Meet Our <span className="text-gold">Expert Astrologers</span>
-          </h3>
-
-          <div className="hidden lg:grid lg:grid-cols-4 gap-5 mb-10">
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-8 mb-12">
             {astrologers.map((astrologer, index) => (
-              <div
-                key={astrologer.id}
-                className="relative group"
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-400 hover:shadow-gold/40 hover:transform hover:scale-[1.02]">
-                  <div className="relative h-40  overflow-hidden">
-                    <img
-                      src={astrologer.image}
-                      alt={astrologer.name}
-                      className="w-full h-full bg-cover transition-transform duration-400 group-hover:scale-105"
-                    />
-                    
-                    {astrologer.online && (
-                      <div className="absolute top-3 right-3 flex items-center gap-1 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
-                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                        Online
-                      </div>
-                    )}
+              <div key={astrologer.id} className="relative group h-full">
+                <div className="relative h-full bg-[#FFFCF5] rounded-[2rem] overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/60 shadow-sm hover:shadow-[0_20px_45px_-12px_rgba(255,193,7,0.3)] transition-all duration-500 flex flex-col group/card">
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  {/* Decorative Vedic Overlays */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#FFC107]/5 rounded-full -mr-12 -mt-12 transition-transform duration-700 group-hover/card:scale-150" />
+
+                  {/* Image Section */}
+                  <div className="relative p-2 pb-0">
+                    <div className="relative h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
+                      <img
+                        src={astrologer.image}
+                        alt={astrologer.name}
+                        className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover/card:scale-110"
+                      />
+
+                      {/* Premium Overlays */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/70 via-transparent to-transparent opacity-80" />
+
+                      {/* Online Status Badge */}
+                      {astrologer.online && (
+                        <div className="absolute top-3 right-3 z-20">
+                          <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-lg border border-green-100">
+                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                            <span className="text-[9px] font-black uppercase tracking-widest text-green-600">Online</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Corner Accents */}
+                      <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#FFC107] opacity-0 group-hover/card:opacity-100 transition-all duration-500 -translate-x-1 -translate-y-1 group-hover/card:translate-x-0 group-hover/card:translate-y-0" />
+                    </div>
                   </div>
 
-                  <div className="p-4">
-                    <h4 className="text-lg font-bold text-maroon mb-1.5 font-serif">
-                      {astrologer.name}
-                    </h4>
-
-                    <div className="flex items-center gap-1.5 mb-2.5">
-                      <div className="flex items-center gap-1 bg-gold/20 px-1.5 py-0.5 rounded-md">
-                        <Star className="w-3.5 h-3.5 text-gold fill-gold" />
-                        <span className="text-xs font-bold text-maroon">{astrologer.rating}</span>
+                  {/* Content Section */}
+                  <div className="p-5 pt-4 text-center flex flex-col items-center flex-grow relative">
+                    {/* Floating Icon Badge Placeholder (Sparkle) */}
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                      <div className="w-11 h-11 rounded-full bg-white shadow-xl flex items-center justify-center border-4 border-[#FFFCF5] transition-transform duration-500 group-hover/card:scale-110">
+                        <Sparkles className="w-4.5 h-4.5 text-amber-500" />
                       </div>
-                      <span className="text-xs text-gray-600">({astrologer.reviews})</span>
                     </div>
 
-                    <div className="flex items-center gap-2.5 mb-2.5 text-xs text-gray-600">
-                      <div className="flex items-center gap-1">
-                        <Award className="w-3.5 h-3.5 text-saffron" />
+                    <div className="mt-4 mb-3 w-full">
+                      <h4 className="text-lg font-bold text-[#4A3427] mb-1.5 tracking-tight group-hover/card:text-[#FFC107] transition-colors uppercase font-serif px-2">
+                        {astrologer.name}
+                      </h4>
+                      <div className="w-8 h-0.5 bg-[#FFC107] mx-auto group-hover:card:w-20 transition-all duration-500 rounded-full" />
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <div className="flex items-center gap-1.5 bg-white px-2.5 py-0.5 rounded-full shadow-sm border border-amber-100 font-black">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span className="text-xs text-[#E8453C]">{astrologer.rating}</span>
+                      </div>
+                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                        {astrologer.reviews} Reviews
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-4 mb-4 w-full text-[10px] font-bold uppercase tracking-wider text-[#6D5B4F]">
+                      <div className="flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5 text-amber-500" />
                         <span>{astrologer.experience}</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <TrendingUp className="w-3.5 h-3.5 text-green-600" />
+                      <div className="w-1 h-1 bg-slate-300 rounded-full" />
+                      <div className="flex items-center gap-1.5">
+                        <TrendingUp className="w-3.5 h-3.5 text-amber-500" />
                         <span>{astrologer.consultations}</span>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 mb-3">
+                    <div className="flex flex-wrap justify-center gap-1.5 mb-5">
                       {astrologer.expertise.map((exp, idx) => (
-                        <span
-                          key={idx}
-                          className="text-[10px] bg-gradient-to-r from-saffron/10 to-maroon/10 text-maroon px-1.5 py-0.5 rounded-full border border-saffron/30"
-                        >
+                        <span key={idx} className="text-[8px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-full bg-white border border-[#FFC107]/20 text-[#E8453C] shadow-sm group-hover/card:border-[#E8453C]/20 transition-colors">
                           {exp}
                         </span>
                       ))}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <button className="group/btn flex items-center justify-center gap-1.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-2 rounded-lg font-bold text-xs shadow transition-all duration-300">
-                        <Phone className="w-3.5 h-3.5 group-hover/btn:animate-bounce" />
-                        Call
+                    {/* Action Buttons */}
+                    <div className="grid grid-cols-2 gap-2.5 w-full mt-auto">
+                      <button className="group/btn relative px-3 py-2.5 bg-[#22C55E] text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] shadow-lg shadow-green-100 hover:shadow-green-200 transition-all active:scale-95 overflow-hidden flex items-center justify-center gap-1.5">
+                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
+                        <Phone className="w-3 h-3 relative z-10" />
+                        <span className="relative z-10">Call</span>
                       </button>
-                      <button className="group/btn flex items-center justify-center gap-1.5 bg-gradient-to-r from-saffron to-maroon hover:from-saffron-dark hover:to-maroon-dark text-white py-2 rounded-lg font-bold text-xs shadow transition-all duration-300">
-                        <MessageCircle className="w-3.5 h-3.5 group-hover/btn:animate-bounce" />
-                        Chat
+                      <button className="group/btn relative px-3 py-2.5 bg-[#E8453C] text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] shadow-lg shadow-red-100 hover:shadow-red-200 transition-all active:scale-95 overflow-hidden flex items-center justify-center gap-1.5">
+                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
+                        <MessageCircle className="w-3 h-3 relative z-10" />
+                        <span className="relative z-10">Chat</span>
                       </button>
                     </div>
                   </div>
 
-                  {hoveredCard === index && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-gold/15 to-transparent pointer-events-none rounded-2xl" />
-                  )}
+                  {/* Subtle Background Mandala */}
+                  <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover/card:opacity-[0.08] transition-opacity duration-700 pointer-events-none">
+                    <Sparkles className="w-40 h-40 text-[#FFC107]" />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
+          {/* Mobile Carousel - Updated with Match Design */}
           <div className="lg:hidden relative">
-            <div className="overflow-hidden rounded-2xl">
-              <div 
-                className="flex transition-transform duration-400 ease-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
+            <div className="overflow-hidden">
+              <div className="flex transition-transform duration-300 ease-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                 {astrologers.map((astrologer) => (
                   <div key={astrologer.id} className="w-full flex-shrink-0 px-3">
-                    <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
-                      <div className="relative h-56 bg-cover">
-                        <img
-                          src={astrologer.image}
-                          alt={astrologer.name}
-                          className="w-full h-full "
-                        />
-                        
-                        {astrologer.online && (
-                          <div className="absolute top-3 right-3 flex items-center gap-1 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                            <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                            Online
-                          </div>
-                        )}
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="relative bg-[#FFFCF5] rounded-[2rem] overflow-hidden border-2 border-[#FFC107]/20 shadow-lg flex flex-col">
+                      {/* Mobile Image Side */}
+                      <div className="relative p-2.5 pb-0">
+                        <div className="relative h-48 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
+                          <img src={astrologer.image} alt={astrologer.name} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13] via-transparent to-transparent opacity-60" />
+                        </div>
                       </div>
-
-                      <div className="p-4">
-                        <h4 className="text-xl font-bold text-maroon mb-1.5 font-serif">
-                          {astrologer.name}
-                        </h4>
-
-                        <div className="flex items-center gap-1.5 mb-2.5">
-                          <div className="flex items-center gap-1 bg-gold/20 px-1.5 py-0.5 rounded-md">
-                            <Star className="w-3.5 h-3.5 text-gold fill-gold" />
-                            <span className="text-xs font-bold text-maroon">{astrologer.rating}</span>
+                      <div className="p-6 text-center">
+                        <h4 className="text-lg font-serif font-black text-[#4A3427] mb-2 uppercase tracking-wide">{astrologer.name}</h4>
+                        <div className="flex items-center justify-center gap-3 mb-6">
+                          <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full shadow-sm border border-amber-100 font-black">
+                            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                            <span className="text-[10px] text-[#E8453C]">{astrologer.rating}</span>
                           </div>
-                          <span className="text-xs text-gray-600">({astrologer.reviews})</span>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{astrologer.reviews} Reviews</span>
                         </div>
-
-                        <div className="flex items-center gap-2.5 mb-2.5 text-xs text-gray-600">
-                          <div className="flex items-center gap-1">
-                            <Award className="w-3.5 h-3.5 text-saffron" />
-                            <span>{astrologer.experience}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <TrendingUp className="w-3.5 h-3.5 text-green-600" />
-                            <span>{astrologer.consultations}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap gap-1.5 mb-3">
-                          {astrologer.expertise.map((exp, idx) => (
-                            <span
-                              key={idx}
-                              className="text-[10px] bg-gradient-to-r from-saffron/10 to-maroon/10 text-maroon px-1.5 py-0.5 rounded-full border border-saffron/30"
-                            >
-                              {exp}
-                            </span>
-                          ))}
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-2.5">
-                          <button className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-lg font-bold text-xs shadow">
-                            <Phone className="w-4 h-4" />
-                            Call Now
+                        <div className="grid grid-cols-2 gap-3">
+                          <button className="flex items-center justify-center gap-2 bg-[#22C55E] text-white py-3.5 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-green-50">
+                            <Phone className="w-4 h-4" /> Call
                           </button>
-                          <button className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-saffron to-maroon text-white py-2.5 rounded-lg font-bold text-xs shadow">
-                            <MessageCircle className="w-4 h-4" />
-                            Chat Now
+                          <button className="flex items-center justify-center gap-2 bg-[#E8453C] text-white py-3.5 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-50">
+                            <MessageCircle className="w-4 h-4" /> Chat
                           </button>
                         </div>
                       </div>
@@ -338,114 +223,22 @@ const TalkToAstrologer = () => {
               </div>
             </div>
 
-            <button
-              onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2.5 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center text-maroon hover:bg-gold hover:text-white transition-all z-10"
-            >
-              <ChevronLeft className="w-4 h-4" />
+            <button onClick={prevSlide} className="absolute left-0 top-[40%] -translate-y-1/2 -translate-x-2 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center transition-all z-20 border border-amber-100">
+              <ChevronLeft className="w-5 h-5 text-[#E8453C]" />
             </button>
-
-            <button
-              onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2.5 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center text-maroon hover:bg-gold hover:text-white transition-all z-10"
-            >
-              <ChevronRight className="w-4 h-4" />
+            <button onClick={nextSlide} className="absolute right-0 top-[40%] -translate-y-1/2 translate-x-2 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center transition-all z-20 border border-amber-100">
+              <ChevronRight className="w-5 h-5 text-[#E8453C]" />
             </button>
-
-            <div className="flex justify-center gap-1.5 mt-4">
+            <div className="flex justify-center gap-1.5 mt-6">
               {astrologers.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    idx === currentSlide ? 'w-6 bg-gold' : 'w-1.5 bg-white/50'
-                  }`}
-                />
+                <button key={idx} onClick={() => setCurrentSlide(idx)} className="h-1.5 rounded-full transition-all duration-300" style={{ backgroundColor: RED, width: idx === currentSlide ? '1.5rem' : '0.375rem', opacity: idx === currentSlide ? 1 : 0.3 }} />
               ))}
             </div>
           </div>
         </div>
 
-        <div className={`text-center mt-8 transition-all duration-800 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="inline-flex flex-col sm:flex-row items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center animate-pulse">
-                <Video className="w-5 h-5 text-white" />
-              </div>
-              <div className="text-left">
-                <p className="text-gold text-xs">Available 24/7</p>
-                <p className="font-bold text-white text-base">First Consultation FREE</p>
-              </div>
-            </div>
-            
-            <button className="bg-gradient-to-r from-gold to-saffron hover:from-gold-dark hover:to-saffron-dark text-maroon px-6 py-2.5 rounded-lg font-bold shadow hover:shadow-xl transition-all duration-300 flex items-center gap-1.5 text-sm">
-              View All Astrologers
-              <Star className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
+
       </div>
-
-      <style jsx>{`
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.15; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.2); }
-        }
-
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.25; transform: scale(1); }
-          50% { opacity: 0.4; transform: scale(1.05); }
-        }
-
-        @keyframes pulse-slower {
-          0%, 100% { opacity: 0.15; transform: scale(1); }
-          50% { opacity: 0.3; transform: scale(1.08); }
-        }
-
-        @keyframes glow {
-          0%, 100% { box-shadow: 0 0 16px rgba(255, 215, 0, 0.4); }
-          50% { box-shadow: 0 0 32px rgba(255, 215, 0, 0.6); }
-        }
-
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
-        .animate-twinkle {
-          animation: twinkle ease-in-out infinite;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 4s ease-in-out infinite;
-        }
-
-        .animate-pulse-slower {
-          animation: pulse-slower 6s ease-in-out infinite;
-        }
-
-        .animate-glow {
-          animation: glow 2s ease-in-out infinite;
-        }
-
-        .animate-spin-slow {
-          animation: spin-slow 3s linear infinite;
-        }
-
-        .from-saffron { --tw-gradient-from: #FF9933; }
-        .to-saffron-dark { --tw-gradient-to: #FF6600; }
-        .from-maroon { --tw-gradient-from: #800000; }
-        .to-maroon-dark { --tw-gradient-to: #5C0000; }
-        .from-gold { --tw-gradient-from: #FFD700; }
-        .to-gold-dark { --tw-gradient-to: #DAA520; }
-        .bg-maroon { background-color: #800000; }
-        .bg-maroon-dark { background-color: #5C0000; }
-        .text-gold { color: #FFD700; }
-        .text-gold-light { color: #FFEAA7; }
-        .text-maroon { color: #800000; }
-        .border-gold { border-color: #FFD700; }
-        .shadow-gold { box-shadow: 0 8px 32px rgba(255, 215, 0, 0.25); }
-      `}</style>
     </div>
   );
 };

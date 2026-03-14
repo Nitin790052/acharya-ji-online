@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { House, ClipboardList, Grid2x2, Wallet, Compass, LayoutGrid, Bell, Settings, Info, X, LogOut ,User, ChevronRight,Calendar,Star,FileChartLine, MessageSquare, Truck, Wallet2, BellIcon, Settings2, Package, Tag} from "lucide-react";
+import { House, ClipboardList, Grid2x2, Wallet, Compass, LayoutGrid, Bell, Settings, Info, X, LogOut ,User, ChevronRight,Calendar,Star,FileChartLine, MessageSquare, Truck, Wallet2, BellIcon, Settings2, Package, Tag, HouseIcon, LayoutGridIcon, ClipboardListIcon, Users, BarChart} from "lucide-react";
 import  {useAuth}  from "@/app/vendor/auth/AuthContext";
 import path from "path";
 
@@ -55,24 +55,27 @@ const handleLogout = () => {
   { label: "Store Profile & KYC", path: "/vendor/dashboard/settings_puja", icon: <Settings2 /> },
 ],
 
-
   "Temple Services": [
-    { label: "Dashboard", path: "/vendor/dashboard", icon: <House size={20} /> },
-    { label: "Temple Bookings", path: "/vendor/dashboard/bookings", icon: <ClipboardList size={20} /> },
-    { label: "Donations", path: "/vendor/dashboard/donations", icon: <Wallet size={20} /> },
-    { label: "Events", path: "/vendor/dashboard/events", icon: <Grid2x2 size={20} /> },
-    { label: "Notifications", path: "/vendor/dashboard/notifications", icon: <Bell size={20} /> },
-    { label: "Profile & Settings", path: "/vendor/dashboard/settings", icon: <Settings size={20} /> },
-  ],
+  { label: "Dashboard", path: "/vendor/dashboard", icon: <HouseIcon size={20} /> },
+  { label: "Sevas / Pujas", path: "/vendor/dashboard/sevas_temple", icon: <LayoutGridIcon size={20} /> },
+  { label: "Bookings", path: "/vendor/dashboard/bookings_temple", icon: <ClipboardListIcon size={20} /> },
+  { label: "Donations", path: "/vendor/dashboard/donations_temple", icon: <Wallet size={20} /> },
+  { label: "Events", path: "/vendor/dashboard/events_temple", icon: <Grid2x2 size={20} /> },
+  { label: "Staff / Pandit", path: "/vendor/dashboard/staff_temple", icon: <Users size={20} /> },
+  { label: "Wallet & Accounts", path: "/vendor/dashboard/wallet_temple", icon: <Wallet2 size={20} /> },
+  { label: "Temple Settings", path: "/vendor/dashboard/settings_temple", icon: <Settings size={20} /> },
+],
 
   "Event Organizer": [
-    { label: "Dashboard", path: "/vendor/dashboard", icon: <House size={20} /> },
-    { label: "My Events", path: "/vendor/dashboard/events", icon: <Grid2x2 size={20} /> },
-    { label: "Bookings", path: "/vendor/dashboard/bookings", icon: <ClipboardList size={20} /> },
-    { label: "Wallet & Payments", path: "/vendor/dashboard/wallet", icon: <Wallet size={20} /> },
-    { label: "Notifications", path: "/vendor/dashboard/notifications", icon: <Bell size={20} /> },
-    { label: "Profile & Settings", path: "/vendor/dashboard/settings", icon: <Settings size={20} /> },
-  ],
+  { label: "Dashboard", path: "/vendor/dashboard", icon: <House size={20} /> },
+  { label: "Events", path: "/vendor/dashboard/events_Organizer", icon: <Grid2x2 size={20} /> },
+  { label: "Bookings / Registrations", path: "/vendor/dashboard/bookings_Organizer", icon: <ClipboardList size={20} /> },
+  { label: "Attendees", path: "/vendor/dashboard/attendees_Organizer", icon: <Users size={20} /> },
+  { label: "Wallet & Payments", path: "/vendor/dashboard/wallet_Organizer", icon: <Wallet size={20} /> },
+  { label: "Analytics", path: "/vendor/dashboard/analytics_Organizer", icon: <BarChart size={20} /> },
+  { label: "Profile & Settings", path: "/vendor/dashboard/settings_Organizer", icon: <Settings size={20} /> },
+]
+,
 
   "Spiritual Guide": [
     { label: "Dashboard", path: "/vendor/dashboard", icon: <House size={20} /> },

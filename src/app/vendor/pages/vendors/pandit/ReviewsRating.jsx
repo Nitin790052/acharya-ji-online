@@ -27,14 +27,14 @@ const ReviewsRating = () => {
   const [filter, setFilter] = useState('all'); // all, 5star, 4star, 3star, 2star, 1star
   const [sortBy, setSortBy] = useState('recent'); // recent, highest, lowest
   const [activeReview, setActiveReview] = useState(null);
-  
+
   // Reviews Data
   const reviewsData = {
     averageRating: 4.8,
     totalReviews: 42,
     responseRate: '85%',
     recentRating: 4.9,
-    
+
     ratingBreakdown: {
       5: 28,
       4: 10,
@@ -42,7 +42,7 @@ const ReviewsRating = () => {
       2: 1,
       1: 0
     },
-    
+
     reviews: [
       {
         id: 1,
@@ -111,7 +111,7 @@ const ReviewsRating = () => {
         helpful: 2
       }
     ],
-    
+
     tips: {
       punctuality: "Aim to reach 15 minutes before scheduled time",
       communication: "Send confirmation message 1 day before puja",
@@ -120,14 +120,14 @@ const ReviewsRating = () => {
       followUp: "Send thank you message after puja completion"
     }
   };
-  
+
   // Calculate percentages
   const totalReviewsCount = reviewsData.totalReviews;
   const ratingPercentages = {};
   Object.keys(reviewsData.ratingBreakdown).forEach(rating => {
     ratingPercentages[rating] = (reviewsData.ratingBreakdown[rating] / totalReviewsCount) * 100;
   });
-  
+
   // Filter and sort reviews
   const filteredReviews = reviewsData.reviews
     .filter(review => {
@@ -140,10 +140,10 @@ const ReviewsRating = () => {
       if (sortBy === 'lowest') return a.rating - b.rating;
       return 0;
     });
-  
+
   // Get low rating reviews (3 stars or below)
   const lowRatingReviews = reviewsData.reviews.filter(review => review.rating <= 3);
-  
+
   // Format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-IN', {
@@ -152,7 +152,7 @@ const ReviewsRating = () => {
       year: 'numeric'
     });
   };
-  
+
   // Render stars
   const renderStars = (rating) => {
     return (
@@ -160,15 +160,14 @@ const ReviewsRating = () => {
         {[...Array(5)].map((_, i) => (
           <Star
             key={i}
-            className={`w-4 h-4 ${
-              i < rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'
-            }`}
+            className={`w-4 h-4 ${i < rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'
+              }`}
           />
         ))}
       </div>
     );
   };
-  
+
   // Get rating color
   const getRatingColor = (rating) => {
     if (rating >= 4.5) return 'text-green-700 bg-green-50 border-green-200';
@@ -176,7 +175,7 @@ const ReviewsRating = () => {
     if (rating >= 3) return 'text-orange-500 bg-orange-50 border-orange-200';
     return 'text-red-700 bg-red-50 border-red-200';
   };
-  
+
   // Get rating label
   const getRatingLabel = (rating) => {
     if (rating >= 4.5) return 'Excellent';
@@ -185,43 +184,43 @@ const ReviewsRating = () => {
     if (rating >= 2) return 'Fair';
     return 'Poor';
   };
-  
+
   return (
     <div className="min-h-screen bg-gray-50">
-     <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40  
+      <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40  
                 px-3 py-1.5 border border-orange-100 mb-4">
-  
-  {/* Mobile: Column, Desktop: Row */}
-  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-    
-    {/* Title Section - Original size */}
-    <div className="text-left sm:text-left flex items-end gap-2">
-  <div>
-    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-semibold text-orange-900 uppercase
+
+        {/* Mobile: Column, Desktop: Row */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+
+          {/* Title Section - Original size */}
+          <div className="text-left sm:text-left flex items-end gap-2">
+            <div>
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-semibold text-orange-900 uppercase
                    leading-tight">
-      Reviews & Ratings
-    </h1>
-    {/* Mobile: Below heading, Desktop: Right side */}
-    <p className="sm:hidden text-sm text-gray-600 mt-0.5">
-    Build trust and improve through customer feedback
-    </p>
-  </div>
-  
-  {/* Desktop: Right side of heading */}
-  <p className="hidden sm:block text-sm text-gray-600 mb-0.5">
-  Build trust and improve through customer feedback
-  </p>
-</div>
-    
-   
-  </div>
-</div> 
+                Reviews & Ratings
+              </h1>
+              {/* Mobile: Below heading, Desktop: Right side */}
+              <p className="sm:hidden text-sm text-gray-600 mt-0.5">
+                Build trust and improve through customer feedback
+              </p>
+            </div>
+
+            {/* Desktop: Right side of heading */}
+            <p className="hidden sm:block text-sm text-gray-600 mb-0.5">
+              Build trust and improve through customer feedback
+            </p>
+          </div>
+
+
+        </div>
+      </div>
       {/* Main Content - आपके spacing guidelines के according */}
       <div className="space-y-4 px-6 pb-6 pt-2">
         {/* Page Header */}
         <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-3">
-         
-          
+
+
           <div className="flex items-center gap-2">
             <button className="px-3 py-1.5 text-sm bg-white text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center gap-2">
               <Download className="w-4 h-4" />
@@ -233,7 +232,7 @@ const ReviewsRating = () => {
             </button>
           </div>
         </div>
-        
+
         {/* Rating Overview Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {/* Average Rating */}
@@ -261,7 +260,7 @@ const ReviewsRating = () => {
               {renderStars(Math.round(reviewsData.averageRating))}
             </div>
           </div>
-          
+
           {/* Total Reviews */}
           <div className="bg-white rounded-lg border border-gray-200 p-3">
             <div className="flex items-center justify-between mb-2">
@@ -279,7 +278,7 @@ const ReviewsRating = () => {
             <div className="text-xl font-bold text-gray-800">{reviewsData.totalReviews}</div>
             <div className="text-sm text-gray-500 mt-2">Last 30 days: +8 reviews</div>
           </div>
-          
+
           {/* Response Rate */}
           <div className="bg-white rounded-lg border border-gray-200 p-3">
             <div className="flex items-center justify-between mb-2">
@@ -294,7 +293,7 @@ const ReviewsRating = () => {
             <div className="text-xl font-bold text-gray-800">{reviewsData.responseRate}</div>
             <div className="text-sm text-gray-500 mt-2">You respond to most reviews</div>
           </div>
-          
+
           {/* Recent Rating */}
           <div className="bg-white rounded-lg border border-gray-200 p-3">
             <div className="flex items-center justify-between mb-2">
@@ -313,7 +312,7 @@ const ReviewsRating = () => {
             <div className="text-sm text-gray-500 mt-2">Last 10 reviews average</div>
           </div>
         </div>
-        
+
         {/* Rating Breakdown & Tips Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Left Column - Rating Breakdown */}
@@ -323,7 +322,7 @@ const ReviewsRating = () => {
               <div className="p-3 border-b border-gray-200">
                 <h3 className="text-[15px] font-bold text-gray-800">Rating Breakdown</h3>
               </div>
-              
+
               <div className="p-3">
                 <div className="space-y-3">
                   {[5, 4, 3, 2, 1].map((rating) => (
@@ -334,13 +333,13 @@ const ReviewsRating = () => {
                           <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                         </div>
                         <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className="h-full bg-yellow-500 rounded-full"
                             style={{ width: `${ratingPercentages[rating] || 0}%` }}
                           ></div>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-3">
                         <span className="text-sm text-gray-700">
                           {reviewsData.ratingBreakdown[rating] || 0}
@@ -360,7 +359,7 @@ const ReviewsRating = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Improvement Tips (Show only if low ratings exist) */}
             {lowRatingReviews.length > 0 && (
               <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 rounded-lg border border-orange-200 p-3">
@@ -373,7 +372,7 @@ const ReviewsRating = () => {
                     <p className="text-sm text-gray-600">Based on your {lowRatingReviews.length} lower-rated reviews</p>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {Object.entries(reviewsData.tips).map(([key, tip]) => (
                     <div key={key} className="bg-white/60 rounded-lg p-3 border border-orange-200">
@@ -389,7 +388,7 @@ const ReviewsRating = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="mt-3 text-sm text-gray-700">
                   <span className="font-medium">Most common feedback: </span>
                   {lowRatingReviews.some(r => r.comment.toLowerCase().includes('punctuality')) && 'Punctuality • '}
@@ -399,13 +398,13 @@ const ReviewsRating = () => {
               </div>
             )}
           </div>
-          
+
           {/* Right Column - Filter & Sort */}
           <div className="space-y-4">
             {/* Filter & Sort Card */}
             <div className="bg-white rounded-lg border border-gray-200 p-3">
               <h3 className="text-[15px] font-bold text-gray-800 mb-3">Filter & Sort</h3>
-              
+
               {/* Rating Filter */}
               <div className="mb-4">
                 <div className="text-sm font-medium text-gray-700 mb-2">Rating</div>
@@ -421,18 +420,17 @@ const ReviewsRating = () => {
                     <button
                       key={item.value}
                       onClick={() => setFilter(item.value)}
-                      className={`px-2.5 py-1 text-sm rounded-lg border ${
-                        filter === item.value
+                      className={`px-2.5 py-1 text-sm rounded-lg border ${filter === item.value
                           ? 'bg-orange-50 text-orange-600 border-orange-300'
                           : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                      }`}
+                        }`}
                     >
                       {item.label}
                     </button>
                   ))}
                 </div>
               </div>
-              
+
               {/* Sort By */}
               <div>
                 <div className="text-sm font-medium text-gray-700 mb-2">Sort By</div>
@@ -445,11 +443,10 @@ const ReviewsRating = () => {
                     <button
                       key={item.value}
                       onClick={() => setSortBy(item.value)}
-                      className={`w-full px-3 py-1.5 text-sm rounded-lg border flex items-center justify-between ${
-                        sortBy === item.value
+                      className={`w-full px-3 py-1.5 text-sm rounded-lg border flex items-center justify-between ${sortBy === item.value
                           ? 'bg-blue-50 text-blue-600 border-blue-300'
                           : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                      }`}
+                        }`}
                     >
                       <span>{item.label}</span>
                       {sortBy === item.value && <CheckCircle className="w-4 h-4" />}
@@ -457,7 +454,7 @@ const ReviewsRating = () => {
                   ))}
                 </div>
               </div>
-              
+
               {/* Stats Summary */}
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <div className="text-sm text-gray-600 mb-2">Showing {filteredReviews.length} of {reviewsData.totalReviews} reviews</div>
@@ -472,11 +469,11 @@ const ReviewsRating = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Quick Actions */}
             <div className="bg-white rounded-lg border border-gray-200 p-3">
               <h3 className="text-[15px] font-bold text-gray-800 mb-3">Quick Actions</h3>
-              
+
               <div className="space-y-2">
                 <button className="w-full px-3 py-2 text-sm bg-white text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center justify-between">
                   <span className="flex items-center gap-2">
@@ -487,7 +484,7 @@ const ReviewsRating = () => {
                     {reviewsData.reviews.filter(r => !r.replied).length}
                   </span>
                 </button>
-                
+
                 <button className="w-full px-3 py-2 text-sm bg-white text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <Download className="w-4 h-4" />
@@ -495,7 +492,7 @@ const ReviewsRating = () => {
                   </span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
-                
+
                 <button className="w-full px-3 py-2 text-sm bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <TrendingUp className="w-4 h-4" />
@@ -507,7 +504,7 @@ const ReviewsRating = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Reviews List */}
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="p-3 border-b border-gray-200">
@@ -518,7 +515,7 @@ const ReviewsRating = () => {
                   ({filteredReviews.length} reviews)
                 </span>
               </h3>
-              
+
               <div className="flex items-center gap-2">
                 <button className="px-2.5 py-1.5 text-sm bg-white text-gray-800 rounded border border-gray-300 hover:bg-gray-50 flex items-center gap-2">
                   <Filter className="w-4 h-4" />
@@ -531,7 +528,7 @@ const ReviewsRating = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="divide-y divide-gray-100">
             {filteredReviews.length > 0 ? (
               filteredReviews.map((review) => (
@@ -548,16 +545,15 @@ const ReviewsRating = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
-                      <div className={`px-2 py-0.5 rounded-full text-xs ${
-                        review.rating >= 4 ? 'bg-green-50 text-green-700' :
-                        review.rating >= 3 ? 'bg-orange-50 text-orange-500' :
-                        'bg-red-50 text-red-700'
-                      }`}>
+                      <div className={`px-2 py-0.5 rounded-full text-xs ${review.rating >= 4 ? 'bg-green-50 text-green-700' :
+                          review.rating >= 3 ? 'bg-orange-50 text-orange-500' :
+                            'bg-red-50 text-red-700'
+                        }`}>
                         {review.rating}.0
                       </div>
-                      <button 
+                      <button
                         onClick={() => setActiveReview(activeReview === review.id ? null : review.id)}
                         className="p-1 hover:bg-gray-100 rounded"
                       >
@@ -565,28 +561,28 @@ const ReviewsRating = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="mb-2">
                     {renderStars(review.rating)}
                   </div>
-                  
+
                   <div className="text-sm text-gray-800 mb-3">
                     {review.comment}
                   </div>
-                  
+
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-4 text-sm">
                       <div className="text-gray-600 flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         {review.date}
                       </div>
-                      
+
                       <button className="text-gray-600 hover:text-gray-800 flex items-center gap-1">
                         <ThumbsUp className="w-3 h-3" />
                         Helpful ({review.helpful})
                       </button>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                       {!review.replied && (
                         <button className="px-2.5 py-1 text-xs bg-blue-50 text-blue-600 rounded border border-blue-200 hover:bg-blue-100 flex items-center gap-1">
@@ -594,14 +590,14 @@ const ReviewsRating = () => {
                           Reply
                         </button>
                       )}
-                      
+
                       <button className="px-2.5 py-1 text-xs bg-red-50 text-red-700 rounded border border-red-200 hover:bg-red-100 flex items-center gap-1">
                         <Flag className="w-3 h-3" />
                         Report
                       </button>
                     </div>
                   </div>
-                  
+
                   {/* Reply Section */}
                   {review.reply && (
                     <div className="mt-3 ml-4 pl-4 border-l-2 border-orange-300">
@@ -622,7 +618,7 @@ const ReviewsRating = () => {
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Action Menu */}
                   {activeReview === review.id && (
                     <div className="mt-2 bg-gray-50 rounded-lg p-2">
@@ -648,8 +644,8 @@ const ReviewsRating = () => {
                 </div>
                 <h3 className="text-[15px] font-semibold text-gray-800 mb-1">No reviews found</h3>
                 <p className="text-sm text-gray-600">
-                  {filter === 'all' 
-                    ? 'No reviews available' 
+                  {filter === 'all'
+                    ? 'No reviews available'
                     : `No ${filter.replace('star', ' star')} reviews`
                   }
                 </p>
@@ -665,7 +661,7 @@ const ReviewsRating = () => {
             )}
           </div>
         </div>
-        
+
         {/* Response Stats */}
         <div className="bg-white rounded-lg border border-gray-200 p-3">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -679,7 +675,7 @@ const ReviewsRating = () => {
                 Good engagement
               </div>
             </div>
-            
+
             <div className="text-center p-2">
               <div className="text-xl font-bold text-gray-800">24h</div>
               <div className="text-sm text-gray-600">Avg. Response Time</div>
@@ -688,7 +684,7 @@ const ReviewsRating = () => {
                 Aim for 12h
               </div>
             </div>
-            
+
             <div className="text-center p-2">
               <div className="text-xl font-bold text-gray-800">
                 {Math.round((reviewsData.reviews.filter(r => r.rating >= 4).length / reviewsData.totalReviews) * 100)}%
@@ -701,18 +697,18 @@ const ReviewsRating = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Help & Guidelines */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h4 className="text-sm font-medium text-gray-800 mb-1">💡 Tips for Better Reviews</h4>
+              <h4 className="text-sm font-medium text-gray-800 mb-1 flex items-center gap-1.5"><Sparkles className="w-4 h-4 text-blue-500" /> Tips for Better Reviews</h4>
               <p className="text-sm text-gray-600">
                 Always respond professionally to negative reviews. Thank customers for positive reviews.
                 Use feedback to improve your service quality.
               </p>
             </div>
-            
+
             <button className="px-3 py-1.5 text-sm bg-white text-gray-800 rounded-lg border border-gray-300 hover:bg-gray-50">
               View Guidelines
             </button>

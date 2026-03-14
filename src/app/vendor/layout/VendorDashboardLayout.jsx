@@ -8,7 +8,7 @@ const VendorDashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
@@ -28,7 +28,7 @@ const VendorDashboardLayout = () => {
         </div>
 
         {/* Main Content Area - Flex container */}
-        <div className="flex-1 flex flex-col min-h-0 w-full">
+        <div className="flex-1 flex flex-col min-h-0 w-full max-w-full overflow-x-hidden">
           {/* Header - Fixed height */}
           <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
           

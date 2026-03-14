@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Play, ExternalLink, Calendar, MapPin, Award, Newspaper, Video, Users, Instagram, Facebook, Youtube, X } from 'lucide-react';
+import { Link } from "react-router-dom";
+import {
+  Play, ExternalLink, Calendar, MapPin, Award, Newspaper,
+  Video, Users, Instagram, Facebook, Youtube, X,
+  Sparkle, Sparkles, Star, CheckCircle, Shield,
+  ChevronRight, Phone, BookOpen, Clock, Heart, Globe
+} from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import banner from "../assets/banners/bannerMedia.png"
 import image1 from "../assets/mediaPage/imageM1.png"
@@ -37,8 +43,8 @@ const Media = () => {
         excerpt: 'Practical Vastu solutions for contemporary living spaces without major renovations.',
         publication: 'Home & Living Magazine',
         date: '3 Jan 2025',
-        image: 
-        image8,
+        image:
+          image8,
         link: '#'
       },
       {
@@ -48,8 +54,8 @@ const Media = () => {
         excerpt: 'How traditional Vedic practices are helping people navigate contemporary challenges.',
         publication: 'Daily Dharma',
         date: '28 Nov 2024',
-        image: 
-        image7,
+        image:
+          image7,
         link: '#'
       }
     ],
@@ -204,75 +210,132 @@ const Media = () => {
   };
 
   const NewsCard = ({ item }) => (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <img src={item.image} alt={item.title} className="w-full h-48 bg-cover" />
-      <div className="p-5">
-        <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
-          <Newspaper className="w-4 h-4" />
-          <span className="font-medium">{item.publication}</span>
-        </div>
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{item.title}</h3>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{item.excerpt}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-500 flex items-center gap-1">
-            <Calendar className="w-3 h-3" />
-            {item.date}
-          </span>
-          <button className="text-orange-600 hover:text-orange-700 text-sm font-medium flex items-center gap-1">
-            Read Article <ExternalLink className="w-3 h-3" />
-          </button>
+    <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
+      <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 hover:shadow-amber-200/30 flex flex-col">
+        <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
+
+          <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
+            <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+            <div className="absolute top-3 left-3 px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 text-[10px] text-white font-bold uppercase tracking-wider">
+              {item.publication}
+            </div>
+          </div>
+
+          <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
+            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
+              {item.title}
+            </h3>
+
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+              <Sparkle className="w-4 h-4 text-amber-500 group-hover/card:rotate-90 transition-transform duration-700" />
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+            </div>
+
+            <p className="text-gray-600 text-xs font-semibold mb-4 line-clamp-2 leading-relaxed italic">
+              "{item.excerpt}"
+            </p>
+
+            <div className="mt-auto flex items-center justify-between border-t border-amber-100 pt-4">
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                {item.date}
+              </span>
+              <a href={item.link} className="text-amber-600 hover:text-amber-700 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+                Read More <ChevronRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 
   const VideoCard = ({ item }) => (
-    <div 
-      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+    <div
+      className="group/card h-full cursor-pointer animate-fade-in-up"
+      style={{ animationFillMode: 'both' }}
       onClick={() => setSelectedVideo(item)}
     >
-      <div className="relative">
-        <img src={item.thumbnail} alt={item.title} className="w-full h-48 bg-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center group-hover:bg-opacity-50 transition-all">
-          <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-            <Play className="w-6 h-6 text-white ml-1" fill="white" />
+      <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 flex flex-col">
+        <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+          <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10 group/video">
+            <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover/video:bg-black/50 transition-all">
+              <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full border border-white/40 flex items-center justify-center group-hover/video:scale-110 transition-transform shadow-2xl">
+                <Play className="w-6 h-6 text-white ml-1 fill-white" />
+              </div>
+            </div>
+            <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-lg border border-white/20">
+              {item.duration}
+            </div>
           </div>
-        </div>
-        <span className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-          {item.duration}
-        </span>
-      </div>
-      <div className="p-5">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{item.title}</h3>
-        <div className="flex items-center justify-between text-sm text-gray-600">
-          <span>{item.views} views</span>
-          <span className="flex items-center gap-1">
-            <Calendar className="w-3 h-3" />
-            {item.date}
-          </span>
+
+          <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
+            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
+              {item.title}
+            </h3>
+
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+              <Video className="w-4 h-4 text-amber-500" />
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+            </div>
+
+            <div className="mt-auto flex items-center justify-between border-t border-amber-100 pt-4">
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                {item.views} views
+              </span>
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                {item.date}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 
   const EventCard = ({ item }) => (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <img src={item.image} alt={item.title} className="w-full h-48 bg-cover" />
-      <div className="p-5">
-        <div className="flex items-center gap-2 text-sm text-purple-600 mb-2">
-          <Users className="w-4 h-4" />
-          <span className="font-medium">{item.attendees} attendees</span>
-        </div>
-        <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-        <p className="text-gray-600 text-sm mb-3">{item.description}</p>
-        <div className="space-y-2 text-sm text-gray-500">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
-            <span>{item.location}</span>
+    <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
+      <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 flex flex-col">
+        <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+          <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
+            <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+            <div className="absolute top-3 left-3 px-3 py-1 bg-orange-600 text-white text-[10px] font-bold rounded-full border border-orange-400 shadow-lg uppercase tracking-wider">
+              {item.attendees} attendees
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            <span>{item.date}</span>
+
+          <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
+            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 uppercase group-hover/card:text-amber-600 transition-colors">
+              {item.title}
+            </h3>
+
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+              <Users className="w-4 h-4 text-amber-500" />
+              <div className="h-[1px] w-8 bg-amber-200 group-hover/card:w-12 transition-all duration-700" />
+            </div>
+
+            <p className="text-gray-600 text-xs font-semibold mb-4 line-clamp-2 leading-relaxed">
+              {item.description}
+            </p>
+
+            <div className="mt-auto space-y-2 border-t border-amber-100 pt-4">
+              <div className="flex items-center justify-center gap-2 text-gray-500 text-[10px] font-bold uppercase tracking-wider">
+                <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                <span>{item.location}</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 text-gray-500 text-[10px] font-bold uppercase tracking-wider">
+                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                <span>{item.date}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -280,17 +343,32 @@ const Media = () => {
   );
 
   const AwardCard = ({ item }) => (
-    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 p-6">
-      <div className="flex items-start gap-4">
-        <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
-          <Award className="w-8 h-8 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
-          <p className="text-gray-600 text-sm mb-2">{item.organization}</p>
-          <span className="inline-block bg-orange-600 text-white text-xs px-3 py-1 rounded-full">
-            {item.year}
-          </span>
+    <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
+      <div className="relative h-full p-[1.5px] rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 hover:shadow-2xl transition-all duration-500 flex flex-col">
+        <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col p-6 group-hover/card:bg-white transition-all">
+          <div className="flex flex-col items-center text-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center mb-4 shadow-inner group-hover/card:scale-110 transition-transform duration-500">
+              <Award className="w-10 h-10 text-amber-600" />
+            </div>
+
+            <h3 className="text-lg font-black text-[#2A1D13] mb-1 uppercase tracking-wide">
+              {item.title}
+            </h3>
+
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="h-[1px] w-6 bg-amber-300" />
+              <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+              <div className="h-[1px] w-6 bg-amber-300" />
+            </div>
+
+            <p className="text-gray-600 text-xs font-bold uppercase mb-4 tracking-widest">{item.organization}</p>
+
+            <div className="mt-auto">
+              <span className="inline-block bg-[#2A1D13] text-amber-400 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg">
+                Year: {item.year}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -303,19 +381,33 @@ const Media = () => {
       facebook: Facebook
     };
     const PlatformIcon = platformIcons[item.platform];
-    
+
     return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-        <img src={item.image} alt={item.title} className="w-full h-48 bg-cover" />
-        <div className="p-5">
-          <div className="flex items-center gap-2 text-sm text-blue-600 mb-2">
-            <PlatformIcon className="w-4 h-4" />
-            <span className="font-medium capitalize">{item.platform}</span>
-          </div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-          <div className="flex items-center justify-between text-sm text-gray-600">
-            <span>{item.engagement}</span>
-            <span>{item.date}</span>
+      <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
+        <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl flex flex-col">
+          <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
+            <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
+              <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+              <div className="absolute inset-0 bg-black/30 group-hover/card:bg-black/40 transition-all" />
+              <div className="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 flex items-center justify-center">
+                <PlatformIcon className="w-4 h-4 text-white" />
+              </div>
+            </div>
+
+            <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
+              <h3 className="text-base font-black text-[#2A1D13] mb-3 uppercase group-hover/card:text-amber-600 transition-colors">
+                {item.title}
+              </h3>
+
+              <div className="mt-auto flex items-center justify-between border-t border-amber-100 pt-4">
+                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                  {item.engagement}
+                </span>
+                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                  {item.date}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -334,150 +426,198 @@ const Media = () => {
   };
 
   return (
-   <Layout>
-     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
-      {/* Hero Section */}
-<div className="relative text-white py-20 overflow-hidden">
+    <Layout>
+      <div className="min-h-screen bg-[#FAF9F6] relative overflow-hidden">
+        {/* Divine Background Ornaments (consistent with About page) */}
+        <div className="absolute top-[20%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={banner}
-      alt="Acharya Ji Media Coverage"
-      className="w-full h-full object-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
+        {/* Hero Section (About page style) */}
+        <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+          <div className="absolute inset-0">
+            <img src={banner} alt="Background" className="w-full h-full object-cover object-center" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
+            <div className="absolute inset-0 backdrop-blur-[1px]" />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <Award className="w-4 h-4 text-[#FFC107]" />
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                Acharya Ji in <br />
+                <span className="text-yellow-300">Media & Public Platforms</span>
+              </h1>
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-4 drop-shadow">
+                Spreading Vedic wisdom, performing sacred rituals, and guiding thousands through traditional wisdom and spiritual enlightenment.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    {/* Single Professional Overlay (KEY PART) */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55" />
-  </div>
-
-  {/* Content */}
-  <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-    <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-      Acharya Ji in Media & Public Platforms
-    </h1>
-
-    <p className="text-xl text-orange-100 max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-      Spreading Vedic wisdom through trusted media channels and digital platforms
-    </p>
-
-    {/* Stats */}
-    <div className="flex flex-wrap justify-center gap-8 mt-12">
-      {[
-        { value: '50K+', label: 'YouTube Subscribers' },
-        { value: '35K+', label: 'Instagram Followers' },
-        { value: '100+', label: 'Media Features' },
-        { value: '25+', label: 'Public Events' }
-      ].map((item, i) => (
-        <div
-          key={i}
-          className="bg-black/30 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 shadow-lg"
-        >
-          <div className="text-3xl font-bold">{item.value}</div>
-          <div className="text-orange-200 text-sm">{item.label}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
-
-
-      {/* Filter Tabs */}
-      <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex overflow-x-auto scrollbar-hide gap-4 py-4">
-            {filters.map(filter => {
-              const Icon = filter.icon;
-              return (
-                <button
-                  key={filter.id}
-                  onClick={() => setActiveFilter(filter.id)}
-                  className={`flex items-center gap-2 px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap ${
-                    activeFilter === filter.id
-                      ? 'bg-orange-600 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+        {/* Stats Section (Premium Cards) */}
+        <section className="py-12 md:py-16 -mt-10 relative z-20">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+              {[
+                { value: '50K+', label: 'Subscribers', icon: Youtube },
+                { value: '35K+', label: 'Followers', icon: Instagram },
+                { value: '100+', label: 'Features', icon: Newspaper },
+                { value: '25+', label: 'Public Events', icon: Users }
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="bg-white/80 backdrop-blur-xl px-8 py-5 rounded-2xl border-b-4 border-orange-500 shadow-xl flex flex-col items-center min-w-[160px] group hover:-translate-y-2 transition-transform animate-fade-in-up"
+                  style={{ animationDelay: `${i * 0.1}s`, animationFillMode: 'both' }}
                 >
-                  <Icon className="w-4 h-4" />
-                  {filter.label}
-                </button>
-              );
-            })}
+                  <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3 group-hover:bg-orange-600 transition-colors">
+                    <item.icon className="w-5 h-5 text-orange-600 group-hover:text-white" />
+                  </div>
+                  <div className="text-2xl font-black text-[#2A1D13]">{item.value}</div>
+                  <div className="text-orange-600 text-[10px] font-black uppercase tracking-widest">{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Filter Tabs (Refined Style) */}
+        <div className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur-md border-b border-orange-100/50 mb-12">
+          <div className="container mx-auto px-4 overflow-x-auto">
+            <div className="flex justify-center gap-3 py-6 min-w-max">
+              {filters.map(filter => {
+                const Icon = filter.icon;
+                const isActive = activeFilter === filter.id;
+                return (
+                  <button
+                    key={filter.id}
+                    onClick={() => setActiveFilter(filter.id)}
+                    className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 border ${isActive
+                      ? 'bg-[#2A1D13] text-amber-400 border-[#2A1D13] shadow-lg -translate-y-0.5'
+                      : 'bg-white text-gray-600 border-orange-100 hover:border-orange-200 hover:bg-orange-50/50'
+                      }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-amber-400' : 'text-orange-600'}`} />
+                    {filter.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Media Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getFilteredItems().map(item => renderCard(item))}
-        </div>
+        {/* Media Grid */}
+        <section className="pb-20">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {getFilteredItems().map(item => renderCard(item))}
+            </div>
 
-        {getFilteredItems().length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">No content available in this category yet.</p>
+            {getFilteredItems().length === 0 && (
+              <div
+                className="text-center py-12 md:py-16 flex flex-col items-center animate-fade-in"
+              >
+                <Sparkles className="w-12 h-12 text-orange-200 mb-4" />
+                <p className="text-gray-400 font-bold uppercase tracking-widest">Divine content arriving soon...</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* CTA Section (Matched to About page) */}
+        <section className="py-12 md:py-16 bg-white border-t border-orange-50">
+          <div className="container mx-auto px-4 text-center max-w-5xl">
+            <div className="animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+                <Heart className="w-3.5 h-3.5" />
+                <span>Spiritual Connection</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">
+                Experience the <span className="text-[#E8453C]">Divine Grace</span>
+              </h2>
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="w-10 h-[1.5px] bg-orange-200" />
+                <Sparkles className="w-5 h-5 text-orange-400" />
+                <div className="w-10 h-[1.5px] bg-orange-200" />
+              </div>
+              <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">
+                Join Acharya Ji's spiritual family and discover the profound impact of
+                authentic Vedic rituals and divine guidance in your life.
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to="/puja/online">
+                  <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center gap-2.5">
+                      <Calendar className="w-4 h-4" /> Book Sacred Puja
+                    </span>
+                  </button>
+                </Link>
+                <Link to="/contact">
+                  <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center gap-2.5">
+                      <Phone className="w-4 h-4" /> professional Consultation
+                    </span>
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Video Modal (Consistent styling) */}
+        {selectedVideo && (
+          <div
+            className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
+            onClick={() => setSelectedVideo(null)}
+          >
+            <div
+              className="bg-[#FCFBF7] rounded-3xl max-w-4xl w-full overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-amber-200/50 animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-5 border-b border-amber-100 flex items-center justify-between bg-white">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-8 bg-orange-600 rounded-full" />
+                  <h3 className="font-black text-[#2A1D13] text-sm md:text-base uppercase tracking-wider">{selectedVideo.title}</h3>
+                </div>
+                <button
+                  onClick={() => setSelectedVideo(null)}
+                  className="p-2 hover:bg-orange-50 rounded-full transition-colors group"
+                >
+                  <X className="w-6 h-6 text-gray-400 group-hover:text-orange-600 transition-colors" />
+                </button>
+              </div>
+              <div className="aspect-video bg-black flex items-center justify-center">
+                <iframe
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                  title={selectedVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-6 bg-white flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <span className="text-xs font-black text-gray-400 uppercase tracking-widest">{selectedVideo.views} Views</span>
+                  <div className="w-1 h-1 bg-gray-300 rounded-full" />
+                  <span className="text-xs font-black text-orange-600 uppercase tracking-widest">{selectedVideo.date}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest">Acharya Ji Official</span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
-
-      {/* Conversion CTA Section */}
-      <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-16 mt-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Want Personal Guidance from Acharya Ji?</h2>
-          <p className="text-orange-100 text-lg mb-8">
-            Get expert consultation on astrology, vastu, puja services, and spiritual guidance
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-white text-orange-600 px-8 py-3 rounded-lg font-bold hover:bg-orange-50 transition-colors">
-              Book Consultation
-            </button>
-            <button className="bg-green-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-600 transition-colors flex items-center gap-2">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              WhatsApp Chat
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-orange-600 transition-colors">
-              Book Puja
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Video Modal */}
-      {selectedVideo && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedVideo(null)}
-        >
-          <div className="bg-white rounded-lg max-w-4xl w-full overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <div className="p-4 border-b flex items-center justify-between">
-              <h3 className="font-bold text-lg">{selectedVideo.title}</h3>
-              <button 
-                onClick={() => setSelectedVideo(null)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="aspect-video bg-gray-900 flex items-center justify-center">
-              <iframe
-                className="w-full h-full"
-                src={`https://www.youtube.com/embed/${selectedVideo.videoId}`}
-                title={selectedVideo.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-   </Layout>
+    </Layout>
   );
 };
 

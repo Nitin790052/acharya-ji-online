@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
+import {
   Search,
   Filter,
   Download,
@@ -169,7 +169,7 @@ const Products = () => {
 
   // Categories
   const categories = ['All', 'Puja Kits', 'Decorations', 'Puja Items', 'Idols', 'Accessories', 'Utensils'];
-  
+
   // Puja Types
   const pujaTypes = ['Satyanarayan', 'Navratri', 'Ganesh Chaturthi', 'Diwali', 'Havan', 'General'];
 
@@ -208,12 +208,12 @@ const Products = () => {
         product.pujaType.toLowerCase().includes(query)
       );
     }
-    
+
     // Category filter
     if (categoryFilter !== 'all' && product.category !== categoryFilter) {
       return false;
     }
-    
+
     // Stock filter
     if (stockFilter === 'in-stock' && product.stock <= 0) {
       return false;
@@ -224,7 +224,7 @@ const Products = () => {
     if (stockFilter === 'low-stock' && (product.stock > 10 || product.stock <= 0)) {
       return false;
     }
-    
+
     return true;
   });
 
@@ -234,7 +234,7 @@ const Products = () => {
       addProduct: () => {
         if (editingProduct) {
           // Update existing product
-          setProducts(prev => prev.map(p => 
+          setProducts(prev => prev.map(p =>
             p.id === editingProduct.id ? { ...formData, id: editingProduct.id } : p
           ));
           setEditingProduct(null);
@@ -296,7 +296,7 @@ const Products = () => {
         }
       },
       toggleActive: (id) => {
-        setProducts(prev => prev.map(p => 
+        setProducts(prev => prev.map(p =>
           p.id === id ? { ...p, isActive: !p.isActive } : p
         ));
       },
@@ -315,7 +315,7 @@ const Products = () => {
             product.isActive ? 'Active' : 'Inactive'
           ].join(','))
         ].join('\n');
-        
+
         const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -346,13 +346,13 @@ const Products = () => {
         }
       },
       bulkActivate: () => {
-        setProducts(prev => prev.map(p => 
+        setProducts(prev => prev.map(p =>
           selectedProducts.includes(p.id) ? { ...p, isActive: true } : p
         ));
         setSelectedProducts([]);
       },
       bulkDeactivate: () => {
-        setProducts(prev => prev.map(p => 
+        setProducts(prev => prev.map(p =>
           selectedProducts.includes(p.id) ? { ...p, isActive: false } : p
         ));
         setSelectedProducts([]);
@@ -373,8 +373,8 @@ const Products = () => {
 
   // Toggle product selection
   const toggleProductSelection = (productId) => {
-    setSelectedProducts(prev => 
-      prev.includes(productId) 
+    setSelectedProducts(prev =>
+      prev.includes(productId)
         ? prev.filter(id => id !== productId)
         : [...prev, productId]
     );
@@ -401,7 +401,7 @@ const Products = () => {
 
   // Get status style
   const getStatusStyle = (isActive) => {
-    return isActive 
+    return isActive
       ? 'bg-green-50 text-green-700'
       : 'bg-gray-50 text-gray-600';
   };
@@ -413,7 +413,7 @@ const Products = () => {
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <div className="text-left sm:text-left flex-1 md:flex ">
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-semibold uppercase leading-tight text-orange-900">
-               Products Management
+              Products Management
             </h1>
             <p className="text-sm text-gray-600 mt-1 md:mt-2.5 lg:mt-2.5">
               Add & manage your puja items
@@ -500,27 +500,27 @@ const Products = () => {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
-                <button 
+                <button
                   onClick={() => handleAction('bulkActivate')}
                   className="px-3 py-1.5 text-sm rounded border bg-green-50 text-green-700 border-green-200 hover:bg-green-100"
                 >
                   Activate Selected
                 </button>
-                <button 
+                <button
                   onClick={() => handleAction('bulkDeactivate')}
                   className="px-3 py-1.5 text-sm rounded border bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
                 >
                   Deactivate Selected
                 </button>
-                <button 
+                <button
                   onClick={() => handleAction('bulkDelete')}
                   className="px-3 py-1.5 text-sm rounded border bg-red-50 text-red-700 border-red-200 hover:bg-red-100"
                 >
                   Delete Selected
                 </button>
-                <button 
+                <button
                   onClick={() => setSelectedProducts([])}
                   className="px-3 py-1.5 text-sm rounded border border-gray-300 hover:bg-gray-100"
                 >
@@ -538,7 +538,7 @@ const Products = () => {
               <h2 className="text-xl font-bold text-gray-800">
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h2>
-              <button 
+              <button
                 onClick={() => {
                   setShowAddForm(false);
                   setEditingProduct(null);
@@ -758,14 +758,14 @@ const Products = () => {
                 <h3 className="text-lg font-bold text-gray-800">
                   Bulk Upload Products
                 </h3>
-                <button 
+                <button
                   onClick={() => setShowBulkUpload(false)}
                   className="p-1 hover:bg-gray-100 rounded"
                 >
                   <XCircle className="w-5 h-5" />
                 </button>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="p-4 rounded-lg border-2 border-dashed border-gray-300">
                   <div className="text-center">
@@ -778,14 +778,14 @@ const Products = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <input
                   type="file"
                   accept=".csv"
                   onChange={handleCSVUpload}
                   className="w-full"
                 />
-                
+
                 <div className="flex justify-end gap-3 mt-6">
                   <button
                     onClick={() => setShowBulkUpload(false)}
@@ -877,21 +877,21 @@ const Products = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-2 mb-4 text-sm">
-          <button 
+          <button
             onClick={() => setShowAddForm(true)}
             className="px-4 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             Add Product
           </button>
-          <button 
+          <button
             onClick={() => setShowBulkUpload(true)}
             className="px-4 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-100 flex items-center gap-2"
           >
             <Upload className="w-4 h-4" />
             Bulk Upload
           </button>
-          <button 
+          <button
             onClick={() => handleAction('exportCSV')}
             className="px-4 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-100 flex items-center gap-2"
           >
@@ -909,7 +909,7 @@ const Products = () => {
                 <thead>
                   <tr className="text-left text-sm border-gray-200 bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40">
                     <th className="p-4">
-                      <button 
+                      <button
                         onClick={() => handleAction('selectAll')}
                         className="flex items-center gap-2"
                       >
@@ -942,12 +942,12 @@ const Products = () => {
                 </thead>
                 <tbody>
                   {filteredProducts.map(product => (
-                    <tr 
-                      key={product.id} 
+                    <tr
+                      key={product.id}
                       className="border-t border-gray-200 hover:bg-gray-50"
                     >
                       <td className="px-4 py-2.5">
-                        <button 
+                        <button
                           onClick={() => toggleProductSelection(product.id)}
                           className="flex items-center"
                         >
@@ -962,8 +962,8 @@ const Products = () => {
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100">
                             {product.image ? (
-                              <img 
-                                src={product.image} 
+                              <img
+                                src={product.image}
                                 alt={product.name}
                                 className="w-full h-full object-fill"
                               />
@@ -1006,32 +1006,32 @@ const Products = () => {
                       </td>
                       <td className="px-4 py-2.5">
                         <div className="flex items-center gap-1">
-                          <button 
+                          <button
                             onClick={() => handleAction('editProduct', product.id)}
                             className="p-1.5 rounded  hover:bg-yellow-200 "
                             title="Edit"
                           >
                             <Edit className="w-4 h-4" color='blue' />
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleAction('duplicateProduct', product.id)}
                             className="p-1.5 rounded  hover:bg-yellow-200 "
                             title="Duplicate"
                           >
-                            <Copy className="w-4 h-4" color='orange'/>
+                            <Copy className="w-4 h-4" color='orange' />
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleAction('toggleActive', product.id)}
                             className="p-1.5 rounded  hover:bg-yellow-200 "
                             title={product.isActive ? 'Deactivate' : 'Activate'}
                           >
                             {product.isActive ? (
-                              <XCircle className="w-4 h-4 " color='red'/>
+                              <XCircle className="w-4 h-4 " color='red' />
                             ) : (
                               <CheckCircle className="w-4 h-4" color='green' />
                             )}
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleAction('deleteProduct', product.id)}
                             className="p-1.5 rounded  hover:bg-yellow-200 "
                             title="Delete"
@@ -1063,121 +1063,121 @@ const Products = () => {
           </div>
         ) : (
           /* Grid View */
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-  {filteredProducts.map(product => (
-    <div 
-      key={product.id} 
-      className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200"
-    >
-      {/* Product Image - Mobile pe uper, full width */}
-      <div className="relative h-48 md:h-40 bg-gradient-to-br from-gray-50 to-gray-100">
-        {product.image ? (
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-fill"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-4xl">📦</span>
-          </div>
-        )}
-        {/* Selection Checkbox */}
-        <button 
-          onClick={() => toggleProductSelection(product.id)}
-          className="absolute top-2 left-2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1"
-        >
-          {selectedProducts.includes(product.id) ? (
-            <CheckSquare className="w-5 h-5 text-blue-600" />
-          ) : (
-            <Square className="w-5 h-5 text-gray-500" />
-          )}
-        </button>
-        {/* Status Badge */}
-        <div className="absolute top-2 right-2">
-          <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStockStatusStyle(product.stock)}`}>
-            {product.stock} units
-          </span>
-        </div>
-      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            {filteredProducts.map(product => (
+              <div
+                key={product.id}
+                className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200"
+              >
+                {/* Product Image - Mobile pe uper, full width */}
+                <div className="relative h-48 md:h-40 bg-gradient-to-br from-gray-50 to-gray-100">
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-fill"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Package className="w-10 h-10 text-gray-400" />
+                    </div>
+                  )}
+                  {/* Selection Checkbox */}
+                  <button
+                    onClick={() => toggleProductSelection(product.id)}
+                    className="absolute top-2 left-2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1"
+                  >
+                    {selectedProducts.includes(product.id) ? (
+                      <CheckSquare className="w-5 h-5 text-blue-600" />
+                    ) : (
+                      <Square className="w-5 h-5 text-gray-500" />
+                    )}
+                  </button>
+                  {/* Status Badge */}
+                  <div className="absolute top-2 right-2">
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStockStatusStyle(product.stock)}`}>
+                      {product.stock} units
+                    </span>
+                  </div>
+                </div>
 
-      {/* Product Info - Mobile pe neeche */}
-      <div className="p-3 md:p-4">
-        {/* Title and Status Row */}
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex-1">
-            <h3 className="font-bold text-gray-800 text-sm md:text-base">
-              {product.name}
-            </h3>
-            <p className="text-xs text-gray-600 mt-1">
-              {product.id} • {product.category}
-            </p>
-          </div>
-          <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusStyle(product.isActive)} ml-2`}>
-            {product.isActive ? 'Active' : 'Inactive'}
-          </span>
-        </div>
+                {/* Product Info - Mobile pe neeche */}
+                <div className="p-3 md:p-4">
+                  {/* Title and Status Row */}
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-800 text-sm md:text-base">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs text-gray-600 mt-1">
+                        {product.id} • {product.category}
+                      </p>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusStyle(product.isActive)} ml-2`}>
+                      {product.isActive ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
 
-        {/* Description */}
-        <p className="text-xs md:text-sm text-gray-700 mb-3 line-clamp-2">
-          {product.description}
-        </p>
+                  {/* Description */}
+                  <p className="text-xs md:text-sm text-gray-700 mb-3 line-clamp-2">
+                    {product.description}
+                  </p>
 
-        {/* Price and Details */}
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="font-bold text-base md:text-lg text-gray-800">
-              {formatCurrency(product.price)}
-            </div>
-            <div className="text-xs text-gray-600 flex items-center gap-1 mt-1">
-              <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">{product.weight}</span>
-              <span>•</span>
-              <span>{product.pujaType}</span>
-            </div>
-          </div>
-        </div>
+                  {/* Price and Details */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-bold text-base md:text-lg text-gray-800">
+                        {formatCurrency(product.price)}
+                      </div>
+                      <div className="text-xs text-gray-600 flex items-center gap-1 mt-1">
+                        <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">{product.weight}</span>
+                        <span>•</span>
+                        <span>{product.pujaType}</span>
+                      </div>
+                    </div>
+                  </div>
 
-        {/* Actions - Mobile pe better spacing */}
-        <div className="flex items-center justify-between mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200">
-          <div className="flex items-center gap-1 md:gap-2">
-            <button 
-              onClick={() => handleAction('editProduct', product.id)}
-              className="p-1.5 rounded hover:bg-blue-50 transition-colors"
-              title="Edit"
-            >
-              <Edit className="w-4 h-4 text-blue-600" />
-            </button>
-            <button 
-              onClick={() => handleAction('duplicateProduct', product.id)}
-              className="p-1.5 rounded hover:bg-orange-50 transition-colors"
-              title="Duplicate"
-            >
-              <Copy className="w-4 h-4 text-orange-600" />
-            </button>
-            <button 
-              onClick={() => handleAction('toggleActive', product.id)}
-              className="p-1.5 rounded hover:bg-gray-100 transition-colors"
-              title={product.isActive ? 'Deactivate' : 'Activate'}
-            >
-              {product.isActive ? (
-                <XCircle className="w-4 h-4 text-red-500" />
-              ) : (
-                <CheckCircle className="w-4 h-4 text-green-500" />
-              )}
-            </button>
+                  {/* Actions - Mobile pe better spacing */}
+                  <div className="flex items-center justify-between mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200">
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <button
+                        onClick={() => handleAction('editProduct', product.id)}
+                        className="p-1.5 rounded hover:bg-blue-50 transition-colors"
+                        title="Edit"
+                      >
+                        <Edit className="w-4 h-4 text-blue-600" />
+                      </button>
+                      <button
+                        onClick={() => handleAction('duplicateProduct', product.id)}
+                        className="p-1.5 rounded hover:bg-orange-50 transition-colors"
+                        title="Duplicate"
+                      >
+                        <Copy className="w-4 h-4 text-orange-600" />
+                      </button>
+                      <button
+                        onClick={() => handleAction('toggleActive', product.id)}
+                        className="p-1.5 rounded hover:bg-gray-100 transition-colors"
+                        title={product.isActive ? 'Deactivate' : 'Activate'}
+                      >
+                        {product.isActive ? (
+                          <XCircle className="w-4 h-4 text-red-500" />
+                        ) : (
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                        )}
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => handleAction('deleteProduct', product.id)}
+                      className="p-1.5 rounded hover:bg-red-50 transition-colors"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4 text-red-500" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <button 
-            onClick={() => handleAction('deleteProduct', product.id)}
-            className="p-1.5 rounded hover:bg-red-50 transition-colors"
-            title="Delete"
-          >
-            <Trash2 className="w-4 h-4 text-red-500" />
-          </button>
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
         )}
 
         {/* Empty State for Grid View */}

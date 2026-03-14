@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
+import {
   Search,
   Filter,
   Package,
@@ -141,7 +141,7 @@ const PujaKits = () => {
       createdAt: '2023-12-05',
       image: image5
     },
-      {
+    {
       id: 'KIT-006',
       name: 'Maha Shivratri Kit',
       description: 'Special items for Shivratri fasting and puja',
@@ -198,8 +198,8 @@ const PujaKits = () => {
 
   // Toggle product selection in form
   const toggleProductSelection = (productId) => {
-    setSelectedProducts(prev => 
-      prev.includes(productId) 
+    setSelectedProducts(prev =>
+      prev.includes(productId)
         ? prev.filter(id => id !== productId)
         : [...prev, productId]
     );
@@ -213,7 +213,7 @@ const PujaKits = () => {
     }
 
     const prices = calculateKitPrice(selectedProducts, formData.discountPercent);
-    
+
     const kitData = {
       ...formData,
       products: [...selectedProducts],
@@ -226,7 +226,7 @@ const PujaKits = () => {
 
     if (editingKit) {
       // Update existing kit
-      setKits(prev => prev.map(k => 
+      setKits(prev => prev.map(k =>
         k.id === editingKit.id ? { ...kitData, id: editingKit.id, sales: editingKit.sales } : k
       ));
       setEditingKit(null);
@@ -290,7 +290,7 @@ const PujaKits = () => {
 
   // Toggle kit activation
   const toggleKitActive = (id) => {
-    setKits(prev => prev.map(k => 
+    setKits(prev => prev.map(k =>
       k.id === id ? { ...k, isActive: !k.isActive } : k
     ));
   };
@@ -307,19 +307,19 @@ const PujaKits = () => {
         kit.category.toLowerCase().includes(query)
       );
     }
-    
+
     // Category filter
     if (categoryFilter !== 'all' && kit.category !== categoryFilter) {
       return false;
     }
-    
+
     return true;
   });
 
   // Toggle kit selection
   const toggleKitSelection = (kitId) => {
-    setSelectedKits(prev => 
-      prev.includes(kitId) 
+    setSelectedKits(prev =>
+      prev.includes(kitId)
         ? prev.filter(id => id !== kitId)
         : [...prev, kitId]
     );
@@ -336,7 +336,7 @@ const PujaKits = () => {
 
   // Get status style
   const getStatusStyle = (isActive) => {
-    return isActive 
+    return isActive
       ? 'bg-green-50 text-green-700'
       : 'bg-red-50 text-gray-600';
   };
@@ -358,12 +358,12 @@ const PujaKits = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 px-3 py-1.5 border border-orange-100">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-           <div className="text-left sm:text-left flex-1 md:flex ">
+          <div className="text-left sm:text-left flex-1 md:flex ">
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-semibold uppercase leading-tight text-orange-900">
-               Puja Kits
+              Puja Kits
             </h1>
             <p className="text-sm text-gray-600 mt-1 md:mt-2.5 lg:mt-2.5">
-             Increase order value with bundled products
+              Increase order value with bundled products
             </p>
           </div>
         </div>
@@ -447,7 +447,7 @@ const PujaKits = () => {
               <h2 className="text-xl font-bold text-gray-800">
                 {editingKit ? 'Edit Puja Kit' : 'Create New Puja Kit'}
               </h2>
-              <button 
+              <button
                 onClick={() => {
                   setShowCreateForm(false);
                   setEditingKit(null);
@@ -597,7 +597,7 @@ const PujaKits = () => {
                 <div className="border rounded-lg overflow-hidden border-gray-200">
                   <div className="max-h-64 overflow-y-auto">
                     {allProducts.map(product => (
-                      <div 
+                      <div
                         key={product.id}
                         className="flex items-center gap-3 p-3 border-b cursor-pointer border-gray-200 hover:bg-gray-50"
                         onClick={() => toggleProductSelection(product.id)}
@@ -609,8 +609,8 @@ const PujaKits = () => {
                             <Square className="w-5 h-5 text-gray-400" />
                           )}
                         </div>
-                        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
-                          <span className="text-lg">{product.image}</span>
+                        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                          <Package className="w-4 h-4 text-orange-500" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
@@ -779,12 +779,12 @@ const PujaKits = () => {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
-                <button 
+                <button
                   onClick={() => {
                     // Bulk activate
-                    setKits(prev => prev.map(k => 
+                    setKits(prev => prev.map(k =>
                       selectedKits.includes(k.id) ? { ...k, isActive: true } : k
                     ));
                     setSelectedKits([]);
@@ -793,10 +793,10 @@ const PujaKits = () => {
                 >
                   Activate Selected
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     // Bulk deactivate
-                    setKits(prev => prev.map(k => 
+                    setKits(prev => prev.map(k =>
                       selectedKits.includes(k.id) ? { ...k, isActive: false } : k
                     ));
                     setSelectedKits([]);
@@ -805,7 +805,7 @@ const PujaKits = () => {
                 >
                   Deactivate Selected
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     if (window.confirm(`Delete ${selectedKits.length} selected kits?`)) {
                       setKits(prev => prev.filter(k => !selectedKits.includes(k.id)));
@@ -816,7 +816,7 @@ const PujaKits = () => {
                 >
                   Delete Selected
                 </button>
-                <button 
+                <button
                   onClick={() => setSelectedKits([])}
                   className="px-3 py-1.5 text-sm rounded border border-gray-300 hover:bg-gray-100"
                 >
@@ -829,14 +829,14 @@ const PujaKits = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-2 mb-4">
-          <button 
+          <button
             onClick={() => setShowCreateForm(true)}
             className="px-4 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             Create New Kit
           </button>
-          <button 
+          <button
             onClick={() => {
               // Export kits
               const headers = ['ID', 'Name', 'Category', 'Original Price', 'Discount %', 'Final Price', 'Products', 'Sales', 'Status'];
@@ -854,7 +854,7 @@ const PujaKits = () => {
                   kit.isActive ? 'Active' : 'Inactive'
                 ].join(','))
               ].join('\n');
-              
+
               const blob = new Blob([csvContent], { type: 'text/csv' });
               const url = window.URL.createObjectURL(blob);
               const a = document.createElement('a');
@@ -875,169 +875,169 @@ const PujaKits = () => {
           <div className="rounded-lg border overflow-hidden bg-white border-gray-200">
             <div className="rounded-lg border bg-white overflow-hidden">
 
-  {/* 🔥 mobile horizontal scroll */}
-  <div className="overflow-x-auto">
+              {/* 🔥 mobile horizontal scroll */}
+              <div className="overflow-x-auto">
 
-    <table className="min-w-[900px] w-full text-[15px]">
+                <table className="min-w-[900px] w-full text-[15px]">
 
-      {/* ================= HEADER ================= */}
-      <thead className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 border-b sticky top-0 z-10">
+                  {/* ================= HEADER ================= */}
+                  <thead className="bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 border-b sticky top-0 z-10">
 
-        <tr className="text-gray-600 text-xs uppercase tracking-wide">
+                    <tr className="text-gray-600 text-xs uppercase tracking-wide">
 
-          <th className="px-4 py-3">
-            <button onClick={selectAllKits}>
-              {selectedKits.length === filteredKits.length && filteredKits.length > 0 ? (
-                <CheckSquare className="w-4 h-4 text-blue-600" />
-              ) : (
-                <Square className="w-4 h-4 text-gray-400" />
-              )}
-            </button>
-          </th>
+                      <th className="px-4 py-3">
+                        <button onClick={selectAllKits}>
+                          {selectedKits.length === filteredKits.length && filteredKits.length > 0 ? (
+                            <CheckSquare className="w-4 h-4 text-blue-600" />
+                          ) : (
+                            <Square className="w-4 h-4 text-gray-400" />
+                          )}
+                        </button>
+                      </th>
 
-          <th className="px-4 py-3 text-left">Kit Details</th>
-          <th className="px-4 py-3">Category</th>
-          <th className="px-4 py-3">Pricing</th>
-          <th className="px-4 py-3">Products</th>
-          <th className="px-4 py-3">Sales</th>
-          <th className="px-4 py-3">Status</th>
-          <th className="px-4 py-3 text-center">Actions</th>
+                      <th className="px-4 py-3 text-left">Kit Details</th>
+                      <th className="px-4 py-3">Category</th>
+                      <th className="px-4 py-3">Pricing</th>
+                      <th className="px-4 py-3">Products</th>
+                      <th className="px-4 py-3">Sales</th>
+                      <th className="px-4 py-3">Status</th>
+                      <th className="px-4 py-3 text-center">Actions</th>
 
-        </tr>
-      </thead>
+                    </tr>
+                  </thead>
 
 
-      {/* ================= BODY ================= */}
-      <tbody>
+                  {/* ================= BODY ================= */}
+                  <tbody>
 
-        {filteredKits.map((kit, i) => (
-          <tr
-            key={kit.id}
-            className={`
+                    {filteredKits.map((kit, i) => (
+                      <tr
+                        key={kit.id}
+                        className={`
               border-t
               hover:bg-gray-50
               transition
               ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/40'}
             `}
-          >
+                      >
 
-            {/* SELECT */}
-            <td className="px-4 py-3">
-              <button onClick={() => toggleKitSelection(kit.id)}>
-                {selectedKits.includes(kit.id) ? (
-                  <CheckSquare className="w-4 h-4 text-blue-600" />
-                ) : (
-                  <Square className="w-4 h-4 text-gray-400" />
-                )}
-              </button>
-            </td>
+                        {/* SELECT */}
+                        <td className="px-4 py-3">
+                          <button onClick={() => toggleKitSelection(kit.id)}>
+                            {selectedKits.includes(kit.id) ? (
+                              <CheckSquare className="w-4 h-4 text-blue-600" />
+                            ) : (
+                              <Square className="w-4 h-4 text-gray-400" />
+                            )}
+                          </button>
+                        </td>
 
 
-            {/* KIT DETAILS */}
-            <td className="px-4 py-3">
-              <div className="flex items-center gap-3">
+                        {/* KIT DETAILS */}
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-3">
 
-                {/* slightly bigger image */}
-                <div className="w-16 h-16 rounded-md bg-white border overflow-hidden flex-shrink-0">
-                  <img
-                    src={kit.image}
-                    alt={kit.name}
-                    className="w-full h-full object-contain p-1"
-                  />
-                </div>
+                            {/* slightly bigger image */}
+                            <div className="w-16 h-16 rounded-md bg-white border overflow-hidden flex-shrink-0">
+                              <img
+                                src={kit.image}
+                                alt={kit.name}
+                                className="w-full h-full object-contain p-1"
+                              />
+                            </div>
 
-                <div>
-                  <p className="font-medium text-gray-800">
-                    {kit.name}
-                  </p>
-                  <p className="text-xs text-gray-500">{kit.id}</p>
-                </div>
+                            <div>
+                              <p className="font-medium text-gray-800">
+                                {kit.name}
+                              </p>
+                              <p className="text-xs text-gray-500">{kit.id}</p>
+                            </div>
+
+                          </div>
+                        </td>
+
+
+                        {/* CATEGORY */}
+                        <td className="px-4 py-3">
+                          <span className={`px-3 py-1 rounded-full text-xs ${getCategoryStyle(kit.category)}`}>
+                            {kit.category}
+                          </span>
+                        </td>
+
+
+                        {/* PRICING */}
+                        <td className="px-4 py-3">
+                          <div className="leading-tight">
+                            <span className="line-through text-xs text-gray-400 mr-1">
+                              {formatCurrency(kit.originalPrice)}
+                            </span>
+                            <span className="text-xs text-red-500">
+                              -{kit.discountPercent}%
+                            </span>
+
+                            <div className="font-semibold text-gray-900">
+                              {formatCurrency(kit.finalPrice)}
+                            </div>
+                          </div>
+                        </td>
+
+
+                        {/* PRODUCTS */}
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-1">
+                            <span>{kit.products.length}</span>
+                            <Eye className="w-4 h-4 text-gray-400" />
+                          </div>
+                        </td>
+
+
+                        {/* SALES */}
+                        <td className="px-4 py-3 font-medium">
+                          {kit.sales}
+                        </td>
+
+
+                        {/* STATUS */}
+                        <td className="px-4 py-3">
+                          <span className={`px-3 py-1 rounded-full text-xs ${getStatusStyle(kit.isActive)}`}>
+                            {kit.isActive ? 'Active' : 'Inactive'}
+                          </span>
+                        </td>
+
+
+                        {/* ACTIONS */}
+                        <td className="px-4 py-3">
+                          <div className="flex items-center justify-center gap-2">
+
+                            <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => editKit(kit)}>
+                              <Edit className="w-4 h-4 " color='blue' />
+                            </button>
+
+                            <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => duplicateKit(kit)}>
+                              <Copy className="w-4 h-4 " color='orange' />
+                            </button>
+
+                            <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => toggleKitActive(kit.id)}>
+                              {kit.isActive
+                                ? <XCircle className="w-4 h-4 " color='red' />
+                                : <CheckCircle className="w-4 h-4 " color='green' />}
+                            </button>
+
+                            <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => deleteKit(kit.id)}>
+                              <Trash2 className="w-4 h-4 " color='red' />
+                            </button>
+
+                          </div>
+                        </td>
+
+                      </tr>
+                    ))}
+
+                  </tbody>
+                </table>
 
               </div>
-            </td>
-
-
-            {/* CATEGORY */}
-            <td className="px-4 py-3">
-              <span className={`px-3 py-1 rounded-full text-xs ${getCategoryStyle(kit.category)}`}>
-                {kit.category}
-              </span>
-            </td>
-
-
-            {/* PRICING */}
-            <td className="px-4 py-3">
-              <div className="leading-tight">
-                <span className="line-through text-xs text-gray-400 mr-1">
-                  {formatCurrency(kit.originalPrice)}
-                </span>
-                <span className="text-xs text-red-500">
-                  -{kit.discountPercent}%
-                </span>
-
-                <div className="font-semibold text-gray-900">
-                  {formatCurrency(kit.finalPrice)}
-                </div>
-              </div>
-            </td>
-
-
-            {/* PRODUCTS */}
-            <td className="px-4 py-3">
-              <div className="flex items-center gap-1">
-                <span>{kit.products.length}</span>
-                <Eye className="w-4 h-4 text-gray-400" />
-              </div>
-            </td>
-
-
-            {/* SALES */}
-            <td className="px-4 py-3 font-medium">
-              {kit.sales}
-            </td>
-
-
-            {/* STATUS */}
-            <td className="px-4 py-3">
-              <span className={`px-3 py-1 rounded-full text-xs ${getStatusStyle(kit.isActive)}`}>
-                {kit.isActive ? 'Active' : 'Inactive'}
-              </span>
-            </td>
-
-
-            {/* ACTIONS */}
-            <td className="px-4 py-3">
-              <div className="flex items-center justify-center gap-2">
-
-                <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => editKit(kit)}>
-                  <Edit className="w-4 h-4 " color='blue' />
-                </button>
-
-                <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => duplicateKit(kit)}>
-                  <Copy className="w-4 h-4 " color='orange' />
-                </button>
-
-                <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => toggleKitActive(kit.id)}>
-                  {kit.isActive
-                    ? <XCircle className="w-4 h-4 " color='red' />
-                    : <CheckCircle className="w-4 h-4 " color='green' />}
-                </button>
-
-                <button className="p-1.5 hover:bg-gray-200 rounded" onClick={() => deleteKit(kit.id)}>
-                  <Trash2 className="w-4 h-4 " color='red' />
-                </button>
-
-              </div>
-            </td>
-
-          </tr>
-        ))}
-
-      </tbody>
-    </table>
-
-  </div>
-</div>
+            </div>
 
 
             {/* Empty State */}
@@ -1052,7 +1052,7 @@ const PujaKits = () => {
                 <p className="text-sm text-gray-600">
                   {searchQuery ? 'Try a different search term' : 'Click "Create New Kit" to get started'}
                 </p>
-                <button 
+                <button
                   onClick={() => setShowCreateForm(true)}
                   className="mt-4 px-4 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700"
                 >
@@ -1063,11 +1063,11 @@ const PujaKits = () => {
           </div>
         ) : (
           /* Grid View */
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-  {filteredKits.map(kit => (
-    <div
-      key={kit.id}
-      className="
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredKits.map(kit => (
+              <div
+                key={kit.id}
+                className="
         rounded-2xl
         border border-gray-200
         bg-white
@@ -1076,153 +1076,153 @@ const PujaKits = () => {
         hover:shadow-lg
         transition-all duration-300
       "
-    >
-      <div className="relative">
+              >
+                <div className="relative">
 
-        {/* Header */}
-        <div className="p-4"> {/* ↓ reduced */}
-          <div className="flex items-start justify-between mb-2">
-            <div className="flex items-center gap-2"> {/* ↓ gap */}
+                  {/* Header */}
+                  <div className="p-4"> {/* ↓ reduced */}
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-2"> {/* ↓ gap */}
 
-              <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
-                <img
-                  src={kit.image}
-                  alt=""
-                  className="w-full h-full object-cover rounded-xl"
-                />
+                        <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
+                          <img
+                            src={kit.image}
+                            alt=""
+                            className="w-full h-full object-cover rounded-xl"
+                          />
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-sm"> {/* ↓ */}
+                            {kit.name}
+                          </h3>
+                          <span className="text-[11px] text-gray-500">
+                            {kit.id}
+                          </span>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => toggleKitSelection(kit.id)}
+                        className="z-10"
+                      >
+                        {selectedKits.includes(kit.id) ? (
+                          <CheckSquare className="w-5 h-5 text-blue-600" />
+                        ) : (
+                          <Square className="w-5 h-5 text-gray-400" />
+                        )}
+                      </button>
+                    </div>
+
+                    <p className="text-xs mb-2 text-gray-600 leading-snug"> {/* ↓ */}
+                      {kit.description.length > 100
+                        ? `${kit.description.substring(0, 100)}...`
+                        : kit.description}
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${getCategoryStyle(kit.category)}`}>
+                        {kit.category}
+                      </span>
+
+                      <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${getStatusStyle(kit.isActive)}`}>
+                        {kit.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="px-4 py-3 bg-orange-50 border-t border-orange-100"> {/* ↓ */}
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <span className="line-through text-xs text-gray-400">
+                            {formatCurrency(kit.originalPrice)}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-[11px] bg-red-100 text-red-600">
+                            -{kit.discountPercent}%
+                          </span>
+                        </div>
+
+                        <div className="font-bold text-lg text-gray-900"> {/* ↓ */}
+                          {formatCurrency(kit.finalPrice)}
+                        </div>
+                      </div>
+
+                      <div className="text-right text-xs text-gray-600">
+                        <div className="flex items-center gap-1 justify-end">
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                          {kit.sales}
+                        </div>
+                        <div>{kit.products.length} items</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Products */}
+                  <div className="p-4"> {/* ↓ */}
+                    <h4 className="text-xs font-medium mb-1 text-gray-600">
+                      Includes:
+                    </h4>
+
+                    <div className="flex flex-wrap gap-1"> {/* ↓ */}
+                      {kit.products.slice(0, 4).map(pid => {
+                        const product = allProducts.find(p => p.id === pid);
+
+                        return product ? (
+                          <span
+                            key={pid}
+                            className="px-2 py-0.5 rounded-md text-[11px] bg-gray-100 text-gray-600"
+                            title={product.name}
+                          >
+                            {product.name.substring(0, 10)}...
+                          </span>
+                        ) : null;
+                      })}
+
+                      {kit.products.length > 4 && (
+                        <span className="px-2 py-0.5 rounded-md text-[11px] bg-gray-100 text-gray-600">
+                          +{kit.products.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="p-3 border-t border-gray-200 bg-gray-50"> {/* ↓ */}
+                    <div className="flex items-center justify-between">
+
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => editKit(kit)} className="p-1.5 rounded hover:bg-blue-100">
+                          <Edit className="w-4 h-4 text-blue-600" />
+                        </button>
+
+                        <button onClick={() => duplicateKit(kit)} className="p-1.5 rounded hover:bg-yellow-100">
+                          <Copy className="w-4 h-4 text-yellow-600" />
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => toggleKitActive(kit.id)} className="p-1.5 rounded hover:bg-green-100">
+                          {kit.isActive ? (
+                            <XCircle className="w-4 h-4 text-red-600" />
+                          ) : (
+                            <CheckCircle className="w-4 h-4 text-green-600" />
+                          )}
+                        </button>
+
+                        <button onClick={() => deleteKit(kit.id)} className="p-1.5 rounded hover:bg-red-100">
+                          <Trash2 className="w-4 h-4 text-red-600" />
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
               </div>
-
-              <div>
-                <h3 className="font-semibold text-gray-900 text-sm"> {/* ↓ */}
-                  {kit.name}
-                </h3>
-                <span className="text-[11px] text-gray-500">
-                  {kit.id}
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => toggleKitSelection(kit.id)}
-              className="z-10"
-            >
-              {selectedKits.includes(kit.id) ? (
-                <CheckSquare className="w-5 h-5 text-blue-600" />
-              ) : (
-                <Square className="w-5 h-5 text-gray-400" />
-              )}
-            </button>
+            ))}
           </div>
-
-          <p className="text-xs mb-2 text-gray-600 leading-snug"> {/* ↓ */}
-            {kit.description.length > 100
-              ? `${kit.description.substring(0, 100)}...`
-              : kit.description}
-          </p>
-
-          <div className="flex items-center justify-between">
-            <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${getCategoryStyle(kit.category)}`}>
-              {kit.category}
-            </span>
-
-            <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${getStatusStyle(kit.isActive)}`}>
-              {kit.isActive ? "Active" : "Inactive"}
-            </span>
-          </div>
-        </div>
-
-        {/* Price */}
-        <div className="px-4 py-3 bg-orange-50 border-t border-orange-100"> {/* ↓ */}
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-1">
-                <span className="line-through text-xs text-gray-400">
-                  {formatCurrency(kit.originalPrice)}
-                </span>
-                <span className="px-2 py-0.5 rounded text-[11px] bg-red-100 text-red-600">
-                  -{kit.discountPercent}%
-                </span>
-              </div>
-
-              <div className="font-bold text-lg text-gray-900"> {/* ↓ */}
-                {formatCurrency(kit.finalPrice)}
-              </div>
-            </div>
-
-            <div className="text-right text-xs text-gray-600">
-              <div className="flex items-center gap-1 justify-end">
-                <ShoppingBag className="w-3.5 h-3.5" />
-                {kit.sales}
-              </div>
-              <div>{kit.products.length} items</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Products */}
-        <div className="p-4"> {/* ↓ */}
-          <h4 className="text-xs font-medium mb-1 text-gray-600">
-            Includes:
-          </h4>
-
-          <div className="flex flex-wrap gap-1"> {/* ↓ */}
-            {kit.products.slice(0, 4).map(pid => {
-              const product = allProducts.find(p => p.id === pid);
-
-              return product ? (
-                <span
-                  key={pid}
-                  className="px-2 py-0.5 rounded-md text-[11px] bg-gray-100 text-gray-600"
-                  title={product.name}
-                >
-                  {product.image} {product.name.substring(0, 10)}...
-                </span>
-              ) : null;
-            })}
-
-            {kit.products.length > 4 && (
-              <span className="px-2 py-0.5 rounded-md text-[11px] bg-gray-100 text-gray-600">
-                +{kit.products.length - 4}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div className="p-3 border-t border-gray-200 bg-gray-50"> {/* ↓ */}
-          <div className="flex items-center justify-between">
-
-            <div className="flex items-center gap-1">
-              <button onClick={() => editKit(kit)} className="p-1.5 rounded hover:bg-blue-100">
-                <Edit className="w-4 h-4 text-blue-600" />
-              </button>
-
-              <button onClick={() => duplicateKit(kit)} className="p-1.5 rounded hover:bg-yellow-100">
-                <Copy className="w-4 h-4 text-yellow-600" />
-              </button>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <button onClick={() => toggleKitActive(kit.id)} className="p-1.5 rounded hover:bg-green-100">
-                {kit.isActive ? (
-                  <XCircle className="w-4 h-4 text-red-600" />
-                ) : (
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                )}
-              </button>
-
-              <button onClick={() => deleteKit(kit.id)} className="p-1.5 rounded hover:bg-red-100">
-                <Trash2 className="w-4 h-4 text-red-600" />
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  ))}
-</div>
 
         )}
 
@@ -1238,7 +1238,7 @@ const PujaKits = () => {
             <p className="text-sm text-gray-600">
               {searchQuery ? 'Try a different search term' : 'Click "Create New Kit" to get started'}
             </p>
-            <button 
+            <button
               onClick={() => setShowCreateForm(true)}
               className="mt-4 px-4 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700"
             >
@@ -1249,76 +1249,76 @@ const PujaKits = () => {
 
         {/* Example Kits Section */}
         <div className="rounded-lg border p-4 mt-6 bg-white border-gray-200">
-  <h3 className="text-base font-semibold mb-3 text-gray-800">
-    💡 Example Kit Ideas
-  </h3>
+          <h3 className="text-base font-semibold mb-3 text-gray-800 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-orange-500" /> Example Kit Ideas
+          </h3>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
 
-    {/* Card 1 */}
-    <div className="p-3 rounded-xl bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 shadow-sm hover:shadow-md transition">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="w-9 h-9 overflow-hidden rounded-md"> {/* ↓ */}
-          <img src={image1} alt="" className="w-full h-full object-cover" />
+            {/* Card 1 */}
+            <div className="p-3 rounded-xl bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 shadow-sm hover:shadow-md transition">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-9 h-9 overflow-hidden rounded-md"> {/* ↓ */}
+                  <img src={image1} alt="" className="w-full h-full object-cover" />
+                </div>
+                <h4 className="font-medium text-sm text-gray-800">
+                  Satyanarayan Kit
+                </h4>
+              </div>
+
+              <p className="text-xs mb-2 text-gray-700 leading-snug">
+                Diya + Ghee + Agarbatti + Coconut + Sandalwood
+              </p>
+
+              <div className="text-[11px] text-gray-500">
+                Original: ₹1,150 • Bundle: ₹978 (15% off)
+              </div>
+            </div>
+
+
+            {/* Card 2 */}
+            <div className="p-3 rounded-xl bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 shadow-sm hover:shadow-md transition">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-9 h-9 overflow-hidden rounded-md">
+                  <img src={image6} alt="" className="w-full h-full object-cover" />
+                </div>
+                <h4 className="font-medium text-sm text-gray-800">
+                  Navratri Special
+                </h4>
+              </div>
+
+              <p className="text-xs mb-2 text-gray-700 leading-snug">
+                Diya Set + Flowers + Camphor + Kumkum + Bell
+              </p>
+
+              <div className="text-[11px] text-gray-500">
+                Original: ₹1,200 • Bundle: ₹960 (20% off)
+              </div>
+            </div>
+
+
+            {/* Card 3 */}
+            <div className="p-3 rounded-xl bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 shadow-sm hover:shadow-md transition">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-9 h-9 overflow-hidden rounded-md">
+                  <img src={image4} alt="" className="w-full h-full object-cover" />
+                </div>
+                <h4 className="font-medium text-sm text-gray-800">
+                  Diwali Ultimate
+                </h4>
+              </div>
+
+              <p className="text-xs mb-2 text-gray-700 leading-snug">
+                Premium Diyas + Rangoli + Candles + Sweets Box
+              </p>
+
+              <div className="text-[11px] text-gray-500">
+                Original: ₹2,500 • Bundle: ₹1,875 (25% off)
+              </div>
+            </div>
+
+          </div>
         </div>
-        <h4 className="font-medium text-sm text-gray-800">
-          Satyanarayan Kit
-        </h4>
-      </div>
-
-      <p className="text-xs mb-2 text-gray-700 leading-snug">
-        Diya + Ghee + Agarbatti + Coconut + Sandalwood
-      </p>
-
-      <div className="text-[11px] text-gray-500">
-        Original: ₹1,150 • Bundle: ₹978 (15% off)
-      </div>
-    </div>
-
-
-    {/* Card 2 */}
-    <div className="p-3 rounded-xl bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 shadow-sm hover:shadow-md transition">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="w-9 h-9 overflow-hidden rounded-md">
-          <img src={image6} alt="" className="w-full h-full object-cover" />
-        </div>
-        <h4 className="font-medium text-sm text-gray-800">
-          Navratri Special
-        </h4>
-      </div>
-
-      <p className="text-xs mb-2 text-gray-700 leading-snug">
-        Diya Set + Flowers + Camphor + Kumkum + Bell
-      </p>
-
-      <div className="text-[11px] text-gray-500">
-        Original: ₹1,200 • Bundle: ₹960 (20% off)
-      </div>
-    </div>
-
-
-    {/* Card 3 */}
-    <div className="p-3 rounded-xl bg-gradient-to-r from-orange-100/30 via-yellow-200/20 to-amber-300/40 shadow-sm hover:shadow-md transition">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="w-9 h-9 overflow-hidden rounded-md">
-          <img src={image4} alt="" className="w-full h-full object-cover" />
-        </div>
-        <h4 className="font-medium text-sm text-gray-800">
-          Diwali Ultimate
-        </h4>
-      </div>
-
-      <p className="text-xs mb-2 text-gray-700 leading-snug">
-        Premium Diyas + Rangoli + Candles + Sweets Box
-      </p>
-
-      <div className="text-[11px] text-gray-500">
-        Original: ₹2,500 • Bundle: ₹1,875 (25% off)
-      </div>
-    </div>
-
-  </div>
-</div>
 
       </div>
     </div>

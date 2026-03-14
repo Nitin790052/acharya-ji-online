@@ -12,7 +12,6 @@ import {
   Shield, History, FileArchive, Cloud,
   Sparkles, Calculator, Compass, Target, PieChart
 } from 'lucide-react';
-import { color } from 'framer-motion';
 
 const GeneratorKundliReports = () => {
   const [activeTab, setActiveTab] = useState('generated');

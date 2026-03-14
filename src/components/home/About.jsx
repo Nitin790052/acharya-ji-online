@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 import about from "../../assets/aboutImage/acharyaji.jpg"
+import SectionHeader from '../common/SectionHeader';
 
 const features = [
   'Experienced & Certified Pandits',
@@ -15,106 +14,81 @@ const features = [
 
 export function About() {
   return (
-    <section className="py-14 overflow-hidden">
+    <section className="py-14 overflow-hidden bg-white">
       <div className="container mx-auto px-3">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Image Side */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="relative"
+          <div
+            className="relative animate-slide-in-left"
           >
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-sandalwood-light">
-              {/* Background Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-saffron/20 via-gold/20 to-maroon/20" />
-              
-              {/* Divine Pattern Overlay */}
-              <div className="absolute inset-0 divine-pattern opacity-10" />
-              
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden" style={{ backgroundColor: '#fef2f2' }}>
+              {/* Subtle coral tint overlay */}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(232,69,60,0.08) 0%, rgba(232,69,60,0.04) 100%)' }} />
+
               {/* Main Image */}
-              <img 
-                src={about} 
-                alt="Acharya Ji performing puja ceremony" 
+              <img
+                src={about}
+                alt="Acharya Ji performing puja ceremony"
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              
-              
-              
-              {/* Overlay Gradient for better text readability */}
+
+              {/* Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
             </div>
-            
-            {/* Floating Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.25 }}
-              className="absolute -bottom-5 -right-5 bg-white rounded-lg shadow-lg p-5 max-w-[280px] border border-sandalwood/20 backdrop-blur-sm z-10"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-saffron to-gold flex items-center justify-center shadow-md">
-                  
-                </div>
-                <div>
-                  <p className="text-2xl font-serif font-bold text-maroon">15+</p>
-                  <p className="text-xs text-gray-600">Years of Experience</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+          </div>
 
           {/* Content Side */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+          <div
+            className="animate-fade-in-up"
           >
-            <span className="inline-block px-3 py-1.5 bg-gradient-to-r from-saffron/10 to-gold/10 text-maroon rounded-full text-xs font-medium mb-3">
-              About Acharya Ji
-            </span>
-            <h2 className="font-serif text-2xl md:text-3xl font-bold mb-5 text-gray-900">
-              Bringing Divine Blessings to Your Home
-            </h2>
+            <SectionHeader
+              badge="About Acharya Ji"
+              title="Bringing Divine Blessings to Your Home"
+              className="text-left mb-6"
+            />
             <p className="text-gray-600 mb-5 leading-relaxed text-sm">
-              Acharya Ji is a trusted platform for authentic spiritual services, connecting devotees 
-              with experienced priests and religious scholars. We believe in preserving ancient 
+              Acharya Ji is a trusted platform for authentic spiritual services, connecting devotees
+              with experienced priests and religious scholars. We believe in preserving ancient
               traditions while making them accessible to modern families.
             </p>
             <p className="text-gray-600 mb-6 leading-relaxed text-sm">
-              Whether you seek blessings for a new beginning, wish to perform ancestral rites, 
-              or want to celebrate festivals with proper rituals, our team ensures every ceremony 
+              Whether you seek blessings for a new beginning, wish to perform ancestral rites,
+              or want to celebrate festivals with proper rituals, our team ensures every ceremony
               is conducted with devotion and authenticity.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
               {features.map((feature, index) => (
-                <motion.div
+                <div
                   key={feature}
-                  initial={{ opacity: 0, x: 16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  className="flex items-center gap-1.5 bg-white/50 p-2 rounded-lg"
+                  className="flex items-center gap-1.5 p-2 rounded-lg animate-fade-in-right"
+                  style={{ backgroundColor: 'rgba(232,69,60,0.05)', animationDelay: `${index * 0.08}s`, animationFillMode: 'both' }}
                 >
-                  <CheckCircle className="w-4 h-4 text-saffron flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: '#E8453C' }} />
                   <span className="text-xs text-gray-700">{feature}</span>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Button asChild className="bg-gradient-to-r from-saffron to-gold hover:from-saffron/90 hover:to-gold/90 text-white border-none">
-                <Link to="/about">Learn More About Us</Link>
-              </Button>
-              <Button asChild variant="outline" className="border-saffron text-saffron hover:bg-saffron/10">
-                <Link to="/contact">Get in Touch</Link>
-              </Button>
+              <Link
+                to="/about"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg font-semibold text-white text-sm transition-all duration-300 hover:opacity-90 hover:shadow-lg"
+                style={{ backgroundColor: '#E8453C' }}
+              >
+                Learn More About Us
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg font-semibold text-sm border-2 transition-all duration-300 hover:text-white"
+                style={{ borderColor: '#E8453C', color: '#E8453C' }}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#E8453C'; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#E8453C'; }}
+              >
+                Get in Touch
+              </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

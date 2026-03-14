@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MessageCircle, MapPin, Clock, Globe, Send, CheckCircle } from 'lucide-react';
+import {
+  Phone, Mail, MessageCircle, MapPin, Clock, Globe, Send,
+  CheckCircle, Award, Sparkles, ChevronDown
+} from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import banner from "../assets/banners/bannerContact2.png"
+import banner from "../assets/banners/vedic_contact_banner_premium.png"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -11,7 +14,9 @@ export default function ContactPage() {
     subject: '',
     message: ''
   });
+
   const [submitted, setSubmitted] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -22,8 +27,6 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Form submission logic yahan implement karoge
-    console.log('Form Data:', formData);
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
@@ -34,337 +37,231 @@ export default function ContactPage() {
         subject: '',
         message: ''
       });
-    }, 3000);
+    }, 4000);
   };
 
+  const toggleFaq = (index) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
+  };
+
+  const faqs = [
+    { q: "How soon will I get a callback?", a: "Hum 24 hours ke andar aapko contact karenge. Urgent cases ke liye directly call ya WhatsApp karein." },
+    { q: "Is online puja as effective?", a: "Ji haan, hamare experienced Acharyas Vedic rituals ko poori shraddha aur accuracy ke saath perform karte hain. Aapka sankalp aur vishwas sabse important hai." },
+    { q: "How are astrologers verified?", a: "Hamare sabhi astrologers experienced hain aur verified certifications ke saath. Unke profile check kar sakte hain." },
+    { q: "Can I book puja for parents / family?", a: "Bilkul! Aap apne parivar ke kisi bhi sadasya ke liye puja book kar sakte hain. Bas unki details provide karni hogi." }
+  ];
+
   return (
-   <Layout>
-     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-      
-      {/* Hero Section */}
-  <div className="relative py-12 sm:py-14 md:py-28 px-4 text-white overflow-hidden">
+    <Layout>
+      <div className="min-h-screen bg-background">
 
-  {/* Background Image */}
-  <div className="absolute inset-0">
-    <img
-      src={banner}
-      alt="Banner"
-      className="w-full h-full bg-cover"
-      style={{
-        filter: 'brightness(1.05) contrast(1.05) saturate(1.1)'
-      }}
-    />
-
-    {/* ✅ SINGLE PROFESSIONAL OVERLAY */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/55" />
-
-    {/* Soft depth lights (no image blur) */}
-    <div className="absolute -top-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl opacity-50" />
-    <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl opacity-50" />
-  </div>
-
-  {/* Content */}
-  <div className="relative z-10 max-w-4xl mx-auto text-center">
-    <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-      Get in Touch with Acharya Ji Online
-    </h1>
-
-    <p className="text-lg md:text-xl text-orange-100 max-w-3xl mx-auto drop-shadow">
-      Puja booking, astrology consultation, kundli queries, vastu guidance
-      ya general questions — hum aapki madad ke liye yahan hain
-    </p>
-  </div>
-</div>
-
-
-
-      {/* Quick Contact Options */}
-      <div className="max-w-6xl mx-auto px-4 mt-4 mb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <div className="bg-white rounded-lg shadow-lg px-4 py-3 border-t-4 border-orange-500 hover:shadow-xl transition-shadow">
-            <Phone className="w-8 h-8 text-orange-600 mb-3" />
-            <h3 className="font-bold text-lg mb-2">Call / WhatsApp</h3>
-            <p className="text-gray-600 text-sm mb-3">Talk to our support team or astrologer</p>
-            <a href="tel:+919876543210" className="text-orange-600 font-semibold hover:underline">
-              +91 98765 43210
-            </a>
+        {/* Hero Section - Matching About/Career Page UI */}
+        <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+          <div className="absolute inset-0">
+            <img src={banner} alt="Background" className="w-full h-full object-cover object-center" />
+            <div className="absolute inset-0 bg-black/45" />
           </div>
-
-          <div className="bg-white rounded-lg shadow-lg px-4 py-3 border-t-4 border-amber-500 hover:shadow-xl transition-shadow">
-            <MessageCircle className="w-8 h-8 text-amber-600 mb-3" />
-            <h3 className="font-bold text-lg mb-2">Talk to Astrologer</h3>
-            <p className="text-gray-600 text-sm mb-3">Instant or scheduled consultation</p>
-            <button className="text-amber-600 font-semibold hover:underline">
-              Book Now
-            </button>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <Award className="w-4 h-4 text-[#FFC107]" />
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                Get in Touch with <br />
+                <span className="text-yellow-300">Acharya Ji Online</span>
+              </h1>
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-4 drop-shadow">
+                Puja booking, astrology consultation, kundli queries, vastu guidance ya general questions — hum aapki madad ke liye yahan hain.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <div className="bg-white rounded-lg shadow-lg px-4 py-3 border-t-4 border-red-500 hover:shadow-xl transition-shadow">
-            <div className="w-8 h-8 text-red-600 mb-3 font-bold text-2xl">ॐ</div>
-            <h3 className="font-bold text-lg mb-2">Book Puja</h3>
-            <p className="text-gray-600 text-sm mb-3">Online or home-visit puja booking</p>
-            <button className="text-red-600 font-semibold hover:underline">
-              Book Puja
-            </button>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-lg px-4 py-3 border-t-4 border-blue-500 hover:shadow-xl transition-shadow">
-            <Mail className="w-8 h-8 text-blue-600 mb-3" />
-            <h3 className="font-bold text-lg mb-2">Email Support</h3>
-            <p className="text-gray-600 text-sm mb-3">Detailed queries & documents</p>
-            <a href="mailto:support@acharyajionline.com" className="text-blue-600 font-semibold hover:underline break-all">
-              support@acharyajionline.com
-            </a>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="max-w-6xl mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Send Your Query</h2>
-              
-              {submitted ? (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-                  <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-bold text-green-800 mb-2">Query Submitted Successfully!</h3>
-                  <p className="text-green-700">Hum jaldi hi aapko contact karenge</p>
-                </div>
-              ) : (
-                <div className="space-y-5">
-                  
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
-                      Full Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
-                      placeholder="Enter your full name"
-                    />
+        {/* Quick Contact Options - Matching Career Page Grid UI */}
+        <section className="py-12 md:py-16 bg-white">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+              {[
+                { title: 'Call / WhatsApp', desc: 'Talk to our support team directly.', icon: Phone, action: '+91 98765 43210' },
+                { title: 'Talk to Astrologer', desc: 'Instant or scheduled consultation.', icon: MessageCircle, action: 'Book Now' },
+                { title: 'Book Puja', desc: 'Online or home-visit puja booking.', icon: Award, action: 'Book Puja' },
+                { title: 'Email Support', desc: 'Detailed queries & documents.', icon: Mail, action: 'support@acharyajionline.com' }
+              ].map((value, index) => (
+                <div
+                  key={value.title}
+                  className="bg-[#FFFAF3] p-4 py-8 text-center border-b-[6px] border-orange-500 shadow-md hover:shadow-2xl transition-all duration-500 rounded-none relative group overflow-hidden flex flex-col items-center animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+                >
+                  <div className="absolute top-4 right-4 text-orange-200/50 group-hover:text-orange-400 transition-all duration-700"><Sparkles className="w-5 h-5" /></div>
+                  <div className="w-14 h-14 rounded-sm bg-white mx-auto mb-5 flex items-center justify-center shadow-md group-hover:shadow-xl transition-all duration-500 border border-orange-100/50 relative">
+                    <div className="absolute inset-0 bg-orange-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left opacity-10" />
+                    <value.icon className="w-7 h-7 text-orange-600 group-hover:scale-110 transition-transform duration-500" />
                   </div>
+                  <h3 className="text-lg font-black text-[#4A3427] mb-3 uppercase tracking-wider group-hover:text-orange-600 transition-colors">{value.title}</h3>
+                  <p className="text-gray-600 font-semibold leading-relaxed text-xs mb-4 flex-grow">{value.desc}</p>
+                  <span className="text-orange-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] cursor-pointer hover:underline">{value.action}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-gray-700 font-semibold mb-2">
-                        Mobile Number <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="tel"
-                        name="mobile"
-                        value={formData.mobile}
-                        onChange={handleChange}
-                        pattern="[0-9]{10}"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
-                        placeholder="10 digit mobile number"
-                      />
+        {/* Main Content Grid */}
+        <section className="py-12 md:py-16 bg-[#FAF9F6]">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+              {/* Contact Form - Matching About/Career Page UI */}
+              <div className="lg:col-span-2">
+                <div className="bg-white p-6 md:p-12 border-t-[8px] border-orange-600 shadow-2xl rounded-none relative overflow-hidden h-full animate-fade-in-up">
+                  <div className="text-center mb-10">
+                    <div className="inline-flex items-center gap-2 px-4 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4 border border-orange-100">
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Send Message</span>
                     </div>
-
-                    <div>
-                      <label className="block text-gray-700 font-semibold mb-2">
-                        Email (Optional)
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
-                        placeholder="your@email.com"
-                      />
+                    <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] mb-4 uppercase tracking-tight">Send Your <span className="text-orange-600">Query</span></h2>
+                    <div className="flex items-center justify-center gap-2 mb-8">
+                      <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
-                      Subject <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="puja">Puja Booking</option>
-                      <option value="astrology">Astrology Consultation</option>
-                      <option value="kundli">Kundli / Dosh</option>
-                      <option value="vastu">Vastu Healing</option>
-                      <option value="general">General Query</option>
-                    </select>
-                  </div>
+                  {submitted && (
+                    <div className="mb-8 bg-green-50 border-2 border-green-500 text-green-800 px-6 py-4 rounded-xl flex items-center gap-4 animate-fade-in">
+                      <CheckCircle className="w-6 h-6 text-green-600 shrink-0" />
+                      <p className="text-xs font-bold uppercase tracking-wider">Query Sent! Our team will contact you shortly.</p>
+                    </div>
+                  )}
 
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
-                      Message <span className="text-red-500">*</span>
-                    </label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows="5"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition resize-none"
-                      placeholder="Apni query detail mein likhein..."
-                    ></textarea>
-                  </div>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <label className="block text-[10px] font-black text-[#4A3427] uppercase tracking-widest mb-2">Full Name <span className="text-red-500">*</span></label>
+                      <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full px-5 py-4 rounded-xl bg-[#FAF9F6] border-2 border-orange-100 focus:border-orange-500 focus:outline-none transition-all font-bold text-sm" placeholder="Your full name" required />
+                    </div>
 
-                  <button
-                    onClick={handleSubmit}
-                    className="w-full bg-gradient-to-r from-gray-600 to-amber-600 text-white font-bold py-4 rounded-lg hover:from-orange-700 hover:to-amber-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-5 h-5" />
-                    Request a Callback
-                  </button>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-[10px] font-black text-[#4A3427] uppercase tracking-widest mb-2">Mobile Number <span className="text-red-500">*</span></label>
+                        <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} pattern="[0-9]{10}" className="w-full px-5 py-4 rounded-xl bg-[#FAF9F6] border-2 border-orange-100 focus:border-orange-500 focus:outline-none transition-all font-bold text-sm" placeholder="10 Digit Number" required />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black text-[#4A3427] uppercase tracking-widest mb-2">Email (Optional)</label>
+                        <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-5 py-4 rounded-xl bg-[#FAF9F6] border-2 border-orange-100 focus:border-orange-500 focus:outline-none transition-all font-bold text-sm" placeholder="your@email.com" />
+                      </div>
+                    </div>
 
-                </div>
-              )}
-            </div>
-          </div>
+                    <div>
+                      <label className="block text-[10px] font-black text-[#4A3427] uppercase tracking-widest mb-2">Subject <span className="text-red-500">*</span></label>
+                      <select name="subject" value={formData.subject} onChange={handleChange} className="w-full px-5 py-4 rounded-xl bg-[#FAF9F6] border-2 border-orange-100 focus:border-orange-500 focus:outline-none transition-all font-bold text-sm appearance-none" required>
+                        <option value="">Select a subject</option>
+                        <option value="puja">Puja Booking</option>
+                        <option value="astrology">Astrology Consultation</option>
+                        <option value="kundli">Kundli / Dosh</option>
+                        <option value="vastu">Vastu Healing</option>
+                        <option value="general">General Query</option>
+                      </select>
+                    </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            
-            {/* Service Quick Links */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Quick Service Links</h3>
-              <div className="space-y-3">
-                <div className="border-l-4 border-orange-500 pl-4 py-2">
-                  <p className="text-sm text-gray-600">Looking for Puja Services?</p>
-                  <a href="#" className="text-orange-600 font-semibold hover:underline">Book Puja</a>
-                </div>
-                <div className="border-l-4 border-amber-500 pl-4 py-2">
-                  <p className="text-sm text-gray-600">Want Astrology Consultation?</p>
-                  <a href="#" className="text-amber-600 font-semibold hover:underline">Talk to Astrologer</a>
-                </div>
-                <div className="border-l-4 border-red-500 pl-4 py-2">
-                  <p className="text-sm text-gray-600">Need Kundli Matching / Dosh?</p>
-                  <a href="#" className="text-red-600 font-semibold hover:underline">Go to Kundli</a>
-                </div>
-                <div className="border-l-4 border-blue-500 pl-4 py-2">
-                  <p className="text-sm text-gray-600">Interested in Vastu / Healing?</p>
-                  <a href="#" className="text-blue-600 font-semibold hover:underline">Explore Services</a>
+                    <div>
+                      <label className="block text-[10px] font-black text-[#4A3427] uppercase tracking-widest mb-2">Message <span className="text-red-500">*</span></label>
+                      <textarea name="message" value={formData.message} onChange={handleChange} rows="5" className="w-full px-5 py-4 rounded-xl bg-[#FAF9F6] border-2 border-orange-100 focus:border-orange-500 focus:outline-none transition-all font-bold text-sm italic resize-none" placeholder="Apni query detail mein likhein..." required></textarea>
+                    </div>
+
+                    <button type="submit" className="w-full bg-[#E8453C] hover:bg-[#CC3B34] text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.3em] shadow-2xl transition-all flex items-center justify-center gap-3">
+                      <Send className="w-4 h-4" /> Request a Callback
+                    </button>
+                  </form>
                 </div>
               </div>
-            </div>
 
-            {/* Office Information */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Support Information</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-gray-800">Location</p>
-                    <p className="text-sm text-gray-600">Delhi NCR, India</p>
+              {/* Sidebar Info - Match the premium styling */}
+              <div className="space-y-6">
+
+                {/* Office Information */}
+                <div className="bg-white p-6 md:p-8 border-l-[6px] border-orange-500 shadow-xl rounded-none relative animate-fade-in-right">
+                  <h3 className="text-xl font-black text-[#4A3427] mb-6 uppercase tracking-wider">Support <span className="text-orange-600">Info</span></h3>
+                  <div className="space-y-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-sm bg-orange-50 flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="font-extrabold text-[#4A3427] text-sm uppercase tracking-wider mb-1">Location</p>
+                        <p className="text-xs text-gray-600 font-bold">Delhi NCR, India</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-sm bg-orange-50 flex items-center justify-center flex-shrink-0">
+                        <Clock className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="font-extrabold text-[#4A3427] text-sm uppercase tracking-wider mb-1">Support Hours</p>
+                        <p className="text-xs text-gray-600 font-bold mb-0.5">Monday - Sunday</p>
+                        <p className="text-xs text-gray-600 font-bold">8 AM - 10 PM</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-sm bg-orange-50 flex items-center justify-center flex-shrink-0">
+                        <Globe className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="font-extrabold text-[#4A3427] text-sm uppercase tracking-wider mb-1">Service Area</p>
+                        <p className="text-xs text-gray-600 font-bold">Pan-India & International (Online)</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-gray-800">Support Hours</p>
-                    <p className="text-sm text-gray-600">Monday - Sunday</p>
-                    <p className="text-sm text-gray-600">8 AM - 10 PM</p>
+
+                {/* Trust Section - Premium Dark Card */}
+                <div className="bg-gradient-to-br from-[#2A1D13] to-[#1A130F] p-6 md:p-8 shadow-xl rounded-none relative overflow-hidden animate-fade-in-right" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                  <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #f97316 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+                  <h3 className="text-lg font-black text-[#FFC107] mb-5 uppercase tracking-wider relative z-10 w-full text-center">Our Commitment</h3>
+                  <div className="space-y-4 relative z-10">
+                    {[
+                      "100% Confidentiality",
+                      "No spam calls",
+                      "Authentic Guidance",
+                      "Transparent pricing"
+                    ].map((text, i) => (
+                      <div key={i} className="flex items-center gap-3 border-b border-white/10 pb-3 last:border-0 last:pb-0">
+                        <CheckCircle className="w-4 h-4 text-[#25D366] flex-shrink-0" />
+                        <span className="text-xs text-amber-50 font-semibold tracking-wider uppercase">{text}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <Globe className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-gray-800">Service Area</p>
-                    <p className="text-sm text-gray-600">Pan-India & International (Online)</p>
-                  </div>
-                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* Google Map Section */}
+        <section className="py-12 md:py-16 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl mb-10">
+            <div className="text-center animate-fade-in-up">
+              <h2 className="text-3xl md:text-4xl font-black text-[#4A3427] mb-4">Find Us <span className="text-orange-600">On Map</span></h2>
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-12 h-1 bg-orange-200 rounded-full" /><Sparkles className="w-5 h-5 text-orange-400" /><div className="w-12 h-1 bg-orange-200 rounded-full" />
               </div>
             </div>
-
-            {/* Trust Section */}
-            <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border-2 border-orange-200 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-3">Our Commitment</h3>
-              <div className="space-y-2 text-sm text-gray-700">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p>Your details are kept 100% confidential</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p>No spam calls</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p>Authentic guidance by experienced Acharyas</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p>Transparent pricing & processes</p>
-                </div>
-              </div>
-            </div>
-
           </div>
-
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="bg-white py-10 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="font-bold text-lg text-gray-800 mb-2">How soon will I get a callback?</h3>
-              <p className="text-gray-600">Hum 24 hours ke andar aapko contact karenge. Urgent cases ke liye directly call ya WhatsApp karein.</p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="font-bold text-lg text-gray-800 mb-2">Is online puja as effective?</h3>
-              <p className="text-gray-600">Ji haan, hamare experienced Acharyas Vedic rituals ko poori shraddha aur accuracy ke saath perform karte hain. Aapka sankalp aur vishwas sabse important hai.</p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="font-bold text-lg text-gray-800 mb-2">How are astrologers verified?</h3>
-              <p className="text-gray-600">Hamare sabhi astrologers experienced hain aur verified certifications ke saath. Unke profile check kar sakte hain.</p>
-            </div>
-
-            <div className="pb-6">
-              <h3 className="font-bold text-lg text-gray-800 mb-2">Can I book puja for parents / family?</h3>
-              <p className="text-gray-600">Bilkul! Aap apne parivar ke kisi bhi sadasya ke liye puja book kar sakte hain. Bas unki details provide karni hogi.</p>
-            </div>
-
+          <div className="w-full h-[400px] md:h-[500px]">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.06889754720782!3d28.52758200617607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1709999999999!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Google Map Location"
+              className="grayscale hover:grayscale-0 transition-all duration-700"
+            ></iframe>
           </div>
-        </div>
+        </section>
       </div>
-
-      {/* Final CTA */}
-      <div className="bg-gradient-to-r from-orange-200 to-amber-300 text-black py-10 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Let Us Help You Find Clarity, Peace & Divine Guidance
-          </h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-white text-orange-600 px-8 py-4 rounded-lg font-bold hover:bg-orange-50 transition-all shadow-lg">
-              Book Puja
-            </button>
-            <button className="bg-white text-amber-600 px-8 py-4 rounded-lg font-bold hover:bg-amber-50 transition-all shadow-lg">
-              Talk to Astrologer
-            </button>
-            <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition-all shadow-lg flex items-center gap-2">
-              <MessageCircle className="w-5 h-5" />
-              WhatsApp Us
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-   </Layout>
+    </Layout>
   );
 }

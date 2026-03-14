@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
-import { ShoppingCart, Star } from 'lucide-react';
+import { ShoppingCart, Star, Award } from 'lucide-react';
+
 
 const products = [
   {
@@ -84,37 +84,36 @@ export default function PujaEssentials() {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative py-16 bg-gradient-to-br from-saffron/90 to-gold/80 text-primary-foreground">
+      <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-primary-foreground overflow-hidden bg-gradient-to-br from-saffron/90 to-gold/80">
         <div className="absolute inset-0 divine-pattern opacity-30" />
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-              Puja Essentials
+        <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+              <Award className="w-4 h-4 text-[#FFC107]" />
+              <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+            </div>
+
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+              Sacred Puja <br />
+              <span className="text-yellow-300">Essentials</span>
             </h1>
-            <p className="text-lg opacity-90">
+
+            <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
               Premium quality items for your daily worship and special ceremonies.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Products Grid */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((product, index) => (
-              <motion.div
+              <div
                 key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-card rounded-xl overflow-hidden shadow-lg border border-border hover:shadow-xl transition-all group"
+                className="bg-card rounded-xl overflow-hidden shadow-lg border border-border hover:shadow-xl transition-all group animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'both' }}
               >
                 <div className="aspect-square bg-sandalwood-light relative overflow-hidden">
                   <img
@@ -122,19 +121,19 @@ export default function PujaEssentials() {
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <span className="absolute top-2 left-2 px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full">
+                  <span className="absolute top-2 left-2 px-2 py-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full uppercase tracking-wider">
                     {product.category}
                   </span>
                 </div>
                 <div className="p-4">
                   <div className="flex items-center gap-1 text-sm text-gold mb-1">
                     <Star className="w-4 h-4 fill-current" />
-                    <span>{product.rating}</span>
+                    <span className="font-bold">{product.rating}</span>
                   </div>
-                  <h3 className="font-semibold mb-1 line-clamp-1">{product.name}</h3>
-                  <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
+                  <h3 className="font-bold mb-1 line-clamp-1 text-gray-800 uppercase tracking-tight">{product.name}</h3>
+                  <p className="text-xs text-muted-foreground mb-3 font-medium">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary">₹{product.price}</span>
+                    <span className="text-lg font-black text-primary">₹{product.price}</span>
                     <Button
                       variant="divine"
                       size="sm"
@@ -145,12 +144,13 @@ export default function PujaEssentials() {
                         image: product.image,
                         category: product.category,
                       })}
+                      className="rounded-lg h-9 w-9 p-0 flex items-center justify-center"
                     >
                       <ShoppingCart className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
