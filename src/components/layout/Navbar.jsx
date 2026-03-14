@@ -75,7 +75,7 @@ const navItems = [
     href: '/vastu',
     children: [
       { label: 'Vastu Consultation', href: '/vastu-consultation' },
-      { label: 'Home / Office Vastu', href: '' },
+      { label: 'Home / Office Vastu', href: '/home-office-vastu' },
       { label: 'Feng Shui', href: '' },
       { label: 'Gemstones', href: '' },
       { label: 'Rudraksha', href: '' },
@@ -98,7 +98,7 @@ const navItems = [
     label: 'Shop',
     href: '/shop',
     children: [
-      { label: 'Puja Samagri', href: '' },
+      { label: 'Puja Samagri', href: '/puja-samagri' },
       { label: 'Gemstones', href: '' },
       { label: 'Yantra', href: '' },
     ],

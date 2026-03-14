@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import Index from "./pages/Index";
 import PujaEssentials from "./pages/samagri/PujaEssentials";
+import PujaSamagri from "./pages/samagri/ShopPujaSamagri";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import Gallery from "./pages/Gallery";
@@ -94,6 +95,8 @@ import GetKundli from "./pages/kundli/GetKundli";
 import ReikiHealing from "./pages/healing/ReikiHealing";
 import CrystalHealing from "./pages/healing/CrystalHealing";
 import VastuConsultation from "./pages/vastu/VastuConsultation";
+import HomeOfficeVastu from "./pages/vastu/HomeOfficeVastu";
+import ShopPujaSamagri from "./pages/samagri/ShopPujaSamagri";
 
 
 const queryClient = new QueryClient();
@@ -101,11 +104,11 @@ const queryClient = new QueryClient();
 const GlobalFloatingButtons = () => {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
-    const isDashboard = location.pathname.includes("/dashboard") || 
-                       location.pathname.startsWith("/user") || 
-                       location.pathname.startsWith("/vendor") ||
-                       location.pathname === "/login" ||
-                       location.pathname === "/vendorRegister";
+    const isDashboard = location.pathname.includes("/dashboard") ||
+        location.pathname.startsWith("/user") ||
+        location.pathname.startsWith("/vendor") ||
+        location.pathname === "/login" ||
+        location.pathname === "/vendorRegister";
 
     if (isDashboard) return null;
 
@@ -145,13 +148,14 @@ const App = () => (
                                     <Route path="/about" element={<AboutUs />} />
                                     <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
                                     <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
-                                    <Route path="/samagri/essentials" element={<PujaEssentials />} />
-                                    <Route path="/samagri/idols" element={<PujaEssentials />} />
-                                    <Route path="/samagri/hawan" element={<PujaEssentials />} />
-                                    <Route path="/products" element={<PujaEssentials />} />
-                                    <Route path="/products/prasad" element={<PujaEssentials />} />
-                                    <Route path="/products/kits" element={<PujaEssentials />} />
-                                    <Route path="/products/festival" element={<PujaEssentials />} />
+                                    <Route path="/samagri/essentials" element={<PujaSamagri />} />
+                                    <Route path="/samagri/idols" element={<PujaSamagri />} />
+                                    <Route path="/samagri/hawan" element={<PujaSamagri />} />
+                                    <Route path="/products" element={<PujaSamagri />} />
+                                    <Route path="/puja-samagri" element={<PujaSamagri />} />
+                                    <Route path="/products/prasad" element={<PujaSamagri />} />
+                                    <Route path="/products/kits" element={<PujaSamagri />} />
+                                    <Route path="/products/festival" element={<PujaSamagri />} />
                                     <Route path="/bidders" element={<TwoBidders />} />
                                     <Route path="/career" element={<Career />} />
                                     <Route path="/media" element={<Media />} />
@@ -165,6 +169,8 @@ const App = () => (
                                     <Route path="/reiki-healing" element={<ReikiHealing />} />
                                     <Route path="/crystal-healing" element={<CrystalHealing />} />
                                     <Route path="/vastu-consultation" element={<VastuConsultation />} />
+                                    <Route path="/home-office-vastu" element={<HomeOfficeVastu />} />
+                                    <Route path="/shop-puja-samagri" element={<ShopPujaSamagri />} />
 
                                     <Route path="/user_login" element={<UserLogin />} />
                                     <Route path="/user_login/registeration" element={<RegistrationForm />} />
