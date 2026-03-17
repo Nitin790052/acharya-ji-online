@@ -28,7 +28,7 @@ const NavbarManager = () => {
   const [viewItem, setViewItem] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  const API_URL = 'http://localhost:5000/api/navbar';
+  const API_URL = `${import.meta.env.VITE_API_URL.endsWith('/') ? import.meta.env.VITE_API_URL : import.meta.env.VITE_API_URL + '/'}navbar`;
 
   const fetchNavbarItems = async () => {
     try {

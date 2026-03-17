@@ -330,7 +330,7 @@ const CarouselManager = () => {
                   <td className="px-6 py-4">
                     {banner.imageUrl && (
                       <img
-                        src={`http://127.0.0.1:5000${banner.imageUrl}`}
+                        src={`${import.meta.env.VITE_BACKEND_URL}${banner.imageUrl}`}
                         alt="Banner"
                         className="w-16 h-10 object-cover rounded shadow-sm"
                       />
@@ -397,7 +397,7 @@ const CarouselManager = () => {
             <div className="p-6 max-h-[70vh] overflow-y-auto">
               {viewBanner.imageUrl && (
                 <div className="mb-6 rounded-xl overflow-hidden shadow-sm border border-gray-100">
-                  <img src={`http://127.0.0.1:5000${viewBanner.imageUrl}`} alt="Banner" className="w-full h-48 object-cover object-center" />
+                  <img src={`${import.meta.env.VITE_BACKEND_URL}${viewBanner.imageUrl}`} alt="Banner" className="w-full h-48 object-cover object-center" />
                 </div>
               )}
 
