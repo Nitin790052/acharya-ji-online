@@ -1,38 +1,40 @@
 import { useState } from "react";
 import { X, Play, MapPin, Calendar, ChevronRight, MessageCircle, Phone, Star, Search, Check, Award, Sparkles, Camera, Video, Clock, Leaf } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import banner from "../assets/banners/vedic_gallery_hero_v1.png"
-import image1 from "../assets/galleryPage/imageId1.png";
-import image2 from "../assets/galleryPage/imageId2.png";
-import image3 from "../assets/galleryPage/imageId3.png";
-import image4 from "../assets/galleryPage/imageId4.png";
-import image5 from "../assets/galleryPage/imageId5.png";
-import image6 from "../assets/galleryPage/imageId6.png";
-import image7 from "../assets/galleryPage/imageId7.png";
-import image8 from "../assets/galleryPage/imageId8.png";
-import image9 from "../assets/galleryPage/imageId9.png";
-import image10 from "../assets/galleryPage/imageId10.png";
-import image11 from "../assets/galleryPage/imageId11.png";
-import image12 from "../assets/galleryPage/imageId12.png";
-import image13 from "../assets/galleryPage/imageId13.png";
-import image14 from "../assets/galleryPage/imageId14.png";
-import image15 from "../assets/galleryPage/imageId15.png";
-import image16 from "../assets/galleryPage/imageId16.png";
-import image17 from "../assets/galleryPage/imageId17.png";
-import image18 from "../assets/galleryPage/imageId18.png";
-import image19 from "../assets/galleryPage/imageId19.png";
-import image20 from "../assets/galleryPage/imageId20.png";
-import image21 from "../assets/galleryPage/imageId21.png";
-import image22 from "../assets/galleryPage/imageId22.png";
-import image23 from "../assets/galleryPage/imageId23.png";
-import image24 from "../assets/galleryPage/imageId24.png";
-import image25 from "../assets/galleryPage/imageId25.png";
-import image26 from "../assets/galleryPage/imageId26.png";
-import image27 from "../assets/galleryPage/imageId27.png";
-import image28 from "../assets/galleryPage/imageId28.png";
-import image29 from "../assets/galleryPage/imageId29.png";
+import { usePageBanner } from "@/hooks/usePageBanner";
+
+import image1 from "../assets/galleryPage/imageId1.webp";
+import image2 from "../assets/galleryPage/imageId2.webp";
+import image3 from "../assets/galleryPage/imageId3.webp";
+import image4 from "../assets/galleryPage/imageId4.webp";
+import image5 from "../assets/galleryPage/imageId5.webp";
+import image6 from "../assets/galleryPage/imageId6.webp";
+import image7 from "../assets/galleryPage/imageId7.webp";
+import image8 from "../assets/galleryPage/imageId8.webp";
+import image9 from "../assets/galleryPage/imageId9.webp";
+import image10 from "../assets/galleryPage/imageId10.webp";
+import image11 from "../assets/galleryPage/imageId11.webp";
+import image12 from "../assets/galleryPage/imageId12.webp";
+import image13 from "../assets/galleryPage/imageId13.webp";
+import image14 from "../assets/galleryPage/imageId14.webp";
+import image15 from "../assets/galleryPage/imageId15.webp";
+import image16 from "../assets/galleryPage/imageId16.webp";
+import image17 from "../assets/galleryPage/imageId17.webp";
+import image18 from "../assets/galleryPage/imageId18.webp";
+import image19 from "../assets/galleryPage/imageId19.webp";
+import image20 from "../assets/galleryPage/imageId20.webp";
+import image21 from "../assets/galleryPage/imageId21.webp";
+import image22 from "../assets/galleryPage/imageId22.webp";
+import image23 from "../assets/galleryPage/imageId23.webp";
+import image24 from "../assets/galleryPage/imageId24.webp";
+import image25 from "../assets/galleryPage/imageId25.webp";
+import image26 from "../assets/galleryPage/imageId26.webp";
+import image27 from "../assets/galleryPage/imageId27.webp";
+import image28 from "../assets/galleryPage/imageId28.webp";
+import image29 from "../assets/galleryPage/imageId29.webp";
 
 const Gallery = () => {
+  const banner = usePageBanner();
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -96,23 +98,29 @@ const Gallery = () => {
         <div className="absolute top-[10%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
+        {/* Hero Section */}
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
-            <img src={banner} alt="Background" className="w-full h-full object-cover object-center" />
-            <div className="absolute inset-0 bg-black/30" />
+            {banner.imageUrl ? (
+              <img src={`http://127.0.0.1:5000${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+            ) : (
+              <div className="absolute inset-0 bg-[#2A1D13]/90" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                 <Award className="w-4 h-4 text-[#FFC107]" />
-                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                Sacred Moments &<br />
-                <span className="text-yellow-300">Divine Rituals</span>
+                {banner.titleHighlight1} <br />
+                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
               </h1>
               <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-8">
-                Experience the sanctity of Vedic traditions through our captured moments. Real pujas, real blessings, real spiritual journeys.
+                {banner.subtitle}
               </p>
 
               <div className="max-w-lg mx-auto relative group">

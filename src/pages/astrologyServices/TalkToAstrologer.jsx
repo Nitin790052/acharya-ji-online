@@ -50,13 +50,13 @@ import {
     X
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../../assets/banners/bannerBookPuja.png";
+
 
 // Import Astrologer Images from assets
-import rajSharmaImg from "../../assets/astrologors/PanditRajeshSharma.png";
-import acharyaPriyaImg from "../../assets/astrologors/DrPriyaMishra.jpg";
-import sureshKumarImg from "../../assets/astrologors/PanditSureshPandey.jpg";
-import lakshmiDeviImg from "../../assets/astrologors/AcharyaVikramJoshi.jpg";
+import rajSharmaImg from "../../assets/astrologors/PanditRajeshSharma.webp";
+import acharyaPriyaImg from "../../assets/astrologors/DrPriyaMishra.webp";
+import sureshKumarImg from "../../assets/astrologors/PanditSureshPandey.webp";
+import lakshmiDeviImg from "../../assets/astrologors/AcharyaVikramJoshi.webp";
 
 const TalkToAstrologer = () => {
     const [selectedFaq, setSelectedFaq] = useState(null);
@@ -190,7 +190,7 @@ const TalkToAstrologer = () => {
                     {/* Hero Section - Exact About Us Style */}
                     <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                         <div className="absolute inset-0">
-                            <img src={bgImage} alt="Astrologer Background" className="w-full h-full object-cover object-top" />
+                            <img src="" alt="Astrologer Background" className="w-full h-full object-cover object-top" />
                             <div className="absolute inset-0 bg-black/30" />
                         </div>
                         <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">

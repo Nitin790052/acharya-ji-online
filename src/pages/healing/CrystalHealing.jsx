@@ -23,7 +23,7 @@ import {
     Gem
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../../assets/banners/bannerBookPuja.png";
+
 
 const CrystalHealing = () => {
     const [selectedFaq, setSelectedFaq] = useState(null);
@@ -129,7 +129,7 @@ const CrystalHealing = () => {
                     {/* Hero Section - Exact About Us Style */}
                     <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                         <div className="absolute inset-0">
-                            <img src={bgImage} alt="Crystal Background" className="w-full h-full object-cover object-top" />
+                            <img src="" alt="Crystal Background" className="w-full h-full object-cover object-top" />
                             <div className="absolute inset-0 bg-black/30" />
                         </div>
                         <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">

@@ -6,16 +6,18 @@ import {
   Briefcase, GraduationCap, DollarSign, Globe, ChevronRight, Heart
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import bgHero from "../assets/banners/globalHeroBanner.png"
-import bgImage from "../assets/careerPage/careerBack.png"
-import image1 from "../assets/careerPage/image1.png"
-import image2 from "../assets/careerPage/image2.png"
-import image3 from "../assets/careerPage/image3.png"
-import image4 from "../assets/careerPage/image4.png"
-import image5 from "../assets/careerPage/image5.png"
-import image6 from "../assets/careerPage/image6.png"
+import { usePageBanner } from "@/hooks/usePageBanner";
+
+import bgImage from "../assets/careerPage/careerBack.webp"
+import image1 from "../assets/careerPage/image1.webp"
+import image2 from "../assets/careerPage/image2.webp"
+import image3 from "../assets/careerPage/image3.webp"
+import image4 from "../assets/careerPage/image4.webp"
+import image5 from "../assets/careerPage/image5.webp"
+import image6 from "../assets/careerPage/image6.webp"
 
 export default function Career() {
+  const banner = usePageBanner();
   const [formData, setFormData] = useState({
     fullName: '',
     mobile: '',
@@ -104,24 +106,29 @@ export default function Career() {
     <Layout>
       <div className="min-h-screen bg-background">
 
-        {/* Full Matched Hero Section (About Us Style) */}
+        {/* Hero Section */}
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
-            <img src={bgHero} alt="Background" className="w-full h-full object-cover object-top" />
-            <div className="absolute inset-0 bg-black/30" />
+            {banner.imageUrl ? (
+              <img src={`http://127.0.0.1:5000${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+            ) : (
+              <div className="absolute inset-0 bg-[#2A1D13]/90" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
-                <Users className="w-4 h-4 text-[#FFC107]" />
-                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                <Award className="w-4 h-4 text-[#FFC107]" />
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                Empowering Ancient Traditions via<br />
-                <span className="text-yellow-300">Modern Expertise</span>
+                {banner.titleHighlight1} <br />
+                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
               </h1>
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-8">
-                Join India's most trusted spiritual network of learned Acharyas, Astrologers, and Wellness Experts dedicated to preserving Vedic wisdom.
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow">
+                {banner.subtitle}
               </p>
             </div>
           </div>

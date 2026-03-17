@@ -5,14 +5,15 @@ import {
 } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { Layout } from '@/components/layout/Layout';
-import banner from "../../assets/banners/bannerBookPuja.png"
-import image1 from "../../assets/bookPooja/image1.png"
-import image2 from "../../assets/bookPooja/image2.png"
-import image3 from "../../assets/bookPooja/image3.png"
-import image4 from "../../assets/bookPooja/image4.png"
-import image5 from "../../assets/bookPooja/image5.png"
-import image6 from "../../assets/bookPooja/image6.png"
-import image7 from "../../assets/bookPooja/image7.png"
+import { usePageBanner } from "@/hooks/usePageBanner";
+
+import image1 from "../../assets/bookPooja/image1.webp"
+import image2 from "../../assets/bookPooja/image2.webp"
+import image3 from "../../assets/bookPooja/image3.webp"
+import image4 from "../../assets/bookPooja/image4.webp"
+import image5 from "../../assets/bookPooja/image5.webp"
+import image6 from "../../assets/bookPooja/image6.webp"
+import image7 from "../../assets/bookPooja/image7.webp"
 
 const pujaServices = [
   {
@@ -123,6 +124,7 @@ const acharyas = [
 ];
 
 export default function BookPuja() {
+  const banner = usePageBanner();
   const [selectedPuja, setSelectedPuja] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -213,21 +215,26 @@ export default function BookPuja() {
           {/* Hero Section */}
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
-              <img src={banner} alt="Background" className="w-full h-full object-cover object-top" />
-              <div className="absolute inset-0 bg-black/30" />
+              {banner.imageUrl ? (
+                <img src={`http://127.0.0.1:5000${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+              ) : (
+                <div className="absolute inset-0 bg-[#2A1D13]/90" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
             </div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                   <Award className="w-4 h-4 text-[#FFC107]" />
-                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
                 </div>
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                  Book Authentic Puja with<br />
-                  <span className="text-yellow-300">Experienced Acharyas</span>
+                  {banner.titleHighlight1} <br />
+                  <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
                 </h1>
-                <p className="text-lg md:text-xl text-amber-100 leading-relaxed mb-10 max-w-2xl mx-auto font-medium drop-shadow">
-                  Sacred Rituals Performed as per Vedic Shastras. Online & Home Visit Puja Services available across India with verified experts.
+                <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-10">
+                  {banner.subtitle}
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4">

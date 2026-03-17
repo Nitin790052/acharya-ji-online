@@ -5,22 +5,22 @@ import {
   MessageCircle, Phone, Bell, Moon, Shield, Leaf, Sparkles, Award, Sparkle
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../assets/banners/vedic_blog_hero_v1.png"
-import image1 from "../assets/blogPage/imageId1.png"
-import image2 from "../assets/blogPage/imageId2.png"
-import image3 from "../assets/blogPage/imageId3.png"
-import image4 from "../assets/blogPage/imageId4.png"
-import image5 from "../assets/blogPage/imageId5.png"
-import image6 from "../assets/blogPage/imageId6.png"
-import image7 from "../assets/blogPage/imageId7.png"
-import image8 from "../assets/blogPage/imageId8.png"
-import image9 from "../assets/blogPage/imageId9.png"
-import image10 from "../assets/blogPage/imageId10.png"
-import image11 from "../assets/blogPage/imageId11.png"
-import image12 from "../assets/blogPage/imageId12.png"
-import image13 from "../assets/blogPage/imageId13.png"
-import image14 from "../assets/blogPage/imageId14.png"
-import image15 from "../assets/blogPage/imageId15.png"
+
+import image1 from "../assets/blogPage/imageId1.webp"
+import image2 from "../assets/blogPage/imageId2.webp"
+import image3 from "../assets/blogPage/imageId3.webp"
+import image4 from "../assets/blogPage/imageId4.webp"
+import image5 from "../assets/blogPage/imageId5.webp"
+import image6 from "../assets/blogPage/imageId6.webp"
+import image7 from "../assets/blogPage/imageId7.webp"
+import image8 from "../assets/blogPage/imageId8.webp"
+import image9 from "../assets/blogPage/imageId9.webp"
+import image10 from "../assets/blogPage/imageId10.webp"
+import image11 from "../assets/blogPage/imageId11.webp"
+import image12 from "../assets/blogPage/imageId12.webp"
+import image13 from "../assets/blogPage/imageId13.webp"
+import image14 from "../assets/blogPage/imageId14.webp"
+import image15 from "../assets/blogPage/imageId15.webp"
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -211,7 +211,7 @@ const Blog = () => {
         {/* Hero Section (Matching About Page Style) */}
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
-            <img src={bgImage} alt="Background" className="w-full h-full object-cover object-center" />
+            <img src="" alt="Background" className="w-full h-full object-cover object-center" />
             <div className="absolute inset-0 bg-black/30" />
           </div>
           <div className="container mx-auto px-4 relative z-10">

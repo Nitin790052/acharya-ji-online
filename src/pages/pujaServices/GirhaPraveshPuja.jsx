@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Home, Clock, CheckCircle, Star, Phone, Calendar, Users, Shield, ArrowRight, X, Sparkles, Award, BookOpen, MapPin, Heart, Sparkle, ChevronRight } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import banner from "@/assets/banners/bannerGirhaPage.png"
-import homeImg from "@/assets/grihaPraveshPuja/home_visit.png"
-import onlineImg from "@/assets/grihaPraveshPuja/online_puja.png"
-import muhuratImg from "@/assets/grihaPraveshPuja/muhurat.png"
+
+import homeImg from "@/assets/grihaPraveshPuja/home_visit.webp"
+import onlineImg from "@/assets/grihaPraveshPuja/online_puja.webp"
+import muhuratImg from "@/assets/grihaPraveshPuja/muhurat.webp"
 import { Link } from "react-router-dom";
 
 export default function GrihaPraveshPuja() {
@@ -59,7 +59,7 @@ export default function GrihaPraveshPuja() {
           {/* Hero Section - Matching About Us deeply */}
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
-              <img src={banner} alt="Griha Pravesh" className="w-full h-full object-cover object-top" />
+              <img src="" alt="Griha Pravesh" className="w-full h-full object-cover object-top" />
               <div className="absolute inset-0 bg-black/30" />
             </div>
             <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
@@ -115,7 +115,7 @@ export default function GrihaPraveshPuja() {
                 <div className="relative group flex justify-center animate-fade-in-right">
                   <div className="relative w-[96%] max-w-lg mx-auto p-1.5 md:p-2 bg-gradient-to-br from-amber-100 to-amber-300 rounded-[2rem] shadow-[0_20px_50px_-15px_rgba(217,119,6,0.25)]">
                     <div className="w-full h-[315px] sm:h-[375px] md:h-[445px] rounded-3xl overflow-hidden border-[3px] border-white relative z-10">
-                      <img src={banner} alt="Puja Vidhi" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                      <img src="" alt="Puja Vidhi" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
                     </div>
                     {/* Achievement Badge style from About Us */}

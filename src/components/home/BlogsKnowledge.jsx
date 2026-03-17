@@ -3,12 +3,12 @@ import { BookOpen, Calendar, ArrowRight, Clock, Star, Sparkles, Tag, TrendingUp,
 import SectionHeader from '../common/SectionHeader';
 import { Link } from 'react-router-dom';
 
-import Astrology_vs_Horoscope_Complete_Guide from "../../assets/blogs/Astrology vs Horoscope_ Complete Guide.jpg"
-import Gemstones_Celestial_Healing from "../../assets/blogs/Gemstones_ Celestial Healing.jpg"
-import Griha_Pravesh_Puja_Ultimate_Guide from "../../assets/blogs/Griha Pravesh Puja_ Ultimate Guide.jpg"
-import Meditation_Techniques_Ancient_to_Modern from "../../assets/blogs/Meditation Techniques_ Ancient to Modern.jpg"
-import Navgraha_Shanti_Planetary_Harmony from "../../assets/blogs/Navgraha Shanti_ Planetary Harmony.jpg"
-import Vastu_Shastra_Modern_Applications from "../../assets/blogs/Vastu Shastra_ Modern Applications.jpg"
+import Astrology_vs_Horoscope_Complete_Guide from "../../assets/blogs/Astrology vs Horoscope_ Complete Guide.webp"
+import Gemstones_Celestial_Healing from "../../assets/blogs/Gemstones_ Celestial Healing.webp"
+import Griha_Pravesh_Puja_Ultimate_Guide from "../../assets/blogs/Griha Pravesh Puja_ Ultimate Guide.webp"
+import Meditation_Techniques_Ancient_to_Modern from "../../assets/blogs/Meditation Techniques_ Ancient to Modern.webp"
+import Navgraha_Shanti_Planetary_Harmony from "../../assets/blogs/Navgraha Shanti_ Planetary Harmony.webp"
+import Vastu_Shastra_Modern_Applications from "../../assets/blogs/Vastu Shastra_ Modern Applications.webp"
 
 const BlogsKnowledge = () => {
   const blogs = [

@@ -1,102 +1,111 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import React, { lazy, Suspense } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
-import Index from "./pages/Index";
-import PujaEssentials from "./pages/samagri/PujaEssentials";
-import PujaSamagri from "./pages/samagri/ShopPujaSamagri";
-import Contact from "./pages/Contact";
-import Blog from "./pages/Blog";
-import Gallery from "./pages/Gallery";
-import TwoBidders from "./pages/TwoBidders";
-import AboutUs from "./pages/About";
 import ScrollToTop from "./components/ScrollToTop";
 import FloatingButtons from "./components/FloatingButtons";
 import SocialSidebar from "./components/home/SocialSidebar";
 import SupportSpeedDial from "./components/common/SupportSpeedDial";
-import Media from "./pages/Media";
-import BookPuja from "./pages/pujaServices/BookPuja";
-import Career from "./pages/Career";
-import GrihaPraveshPuja from "./pages/pujaServices/GirhaPraveshPuja";
-import Login from "../src/app/vendor/login/Login";
-import VendorRegister from "../src/app/vendor/pages/VendorRegister";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// ✅ DONO AUTH PROVIDERS - ALAG ALAG NAMES SE IMPORT
+// ✅ AUTH PROVIDERS
 import { AuthProvider as VendorAuthProvider } from "@/app/vendor/auth/AuthContext";
-import { AuthProvider as UserAuthProvider } from "./app/user/auth/AuthContext";  // ✅ USER WALA
+import { AuthProvider as UserAuthProvider } from "./app/user/auth/AuthContext";
 
-// Vendor Imports
-import VendorDashboardLayout from "../src/app/vendor/layout/VendorDashboardLayout";
-import MyPujaServices from "../src/app/vendor/pages/vendors/pandit/MyPujaServices";
-import Bookings from "../src/app/vendor/pages/vendors/pandit/Bookings";
-import AvailabilityCalendar from "../src/app/vendor/pages/vendors/pandit/AvailabilityCalender";
-import WalletEarning from "../src/app/vendor/pages/vendors/pandit/WalletEarning";
-import ReviewsRating from "../src/app/vendor/pages/vendors/pandit/ReviewsRating";
-import Notifications from "../src/app/vendor/pages/vendors/pandit/Notifications";
-import ProfileKyc from "../src/app/vendor/pages/vendors/pandit/ProfileKyc";
+// ✅ Route Guards & Routers
 import VendorRouteGuard from "./app/vendor/routes/VendorRouteGuard";
 import VendorDashboardRouter from "./app/vendor/routes/VendorDashboardRouter";
-import MyConsultations from "./app/vendor/pages/vendors/astrologer/MyConsultations";
-import ReportsKundli from "./app/vendor/pages/vendors/astrologer/ReportsKundli";
-import GeneratorKundliReports from "./app/vendor/pages/vendors/astrologer/GenerateKundliReports";
-import AvailabilitySchedule from "./app/vendor/pages/vendors/astrologer/AvailabilitySchedule";
-import WalletEarnings from "./app/vendor/pages/vendors/astrologer/WalletEarnings";
-import ReviewsRatings from "./app/vendor/pages/vendors/astrologer/ReviewsRatings";
-import ChatCenter from "./app/vendor/pages/vendors/astrologer/ChatCenter";
-import ProfileBranding from "./app/vendor/pages/vendors/astrologer/ProfileBranding";
-import AstroNotifications from "./app/vendor/pages/vendors/astrologer/AstroNotifications";
-import Orders from "./app/vendor/pages/vendors/poojaSamagri/Orders";
-import Products from "./app/vendor/pages/vendors/poojaSamagri/Products";
-import PujaKits from "./app/vendor/pages/vendors/poojaSamagri/Pujakits";
-import Inventory from "./app/vendor/pages/vendors/poojaSamagri/Inventory";
-import OffersCoupons from "./app/vendor/pages/vendors/poojaSamagri/OffersCoupons";
-import ShippingDelivery from "./app/vendor/pages/vendors/poojaSamagri/ShippingDelivery";
-import ReviewsPuja from "./app/vendor/pages/vendors/poojaSamagri/ReviewsPuja";
-import WalletPuja from "./app/vendor/pages/vendors/poojaSamagri/WalletPuja";
-import NotificationPuja from "./app/vendor/pages/vendors/poojaSamagri/Notifications";
-import StoreProfile from "./app/vendor/pages/vendors/poojaSamagri/StoreProfile";
-import SevasPujas from "./app/vendor/pages/vendors/templeService/SevasPujas";
-import BookingsTemple from "./app/vendor/pages/vendors/templeService/Bookings";
-import Donations from "./app/vendor/pages/vendors/templeService/Donations";
-import EventsTemple from "./app/vendor/pages/vendors/templeService/EventsTemple";
-import StaffManagement from "./app/vendor/pages/vendors/templeService/StaffManagement";
-import WalletTemple from "./app/vendor/pages/vendors/templeService/WalletTemple";
-import SettingsTemple from "./app/vendor/pages/vendors/templeService/SettingsTemple";
-import OrganizerEvents from "./app/vendor/pages/vendors/eventOrganizer/OrganizerEvents";
-import Bookings_Organizer from "./app/vendor/pages/vendors/eventOrganizer/Bookings_Organizer";
-import Attendees_Organizer from "./app/vendor/pages/vendors/eventOrganizer/Attendees_Organizer";
-import WalletPayments_Organizer from "./app/vendor/pages/vendors/eventOrganizer/WalletPayments_Organizer";
-import Analytics_Oraganizer from "./app/vendor/pages/vendors/eventOrganizer/Analytics_Organizer";
-import ProfileSettings_Organizer from "./app/vendor/pages/vendors/eventOrganizer/ProfileSettings_Organizer";
+import ProtectedRoute from "./app/user/ProtectedRoute";
+// ✅ Lazy Loading Pages for Performance
+const Index = lazy(() => import("./pages/Index"));
+const PujaEssentials = lazy(() => import("./pages/samagri/PujaEssentials"));
+const PujaSamagri = lazy(() => import("./pages/samagri/ShopPujaSamagri"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const TwoBidders = lazy(() => import("./pages/TwoBidders"));
+const AboutUs = lazy(() => import("./pages/About"));
+const Media = lazy(() => import("./pages/Media"));
+const BookPuja = lazy(() => import("./pages/pujaServices/BookPuja"));
+const Career = lazy(() => import("./pages/Career"));
+const GrihaPraveshPuja = lazy(() => import("./pages/pujaServices/GirhaPraveshPuja"));
+const Login = lazy(() => import("../src/app/vendor/login/Login"));
+const VendorRegister = lazy(() => import("../src/app/vendor/pages/VendorRegister"));
 
-// User Imports
-import UserLogin from "./app/user/pages/UserLogin";
-import RegistrationForm from "./app/user/pages/RegistrationForm";
-import UserDashboardLayout from "../src/app/user/layout/UserDashboardLayout"
-import UserDashboard from "./app/user/pages/UserDashboard";
-import ProtectedRoute from "./app/user/ProtectedRoute";  // ✅ User Protected Route
-import UserOrders from "./app/user/pages/orders/UserOrders";
-import UserProfile from "./app/user/pages/headerProfile/UserProfile";
-import UserHistory from "./app/user/pages/UserHistory";
-import UserPayments from "./app/user/pages/UserPayments";
-import PendingOrders from "./app/user/pages/orders/PendingOrders";
-import ProcessingOrders from "./app/user/pages/orders/ProcessingOrders";
-import CancelledOrders from "./app/user/pages/orders/CancelledOrders";
-import CompletedOrders from "./app/user/pages/orders/CompletedOrders";
-import Invoice from "./app/user/pages/invoice/Invoice";
-import ViewInvoice from "./app/user/components/ViewInvoice";
-import NotFound from "./pages/NotFound";
-import TalkToAstrologer from "./pages/astrologyServices/TalkToAstrologer";
-import GetKundli from "./pages/kundli/GetKundli";
-import ReikiHealing from "./pages/healing/ReikiHealing";
-import CrystalHealing from "./pages/healing/CrystalHealing";
-import VastuConsultation from "./pages/vastu/VastuConsultation";
-import HomeOfficeVastu from "./pages/vastu/HomeOfficeVastu";
-import ShopPujaSamagri from "./pages/samagri/ShopPujaSamagri";
+// Vendor Pages
+const MyPujaServices = lazy(() => import("../src/app/vendor/pages/vendors/pandit/MyPujaServices"));
+const Bookings = lazy(() => import("../src/app/vendor/pages/vendors/pandit/Bookings"));
+const AvailabilityCalendar = lazy(() => import("../src/app/vendor/pages/vendors/pandit/AvailabilityCalender"));
+const WalletEarning = lazy(() => import("../src/app/vendor/pages/vendors/pandit/WalletEarning"));
+const ReviewsRating = lazy(() => import("../src/app/vendor/pages/vendors/pandit/ReviewsRating"));
+const Notifications = lazy(() => import("../src/app/vendor/pages/vendors/pandit/Notifications"));
+const ProfileKyc = lazy(() => import("../src/app/vendor/pages/vendors/pandit/ProfileKyc"));
+const MyConsultations = lazy(() => import("./app/vendor/pages/vendors/astrologer/MyConsultations"));
+const ReportsKundli = lazy(() => import("./app/vendor/pages/vendors/astrologer/ReportsKundli"));
+const GeneratorKundliReports = lazy(() => import("./app/vendor/pages/vendors/astrologer/GenerateKundliReports"));
+const AvailabilitySchedule = lazy(() => import("./app/vendor/pages/vendors/astrologer/AvailabilitySchedule"));
+const WalletEarnings = lazy(() => import("./app/vendor/pages/vendors/astrologer/WalletEarnings"));
+const ReviewsRatings = lazy(() => import("./app/vendor/pages/vendors/astrologer/ReviewsRatings"));
+const ChatCenter = lazy(() => import("./app/vendor/pages/vendors/astrologer/ChatCenter"));
+const ProfileBranding = lazy(() => import("./app/vendor/pages/vendors/astrologer/ProfileBranding"));
+const AstroNotifications = lazy(() => import("./app/vendor/pages/vendors/astrologer/AstroNotifications"));
+const Orders = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/Orders"));
+const Products = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/Products"));
+const PujaKits = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/Pujakits"));
+const Inventory = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/Inventory"));
+const OffersCoupons = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/OffersCoupons"));
+const ShippingDelivery = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/ShippingDelivery"));
+const ReviewsPuja = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/ReviewsPuja"));
+const WalletPuja = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/WalletPuja"));
+const NotificationPuja = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/Notifications"));
+const StoreProfile = lazy(() => import("./app/vendor/pages/vendors/poojaSamagri/StoreProfile"));
+const SevasPujas = lazy(() => import("./app/vendor/pages/vendors/templeService/SevasPujas"));
+const BookingsTemple = lazy(() => import("./app/vendor/pages/vendors/templeService/Bookings"));
+const Donations = lazy(() => import("./app/vendor/pages/vendors/templeService/Donations"));
+const EventsTemple = lazy(() => import("./app/vendor/pages/vendors/templeService/EventsTemple"));
+const StaffManagement = lazy(() => import("./app/vendor/pages/vendors/templeService/StaffManagement"));
+const WalletTemple = lazy(() => import("./app/vendor/pages/vendors/templeService/WalletTemple"));
+const SettingsTemple = lazy(() => import("./app/vendor/pages/vendors/templeService/SettingsTemple"));
+const OrganizerEvents = lazy(() => import("./app/vendor/pages/vendors/eventOrganizer/OrganizerEvents"));
+const Bookings_Organizer = lazy(() => import("./app/vendor/pages/vendors/eventOrganizer/Bookings_Organizer"));
+const Attendees_Organizer = lazy(() => import("./app/vendor/pages/vendors/eventOrganizer/Attendees_Organizer"));
+const WalletPayments_Organizer = lazy(() => import("./app/vendor/pages/vendors/eventOrganizer/WalletPayments_Organizer"));
+const Analytics_Oraganizer = lazy(() => import("./app/vendor/pages/vendors/eventOrganizer/Analytics_Organizer"));
+const ProfileSettings_Organizer = lazy(() => import("./app/vendor/pages/vendors/eventOrganizer/ProfileSettings_Organizer"));
+
+// User Pages
+const UserLogin = lazy(() => import("./app/user/pages/UserLogin"));
+const RegistrationForm = lazy(() => import("./app/user/pages/RegistrationForm"));
+const UserDashboard = lazy(() => import("./app/user/pages/UserDashboard"));
+const UserOrders = lazy(() => import("./app/user/pages/orders/UserOrders"));
+const UserProfile = lazy(() => import("./app/user/pages/headerProfile/UserProfile"));
+const UserHistory = lazy(() => import("./app/user/pages/UserHistory"));
+const UserPayments = lazy(() => import("./app/user/pages/UserPayments"));
+const PendingOrders = lazy(() => import("./app/user/pages/orders/PendingOrders"));
+const ProcessingOrders = lazy(() => import("./app/user/pages/orders/ProcessingOrders"));
+const CancelledOrders = lazy(() => import("./app/user/pages/orders/CancelledOrders"));
+const CompletedOrders = lazy(() => import("./app/user/pages/orders/CompletedOrders"));
+const Invoice = lazy(() => import("./app/user/pages/invoice/Invoice"));
+const ViewInvoice = lazy(() => import("./app/user/components/ViewInvoice"));
+
+// Service Pages
+const TalkToAstrologer = lazy(() => import("./pages/astrologyServices/TalkToAstrologer"));
+const GetKundli = lazy(() => import("./pages/kundli/GetKundli"));
+const ReikiHealing = lazy(() => import("./pages/healing/ReikiHealing"));
+const CrystalHealing = lazy(() => import("./pages/healing/CrystalHealing"));
+const VastuConsultation = lazy(() => import("./pages/vastu/VastuConsultation"));
+const HomeOfficeVastu = lazy(() => import("./pages/vastu/HomeOfficeVastu"));
+const ShopPujaSamagri = lazy(() => import("./pages/samagri/ShopPujaSamagri"));
+const AstrologyCourses = lazy(() => import("./pages/learn/AstrologyCourses"));
+const CourseDetail = lazy(() => import("./pages/learn/CourseDetail"));
+
+// Admin & Others
+const AdminApp = lazy(() => import("./app/Admin_panel_acharya/src/App"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const VendorDashboardLayout = lazy(() => import("../src/app/vendor/layout/VendorDashboardLayout"));
+const UserDashboardLayout = lazy(() => import("../src/app/user/layout/UserDashboardLayout"));
 
 
 const queryClient = new QueryClient();
@@ -107,6 +116,7 @@ const GlobalFloatingButtons = () => {
     const isDashboard = location.pathname.includes("/dashboard") ||
         location.pathname.startsWith("/user") ||
         location.pathname.startsWith("/vendor") ||
+        location.pathname.startsWith("/admin-acharya") ||
         location.pathname === "/login" ||
         location.pathname === "/vendorRegister";
 
@@ -141,120 +151,130 @@ const App = () => (
                     <UserAuthProvider>
                         <CartProvider>
                             <TooltipProvider>
-                                <Toaster />
-                                <Sonner />
-                                <Routes>
-                                    <Route path="/" element={<Index />} />
-                                    <Route path="/about" element={<AboutUs />} />
-                                    <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
-                                    <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
-                                    <Route path="/samagri/essentials" element={<PujaSamagri />} />
-                                    <Route path="/samagri/idols" element={<PujaSamagri />} />
-                                    <Route path="/samagri/hawan" element={<PujaSamagri />} />
-                                    <Route path="/products" element={<PujaSamagri />} />
-                                    <Route path="/puja-samagri" element={<PujaSamagri />} />
-                                    <Route path="/products/prasad" element={<PujaSamagri />} />
-                                    <Route path="/products/kits" element={<PujaSamagri />} />
-                                    <Route path="/products/festival" element={<PujaSamagri />} />
-                                    <Route path="/bidders" element={<TwoBidders />} />
-                                    <Route path="/career" element={<Career />} />
-                                    <Route path="/media" element={<Media />} />
-                                    <Route path="/gallery" element={<Gallery />} />
-                                    <Route path="/blog" element={<Blog />} />
-                                    <Route path="/blog/:id" element={<Blog />} />
-                                    <Route path="/contact" element={<Contact />} />
-                                    <Route path="/astrologer" element={<TalkToAstrologer />} />
-                                    <Route path="/astrologer/:id" element={<TalkToAstrologer />} />
-                                    <Route path="/kundli" element={<GetKundli />} />
-                                    <Route path="/reiki-healing" element={<ReikiHealing />} />
-                                    <Route path="/crystal-healing" element={<CrystalHealing />} />
-                                    <Route path="/vastu-consultation" element={<VastuConsultation />} />
-                                    <Route path="/home-office-vastu" element={<HomeOfficeVastu />} />
-                                    <Route path="/shop-puja-samagri" element={<ShopPujaSamagri />} />
+                                <Suspense fallback={
+                                    <div className="flex items-center justify-center min-h-screen bg-orange-50/30">
+                                        <div className="relative">
+                                            <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
+                                            <div className="mt-4 text-orange-800 font-medium">Loading...</div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <Routes>
+                                        <Route path="/" element={<Index />} />
+                                        <Route path="/about" element={<AboutUs />} />
+                                        <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
+                                        <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
+                                        <Route path="/samagri/essentials" element={<PujaSamagri />} />
+                                        <Route path="/samagri/idols" element={<PujaSamagri />} />
+                                        <Route path="/samagri/hawan" element={<PujaSamagri />} />
+                                        <Route path="/products" element={<PujaSamagri />} />
+                                        <Route path="/puja-samagri" element={<PujaSamagri />} />
+                                        <Route path="/products/prasad" element={<PujaSamagri />} />
+                                        <Route path="/products/kits" element={<PujaSamagri />} />
+                                        <Route path="/products/festival" element={<PujaSamagri />} />
+                                        <Route path="/bidders" element={<TwoBidders />} />
+                                        <Route path="/career" element={<Career />} />
+                                        <Route path="/media" element={<Media />} />
+                                        <Route path="/gallery" element={<Gallery />} />
+                                        <Route path="/blog" element={<Blog />} />
+                                        <Route path="/blog/:id" element={<Blog />} />
+                                        <Route path="/contact" element={<Contact />} />
+                                        <Route path="/astrologer" element={<TalkToAstrologer />} />
+                                        <Route path="/astrologer/:id" element={<TalkToAstrologer />} />
+                                        <Route path="/kundli" element={<GetKundli />} />
+                                        <Route path="/reiki-healing" element={<ReikiHealing />} />
+                                        <Route path="/crystal-healing" element={<CrystalHealing />} />
+                                        <Route path="/vastu-consultation" element={<VastuConsultation />} />
+                                        <Route path="/home-office-vastu" element={<HomeOfficeVastu />} />
+                                        <Route path="/shop-puja-samagri" element={<ShopPujaSamagri />} />
+                                        <Route path="/learn-astrology-courses" element={<AstrologyCourses />} />
+                                        <Route path="/learn/astrology/:slug" element={<CourseDetail />} />
 
-                                    <Route path="/user_login" element={<UserLogin />} />
-                                    <Route path="/user_login/registeration" element={<RegistrationForm />} />
+                                        <Route path="/user_login" element={<UserLogin />} />
+                                        <Route path="/user_login/registeration" element={<RegistrationForm />} />
 
-                                    <Route
-                                        path="/user/dashboard"
-                                        element={
-                                            <ProtectedRoute>
-                                                <UserDashboardLayout />
-                                            </ProtectedRoute>
-                                        }
-                                    >
-                                        <Route index element={<UserDashboard />} />
-                                        <Route path="order-user/order-all" element={<UserOrders />} />
-                                        <Route path="order-user/order-pendings" element={<PendingOrders />} />
-                                        <Route path="order-user/order-processing" element={<ProcessingOrders />} />
-                                        <Route path="order-user/order-cancelled" element={<CancelledOrders />} />
-                                        <Route path="order-user/order-completed" element={<CompletedOrders />} />
-                                        <Route path="profile-user" element={<UserProfile />} />
-                                        <Route path="history-user" element={<UserHistory />} />
-                                        <Route path="payments-user" element={<UserPayments />} />
-                                        <Route path="invoice/:id" element={<Invoice />} />
-                                        <Route path="modal/invoice/:id" element={<ViewInvoice />} />
-                                    </Route>
+                                        <Route
+                                            path="/user/dashboard"
+                                            element={
+                                                <ProtectedRoute>
+                                                    <UserDashboardLayout />
+                                                </ProtectedRoute>
+                                            }
+                                        >
+                                            <Route index element={<UserDashboard />} />
+                                            <Route path="order-user/order-all" element={<UserOrders />} />
+                                            <Route path="order-user/order-pendings" element={<PendingOrders />} />
+                                            <Route path="order-user/order-processing" element={<ProcessingOrders />} />
+                                            <Route path="order-user/order-cancelled" element={<CancelledOrders />} />
+                                            <Route path="order-user/order-completed" element={<CompletedOrders />} />
+                                            <Route path="profile-user" element={<UserProfile />} />
+                                            <Route path="history-user" element={<UserHistory />} />
+                                            <Route path="payments-user" element={<UserPayments />} />
+                                            <Route path="invoice/:id" element={<Invoice />} />
+                                            <Route path="modal/invoice/:id" element={<ViewInvoice />} />
+                                        </Route>
 
-                                    <Route path="/login" element={<Login />} />
-                                    <Route path="/vendorRegister" element={<VendorRegister />} />
+                                        <Route path="/login" element={<Login />} />
+                                        <Route path="/vendorRegister" element={<VendorRegister />} />
 
-                                    <Route
-                                        path="/vendor/dashboard"
-                                        element={
-                                            <VendorRouteGuard>
-                                                <VendorDashboardLayout />
-                                            </VendorRouteGuard>
-                                        }
-                                    >
-                                        <Route index element={<VendorDashboardRouter />} />
-                                        <Route path="services" element={<MyPujaServices />} />
-                                        <Route path="bookings" element={<Bookings />} />
-                                        <Route path="calendar" element={<AvailabilityCalendar />} />
-                                        <Route path="wallet" element={<WalletEarning />} />
-                                        <Route path="reviews" element={<ReviewsRating />} />
-                                        <Route path="notifications" element={<Notifications />} />
-                                        <Route path="settings" element={<ProfileKyc />} />
+                                        <Route
+                                            path="/vendor/dashboard"
+                                            element={
+                                                <VendorRouteGuard>
+                                                    <VendorDashboardLayout />
+                                                </VendorRouteGuard>
+                                            }
+                                        >
+                                            <Route index element={<VendorDashboardRouter />} />
+                                            <Route path="services" element={<MyPujaServices />} />
+                                            <Route path="bookings" element={<Bookings />} />
+                                            <Route path="calendar" element={<AvailabilityCalendar />} />
+                                            <Route path="wallet" element={<WalletEarning />} />
+                                            <Route path="reviews" element={<ReviewsRating />} />
+                                            <Route path="notifications" element={<Notifications />} />
+                                            <Route path="settings" element={<ProfileKyc />} />
 
-                                        <Route path="consultations" element={<MyConsultations />} />
-                                        <Route path="reports" element={<ReportsKundli />} />
-                                        <Route path="generate" element={<GeneratorKundliReports />} />
-                                        <Route path="availability" element={<AvailabilitySchedule />} />
-                                        <Route path="wallet" element={<WalletEarnings />} />
-                                        <Route path="reviews" element={<ReviewsRatings />} />
-                                        <Route path="chatCenter" element={<ChatCenter />} />
-                                        <Route path="astroNotifications" element={<AstroNotifications />} />
-                                        <Route path="profile" element={<ProfileBranding />} />
+                                            <Route path="consultations" element={<MyConsultations />} />
+                                            <Route path="reports" element={<ReportsKundli />} />
+                                            <Route path="generate" element={<GeneratorKundliReports />} />
+                                            <Route path="availability" element={<AvailabilitySchedule />} />
+                                            <Route path="wallet" element={<WalletEarnings />} />
+                                            <Route path="reviews" element={<ReviewsRatings />} />
+                                            <Route path="chatCenter" element={<ChatCenter />} />
+                                            <Route path="astroNotifications" element={<AstroNotifications />} />
+                                            <Route path="profile" element={<ProfileBranding />} />
 
-                                        <Route path="orders_puja" element={<Orders />} />
-                                        <Route path="products_puja" element={<Products />} />
-                                        <Route path="pujaKits_puja" element={<PujaKits />} />
-                                        <Route path="inventory_puja" element={<Inventory />} />
-                                        <Route path="offers_puja" element={<OffersCoupons />} />
-                                        <Route path="delivery_puja" element={<ShippingDelivery />} />
-                                        <Route path="settlement_puja" element={<WalletPuja />} />
-                                        <Route path="ratings_puja" element={<ReviewsPuja />} />
-                                        <Route path="notifications_puja" element={<NotificationPuja />} />
-                                        <Route path="settings_puja" element={<StoreProfile />} />
+                                            <Route path="orders_puja" element={<Orders />} />
+                                            <Route path="products_puja" element={<Products />} />
+                                            <Route path="pujaKits_puja" element={<PujaKits />} />
+                                            <Route path="inventory_puja" element={<Inventory />} />
+                                            <Route path="offers_puja" element={<OffersCoupons />} />
+                                            <Route path="delivery_puja" element={<ShippingDelivery />} />
+                                            <Route path="settlement_puja" element={<WalletPuja />} />
+                                            <Route path="ratings_puja" element={<ReviewsPuja />} />
+                                            <Route path="notifications_puja" element={<NotificationPuja />} />
+                                            <Route path="settings_puja" element={<StoreProfile />} />
 
-                                        <Route path="sevas_temple" element={<SevasPujas />} />
-                                        <Route path="bookings_temple" element={<BookingsTemple />} />
-                                        <Route path="donations_temple" element={<Donations />} />
-                                        <Route path="events_temple" element={<EventsTemple />} />
-                                        <Route path="staff_temple" element={<StaffManagement />} />
-                                        <Route path="wallet_temple" element={<WalletTemple />} />
-                                        <Route path="settings_temple" element={<SettingsTemple />} />
+                                            <Route path="sevas_temple" element={<SevasPujas />} />
+                                            <Route path="bookings_temple" element={<BookingsTemple />} />
+                                            <Route path="donations_temple" element={<Donations />} />
+                                            <Route path="events_temple" element={<EventsTemple />} />
+                                            <Route path="staff_temple" element={<StaffManagement />} />
+                                            <Route path="wallet_temple" element={<WalletTemple />} />
+                                            <Route path="settings_temple" element={<SettingsTemple />} />
 
-                                        <Route path="events_Organizer" element={<OrganizerEvents />} />
-                                        <Route path="bookings_Organizer" element={<Bookings_Organizer />} />
-                                        <Route path="attendees_Organizer" element={<Attendees_Organizer />} />
-                                        <Route path="wallet_Organizer" element={<WalletPayments_Organizer />} />
-                                        <Route path="analytics_Organizer" element={<Analytics_Oraganizer />} />
-                                        <Route path="settings_Organizer" element={<ProfileSettings_Organizer />} />
-                                    </Route>
+                                            <Route path="events_Organizer" element={<OrganizerEvents />} />
+                                            <Route path="bookings_Organizer" element={<Bookings_Organizer />} />
+                                            <Route path="attendees_Organizer" element={<Attendees_Organizer />} />
+                                            <Route path="wallet_Organizer" element={<WalletPayments_Organizer />} />
+                                            <Route path="analytics_Organizer" element={<Analytics_Oraganizer />} />
+                                            <Route path="settings_Organizer" element={<ProfileSettings_Organizer />} />
+                                        </Route>
 
-                                    <Route path="*" element={<NotFound />} />
-                                </Routes>
+                                        <Route path="/admin-acharya/*" element={<AdminApp />} />
+                                        <Route path="*" element={<NotFound />} />
+                                    </Routes>
+                                </Suspense>
                             </TooltipProvider>
                         </CartProvider>
                     </UserAuthProvider>

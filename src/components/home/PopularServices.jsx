@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Book, Droplets, Star, Users, ArrowRight, Sparkles, Clock, IndianRupee, ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import grahPravesh from "../../assets/popularServices/GrihaPraveshPuja.png"
-import LakshmiPuja from "../../assets/popularServices/LakshmiPuja1.png"
-import NavgrahaShanti from "../../assets/popularServices/NavgrahaShantiPuja.png"
-import PitruDosh from "../../assets/popularServices/PitruDoshPuja1.png"
-import Rudrabhishek from "../../assets/popularServices/Rudrabhishek1.png"
-import satyaNarayankatha from "../../assets/popularServices/satyanarayankatha1.png"
+import grahPravesh from "../../assets/popularServices/GrihaPraveshPuja.webp"
+import LakshmiPuja from "../../assets/popularServices/LakshmiPuja1.webp"
+import NavgrahaShanti from "../../assets/popularServices/NavgrahaShantiPuja.webp"
+import PitruDosh from "../../assets/popularServices/PitruDoshPuja1.webp"
+import Rudrabhishek from "../../assets/popularServices/Rudrabhishek1.webp"
+import satyaNarayankatha from "../../assets/popularServices/satyanarayankatha1.webp"
 const RED = '#E8453C';
 
 const PopularPujaServices = () => {
@@ -67,6 +67,7 @@ const PopularPujaServices = () => {
                           src={puja.Image}
                           alt={puja.name}
                           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                          loading="lazy"
                         />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
@@ -151,6 +152,7 @@ const PopularPujaServices = () => {
                               src={puja.Image}
                               alt={puja.name}
                               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                              loading="lazy"
                             />
                           )}
                           <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />

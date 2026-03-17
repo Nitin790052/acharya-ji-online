@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import image1 from "../../assets/banners/cara1.jpeg";
-import image2 from "../../assets/banners/cara2.jpeg";
-import image3 from "../../assets/banners/cara3.jpeg";
 
 const slides = [
   {

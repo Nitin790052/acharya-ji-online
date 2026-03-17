@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, Star, Award, TrendingUp, ChevronLeft, ChevronRight, Sparkles, Video } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import image1 from "../../assets/astrologors/AcharyaVikramJoshi.jpg"
-import image2 from "../../assets/astrologors/DrPriyaMishra.jpg"
-import image3 from "../../assets/astrologors/PanditRajeshSharma.png"
+import image1 from "../../assets/astrologors/AcharyaVikramJoshi.webp"
+import image2 from "../../assets/astrologors/DrPriyaMishra.webp"
+import image3 from "../../assets/astrologors/PanditRajeshSharma.webp"
 
 
 const RED = '#E8453C';

@@ -9,7 +9,7 @@ import {
   CheckCircle,
   Shield,
 } from "lucide-react";
-import image from "../../../assets/login/imageLo4.png";
+import image from "../../../assets/login/imageLo4.webp";
 import { useAuth } from "../../../app/vendor/auth/AuthContext";
 import { toast } from "react-toastify";
 

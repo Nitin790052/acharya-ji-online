@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
-import about from "../../assets/aboutImage/acharyaji.jpg"
+import about from "../../assets/aboutImage/acharyaji.webp"
 import SectionHeader from '../common/SectionHeader';
 
 const features = [

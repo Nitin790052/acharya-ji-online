@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Sparkles, Home, Video, Star, Package, Truck, Gift, ArrowRight, Flame, Moon, ScrollText, Shield, Leaf, ShoppingCart } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import Puja_Services from "../../assets/coreServices/poojaServices.png"
-import Astrology_Consultation from "../../assets/coreServices/astrologer.png"
-import Kundli_Services from "../../assets/coreServices/KundliServices.png"
-import Vastu_Remedies from "../../assets/coreServices/Vastu&Remedies.png"
-import Healing_Spiritual from "../../assets/coreServices/Healing&Spiritual.png"
-import Shop from "../../assets/coreServices/Samagri&Gemstones.png"
-import HomePooja from "../../assets/detailedServices/HomeVisitPuja.png"
-import OnlinePuja from "../../assets/detailedServices/OnlinePuja.png"
-import SpecialAnushthan from "../../assets/detailedServices/SpecialAnushthan.png"
-import PujaSamagri from "../../assets/detailedServices/PujaSamagri.png"
-import PrasadDelivery from "../../assets/detailedServices/PrasadDelivery.png"
-import FestivalSpecials from "../../assets/detailedServices/FestivalSpecials.png"
+import Puja_Services from "../../assets/coreServices/poojaServices.webp"
+import Astrology_Consultation from "../../assets/coreServices/astrologer.webp"
+import Kundli_Services from "../../assets/coreServices/KundliServices.webp"
+import Vastu_Remedies from "../../assets/coreServices/Vastu&Remedies.webp"
+import Healing_Spiritual from "../../assets/coreServices/Healing&Spiritual.webp"
+import Shop from "../../assets/coreServices/Samagri&Gemstones.webp"
+import HomePooja from "../../assets/detailedServices/HomeVisitPuja.webp"
+import OnlinePuja from "../../assets/detailedServices/OnlinePuja.webp"
+import SpecialAnushthan from "../../assets/detailedServices/SpecialAnushthan.webp"
+import PujaSamagri from "../../assets/detailedServices/PujaSamagri.webp"
+import PrasadDelivery from "../../assets/detailedServices/PrasadDelivery.webp"
+import FestivalSpecials from "../../assets/detailedServices/FestivalSpecials.webp"
 
 const coreServices = [
   { image: Puja_Services, title: 'Puja Services', description: 'Online & Offline Puja', href: '/puja', Icon: Flame },
@@ -99,6 +99,7 @@ export function Services() {
                       src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60" />
 
@@ -168,6 +169,7 @@ export function Services() {
                           src={service.Image}
                           alt={service.title}
                           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                          loading="lazy"
                         />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />

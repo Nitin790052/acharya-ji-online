@@ -13,7 +13,7 @@ import {
     BookOpen, Star, CheckCircle, Clock, MapPin, ChevronRight, Zap, Leaf, HelpCircle, MessageSquare, Sun, Moon, Wind, Feather, Activity, Coffee, Battery, Brain, Droplet, Flower2
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../../assets/healing/ReikiHealing.png";
+import bgImage from "../../assets/healing/ReikiHealing.webp";
 
 const ReikiHealing = () => {
     const [selectedFaq, setSelectedFaq] = useState(null);

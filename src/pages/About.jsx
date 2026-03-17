@@ -2,15 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Phone, Users, Heart, Award, Shield, Sparkle, Sparkles, BookOpen, Star, CheckCircle, Clock, MapPin, ChevronRight } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
-import bgImage from "../assets/banners/about_hero_acharya.png"
-import about from "../assets/aboutImage/acharyaji.jpg"
-import PujaServices1 from "../assets/aboutPage/PujaServices1.png"
-import Vastu from "../assets/aboutPage/Vastu.png"
-import AstrologyServices from "../assets/aboutPage/AstrologyServices.png"
-import Healing_Wellness from "../assets/aboutPage/Healing&Wellness.png"
+import { usePageBanner } from "@/hooks/usePageBanner";
+
+import about from "../assets/aboutImage/acharyaji.webp"
+import PujaServices1 from "../assets/aboutPage/PujaServices1.webp"
+import Vastu from "../assets/aboutPage/Vastu.webp"
+import AstrologyServices from "../assets/aboutPage/AstrologyServices.webp"
+import Healing_Wellness from "../assets/aboutPage/Healing&Wellness.webp"
+
 
 const AboutUs = () => {
   const [hoveredService, setHoveredService] = useState(null);
+  const banner = usePageBanner();
 
   const services = [
     {
@@ -73,21 +76,26 @@ const AboutUs = () => {
           {/* Hero Section */}
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
-              <img src={bgImage} alt="Background" className="w-full h-full object-cover " />
-              <div className="absolute inset-0 bg-black/30" />
+              {banner.imageUrl ? (
+                <img src={`http://127.0.0.1:5000${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+              ) : (
+                <div className="absolute inset-0 bg-[#2A1D13]/90" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
             </div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                   <Award className="w-4 h-4 text-[#FFC107]" />
-                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                  <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
                 </div>
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                  Preserving Sanatan Traditions with<br />
-                  <span className="text-yellow-300">Authentic Vedic Wisdom</span>
+                  {banner.titleHighlight1} <br />
+                  <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
                 </h1>
                 <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow">
-                  A trusted spiritual platform offering authentic puja services, Vedic astrology, vastu consultation, and healing solutions — performed by experienced and learned Acharyas.
+                  {banner.subtitle}
                 </p>
               </div>
             </div>

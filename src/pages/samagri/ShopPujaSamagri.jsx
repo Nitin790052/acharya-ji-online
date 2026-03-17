@@ -29,9 +29,9 @@ import { Layout } from '@/components/layout/Layout';
 import { useCart } from "@/contexts/CartContext";
 
 // Assets (Using available assets where possible)
-import bannerBg from "../../assets/banners/bannerBookPuja.png";
-import rudrakshaImg from "../../assets/vastuRamadies/Rudraksha.jpg";
-import gemstoneImg from "../../assets/vastuRamadies/Gemstones.jpg";
+
+import rudrakshaImg from "../../assets/vastuRamadies/Rudraksha.webp";
+import gemstoneImg from "../../assets/vastuRamadies/Gemstones.webp";
 
 const ShopPujaSamagri = () => {
     const { addItem } = useCart();
@@ -162,7 +162,7 @@ const ShopPujaSamagri = () => {
                 {/* 2️⃣ Hero Banner - Standardized Sizing */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src={bannerBg} alt="Puja Samagri" className="w-full h-full object-cover object-top" />
+                        <img src="" alt="Puja Samagri" className="w-full h-full object-cover object-top" />
                         <div className="absolute inset-0 bg-black/40" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10 animate-fade-in-up text-center">
@@ -171,7 +171,7 @@ const ShopPujaSamagri = () => {
                                 <Award className="w-4 h-4 text-[#FFC107]" />
                                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
                             </div>
-                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12_rgba(0,0,0,0.6)] uppercase">
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                                 Sacred Items For <br />
                                 <span className="text-yellow-300">Every Ritual</span>
                             </h1>
@@ -394,7 +394,7 @@ const ShopPujaSamagri = () => {
                             </div>
                             <h2 className="text-3xl md:text-5xl font-extrabold mb-4 uppercase tracking-tighter leading-tight">Ready-To-Use <br /><span className="text-yellow-400">Sacred Puja Kits</span></h2>
                             <p className="text-gray-400 font-bold text-[10px] md:text-xs uppercase tracking-widest italic max-w-xl mx-auto">Curated collections of the finest items for your spiritual journey.</p>
-                            
+
                             <div className="mt-8 flex justify-center">
                                 <Link to="/samagri/essentials" className="group flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] text-yellow-400 hover:text-white transition-all">
                                     View Full Collection <div className="w-10 h-10 rounded-none border border-yellow-400 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all"><ArrowRight className="w-5 h-5" /></div>
@@ -407,7 +407,7 @@ const ShopPujaSamagri = () => {
                             {pujaKits.map((kit, i) => (
                                 <div key={i} className="group bg-white/5 border border-white/10 p-5 md:p-6 hover:border-yellow-400 transition-all duration-500 relative overflow-hidden flex flex-col items-center text-center">
                                     <div className="absolute top-0 left-0 w-2 h-0 bg-yellow-400 group-hover:h-full transition-all duration-500" />
-                                    
+
                                     <div className="w-full aspect-[16/9] overflow-hidden mb-6 relative">
                                         <img src={kit.image} alt={kit.name} className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 to-transparent/10" />
@@ -417,7 +417,7 @@ const ShopPujaSamagri = () => {
                                     </div>
 
                                     <h3 className="text-base md:text-lg font-extrabold mb-5 uppercase tracking-tight group-hover:text-yellow-400 transition-colors">{kit.name}</h3>
-                                    
+
                                     <div className="space-y-2 mb-8 w-full">
                                         {kit.items.slice(0, 4).map((item, j) => (
                                             <div key={j} className="flex items-center justify-center gap-2 text-[9px] font-bold uppercase tracking-widest text-gray-400">

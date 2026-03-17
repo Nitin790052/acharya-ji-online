@@ -35,14 +35,14 @@ import {
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
 import { Link } from "react-router-dom";
-import banner from "../../assets/banners/cara1.jpeg";
-import homeVastuImg from "../../assets/vastuRamadies/Home Vastu.jpg";
-import officeVastuImg from "../../assets/vastuRamadies/Office Vastu.jpg";
-import plotVastuImg from "../../assets/vastuRamadies/plotvastu.png";
-import factoryVastuImg from "../../assets/vastuRamadies/factoryvastu.png";
-import apartmentVastuImg from "../../assets/vastuRamadies/apartmentvastu.png";
-import commercialVastuImg from "../../assets/vastuRamadies/commercialvastu.png";
-import vastueAbout from "../../assets/vastuRamadies/vastueAbout.png";
+
+import homeVastuImg from "../../assets/vastuRamadies/Home Vastu.webp";
+import officeVastuImg from "../../assets/vastuRamadies/Office Vastu.webp";
+import plotVastuImg from "../../assets/vastuRamadies/plotvastu.webp";
+import factoryVastuImg from "../../assets/vastuRamadies/factoryvastu.webp";
+import apartmentVastuImg from "../../assets/vastuRamadies/apartmentvastu.webp";
+import commercialVastuImg from "../../assets/vastuRamadies/commercialvastu.webp";
+import vastueAbout from "../../assets/vastuRamadies/vastueAbout.webp";
 
 const VastuConsultation = () => {
     const [selectedFaq, setSelectedFaq] = useState(null);
@@ -157,7 +157,7 @@ const VastuConsultation = () => {
                 {/* Hero Section */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src={banner} alt="Background" className="w-full h-full object-cover object-top" />
+                        <img src="" alt="Background" className="w-full h-full object-cover object-top" />
                         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
                         <div className="absolute inset-0 backdrop-blur-[1px]" />
                     </div>

@@ -28,12 +28,12 @@ import {
   Save,
   Camera
 } from 'lucide-react';
-import image1 from "../../../../../assets/vendor/eventsDashboard/Mahashivratri Celebration.png"
-import image2 from "../../../../../assets/vendor/eventsDashboard/Ram Navami.png"
-import image3 from "../../../../../assets/vendor/eventsDashboard/Hanuman Jayanti.png"
-import image4 from "../../../../../assets/vendor/eventsDashboard/Annakut Utsav medium.png"
-import image5 from "../../../../../assets/vendor/eventsDashboard/Gita Jayanti.png"
-import image6 from "../../../../../assets/vendor/eventsDashboard/Mahashivratri Celebration.png"
+import image1 from "../../../../../assets/vendor/eventsDashboard/Mahashivratri Celebration.webp"
+import image2 from "../../../../../assets/vendor/eventsDashboard/Ram Navami.webp"
+import image3 from "../../../../../assets/vendor/eventsDashboard/Hanuman Jayanti.webp"
+import image4 from "../../../../../assets/vendor/eventsDashboard/Annakut Utsav medium.webp"
+import image5 from "../../../../../assets/vendor/eventsDashboard/Gita Jayanti.webp"
+import image6 from "../../../../../assets/vendor/eventsDashboard/Mahashivratri Celebration.webp"
 
 const OrganizerEvents = () => {
   const [filter, setFilter] = useState('all');

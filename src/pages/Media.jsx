@@ -7,19 +7,21 @@ import {
   ChevronRight, Phone, BookOpen, Clock, Heart, Globe
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import banner from "../assets/banners/bannerMedia.png"
-import image1 from "../assets/mediaPage/imageM1.png"
-import image2 from "../assets/mediaPage/imageM2.png"
-import image3 from "../assets/mediaPage/imageM3.png"
-import image4 from "../assets/mediaPage/imageM4.png"
-import image5 from "../assets/mediaPage/imageM5.png"
-import image6 from "../assets/mediaPage/imageM6.png"
-import image7 from "../assets/mediaPage/imageM7.png"
-import image8 from "../assets/mediaPage/imageM8.png"
-import image9 from "../assets/mediaPage/imageM9.png"
+import { usePageBanner } from "@/hooks/usePageBanner";
+
+import image1 from "../assets/mediaPage/imageM1.webp"
+import image2 from "../assets/mediaPage/imageM2.webp"
+import image3 from "../assets/mediaPage/imageM3.webp"
+import image4 from "../assets/mediaPage/imageM4.webp"
+import image5 from "../assets/mediaPage/imageM5.webp"
+import image6 from "../assets/mediaPage/imageM6.webp"
+import image7 from "../assets/mediaPage/imageM7.webp"
+import image8 from "../assets/mediaPage/imageM8.webp"
+import image9 from "../assets/mediaPage/imageM9.webp"
 
 
 const Media = () => {
+  const banner = usePageBanner();
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -432,25 +434,29 @@ const Media = () => {
         <div className="absolute top-[20%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
-        {/* Hero Section (About page style) */}
+        {/* Hero Section */}
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
-            <img src={banner} alt="Background" className="w-full h-full object-cover object-center" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
-            <div className="absolute inset-0 backdrop-blur-[1px]" />
+            {banner.imageUrl ? (
+              <img src={`http://127.0.0.1:5000${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top " />
+            ) : (
+              <div className="absolute inset-0 bg-[#2A1D13]/90" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
-                <Award className="w-4 h-4 text-[#FFC107]" />
-                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                <Newspaper className="w-4 h-4 text-[#FFC107]" />
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                Acharya Ji in <br />
-                <span className="text-yellow-300">Media & Public Platforms</span>
+                {banner.titleHighlight1} <br />
+                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
               </h1>
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-4 drop-shadow">
-                Spreading Vedic wisdom, performing sacred rituals, and guiding thousands through traditional wisdom and spiritual enlightenment.
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow">
+                {banner.subtitle}
               </p>
             </div>
           </div>

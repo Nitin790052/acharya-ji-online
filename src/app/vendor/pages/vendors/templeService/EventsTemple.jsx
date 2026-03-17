@@ -31,12 +31,12 @@ import {
   Phone,
   Save
 } from 'lucide-react';
-import image1 from "../../../../../assets/vendor/eventTemple/Mahashivratri Celebration.png"
-import image2 from "../../../../../assets/vendor/eventTemple/Ram Navami.png"
-import image3 from "../../../../../assets/vendor/eventTemple/Hanuman Jayanti.png"
-import image4 from "../../../../../assets/vendor/eventTemple/Annakut Utsav.png"
-import image5 from "../../../../../assets/vendor/eventTemple/Gita Jayanti.png"
-import image6 from "../../../../../assets/vendor/eventTemple/Weekly Bhajan Sandhya.png"
+import image1 from "../../../../../assets/vendor/eventTemple/Mahashivratri Celebration.webp"
+import image2 from "../../../../../assets/vendor/eventTemple/Ram Navami.webp"
+import image3 from "../../../../../assets/vendor/eventTemple/Hanuman Jayanti.webp"
+import image4 from "../../../../../assets/vendor/eventTemple/Annakut Utsav.webp"
+import image5 from "../../../../../assets/vendor/eventTemple/Gita Jayanti.webp"
+import image6 from "../../../../../assets/vendor/eventTemple/Weekly Bhajan Sandhya.webp"
 
 const EventsTemple = () => {
   const [filter, setFilter] = useState('upcoming');

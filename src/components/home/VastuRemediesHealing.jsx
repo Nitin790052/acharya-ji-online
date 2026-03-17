@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Building2, Gem, Circle, Leaf, ArrowRight, Sparkles, Shield, Star, CheckCircle } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import Gemstones from "../../assets/vastuRamadies/Gemstones.jpg"
-import healing from "../../assets/vastuRamadies/healing.png"
-import HomeVastu from "../../assets/vastuRamadies/Home Vastu.jpg"
-import OfficeVastu from "../../assets/vastuRamadies/Office Vastu.jpg"
-import Rudraksha from "../../assets/vastuRamadies/Rudraksha.jpg"
+import Gemstones from "../../assets/vastuRamadies/Gemstones.webp"
+import healing from "../../assets/vastuRamadies/healing.webp"
+import HomeVastu from "../../assets/vastuRamadies/Home Vastu.webp"
+import OfficeVastu from "../../assets/vastuRamadies/Office Vastu.webp"
+import Rudraksha from "../../assets/vastuRamadies/Rudraksha.webp"
 
 const VastuRemediesHealing = () => {
   const [isVisible, setIsVisible] = useState(false);

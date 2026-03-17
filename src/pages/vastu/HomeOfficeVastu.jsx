@@ -51,10 +51,10 @@ import { Layout } from '@/components/layout/Layout';
 import { Link } from "react-router-dom";
 
 // Assets
-import banner from "../../assets/banners/cara1.jpeg";
-import homeVastuImg from "../../assets/vastuRamadies/Home Vastu.jpg";
-import officeVastuImg from "../../assets/vastuRamadies/Office Vastu.jpg";
-import vastueAbout from "../../assets/vastuRamadies/vastueAbout.png";
+
+import homeVastuImg from "../../assets/vastuRamadies/Home Vastu.webp";
+import officeVastuImg from "../../assets/vastuRamadies/Office Vastu.webp";
+import vastueAbout from "../../assets/vastuRamadies/vastueAbout.webp";
 
 const HomeOfficeVastu = () => {
     useEffect(() => {
@@ -144,7 +144,7 @@ const HomeOfficeVastu = () => {
                 {/* Section 1 — Hero (Styled like TalkToAstrologer) */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src={banner} alt="Vastu Background" className="w-full h-full object-cover object-top" />
+                        <img src="" alt="Vastu Background" className="w-full h-full object-cover object-top" />
                         <div className="absolute inset-0 bg-black/40" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up text-center">

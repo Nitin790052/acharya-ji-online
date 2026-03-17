@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Book, Heart, AlertCircle, Calendar, ArrowRight, Sparkles, Star, Zap, Shield } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import GetFreeKundli from "../../assets/kundli/GetFreeKundli.png"
-import KundliMatching from "../../assets/kundli/KundliMatching.png"
-import ManglikDoshCheck from "../../assets/kundli/ManglikDoshCheck.jpg"
-import ShaniSadeSati from "../../assets/kundli/ShaniSadeSati.jpg"
+import GetFreeKundli from "../../assets/kundli/GetFreeKundli.webp"
+import KundliMatching from "../../assets/kundli/KundliMatching.webp"
+import ManglikDoshCheck from "../../assets/kundli/ManglikDoshCheck.webp"
+import ShaniSadeSati from "../../assets/kundli/ShaniSadeSati.webp"
 
 const KundliServices = () => {
   const [isVisible, setIsVisible] = useState(false);

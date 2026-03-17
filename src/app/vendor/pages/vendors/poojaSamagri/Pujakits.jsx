@@ -27,12 +27,12 @@ import {
   CheckCircle,
   XCircle
 } from 'lucide-react';
-import image1 from "../../../../../assets/vendor/pujaKits/Satyanarayan Puja Kit.png"
-import image2 from "../../../../../assets/vendor/pujaKits/Navratri Special Kit.png"
-import image3 from "../../../../../assets/vendor/pujaKits/Ganesh Chaturthi Kit.png"
-import image4 from "../../../../../assets/vendor/pujaKits/Diwali Puja Kit.png"
-import image5 from "../../../../../assets/vendor/pujaKits/Daily Puja Basic Kit.png"
-import image6 from "../../../../../assets/vendor/pujaKits/Maha Shivratri Kit.png"
+import image1 from "../../../../../assets/vendor/pujaKits/Satyanarayan Puja Kit.webp"
+import image2 from "../../../../../assets/vendor/pujaKits/Navratri Special Kit.webp"
+import image3 from "../../../../../assets/vendor/pujaKits/Ganesh Chaturthi Kit.webp"
+import image4 from "../../../../../assets/vendor/pujaKits/Diwali Puja Kit.webp"
+import image5 from "../../../../../assets/vendor/pujaKits/Daily Puja Basic Kit.webp"
+import image6 from "../../../../../assets/vendor/pujaKits/Maha Shivratri Kit.webp"
 
 const PujaKits = () => {
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'

@@ -27,14 +27,14 @@ import {
   CheckSquare,
   Square
 } from 'lucide-react';
-import image1 from "../../../../../assets/vendor/sellerDashboard/Satyanarayan Puja.png"
-import image2 from "../../../../../assets/vendor/sellerDashboard/Navratri Special Diya Set.png"
-import image3 from "../../../../../assets/vendor/sellerDashboard/Premium Incense Sticks.png"
-import image4 from "../../../../../assets/vendor/sellerDashboard/Ganesh Idol (Silver Finish).png"
-import image5 from "../../../../../assets/vendor/sellerDashboard/Rudraksha Mala.png"
-import image6 from "../../../../../assets/vendor/sellerDashboard/Pooja Thali Set.png"
-import image7 from "../../../../../assets/vendor/sellerDashboard/Havan Samagri Pack.png"
-import image8 from "../../../../../assets/vendor/sellerDashboard/Brass Oil Lamp.png"
+import image1 from "../../../../../assets/vendor/sellerDashboard/Satyanarayan Puja.webp"
+import image2 from "../../../../../assets/vendor/sellerDashboard/Navratri Special Diya Set.webp"
+import image3 from "../../../../../assets/vendor/sellerDashboard/Premium Incense Sticks.webp"
+import image4 from "../../../../../assets/vendor/sellerDashboard/Ganesh Idol (Silver Finish).webp"
+import image5 from "../../../../../assets/vendor/sellerDashboard/Rudraksha Mala.webp"
+import image6 from "../../../../../assets/vendor/sellerDashboard/Pooja Thali Set.webp"
+import image7 from "../../../../../assets/vendor/sellerDashboard/Havan Samagri Pack.webp"
+import image8 from "../../../../../assets/vendor/sellerDashboard/Brass Oil Lamp.webp"
 
 
 const Products = () => {

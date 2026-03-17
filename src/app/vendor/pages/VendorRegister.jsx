@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import image from "../../../assets/login/imageLo5.png";
+import image from "../../../assets/login/imageLo5.webp";
 import CommonInfo from "../pages/vendorRegisterForms/CommonInfo";
 import Pandit from "../../vendor/pages/vendorRegisterForms/forms/Pandit";
 import Astrologer from "../../vendor/pages/vendorRegisterForms/forms/Astrologer";
