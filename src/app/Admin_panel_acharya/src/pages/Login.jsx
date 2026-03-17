@@ -19,7 +19,7 @@ const Login = () => {
   // Hardcoded credentials for demo
   const VALID_CREDENTIALS = {
     email: "admin@gmail.com",
-    password: "admin123"
+    password: "admin@2000"
   };
 
   // Validate form
