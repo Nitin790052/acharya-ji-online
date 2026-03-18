@@ -58,7 +58,7 @@ const CategoryManager = () => {
                     <h1 className="text-2xl font-bold text-gray-800">{categoryName} Management</h1>
                     <p className="text-sm text-gray-500 mt-1">Manage and monitor all {categoryName} vendors</p>
                 </div>
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-sm flex items-center gap-2">
+                <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-sm flex items-center gap-2">
                     <span>+ Add New {categoryName}</span>
                 </button>
             </div>
@@ -68,8 +68,8 @@ const CategoryManager = () => {
                 {[
                     { label: `Total ${categoryName}s`, value: '450', icon: <FiCheckCircle />, color: 'text-blue-600', bg: 'bg-blue-50' },
                     { label: 'Recently Added', value: '12', icon: <FiClock />, color: 'text-purple-600', bg: 'bg-purple-50' },
-                    { label: 'Top Rated', value: '85', icon: <FiStar />, color: 'text-amber-600', bg: 'bg-amber-50' },
-                    { label: 'Under Review', value: '24', icon: <FiFilter />, color: 'text-orange-600', bg: 'bg-orange-50' },
+                    { label: 'Top Rated', value: '85', icon: <FiStar />, color: 'text-blue-900', bg: 'bg-blue-50' },
+                    { label: 'Under Review', value: '24', icon: <FiFilter />, color: 'text-[#959190]', bg: 'bg-[#959190]/10' },
                 ].map((stat, idx) => (
                     <div key={idx} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
                         <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-xl flex items-center justify-center text-xl`}>
@@ -92,7 +92,7 @@ const CategoryManager = () => {
                         <input
                             type="text"
                             placeholder={`Search ${categoryName}...`}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 transition-all text-sm"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-900/20 focus:border-blue-900 transition-all text-sm"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -124,7 +124,7 @@ const CategoryManager = () => {
                                 <tr>
                                     <td colSpan="5" className="px-6 py-12 text-center">
                                         <div className="flex flex-col items-center gap-2">
-                                            <div className="w-8 h-8 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+                                            <div className="w-8 h-8 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
                                             <p className="text-gray-500 text-sm">Loading {categoryName}s...</p>
                                         </div>
                                     </td>
@@ -134,7 +134,7 @@ const CategoryManager = () => {
                                     <tr key={vendor.id} className="hover:bg-gray-50/50 transition-all">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-bold border-2 border-white shadow-sm">
+                                                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-900 font-bold border-2 border-white shadow-sm">
                                                     {vendor.name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -146,8 +146,8 @@ const CategoryManager = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="flex items-center gap-1.5 bg-amber-50 text-amber-700 px-2 py-1 rounded-lg w-fit">
-                                                <FiStar className="fill-amber-500 text-amber-500" size={14} />
+                                            <div className="flex items-center gap-1.5 bg-blue-50 text-blue-900 px-2 py-1 rounded-lg w-fit">
+                                                <FiStar className="fill-blue-900 text-blue-900" size={14} />
                                                 <span className="text-sm font-bold">{vendor.rating}</span>
                                             </div>
                                             <p className="text-xs text-gray-500 mt-1 font-medium">{vendor.experience} experience</p>
@@ -163,13 +163,13 @@ const CategoryManager = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-center gap-2 transition-all">
-                                                <button className="p-2 bg-blue-50 hover:bg-white rounded-lg text-blue-600 shadow-sm border border-blue-100 hover:border-gray-100 transition-all" title="View Details">
+                                                <button className="p-2 bg-green-50 hover:bg-green-100 rounded-lg text-green-600 shadow-sm border border-green-200 transition-all cursor-pointer" title="View Details">
                                                     <FiEye size={18} />
                                                 </button>
-                                                <button className="p-2 bg-amber-50 hover:bg-white rounded-lg text-amber-600 shadow-sm border border-amber-100 hover:border-gray-100 transition-all" title="Edit">
+                                                <button className="p-2 bg-green-50 hover:bg-green-100 rounded-lg text-green-600 shadow-sm border border-green-200 transition-all cursor-pointer" title="Edit">
                                                     <FiEdit2 size={18} />
                                                 </button>
-                                                <button className="p-2 bg-rose-50 hover:bg-white rounded-lg text-rose-600 shadow-sm border border-rose-100 hover:border-gray-100 transition-all" title="Delete">
+                                                <button className="p-2 bg-red-50 hover:bg-red-100 rounded-lg text-red-600 shadow-sm border border-red-200 transition-all cursor-pointer" title="Delete">
                                                     <FiTrash2 size={18} />
                                                 </button>
                                             </div>

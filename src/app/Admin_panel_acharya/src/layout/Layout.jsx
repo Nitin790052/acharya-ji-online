@@ -41,7 +41,7 @@ const Layout = () => {
   }, [location.pathname, isMobile]);
 
   return (
-    <div className="h-screen overflow-hidden bg-gray-50">
+    <div className="h-screen overflow-hidden bg-[#fbfaf9]">
 
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (

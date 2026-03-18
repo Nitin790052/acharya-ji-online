@@ -6,7 +6,7 @@ import { useAuth } from "../auth/AuthContext"; // Import useAuth
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth(); // Get login function from context
-  
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: ""
@@ -18,8 +18,8 @@ const Login = () => {
 
   // Hardcoded credentials for demo
   const VALID_CREDENTIALS = {
-    email: "admin@gmail.com",
-    password: "admin@2000"
+    email: "nitin@gmail.com",
+    password: "nitin@12345"
   };
 
   // Validate form
@@ -72,9 +72,9 @@ const Login = () => {
     // Simulate API call
     setTimeout(() => {
       // Check credentials (hardcoded for demo)
-      if (credentials.email === VALID_CREDENTIALS.email && 
-          credentials.password === VALID_CREDENTIALS.password) {
-        
+      if (credentials.email === VALID_CREDENTIALS.email &&
+        credentials.password === VALID_CREDENTIALS.password) {
+
         // User data to store
         const userData = {
           email: credentials.email,
@@ -85,10 +85,10 @@ const Login = () => {
 
         // Create a dummy token
         const dummyToken = "dummy-jwt-token-" + Math.random().toString(36).substring(2);
-        
+
         // Call context login function with rememberMe
         login(userData, dummyToken, rememberMe);
-        
+
         // Navigate to dashboard
         navigate("/admin-acharya/dashboard");
       } else {
@@ -109,10 +109,10 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6">
-      
+
       {/* Login Form Container - Fully Responsive */}
       <div className="w-full max-w-[90%] xs:max-w-sm sm:max-w-md md:max-w-md border border-slate-500/45 p-4 xs:p-5 sm:p-6 rounded-xl sm:rounded-2xl ">
-        
+
         {/* Logo - Responsive Sizes */}
         <div className="flex justify-center mb-3 sm:mb-4">
           <div className="w-16 h-16 xs:w-18 xs:h-18 sm:w-20 sm:h-20 bg-gray-50 rounded-xl sm:rounded-2xl flex items-center justify-center border border-gray-200">
@@ -154,9 +154,8 @@ const Login = () => {
                 value={credentials.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className={`w-full pl-9 sm:pl-10 pr-3 py-2.5 sm:py-3 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-gray-600 transition-colors text-gray-900 placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm ${
-                  errors.email ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full pl-9 sm:pl-10 pr-3 py-2.5 sm:py-3 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-gray-600 transition-colors text-gray-900 placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm ${errors.email ? "border-red-500" : "border-gray-300"
+                  }`}
               />
             </div>
             {errors.email && (
@@ -177,9 +176,8 @@ const Login = () => {
                 value={credentials.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className={`w-full pl-9 sm:pl-10 pr-10 py-2.5 sm:py-3 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-gray-600 transition-colors text-gray-900 placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`w-full pl-9 sm:pl-10 pr-10 py-2.5 sm:py-3 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-gray-600 transition-colors text-gray-900 placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm ${errors.password ? "border-red-500" : "border-gray-300"
+                  }`}
               />
               <button
                 type="button"
@@ -212,9 +210,8 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full bg-gray-900 text-white font-medium py-2.5 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-gray-800 transition-colors cursor-pointer ${
-              isLoading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`w-full bg-green-600 text-white font-medium py-2.5 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-green-700 transition-colors shadow-md cursor-pointer ${isLoading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             {isLoading ? "Signing in..." : "Sign In"}
           </button>

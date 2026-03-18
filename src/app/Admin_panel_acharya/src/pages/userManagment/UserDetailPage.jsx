@@ -235,7 +235,7 @@ const UserDetailPage = () => {
       delivered: { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200', icon: FiCheckCircle },
       upcoming: { bg: 'bg-blue-100', text: 'text-blue-700', border: 'border-blue-200', icon: FiClock },
       processing: { bg: 'bg-yellow-100', text: 'text-yellow-700', border: 'border-yellow-200', icon: FiRefreshCw },
-      shipped: { bg: 'bg-purple-100', text: 'text-purple-700', border: 'border-purple-200', icon: FiPackage },
+      shipped: { bg: 'bg-amber-100', text: 'text-amber-700', border: 'border-amber-200', icon: FiPackage },
       pending: { bg: 'bg-yellow-100', text: 'text-yellow-700', border: 'border-yellow-200', icon: FiClock },
       cancelled: { bg: 'bg-red-100', text: 'text-red-700', border: 'border-red-200', icon: FiXCircle },
       resolved: { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200', icon: FiCheckCircle },
@@ -287,7 +287,7 @@ const UserDetailPage = () => {
         }
         
         ::-webkit-scrollbar-thumb {
-          background: #daf1e5;
+          background: #959190/20;
           border-radius: 10px;
         }
         
@@ -318,17 +318,17 @@ const UserDetailPage = () => {
       `}</style>
 
       {/* Header with Back Button */}
-      <div className="bg-white border-b border-lime-200 sticky top-0 z-10 ">
+      <div className="bg-white border-b border-blue-900/20 sticky top-0 z-10 ">
         <div className="px-6 py-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <FiUser className="text-orange-600 w-6 h-6" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">User Profile</h1>
-                <p className="text-sm text-gray-500">View detailed user information and activity</p>
-              </div>
-            
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-50 rounded-lg">
+              <FiUser className="text-blue-900 w-6 h-6" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">User Profile</h1>
+              <p className="text-sm text-gray-500">View detailed user information and activity</p>
+            </div>
+
           </div>
         </div>
       </div>
@@ -336,11 +336,11 @@ const UserDetailPage = () => {
       {/* Main Content */}
       <div className="px-6 py-6 space-y-6">
         {/* Profile Section - Premium Card Design */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Profile Image/Avatar */}
             <div className="shrink-0">
-              <div className="w-32 h-32 bg-linear-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="w-32 h-32 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 rounded-2xl flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-4xl">{userData.avatar}</span>
               </div>
             </div>
@@ -349,8 +349,8 @@ const UserDetailPage = () => {
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <div className="p-2 bg-orange-100 rounded-lg">
-                    <FiUser className="text-orange-600" size={16} />
+                  <div className="p-2 bg-blue-50 rounded-lg">
+                    <FiUser className="text-blue-900" size={16} />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Full Name</p>
@@ -379,8 +379,8 @@ const UserDetailPage = () => {
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <FiMapPin className="text-purple-600" size={16} />
+                  <div className="p-2 bg-amber-100 rounded-lg border border-amber-200">
+                    <FiMapPin className="text-amber-600" size={16} />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Location</p>
@@ -437,7 +437,7 @@ const UserDetailPage = () => {
         {/* Activity Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Total Bookings */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="p-2 rounded-lg bg-blue-50">
                 <FiCalendar className="text-blue-600 w-5 h-5" />
@@ -448,7 +448,7 @@ const UserDetailPage = () => {
           </div>
 
           {/* Total Orders */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="p-2 rounded-lg bg-green-50">
                 <FiShoppingBag className="text-green-600 w-5 h-5" />
@@ -459,7 +459,7 @@ const UserDetailPage = () => {
           </div>
 
           {/* Total Spend */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="p-2 rounded-lg bg-orange-50">
                 <FiDollarSign className="text-orange-600 w-5 h-5" />
@@ -470,7 +470,7 @@ const UserDetailPage = () => {
           </div>
 
           {/* Total Refunds */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="p-2 rounded-lg bg-red-50">
                 <FiCreditCard className="text-red-600 w-5 h-5" />
@@ -481,7 +481,7 @@ const UserDetailPage = () => {
           </div>
 
           {/* Active Disputes */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="p-2 rounded-lg bg-yellow-50">
                 <FiAlertCircle className="text-yellow-600 w-5 h-5" />
@@ -496,9 +496,9 @@ const UserDetailPage = () => {
         </div>
 
         {/* Tabs Section */}
-        <div className="bg-white rounded-xl border border-lime-200 overflow-hidden">
+        <div className="bg-white rounded-xl border border-blue-900/20 overflow-hidden">
           {/* Tab Headers */}
-          <div className="border-b border-lime-200">
+          <div className="border-b border-blue-900/20">
             <div className="flex overflow-x-auto">
               {[
                 { id: 'bookings', label: 'Booking History', icon: FiCalendar },
@@ -511,11 +511,11 @@ const UserDetailPage = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-all duration-200 border-b-2 whitespace-nowrap
                     ${activeTab === tab.id
-                      ? 'border-orange-500 text-orange-600 bg-orange-50/50'
+                      ? 'border-blue-900 text-blue-900 bg-blue-50/50'
                       : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     }`}
                 >
-                  <tab.icon size={16} className={activeTab === tab.id ? 'text-orange-500' : 'text-gray-400'} />
+                  <tab.icon size={16} className={activeTab === tab.id ? 'text-blue-900' : 'text-gray-400'} />
                   {tab.label}
                 </button>
               ))}
@@ -528,12 +528,12 @@ const UserDetailPage = () => {
             {activeTab === 'bookings' && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <FiCalendar className="text-orange-500" />
+                  <FiCalendar className="text-blue-900" />
                   Booking History
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-[#daf1e5]">
+                    <thead className="bg-[#959190]/10">
                       <tr>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Booking ID</th>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Service Type</th>
@@ -554,7 +554,7 @@ const UserDetailPage = () => {
                           <td className="px-4 py-3 text-sm font-semibold text-gray-900">{formatCurrency(booking.amount)}</td>
                           <td className="px-4 py-3">{getStatusBadge(booking.status)}</td>
                           <td className="px-4 py-3">
-                            <button className="text-blue-600 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-colors">
+                            <button className="p-1 rounded-lg bg-green-50 hover:bg-green-100 text-green-600 transition-colors border border-green-200">
                               <FiEye size={18} />
                             </button>
                           </td>
@@ -570,12 +570,12 @@ const UserDetailPage = () => {
             {activeTab === 'orders' && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <FiShoppingBag className="text-orange-500" />
+                  <FiShoppingBag className="text-blue-900" />
                   Order History
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-[#daf1e5]">
+                    <thead className="bg-[#959190]/10">
                       <tr>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Order ID</th>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Products</th>
@@ -604,7 +604,7 @@ const UserDetailPage = () => {
                           <td className="px-4 py-3">{getStatusBadge(order.status)}</td>
                           <td className="px-4 py-3">{getStatusBadge(order.deliveryStatus)}</td>
                           <td className="px-4 py-3">
-                            <button className="text-blue-600 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-colors">
+                            <button className="p-1 rounded-lg bg-green-50 hover:bg-green-100 text-green-600 transition-colors border border-green-200">
                               <FiEye size={18} />
                             </button>
                           </td>
@@ -620,12 +620,12 @@ const UserDetailPage = () => {
             {activeTab === 'support' && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <FiMessageCircle className="text-orange-500" />
+                  <FiMessageCircle className="text-blue-900" />
                   Support History
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-[#daf1e5]">
+                    <thead className="bg-[#959190]/10">
                       <tr>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Ticket ID</th>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Subject</th>
@@ -642,7 +642,7 @@ const UserDetailPage = () => {
                           <td className="px-4 py-3">{getStatusBadge(ticket.status)}</td>
                           <td className="px-4 py-3 text-sm text-gray-600">{formatDate(ticket.date)}</td>
                           <td className="px-4 py-3">
-                            <button className="text-blue-600 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-colors">
+                            <button className="p-1 rounded-lg bg-green-50 hover:bg-green-100 text-green-600 transition-colors border border-green-200">
                               <FiEye size={18} />
                             </button>
                           </td>
@@ -658,12 +658,12 @@ const UserDetailPage = () => {
             {activeTab === 'refunds' && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <FiCreditCard className="text-orange-500" />
+                  <FiCreditCard className="text-blue-900" />
                   Refund History
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-[#daf1e5]">
+                    <thead className="bg-[#959190]/10">
                       <tr>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Refund ID</th>
                         <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Booking/Order ID</th>
@@ -704,7 +704,7 @@ const UserDetailPage = () => {
             <FiDownload size={16} />
             Export Data
           </button>
-          <button className="px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors flex items-center gap-2">
+          <button className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors flex items-center gap-2 shadow-md">
             <FiMessageCircle size={16} />
             Contact User
           </button>

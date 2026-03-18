@@ -5,6 +5,7 @@ import {
   FiShoppingBag,
   FiGrid,
   FiUsers,
+  FiUser,
   FiSettings,
   FiLogOut,
   FiChevronDown,
@@ -54,17 +55,17 @@ const Sidebar = ({
   toggleCollapse,
   isMobileOpen
 }) => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   // Force isCollapsed to false on mobile, otherwise use prop
   const [isCollapsed, setIsCollapsed] = useState(isMobile ? false : (propIsCollapsed || false));
   const [openDropdowns, setOpenDropdowns] = useState({});
 
-  // Theme
-  const bgColor = "#faf9f0";
-  const borderColor = "#f0f0e0";
-  const accentGradient = "from-yellow-400 to-yellow-600";
-  const accentColor = "#eab308";
+  // Premium Glassmorphism Theme
+  const bgColor = "rgba(255, 255, 255, 0.6)";
+  const glassBorder = "rgba(255, 255, 255, 0.5)";
+  const accentGradient = "from-blue-900 to-rose-400";
+  const accentColor = "#1e3a8a";
 
   // Update isCollapsed when prop changes or mobile status changes
   useEffect(() => {
@@ -93,6 +94,20 @@ const Sidebar = ({
 
   const menuItems = [
     { key: "dashboard", icon: <FiHome />, label: "Dashboard", path: "/admin-acharya/dashboard", end: true },
+
+    {
+      key: "website-content", icon: <FiFileText />, label: "Website Content",
+      children: [
+        { key: "navbar", icon: <FiAlertCircle />, label: "Navbar", path: "/admin-acharya/dashboard/content/navbar" },
+        { key: "carousels", icon: <FiImage />, label: "Carousels", path: "/admin-acharya/dashboard/content/carousels" },
+        { key: "about us", icon: <FiUser />, label: "About Us", path: "/admin-acharya/dashboard/content/about-us" },
+        { key: "blogs", icon: <FiBookOpen />, label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
+        { key: "testimonials", icon: <FiMessageCircle />, label: "Testimonials", path: "/admin-acharya/dashboard/content/testimonials" },
+
+        { key: "services", icon: <FiGrid />, label: "Service Manager", path: "/admin-acharya/dashboard/content/services" },
+        { key: "faq", icon: <FiAlertCircle />, label: "FAQ", path: "/admin-acharya/dashboard/content/faq" },
+      ]
+    },
 
     {
       key: "user-management", icon: <FiUsers />, label: "User Management",
@@ -128,17 +143,7 @@ const Sidebar = ({
       ]
     },
 
-    {
-      key: "website-content", icon: <FiFileText />, label: "Website Content",
-      children: [
-        { key: "navbar", icon: <FiAlertCircle />, label: "Navbar", path: "/admin-acharya/dashboard/content/navbar" },
-        { key: "blogs", icon: <FiBookOpen />, label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
-        { key: "testimonials", icon: <FiMessageCircle />, label: "Testimonials", path: "/admin-acharya/dashboard/content/testimonials" },
-        { key: "carousels", icon: <FiImage />, label: "Carousels", path: "/admin-acharya/dashboard/content/carousels" },
-        { key: "services", icon: <FiGrid />, label: "Services", path: "/admin-acharya/dashboard/content/services" },
-        { key: "faq", icon: <FiAlertCircle />, label: "FAQ", path: "/admin-acharya/dashboard/content/faq" },
-      ]
-    },
+
 
     {
       key: "seo-management", icon: <FiTrendingUp />, label: "Marketing & SEO",
@@ -161,7 +166,7 @@ const Sidebar = ({
   // Mobile: Always full width with text, Desktop: Collapsible
   const sidebarWidthClass = isMobile
     ? 'w-[280px]'  // Fixed width for mobile with text
-    : (isCollapsed ? 'w-20' : 'w-[240px] lg:w-[280px]');
+    : (isCollapsed ? 'w-20' : 'w-[240px] lg:w-[260px]');
 
   return (
     <>
@@ -180,14 +185,14 @@ const Sidebar = ({
             height: 4px;
           }
           .custom-scrollbar::-webkit-scrollbar-track {
-            background: ${borderColor};
+            background: transparent;
           }
           .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: ${accentColor};
+            background: rgba(30, 58, 138, 0.2);
             border-radius: 20px;
           }
           .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: ${accentColor}dd;
+            background: rgba(30, 58, 138, 0.4);
           }
         `}
       </style>
@@ -200,53 +205,34 @@ const Sidebar = ({
           flex flex-col
           ${sidebarWidthClass}
           ${isMobile && !isMobileOpen ? '-translate-x-full' : 'translate-x-0'}
-          h-full shadow-lg
+          h-full shadow-[8px_0_30px_rgba(0,0,0,0.03)] backdrop-blur-2xl border-r border-white/50
         `}
-        style={{ backgroundColor: bgColor, borderRight: `1px solid ${borderColor}` }}
+        style={{ backgroundColor: bgColor }}
       >
         {/* Logo Section - Always show text on mobile */}
         <div className={`${isMobile ? 'p-5' : (isCollapsed ? 'p-4' : 'p-5')}`}
-          style={{ borderBottom: `1px solid ${borderColor}` }}>
+          style={{ borderBottom: `1px solid ${glassBorder}` }}>
           <div className={`flex items-center ${isMobile ? 'justify-start' : (isCollapsed ? 'justify-center' : 'justify-start')}`}>
             <div className={`flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? '' : 'gap-3')}`}>
               <div className={`
-                bg-gradient-to-r ${accentGradient}
-                rounded-xl flex items-center justify-center text-white shadow-md
-                w-14 h-14
+                bg-white/40 backdrop-blur-md border border-white/60
+                rounded-xl flex items-center justify-center text-white shadow-sm
+                w-16 h-16
               `}>
-                <img src="/logo.png" alt="Logo" className="w-full h-full object-contain p-2" />
+                <img src="/logo.png" alt="Logo" className="w-full h-full object-contain p-1" />
               </div>
               {/* Always show text on mobile, on desktop only when not collapsed */}
               {(isMobile || !isCollapsed) && (
                 <div>
-                  <span className="font-bold text-gray-800 text-xl tracking-tight">Achariya Ji</span>
-                  <p className="text-xs text-gray-600 font-medium">Admin Panel</p>
+                  <h1 className="font-bold text-gray-800 text-2xl tracking-tight leading-none">Achariya Ji</h1>
+                  <p className="text-sm text-gray-600 font-medium mt-1">Admin Panel</p>
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* User Info - Always show on mobile */}
-        {(isMobile || !isCollapsed) && (
-          <div className="mx-3 my-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm"
-            style={{ border: `1px solid ${borderColor}` }}>
-            <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 bg-gradient-to-r ${accentGradient} rounded-xl flex items-center justify-center shadow-sm`}>
-                <FiUsers size={18} className="text-white" />
-              </div>
-              <div className="truncate">
-                <p className="text-sm font-semibold text-gray-800 truncate">
-                  {user?.name || "Admin User"}
-                </p>
-                <p className="text-xs text-gray-600 truncate flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                  {user?.email || "admin@achariya.com"}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
+
 
         {/* Navigation - Always show full text on mobile */}
         <nav className="flex-1 overflow-y-auto px-3 py-2 custom-scrollbar">
@@ -264,10 +250,10 @@ const Sidebar = ({
               ];
 
               return sections.map((section, idx) => (
-                <li key={idx} className="mb-4 last:mb-0">
+                <li key={idx} className="mb-2 last:mb-0">
                   {/* Section Title with Indicator */}
                   {(isMobile || !isCollapsed) && (
-                    <div className="flex items-center gap-2 px-4 py-1.5 mb-1 group/sec">
+                    <div className="flex items-center gap-2 px-4 mt-3 mb-1.5 group/sec">
                       <div className="w-1 h-3 rounded-full bg-yellow-400 shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>
                       <p className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">
                         {section.title}
@@ -276,7 +262,7 @@ const Sidebar = ({
                   )}
 
                   {/* Section Items */}
-                  <ul className="space-y-0.5">
+                  <ul className="space-y-1">
                     {section.items.map((item) => (
                       <li key={item.key}>
                         {item.children ? (
@@ -285,9 +271,9 @@ const Sidebar = ({
                               onClick={() => toggleDropdown(item.key)}
                               className={`
                                 w-full flex items-center justify-between
-                                px-3 py-2 text-sm rounded-xl transition-all duration-200
-                                text-gray-700 hover:text-gray-900
-                                hover:bg-white/80
+                                px-3 py-2 text-sm rounded-xl transition-all duration-300
+                                text-gray-700 hover:text-blue-900
+                                hover:bg-white/50 hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:backdrop-blur-md
                                 ${isMobile ? '' : (isCollapsed ? 'justify-center' : '')}
                               `}
                             >
@@ -309,10 +295,10 @@ const Sidebar = ({
                                     <NavLink to={child.path} onClick={handleNavClick}>
                                       {({ isActive }) => (
                                         <div className={`
-                                          flex items-center gap-3 px-3 py-1.5 text-sm rounded-xl transition-all duration-200
+                                          flex items-center gap-3 px-3 py-1.5 text-sm rounded-xl transition-all duration-300
                                           ${isActive
-                                            ? 'text-white shadow-md'
-                                            : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'}
+                                            ? 'text-white shadow-[0_4px_12px_rgba(30, 58, 138,0.3)] backdrop-blur-md'
+                                            : 'text-gray-600 hover:text-blue-900 hover:bg-white/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:backdrop-blur-sm'}
                                         `}
                                           style={isActive ? {
                                             background: `linear-gradient(to right, ${accentColor}, ${accentColor}dd)`
@@ -323,7 +309,7 @@ const Sidebar = ({
                                           </span>
                                           <span className="font-medium text-[13px]">{child.label}</span>
                                           {isActive && (
-                                            <span className="ml-auto w-1 h-1 bg-white rounded-full"></span>
+                                            <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-sm"></span>
                                           )}
                                         </div>
                                       )}
@@ -338,10 +324,10 @@ const Sidebar = ({
                             {({ isActive }) => (
                               <div className={`
                                 flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? 'justify-center' : 'gap-3')}
-                                px-3 py-2 text-sm rounded-xl transition-all duration-200
+                                px-3 py-2 text-sm rounded-xl transition-all duration-300
                                 ${isActive
-                                  ? 'text-white shadow-md'
-                                  : 'text-gray-700 hover:text-gray-900 hover:bg-white/80'}
+                                  ? 'text-white shadow-[0_4px_12px_rgba(30, 58, 138,0.3)] backdrop-blur-md'
+                                  : 'text-gray-700 hover:text-blue-900 hover:bg-white/50 hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:backdrop-blur-md'}
                               `}
                                 style={isActive ? {
                                   background: `linear-gradient(to right, ${accentColor}, ${accentColor}dd)`
@@ -352,7 +338,7 @@ const Sidebar = ({
                                 </span>
                                 {(isMobile || !isCollapsed) && <span className="font-medium">{item.label}</span>}
                                 {isActive && (isMobile || !isCollapsed) && (
-                                  <span className="ml-auto w-1 h-1 bg-white rounded-full"></span>
+                                  <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
                                 )}
                               </div>
                             )}
@@ -369,7 +355,7 @@ const Sidebar = ({
 
         {/* Logout - Always show text on mobile */}
         <div className={`${isMobile ? 'p-4' : (isCollapsed ? 'p-3' : 'p-4')}`}
-          style={{ borderTop: `1px solid ${borderColor}` }}>
+          style={{ borderTop: `1px solid ${glassBorder}` }}>
           <button
             onClick={handleLogout}
             className={`

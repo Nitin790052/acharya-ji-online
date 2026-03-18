@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_URL } from '../config/apiConfig';
 
 export const heroBannerApi = createApi({
     reducerPath: 'heroBannerApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_API_URL.endsWith('/') 
-            ? import.meta.env.VITE_API_URL.slice(0, -1) 
-            : import.meta.env.VITE_API_URL 
+        baseUrl: API_URL
     }),
     tagTypes: ['HeroBanner'],
     endpoints: (builder) => ({

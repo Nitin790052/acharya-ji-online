@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Calendar, Phone, Users, Heart, Award, Shield, Sparkle, Sparkles, BookOpen, Star, CheckCircle, Clock, MapPin, ChevronRight } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 import about from "../assets/aboutImage/acharyaji.webp"
 import PujaServices1 from "../assets/aboutPage/PujaServices1.webp"
@@ -77,7 +78,7 @@ const AboutUs = () => {
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
               {banner.imageUrl ? (
-                <img src={`${import.meta.env.VITE_BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+                <img src={`${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
               ) : (
                 <div className="absolute inset-0 bg-[#2A1D13]/90" />
               )}

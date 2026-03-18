@@ -317,7 +317,7 @@ const AllUsers = () => {
         }
         
         ::-webkit-scrollbar-thumb {
-          background: #daf1e5;
+          background: #959190/20;
           border-radius: 10px;
         }
         
@@ -381,12 +381,12 @@ const AllUsers = () => {
       `}</style>
 
       {/* Header Section - Matching Dashboard Style */}
-      <div className="bg-white border-b border-lime-200 sticky top-0 z-10">
+      <div className="bg-white border-b border-blue-900/20 sticky top-0 z-10">
         <div className="px-6 py-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <FiUsers className="text-orange-600 w-6 h-6" />
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <FiUsers className="text-blue-900 w-6 h-6" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">All Users</h1>
@@ -420,7 +420,7 @@ const AllUsers = () => {
         {/* Stats Cards - Dashboard Premium Design */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Total Users Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-blue-50">
                 <FiUsers className="text-blue-600 w-5 h-5" />
@@ -435,7 +435,7 @@ const AllUsers = () => {
           </div>
 
           {/* Active Users Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-green-50">
                 <FiUserCheck className="text-green-600 w-5 h-5" />
@@ -452,7 +452,7 @@ const AllUsers = () => {
           </div>
 
           {/* Blocked Users Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-red-50">
                 <FiUserX className="text-red-600 w-5 h-5" />
@@ -463,12 +463,12 @@ const AllUsers = () => {
           </div>
 
           {/* Total Revenue Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-purple-50">
-                <FiAward className="text-purple-600 w-5 h-5" />
+              <div className="p-2 rounded-lg bg-amber-50">
+                <FiAward className="text-amber-600 w-5 h-5" />
               </div>
-              <span className="text-xs font-medium flex items-center gap-1 text-purple-600">
+              <span className="text-xs font-medium flex items-center gap-1 text-amber-600">
                 <FiTrendingUp size={12} />
                 revenue
               </span>
@@ -479,7 +479,7 @@ const AllUsers = () => {
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -489,19 +489,19 @@ const AllUsers = () => {
                 placeholder="Search users by name, email, phone, location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900/40 focus:border-transparent"
               />
             </div>
 
             {/* Status Filter */}
-            <div className="flex gap-2 bg-white rounded-lg p-1 border border-[#daf1e5]">
+            <div className="flex gap-2 bg-white rounded-lg p-1 border border-[#959190]/20">
               {['all', 'active', 'blocked'].map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
                   className={`px-4 py-1.5 text-sm font-medium rounded-md capitalize transition-colors
                     ${selectedFilter === filter
-                      ? 'bg-[#daf1e5] text-black'
+                      ? 'bg-[#959190]/20 text-black'
                       : 'text-gray-600 hover:bg-gray-100'
                     }`}
                 >
@@ -518,7 +518,7 @@ const AllUsers = () => {
                 {/* Date Range Filter */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                    <FiCalendar size={14} className="text-orange-500" />
+                    <FiCalendar size={14} className="text-blue-900" />
                     Registration Date Range
                   </label>
                   <div className="flex gap-2">
@@ -526,14 +526,14 @@ const AllUsers = () => {
                       type="date"
                       value={dateRange.start}
                       onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/40"
                     />
                     <span className="text-gray-400 self-center">to</span>
                     <input
                       type="date"
                       value={dateRange.end}
                       onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/40"
                     />
                   </div>
                 </div>
@@ -541,7 +541,7 @@ const AllUsers = () => {
                 {/* Spend Range Filter */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                    <FiDollarSign size={14} className="text-orange-500" />
+                    <FiDollarSign size={14} className="text-blue-900" />
                     Total Spend Range (₹)
                   </label>
                   <div className="flex gap-2">
@@ -550,7 +550,7 @@ const AllUsers = () => {
                       placeholder="Min"
                       value={spendRange.min}
                       onChange={(e) => setSpendRange({ ...spendRange, min: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/40"
                     />
                     <span className="text-gray-400 self-center">to</span>
                     <input
@@ -558,7 +558,7 @@ const AllUsers = () => {
                       placeholder="Max"
                       value={spendRange.max}
                       onChange={(e) => setSpendRange({ ...spendRange, max: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/40"
                     />
                   </div>
                 </div>
@@ -584,10 +584,10 @@ const AllUsers = () => {
         </div>
 
         {/* Users Table */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <FiUsers className="text-orange-500" />
+              <FiUsers className="text-blue-900" />
               Users List ({filteredUsers.length} users)
             </h2>
             <div className="text-sm text-gray-500">
@@ -604,7 +604,7 @@ const AllUsers = () => {
               </div>
             ) : (
               <table className="w-full">
-                <thead className="bg-[#daf1e5]">
+                <thead className="bg-[#959190]/10">
                   <tr>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">User</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Contact</th>
@@ -621,7 +621,7 @@ const AllUsers = () => {
                     <tr key={user.id} className="table-row-hover">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-semibold text-sm">
+                          <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center text-blue-900 font-semibold text-sm">
                             {user.avatar}
                           </div>
                           <div>
@@ -671,21 +671,24 @@ const AllUsers = () => {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => openUserModal(user, 'view')}
-                            className="text-blue-600 hover:text-blue-700 transition-colors cursor-pointer"
+                            className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer"
                             title="View Details"
                           >
                             <FiEye size={18} />
                           </button>
                           <button
                             onClick={() => openUserModal(user, 'edit')}
-                            className="text-green-600 hover:text-green-700 transition-colors cursor-pointer"
+                            className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer"
                             title="Edit User"
                           >
                             <FiEdit size={18} />
                           </button>
                           <button
                             onClick={() => openUserModal(user, user.status === 'active' ? 'block' : 'unblock')}
-                            className={`${user.status === 'active' ? 'text-red-600 hover:text-red-700' : 'text-green-600 hover:text-green-700'} transition-colors cursor-pointer`}
+                            className={`p-1.5 rounded-lg transition-colors border cursor-pointer 
+                              ${user.status === 'active' 
+                                ? 'bg-red-50 hover:bg-red-100 text-red-600 border-red-200' 
+                                : 'bg-green-50 hover:bg-green-100 text-green-600 border-green-200'}`}
                             title={user.status === 'active' ? 'Block User' : 'Unblock User'}
                           >
                             {user.status === 'active' ? <FiLock size={18} /> : <FiUnlock size={18} />}
@@ -728,7 +731,7 @@ const AllUsers = () => {
                     onClick={() => setCurrentPage(i + 1)}
                     className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors
                       ${currentPage === i + 1
-                        ? 'bg-[#daf1e5] text-gray-900'
+                        ? 'bg-[#959190]/20 text-gray-900'
                         : 'text-gray-600 hover:bg-gray-100'
                       }`}
                   >
@@ -765,7 +768,7 @@ const AllUsers = () => {
             style={{ animation: 'slideUp 0.3s ease-out' }}
           >
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-5 text-white flex justify-between items-center rounded-t-2xl">
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 px-6 py-5 text-blue-900 flex justify-between items-center rounded-t-2xl">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-white/20 rounded-lg">
                   {modalAction === 'view' && <FiEye size={20} />}
@@ -776,7 +779,7 @@ const AllUsers = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg capitalize">{modalAction} User</h3>
-                  <p className="text-sm text-orange-100">{selectedUser.name}</p>
+                  <p className="text-sm text-blue-50">{selectedUser.name}</p>
                 </div>
               </div>
               <button onClick={closeModal} className="hover:bg-white/20 p-2 rounded-lg">
@@ -791,8 +794,8 @@ const AllUsers = () => {
                   {/* User Profile Card */}
                   <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-200">
                     <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
-                        <span className="text-orange-600 font-bold text-xl">{selectedUser.avatar}</span>
+                      <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center">
+                        <span className="text-blue-900 font-bold text-xl">{selectedUser.avatar}</span>
                       </div>
                       <div>
                         <h4 className="text-xl font-bold text-gray-900">{selectedUser.name}</h4>
@@ -938,12 +941,12 @@ const AllUsers = () => {
             <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-lime-200 rounded-b-2xl">
               <button
                 onClick={closeModal}
-                className="px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300"
+                className="px-5 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
-                Close
+                <FiX size={16} /> Close
               </button>
               {modalAction !== 'view' && (
-                <button className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
+                <button className="px-5 py-2.5 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
                   <FiCheckCircle size={16} />
                   {modalAction === 'edit' && 'Save Changes'}
                   {modalAction === 'block' && 'Block User'}

@@ -363,7 +363,7 @@ const ActiveUsers = () => {
         }
         
         ::-webkit-scrollbar-thumb {
-          background: #daf1e5;
+          background: #959190/20;
           border-radius: 10px;
         }
         
@@ -405,12 +405,12 @@ const ActiveUsers = () => {
       `}</style>
 
       {/* Header Section */}
-      <div className="bg-white border-b border-lime-200 sticky top-0 z-10 ">
+      <div className="bg-white border-b border-blue-900/20 sticky top-0 z-10 ">
         <div className="px-6 py-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <FiActivity className="text-orange-600 w-6 h-6" />
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <FiActivity className="text-blue-900 w-6 h-6" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Active Users</h1>
@@ -421,7 +421,7 @@ const ActiveUsers = () => {
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
               {/* Time Range Selector */}
-              <div className="flex items-center gap-2 bg-white rounded-lg p-1 border border-[#daf1e5]">
+              <div className="flex items-center gap-2 bg-white rounded-lg p-1 border border-[#959190]/20">
                 {[
                   { value: '24h', label: '24 Hours', icon: FiClock },
                   { value: '7days', label: '7 Days', icon: FiCalendar },
@@ -431,8 +431,8 @@ const ActiveUsers = () => {
                     key={range.value}
                     onClick={() => setTimeRange(range.value)}
                     className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors flex items-center gap-1
-                      ${timeRange === range.value 
-                        ? 'bg-[#daf1e5] text-gray-900' 
+                      ${timeRange === range.value
+                        ? 'bg-[#959190]/20 text-gray-900'
                         : 'text-gray-600 hover:bg-gray-100'
                       }`}
                   >
@@ -468,7 +468,7 @@ const ActiveUsers = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Total Active Users */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-blue-50">
                 <FiUsers className="text-blue-600 w-5 h-5" />
@@ -489,7 +489,7 @@ const ActiveUsers = () => {
           </div>
 
           {/* Online Now */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-green-50">
                 <FiUserCheck className="text-green-600 w-5 h-5" />
@@ -498,18 +498,18 @@ const ActiveUsers = () => {
             <h3 className="text-[23px] font-bold text-gray-900">{onlineNow}</h3>
             <p className="text-sm text-gray-500 mt-1">Online Now</p>
             <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
-              <div 
-                className="bg-green-600 h-1.5 rounded-full transition-all duration-500" 
+              <div
+                className="bg-green-600 h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${(onlineNow / totalActiveUsers) * 100 || 0}%` }}
               ></div>
             </div>
           </div>
 
           {/* Total Sessions */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-orange-50">
-                <FiZap className="text-orange-600 w-5 h-5" />
+              <div className="p-2 rounded-lg bg-blue-50">
+                <FiZap className="text-blue-900 w-5 h-5" />
               </div>
             </div>
             <h3 className="text-[23px] font-bold text-gray-900">{totalSessions}</h3>
@@ -518,10 +518,10 @@ const ActiveUsers = () => {
           </div>
 
           {/* High Spend Users */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-purple-50">
-                <FiStar className="text-purple-600 w-5 h-5" />
+              <div className="p-2 rounded-lg bg-amber-50">
+                <FiStar className="text-amber-600 w-5 h-5" />
               </div>
             </div>
             <h3 className="text-[23px] font-bold text-gray-900">{highSpendCount}</h3>
@@ -531,37 +531,37 @@ const ActiveUsers = () => {
         </div>
 
         {/* User Type Filters */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setUserType('all')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2
                 ${userType === 'all'
-                  ? 'bg-[#daf1e5] text-gray-900 border border-lime-300'
+                  ? 'bg-[#959190]/20 text-gray-900 border border-blue-900/20'
                   : 'border border-gray-300 text-gray-600 hover:bg-gray-50'
                 }`}
             >
               <FiUsers size={16} />
               All Active Users ({filteredUsers.length})
             </button>
-            
+
             <button
               onClick={() => setUserType('most-active')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2
                 ${userType === 'most-active'
-                  ? 'bg-[#daf1e5] text-gray-900 border border-lime-300'
+                  ? 'bg-[#959190]/20 text-gray-900 border border-blue-900/20'
                   : 'border border-gray-300 text-gray-600 hover:bg-gray-50'
                 }`}
             >
               <FiAward size={16} className="text-yellow-600" />
               Most Active
             </button>
-            
+
             <button
               onClick={() => setUserType('high-spend')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2
                 ${userType === 'high-spend'
-                  ? 'bg-[#daf1e5] text-gray-900 border border-lime-300'
+                  ? 'bg-[#959190]/20 text-gray-900 border border-blue-900/20'
                   : 'border border-gray-300 text-gray-600 hover:bg-gray-50'
                 }`}
             >
@@ -572,10 +572,10 @@ const ActiveUsers = () => {
         </div>
 
         {/* Users Table */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <FiActivity className="text-orange-500" />
+              <FiActivity className="text-blue-900" />
               {userType === 'all' && 'Active Users'}
               {userType === 'most-active' && 'Most Active Users'}
               {userType === 'high-spend' && 'High Spend Users'}
@@ -590,7 +590,7 @@ const ActiveUsers = () => {
               <TableSkeleton />
             ) : (
               <table className="w-full">
-                <thead className="bg-[#daf1e5]">
+                <thead className="bg-[#959190]/10">
                   <tr>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">User</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Last Active</th>
@@ -609,7 +609,7 @@ const ActiveUsers = () => {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div className="relative">
-                            <div className="w-10 h-10 bg-linear-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                            <div className="w-10 h-10 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 rounded-full flex items-center justify-center text-blue-900 font-semibold text-sm shadow-md">
                               {user.avatar}
                             </div>
                             {user.status === 'online' && (
@@ -652,8 +652,8 @@ const ActiveUsers = () => {
                       <td className="px-4 py-3 text-sm text-gray-600">{user.totalOrders}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border
-                          ${user.status === 'online' 
-                            ? 'bg-green-100 text-green-700 border-green-200' 
+                          ${user.status === 'online'
+                            ? 'bg-green-100 text-green-700 border-green-200'
                             : 'bg-gray-100 text-gray-600 border-gray-200'
                           }`}>
                           {user.status === 'online' ? (
@@ -668,10 +668,10 @@ const ActiveUsers = () => {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <button className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-200" title="View Details">
+                          <button className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer" title="View Details">
                             <FiEye size={16} />
                           </button>
-                          <button className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200" title="More Options">
+                          <button className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200 cursor-pointer" title="More Options">
                             <FiMoreVertical size={16} />
                           </button>
                         </div>
@@ -705,13 +705,13 @@ const ActiveUsers = () => {
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                   className={`p-2 rounded-lg border transition-all duration-200
-                    ${currentPage === 1 
-                      ? 'border-gray-200 text-gray-400 cursor-not-allowed' 
+                    ${currentPage === 1
+                      ? 'border-gray-200 text-gray-400 cursor-not-allowed'
                       : 'border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-orange-300'}`}
                 >
                   <FiChevronLeft size={16} />
                 </button>
-                
+
                 {[...Array(totalPages)].map((_, i) => {
                   const pageNum = i + 1;
                   if (
@@ -737,7 +737,7 @@ const ActiveUsers = () => {
                   }
                   return null;
                 })}
-                
+
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
@@ -756,7 +756,7 @@ const ActiveUsers = () => {
         {/* Top Users Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Most Active Users */}
-          <div className="bg-white rounded-xl border border-lime-200 p-6">
+          <div className="bg-white rounded-xl border border-blue-900/20 p-6">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
               <FiAward className="text-yellow-500" />
               Most Active Users (Top 5)
@@ -769,9 +769,9 @@ const ActiveUsers = () => {
                   <div key={user.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
                     <div className="flex items-center gap-3">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm
-                        ${index === 0 ? 'bg-yellow-500' : 
-                          index === 1 ? 'bg-gray-400' : 
-                          index === 2 ? 'bg-orange-400' : 'bg-orange-100 text-orange-600'}`}>
+                        ${index === 0 ? 'bg-yellow-500' :
+                          index === 1 ? 'bg-gray-400' :
+                            index === 2 ? 'bg-orange-400' : 'bg-orange-100 text-orange-600'}`}>
                         {index + 1}
                       </div>
                       <div>
@@ -786,7 +786,7 @@ const ActiveUsers = () => {
           </div>
 
           {/* High Spend Users */}
-          <div className="bg-white rounded-xl border border-lime-200 p-6">
+          <div className="bg-white rounded-xl border border-blue-900/20 p-6">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
               <FiStar className="text-purple-500" />
               Top Spenders (Top 5)
@@ -825,13 +825,13 @@ const ActiveUsers = () => {
               <p className="text-xl font-bold text-gray-900">6:00 PM - 9:00 PM</p>
               <p className="text-xs text-gray-400 mt-1">Most users active during evening</p>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Avg. Session Duration</p>
               <p className="text-xl font-bold text-gray-900">{avgSessionTime.toFixed(0)} minutes</p>
               <p className="text-xs text-gray-400 mt-1">Per user session</p>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Engagement Rate</p>
               <p className="text-xl font-bold text-gray-900">

@@ -5,9 +5,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-gray-200 py-3 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#f7f6f5] border-t border-[#e3e1e0] py-3 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-        
+
         {/* Left Section - Copyright */}
         <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
           <p className="text-xs sm:text-sm text-gray-500">
@@ -28,22 +28,22 @@ const Footer = () => {
 
         {/* Right Section - Links & Version */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <a 
-            href="#" 
+          <a
+            href="#"
             className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
           >
             About
           </a>
           <span className="text-gray-300">|</span>
-          <a 
-            href="#" 
+          <a
+            href="#"
             className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
           >
             Support
           </a>
           <span className="text-gray-300">|</span>
-          <a 
-            href="#" 
+          <a
+            href="#"
             className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
           >
             Privacy
@@ -55,8 +55,8 @@ const Footer = () => {
         </div>
       </div>
 
-     
-   
+
+
     </footer>
   );
 };

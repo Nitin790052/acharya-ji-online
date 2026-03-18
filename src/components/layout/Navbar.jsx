@@ -27,7 +27,10 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const { data: navItems = [], isLoading, isError } = useGetNavbarItemsQuery();
+  const { data: navItems = [], isLoading, isError } = useGetNavbarItemsQuery(undefined, {
+    pollingInterval: 3000,
+    refetchOnMountOrArgChange: true
+  });
 
   const isActive = (href) => {
     return window.location.pathname === href;

@@ -157,7 +157,7 @@ const BlockedUsers = () => {
 
     // Search filter
     if (searchTerm) {
-      filtered = filtered.filter(user => 
+      filtered = filtered.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.phone.includes(searchTerm) ||
@@ -213,15 +213,15 @@ const BlockedUsers = () => {
       }
       return user;
     });
-    
+
     setUsers(updatedUsers);
     setShowUnblockModal(false);
     setSelectedUser(null);
-    
+
     // Show success message
     setToastMessage(`${selectedUser.name} has been unblocked successfully`);
     setShowSuccessToast(true);
-    
+
     // Auto-hide toast after 3 seconds
     setTimeout(() => {
       setShowSuccessToast(false);
@@ -253,7 +253,7 @@ const BlockedUsers = () => {
     a.href = url;
     a.download = `blocked-users-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
-    
+
     setToastMessage('Data exported successfully');
     setShowSuccessToast(true);
     setTimeout(() => setShowSuccessToast(false), 3000);
@@ -355,7 +355,7 @@ const BlockedUsers = () => {
         }
         
         ::-webkit-scrollbar-thumb {
-          background: #daf1e5;
+          background: #959190/20;
           border-radius: 10px;
         }
         
@@ -387,14 +387,14 @@ const BlockedUsers = () => {
       {/* ========== SUCCESS TOAST ========== */}
       {showSuccessToast && (
         <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2"
-             style={{ animation: 'slideInRight 0.3s ease-out' }}>
+          style={{ animation: 'slideInRight 0.3s ease-out' }}>
           <FiCheckCircle size={18} />
           <span className="text-sm font-medium">{toastMessage}</span>
         </div>
       )}
 
       {/* ========== HEADER SECTION ========== */}
-      <div className="bg-white border-b border-lime-200 sticky top-0 z-10 ">
+      <div className="bg-white border-b border-blue-900/20 sticky top-0 z-10 ">
         <div className="px-6 py-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -412,12 +412,12 @@ const BlockedUsers = () => {
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`p-2 rounded-lg border transition-all duration-200 cursor-pointer
-                  ${showFilters 
-                    ? 'bg-orange-50 border-orange-300 text-orange-600' 
+                  ${showFilters
+                    ? 'bg-blue-50 border-blue-900/20 text-blue-900'
                     : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
                 title="Filters"
               >
-                <FiFilter size={16} className={showFilters ? 'text-orange-600' : 'text-gray-500'} />
+                <FiFilter size={16} className={showFilters ? 'text-blue-900' : 'text-gray-500'} />
               </button>
 
               <button
@@ -470,8 +470,8 @@ const BlockedUsers = () => {
             <p className="text-sm text-gray-500 mt-1">Temporary Blocks</p>
             {totalBlocked > 0 && (
               <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
-                <div 
-                  className="bg-yellow-500 h-1.5 rounded-full transition-all duration-500" 
+                <div
+                  className="bg-yellow-500 h-1.5 rounded-full transition-all duration-500"
                   style={{ width: `${(temporaryBlocks / totalBlocked) * 100}%` }}
                 ></div>
               </div>
@@ -505,7 +505,7 @@ const BlockedUsers = () => {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -515,7 +515,7 @@ const BlockedUsers = () => {
                 placeholder="Search by name, email, phone, location, or block reason..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900/40 focus:border-transparent"
               />
               {searchTerm && (
                 <button
@@ -528,12 +528,12 @@ const BlockedUsers = () => {
             </div>
 
             {/* Block Type Filter */}
-            <div className="flex gap-2 bg-white rounded-lg p-1 border border-[#daf1e5]">
+            <div className="flex gap-2 bg-white rounded-lg p-1 border border-[#959190]/20">
               <button
                 onClick={() => setBlockType('all')}
                 className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors flex items-center gap-1 cursor-pointer
-                  ${blockType === 'all' 
-                    ? 'bg-[#daf1e5] text-gray-900' 
+                  ${blockType === 'all'
+                    ? 'bg-[#959190]/20 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100'}`}
               >
                 <FiUserX size={14} />
@@ -542,8 +542,8 @@ const BlockedUsers = () => {
               <button
                 onClick={() => setBlockType('temporary')}
                 className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors flex items-center gap-1 cursor-pointer
-                  ${blockType === 'temporary' 
-                    ? 'bg-[#daf1e5] text-gray-900' 
+                  ${blockType === 'temporary'
+                    ? 'bg-[#959190]/20 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100'}`}
               >
                 <FiClock size={14} />
@@ -552,8 +552,8 @@ const BlockedUsers = () => {
               <button
                 onClick={() => setBlockType('permanent')}
                 className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors flex items-center gap-1 cursor-pointer
-                  ${blockType === 'permanent' 
-                    ? 'bg-[#daf1e5] text-gray-900' 
+                  ${blockType === 'permanent'
+                    ? 'bg-[#959190]/20 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100'}`}
               >
                 <FiLock size={14} />
@@ -569,7 +569,7 @@ const BlockedUsers = () => {
                 {/* Date Range Filter */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                    <FiCalendar size={14} className="text-orange-500" />
+                    <FiCalendar size={14} className="text-blue-900" />
                     Block Date Range
                   </label>
                   <div className="flex gap-2">
@@ -577,14 +577,14 @@ const BlockedUsers = () => {
                       type="date"
                       value={dateRange.start}
                       onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/40"
                     />
                     <span className="text-gray-400 self-center">to</span>
                     <input
                       type="date"
                       value={dateRange.end}
                       onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/40"
                     />
                   </div>
                 </div>
@@ -633,7 +633,7 @@ const BlockedUsers = () => {
         </div>
 
         {/* Blocked Users Table */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
               <FiUserX className="text-red-500" />
@@ -649,7 +649,7 @@ const BlockedUsers = () => {
               <TableSkeleton />
             ) : (
               <table className="w-full">
-                <thead className="bg-[#daf1e5]">
+                <thead className="bg-[#959190]/10">
                   <tr>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">User</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Block Reason</th>
@@ -695,8 +695,8 @@ const BlockedUsers = () => {
                       </td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border
-                          ${user.blockType === 'temporary' 
-                            ? 'bg-yellow-100 text-yellow-700 border-yellow-200' 
+                          ${user.blockType === 'temporary'
+                            ? 'bg-yellow-100 text-yellow-700 border-yellow-200'
                             : 'bg-red-100 text-red-700 border-red-200'
                           }`}>
                           {user.blockType === 'temporary' ? <FiClock size={10} /> : <FiLock size={10} />}
@@ -726,17 +726,17 @@ const BlockedUsers = () => {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <button 
+                          <button
                             onClick={() => handleViewUser(user)}
-                            className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-200 cursor-pointer"
+                            className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer"
                             title="View Details"
                           >
                             <FiEye size={16} />
                           </button>
                           {!user.unblockDate && (
-                            <button 
+                            <button
                               onClick={() => handleUnblockClick(user)}
-                              className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors border border-green-200 cursor-pointer"
+                              className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer"
                               title="Unblock User"
                             >
                               <FiUnlock size={16} />
@@ -760,7 +760,7 @@ const BlockedUsers = () => {
                 <p className="text-gray-500 mb-4">Try adjusting your search or filter criteria</p>
                 <button
                   onClick={clearFilters}
-                  className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                  className="px-4 py-2 bg-gray-100 text-blue-900 border border-blue-900/20 rounded-lg hover:brightness-110 transition-colors"
                 >
                   Clear all filters
                 </button>
@@ -779,13 +779,13 @@ const BlockedUsers = () => {
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                   className={`p-2 rounded-lg border transition-all duration-200 cursor-pointer
-                    ${currentPage === 1 
-                      ? 'border-gray-200 text-gray-400 cursor-not-allowed' 
+                    ${currentPage === 1
+                      ? 'border-gray-200 text-gray-400 cursor-not-allowed'
                       : 'border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-orange-300'}`}
                 >
                   <FiChevronLeft size={16} />
                 </button>
-                
+
                 {[...Array(totalPages)].map((_, i) => {
                   const pageNum = i + 1;
                   if (
@@ -811,7 +811,7 @@ const BlockedUsers = () => {
                   }
                   return null;
                 })}
-                
+
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
@@ -841,7 +841,7 @@ const BlockedUsers = () => {
               </p>
               <p className="text-xs text-gray-400 mt-1">Failed payments, disputes</p>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Suspicious Activity</p>
               <p className="text-xl font-bold text-gray-900">
@@ -849,7 +849,7 @@ const BlockedUsers = () => {
               </p>
               <p className="text-xs text-gray-400 mt-1">Fraud, multiple accounts</p>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Terms Violation</p>
               <p className="text-xl font-bold text-gray-900">
@@ -857,15 +857,15 @@ const BlockedUsers = () => {
               </p>
               <p className="text-xs text-gray-400 mt-1">Content, behavior issues</p>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Other Reasons</p>
               <p className="text-xl font-bold text-gray-900">
-                {users.filter(u => !u.blockReason.toLowerCase().includes('payment') && 
-                                   !u.blockReason.toLowerCase().includes('suspicious') && 
-                                   !u.blockReason.toLowerCase().includes('multiple') &&
-                                   !u.blockReason.toLowerCase().includes('terms') && 
-                                   !u.blockReason.toLowerCase().includes('inappropriate')).length}
+                {users.filter(u => !u.blockReason.toLowerCase().includes('payment') &&
+                  !u.blockReason.toLowerCase().includes('suspicious') &&
+                  !u.blockReason.toLowerCase().includes('multiple') &&
+                  !u.blockReason.toLowerCase().includes('terms') &&
+                  !u.blockReason.toLowerCase().includes('inappropriate')).length}
               </p>
               <p className="text-xs text-gray-400 mt-1">Miscellaneous blocks</p>
             </div>
@@ -896,8 +896,8 @@ const BlockedUsers = () => {
                   <p className="text-sm text-orange-100">{selectedUser.name}</p>
                 </div>
               </div>
-              <button 
-                onClick={() => setShowViewModal(false)} 
+              <button
+                onClick={() => setShowViewModal(false)}
                 className="hover:bg-white/20 p-2 rounded-lg transition-all duration-200 cursor-pointer"
               >
                 <FiXCircle size={20} />
@@ -955,8 +955,8 @@ const BlockedUsers = () => {
                   <div className="flex justify-between">
                     <span className="text-xs text-gray-500">Block Type:</span>
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border
-                      ${selectedUser.blockType === 'temporary' 
-                        ? 'bg-yellow-100 text-yellow-700 border-yellow-200' 
+                      ${selectedUser.blockType === 'temporary'
+                        ? 'bg-yellow-100 text-yellow-700 border-yellow-200'
                         : 'bg-red-100 text-red-700 border-red-200'
                       }`}>
                       {selectedUser.blockType === 'temporary' ? <FiClock size={10} /> : <FiLock size={10} />}
@@ -981,8 +981,8 @@ const BlockedUsers = () => {
                   <p className="text-lg font-bold text-green-600">{selectedUser.totalOrders}</p>
                   <p className="text-xs text-gray-500">Orders</p>
                 </div>
-                <div className="bg-purple-50 p-3 rounded-lg text-center">
-                  <p className="text-lg font-bold text-purple-600">{formatCurrency(selectedUser.totalSpend)}</p>
+                <div className="bg-amber-100 p-3 rounded-lg text-center border border-amber-200">
+                  <p className="text-lg font-bold text-amber-700">{formatCurrency(selectedUser.totalSpend)}</p>
                   <p className="text-xs text-gray-500">Spend</p>
                 </div>
               </div>
@@ -1003,9 +1003,9 @@ const BlockedUsers = () => {
             <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-lime-200 rounded-b-2xl">
               <button
                 onClick={() => setShowViewModal(false)}
-                className="px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300 cursor-pointer"
+                className="px-5 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
-                Close
+                <FiX size={16} /> Close
               </button>
               {!selectedUser.unblockDate && (
                 <button
@@ -1047,8 +1047,8 @@ const BlockedUsers = () => {
                   <p className="text-sm text-orange-100">{selectedUser.name}</p>
                 </div>
               </div>
-              <button 
-                onClick={() => setShowUnblockModal(false)} 
+              <button
+                onClick={() => setShowUnblockModal(false)}
                 className="hover:bg-white/20 p-2 rounded-lg transition-all duration-200 cursor-pointer"
               >
                 <FiXCircle size={20} />
@@ -1101,9 +1101,9 @@ const BlockedUsers = () => {
             <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-lime-200 rounded-b-2xl">
               <button
                 onClick={() => setShowUnblockModal(false)}
-                className="px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300 cursor-pointer"
+                className="px-5 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
               >
-                Cancel
+                <FiX size={16} /> Cancel
               </button>
               <button
                 onClick={confirmUnblock}

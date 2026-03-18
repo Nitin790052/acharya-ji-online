@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { 
-  FiMenu, 
-  FiPlus, 
-  FiEdit2, 
-  FiTrash2, 
-  FiChevronDown, 
+import {
+  FiMenu,
+  FiPlus,
+  FiEdit2,
+  FiTrash2,
+  FiChevronDown,
   FiChevronUp,
   FiSave,
   FiX,
@@ -13,6 +13,7 @@ import {
   FiEye
 } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { API_URL as BASE_API_URL } from "../../../../../config/apiConfig";
 
 const NavbarManager = () => {
   const [navItems, setNavItems] = useState([]);
@@ -28,7 +29,7 @@ const NavbarManager = () => {
   const [viewItem, setViewItem] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  const API_URL = `${import.meta.env.VITE_API_URL.endsWith('/') ? import.meta.env.VITE_API_URL : import.meta.env.VITE_API_URL + '/'}navbar`;
+  const API_URL = `${BASE_API_URL}/navbar`;
 
   const fetchNavbarItems = async () => {
     try {
@@ -122,7 +123,7 @@ const NavbarManager = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex items-center gap-3 mb-8">
-        <div className="p-3 bg-yellow-400 rounded-xl shadow-md text-white">
+        <div className="p-3 bg-gray-100 rounded-xl shadow-md text-blue-900 border border-blue-900/20">
           <FiMenu size={24} />
         </div>
         <div>
@@ -134,42 +135,42 @@ const NavbarManager = () => {
       {/* Form Section */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
         <h2 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-          {isEditing ? <FiEdit2 className="text-yellow-500" /> : <FiPlus className="text-yellow-500" />}
+          {isEditing ? <FiEdit2 className="text-blue-900" /> : <FiPlus className="text-blue-900" />}
           {isEditing ? 'Edit Menu Item' : 'Add New Menu Item'}
         </h2>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Display Label</label>
-              <input 
+              <input
                 type="text"
                 required
                 value={currentItem.label}
-                onChange={(e) => setCurrentItem({...currentItem, label: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition-all"
+                onChange={(e) => setCurrentItem({ ...currentItem, label: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 focus:border-transparent outline-none transition-all"
                 placeholder="e.g. Services"
               />
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Link URL (href)</label>
-              <input 
+              <input
                 type="text"
                 required
                 value={currentItem.href}
-                onChange={(e) => setCurrentItem({...currentItem, href: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition-all"
+                onChange={(e) => setCurrentItem({ ...currentItem, href: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 focus:border-transparent outline-none transition-all"
                 placeholder="e.g. /services"
               />
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Menu Type</label>
-              <select 
+              <select
                 value={currentItem.type}
-                onChange={(e) => setCurrentItem({...currentItem, type: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                onChange={(e) => setCurrentItem({ ...currentItem, type: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               >
                 <option value="link">Single Link</option>
                 <option value="dropdown">Dropdown Menu</option>
@@ -178,11 +179,11 @@ const NavbarManager = () => {
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Order</label>
-              <input 
+              <input
                 type="number"
                 value={currentItem.order}
-                onChange={(e) => setCurrentItem({...currentItem, order: parseInt(e.target.value)})}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                onChange={(e) => setCurrentItem({ ...currentItem, order: parseInt(e.target.value) })}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
           </div>
@@ -192,19 +193,19 @@ const NavbarManager = () => {
             <div className="mt-6 p-6 bg-gray-50 rounded-xl border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider">Sub-Menu Items</h3>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={addChild}
-                  className="flex items-center gap-1 text-xs font-bold text-yellow-600 hover:text-yellow-700 bg-white px-3 py-1.5 rounded-lg border border-yellow-200 shadow-sm transition-all"
+                  className="flex items-center gap-1 text-xs font-bold text-blue-900 hover:brightness-90 bg-white px-3 py-1.5 rounded-lg border border-blue-900/20 shadow-sm transition-all"
                 >
                   <FiPlus /> Add Child
                 </button>
               </div>
-              
+
               <div className="space-y-3">
                 {currentItem.children.map((child, idx) => (
                   <div key={idx} className="flex gap-3 items-center">
-                    <input 
+                    <input
                       type="text"
                       required
                       placeholder="Label"
@@ -212,7 +213,7 @@ const NavbarManager = () => {
                       onChange={(e) => handleChildChange(idx, 'label', e.target.value)}
                       className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none"
                     />
-                    <input 
+                    <input
                       type="text"
                       required
                       placeholder="URL"
@@ -220,7 +221,7 @@ const NavbarManager = () => {
                       onChange={(e) => handleChildChange(idx, 'href', e.target.value)}
                       className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none"
                     />
-                    <button 
+                    <button
                       type="button"
                       onClick={() => removeChild(idx)}
                       className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
@@ -237,16 +238,16 @@ const NavbarManager = () => {
           )}
 
           <div className="flex justify-end gap-3 pt-4 border-t border-gray-50">
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={resetForm}
-              className="px-6 py-2 text-sm font-semibold text-gray-500 hover:text-gray-700 transition-all flex items-center gap-2"
+              className="px-6 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all flex items-center gap-2 shadow-md cursor-pointer"
             >
               <FiX /> Cancel
             </button>
-            <button 
+            <button
               type="submit"
-              className="px-8 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2"
+              className="px-8 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2"
             >
               <FiSave /> {isEditing ? 'Update Navigation' : 'Save Navigation'}
             </button>
@@ -262,10 +263,10 @@ const NavbarManager = () => {
             Total {navItems.length} Items
           </span>
         </div>
-        
+
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#faf9f0]">
+            <thead className="bg-[#959190]/10">
               <tr>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider w-16 text-center">Order</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Item Label</th>
@@ -278,7 +279,7 @@ const NavbarManager = () => {
             <tbody className="divide-y divide-gray-100">
               {navItems.map((item) => (
                 <tr key={item._id} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="px-6 py-4 text-center font-bold text-yellow-600">{item.order}</td>
+                  <td className="px-6 py-4 text-center font-bold text-blue-900">{item.order}</td>
                   <td className="px-6 py-4">
                     <span className="font-semibold text-gray-800">{item.label}</span>
                   </td>
@@ -286,9 +287,8 @@ const NavbarManager = () => {
                     <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">{item.href}</code>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`text-[10px] px-2 py-1 rounded-full font-bold uppercase ${
-                      item.type === 'dropdown' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'
-                    }`}>
+                    <span className={`text-[10px] px-2 py-1 rounded-full font-bold uppercase ${item.type === 'dropdown' ? 'bg-amber-100 text-amber-600 border border-amber-200' : 'bg-blue-100 text-blue-600'
+                      }`}>
                       {item.type}
                     </span>
                   </td>
@@ -297,23 +297,23 @@ const NavbarManager = () => {
                       {item.children?.length || 0} items
                     </span>
                   </td>
-                   <td className="px-6 py-4 text-right">
+                  <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button 
+                      <button
                         onClick={() => openViewModal(item)}
                         className="p-2 text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all"
                         title="View Details"
                       >
                         <FiEye size={18} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleEdit(item)}
-                        className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-all"
+                        className="p-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg transition-all border border-green-200"
                         title="Edit"
                       >
                         <FiEdit2 size={16} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(item._id)}
                         className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
                         title="Delete"
@@ -341,12 +341,12 @@ const NavbarManager = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-4 flex justify-between items-center text-white">
+            <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 flex justify-between items-center text-white">
               <div className="flex items-center gap-3">
                 <FiEye size={20} />
                 <h3 className="font-bold text-lg">Menu Item Details</h3>
               </div>
-              <button 
+              <button
                 onClick={() => setIsViewModalOpen(false)}
                 className="hover:bg-white/20 p-2 rounded-lg transition-all"
               >
@@ -363,13 +363,12 @@ const NavbarManager = () => {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Link Path</p>
-                  <code className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm font-semibold">{viewItem.href}</code>
+                  <code className="bg-blue-50 text-blue-900 px-2 py-0.5 rounded text-sm font-semibold">{viewItem.href}</code>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Type</p>
-                  <span className={`text-[10px] px-2 py-1 rounded-full font-bold uppercase ${
-                    viewItem.type === 'dropdown' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'
-                  }`}>
+                  <span className={`text-[10px] px-2 py-1 rounded-full font-bold uppercase ${viewItem.type === 'dropdown' ? 'bg-amber-100 text-amber-600 border border-amber-200' : 'bg-blue-100 text-blue-600'
+                    }`}>
                     {viewItem.type}
                   </span>
                 </div>
@@ -390,7 +389,7 @@ const NavbarManager = () => {
                     {viewItem.children?.map((child, idx) => (
                       <div key={idx} className="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-xl hover:shadow-sm transition-all group">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-yellow-50 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xs">
+                          <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center text-blue-900 font-bold text-xs">
                             {idx + 1}
                           </div>
                           <div>
@@ -410,18 +409,18 @@ const NavbarManager = () => {
 
             {/* Modal Footer */}
             <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-gray-100">
-              <button 
+              <button
                 onClick={() => {
                   setIsViewModalOpen(false);
                   handleEdit(viewItem);
                 }}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg font-bold text-sm shadow-md hover:bg-blue-600 transition-all flex items-center gap-2"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition-all flex items-center gap-2"
               >
                 <FiEdit2 size={14} /> Edit This Menu
               </button>
-              <button 
+              <button
                 onClick={() => setIsViewModalOpen(false)}
-                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-bold text-sm hover:bg-gray-300 transition-all"
+                className="px-6 py-2 bg-red-600 text-white rounded-lg font-bold text-sm hover:bg-red-700 transition-all shadow-md"
               >
                 Close
               </button>

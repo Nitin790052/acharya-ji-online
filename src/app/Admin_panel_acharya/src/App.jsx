@@ -13,6 +13,8 @@ import PagePlaceholder from "./pages/PagePlaceholder";
 import CategoryManager from "./pages/vendors/CategoryManager";
 import NavbarManager from "./pages/content/NavbarManager";
 import CarouselManager from "./pages/content/CarouselManager";
+import AboutUsManager from "./pages/content/AboutUsManager";
+import ServiceManager from "./pages/content/ServiceManager";
 
 function AdminApp() {
   return (
@@ -29,7 +31,7 @@ function AdminApp() {
         }>
           {/* Dashboard - Default route */}
           <Route index element={<Dashboard />} />
-          
+
           {/* ... existing routes ... */}
           <Route path="users/all" element={<AllUsers />} />
           <Route path="users/new-registrations" element={<NewRegistrations />} />
@@ -45,7 +47,8 @@ function AdminApp() {
           <Route path="content/blogs" element={<PagePlaceholder title="Blogs Management" />} />
           <Route path="content/testimonials" element={<PagePlaceholder title="Testimonials" />} />
           <Route path="content/carousels" element={<CarouselManager />} />
-          <Route path="content/services" element={<PagePlaceholder title="Services Management" />} />
+          <Route path="content/about-us" element={<AboutUsManager />} />
+          <Route path="content/services" element={<ServiceManager />} />
           <Route path="content/faq" element={<PagePlaceholder title="FAQ Management" />} />
           <Route path="seo/settings" element={<PagePlaceholder title="SEO Settings" />} />
           <Route path="seo/meta" element={<PagePlaceholder title="Meta Tags Management" />} />

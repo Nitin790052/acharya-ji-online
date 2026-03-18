@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { 
-  FiMenu, 
-  FiBell, 
-  FiUser, 
-  FiChevronLeft, 
+import {
+  FiMenu,
+  FiBell,
+  FiUser,
+  FiChevronLeft,
   FiChevronRight,
   FiSettings,
   FiLogOut,
@@ -14,29 +14,28 @@ import {
 const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMobile }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [notifications] = useState(3);
- 
 
-  // Theme 4: Amber Gold
+
   const theme = {
-    primary: "#b45309",
-    secondary: "#f59e0b",
-    bg: "#fffbeb",
-    hover: "#fef3c7",
-    text: "#92400e",
+    primary: "#1e3a8a",
+    secondary: "#959190",
+    bg: "#f7f6f5",
+    hover: "#e3e1e0",
+    text: "#4D4441",
     ring: "#ffffff",
-    gradient: "from-[#b45309] to-[#f59e0b]"
+    gradient: "from-blue-900 to-[#959190]"
   };
 
   return (
-    <header 
+    <header
       className="sticky top-0 z-30 shadow-sm w-full"
       style={{ backgroundColor: theme.bg }}
     >
       <div className="px-4 py-1 flex items-center justify-between">
-        
+
         {/* Left Section */}
         <div className="flex items-center gap-3">
-          
+
           {/* Mobile Menu Button - FIXED */}
           {isMobile && (
             <button
@@ -54,7 +53,7 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
             <button
               onClick={toggleCollapse}
               className="p-1.5 hover:bg-white/60 rounded-lg transition-all border"
-              style={{ 
+              style={{
                 color: theme.primary,
                 borderColor: `${theme.primary}20`
               }}
@@ -68,35 +67,35 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
 
         {/* Right Section - Icons and Profile */}
         <div className="flex items-center gap-2 sm:gap-3">
-          
+
           {/* Messages Icon */}
-          <button 
+          <button
             className="relative p-2 hover:bg-white/60 rounded-lg transition-all cursor-pointer"
             style={{ color: theme.primary }}
             aria-label="Messages"
           >
             <FiMail size={20} />
-            <span 
+            <span
               className="absolute -top-1 -right-2 w-5 h-5 text-xs flex items-center justify-center rounded-full ring-2 font-medium"
-                style={{ 
-                  backgroundColor: theme.primary,
-                  color: 'white',
-                  ringColor: theme.ring
-                }}
+              style={{
+                backgroundColor: theme.primary,
+                color: 'white',
+                ringColor: theme.ring
+              }}
             >4</span>
           </button>
 
           {/* Notifications Icon */}
-          <button 
+          <button
             className="relative p-2 hover:bg-white/60 rounded-lg transition-all cursor-pointer"
             style={{ color: theme.primary }}
             aria-label="Notifications"
           >
             <FiBell size={20} />
             {notifications > 0 && (
-              <span 
+              <span
                 className="absolute -top-1 -right-1 w-5 h-5 text-xs flex items-center justify-center rounded-full ring-2 font-medium"
-                style={{ 
+                style={{
                   backgroundColor: theme.primary,
                   color: 'white',
                   ringColor: theme.ring
@@ -115,13 +114,13 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
               aria-label="Profile menu"
             >
               <div className="text-right hidden sm:block">
-                <p 
+                <p
                   className="text-xs sm:text-sm transition-colors"
                   style={{ color: `${theme.primary}90` }}
                 >
                   Admin
                 </p>
-                <p 
+                <p
                   className="text-xs sm:text-sm font-medium transition-colors"
                   style={{ color: theme.text }}
                 >
@@ -129,9 +128,9 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
                 </p>
               </div>
 
-              <div 
+              <div
                 className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shadow-md"
-                style={{ 
+                style={{
                   background: `linear-gradient(to bottom right, ${theme.primary}, ${theme.secondary})`,
                   color: 'white'
                 }}
@@ -144,13 +143,13 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
             {isProfileOpen && (
               <>
                 {/* Backdrop for closing dropdown */}
-                <div 
-                  className="fixed inset-0 z-40" 
-                  onClick={() => setIsProfileOpen(false)} 
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setIsProfileOpen(false)}
                 />
-                
+
                 {/* Dropdown Panel */}
-                <div 
+                <div
                   className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border py-2 z-50"
                   style={{ borderColor: `${theme.primary}20` }}
                 >
@@ -159,9 +158,9 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
                     <p className="text-sm font-medium text-gray-900">John Doe</p>
                     <p className="text-xs text-gray-500">john@example.com</p>
                   </div>
-                  
+
                   {/* Menu Items */}
-                  <button 
+                  <button
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-white transition-all"
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = theme.primary;
@@ -175,8 +174,8 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
                     <FiUser size={14} />
                     Profile
                   </button>
-                  
-                  <button 
+
+                  <button
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-white transition-all"
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = theme.primary;
@@ -190,8 +189,8 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
                     <FiSettings size={14} />
                     Settings
                   </button>
-                  
-                  <button 
+
+                  <button
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-white transition-all"
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = theme.primary;
@@ -205,10 +204,10 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
                     <FiHelpCircle size={14} />
                     Help
                   </button>
-                  
+
                   <hr className="my-2" style={{ borderColor: `${theme.primary}10` }} />
-                  
-                  <button 
+
+                  <button
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-all"
                   >
                     <FiLogOut size={14} />

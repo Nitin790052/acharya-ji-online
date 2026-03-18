@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { 
-  FiUsers, 
-  FiClock, 
-  FiCheckCircle, 
+import {
+  FiUsers,
+  FiClock,
+  FiCheckCircle,
   FiXCircle,
   FiCalendar,
   FiTrendingUp,
@@ -185,7 +185,7 @@ const NewRegistrations = () => {
     const now = new Date();
     const daysToSubtract = timeRange === '7days' ? 7 : 30;
     const cutoffDate = new Date(now.setDate(now.getDate() - daysToSubtract));
-    
+
     return registrationsData.filter(reg => new Date(reg.signupDate) >= cutoffDate);
   };
 
@@ -239,11 +239,11 @@ const NewRegistrations = () => {
       user.firstBooking ? 'Yes' : 'No',
       user.location
     ]);
-    
+
     const csvContent = [headers, ...csvData]
       .map(row => row.join(','))
       .join('\n');
-    
+
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -315,7 +315,7 @@ const NewRegistrations = () => {
         }
         
         ::-webkit-scrollbar-thumb {
-          background: #daf1e5;
+          background: #959190/20;
           border-radius: 10px;
         }
         
@@ -358,12 +358,12 @@ const NewRegistrations = () => {
       `}</style>
 
       {/* Header Section */}
-      <div className="bg-white border-b border-lime-200 sticky top-0 z-10 ">
+      <div className="bg-white border-b border-blue-900/20 sticky top-0 z-10 ">
         <div className="px-6 py-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <FiUserPlus className="text-orange-600 w-6 h-6" />
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <FiUserPlus className="text-blue-900 w-6 h-6" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">New Registrations</h1>
@@ -374,7 +374,7 @@ const NewRegistrations = () => {
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
               {/* Time Range Selector */}
-              <div className="flex items-center gap-2 bg-white rounded-lg p-1 border border-[#daf1e5]">
+              <div className="flex items-center gap-2 bg-white rounded-lg p-1 border border-[#959190]/20">
                 {[
                   { value: '7days', label: '7 Days', icon: FiClock },
                   { value: '30days', label: '30 Days', icon: FiCalendar }
@@ -383,8 +383,8 @@ const NewRegistrations = () => {
                     key={range.value}
                     onClick={() => setTimeRange(range.value)}
                     className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors flex items-center gap-1
-                      ${timeRange === range.value 
-                        ? 'bg-[#daf1e5] text-gray-900' 
+                      ${timeRange === range.value
+                        ? 'bg-[#959190]/20 text-gray-900'
                         : 'text-gray-600 hover:bg-gray-100'
                       }`}
                   >
@@ -398,12 +398,12 @@ const NewRegistrations = () => {
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`p-2 rounded-lg border transition-all duration-200
-                  ${showFilters 
-                    ? 'bg-orange-50 border-orange-300 text-orange-600' 
+                  ${showFilters
+                    ? 'bg-blue-50 border-blue-900/20 text-blue-900'
                     : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
                 title="Filters"
               >
-                <FiFilter size={16} className={showFilters ? 'text-orange-600' : 'text-gray-500'} />
+                <FiFilter size={16} className={showFilters ? 'text-blue-900' : 'text-gray-500'} />
               </button>
 
               {/* Export Button */}
@@ -433,7 +433,7 @@ const NewRegistrations = () => {
         {/* Stats Cards - Dashboard Premium Design */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Total Registrations Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-blue-50">
                 <FiUsers className="text-blue-600 w-5 h-5" />
@@ -448,7 +448,7 @@ const NewRegistrations = () => {
           </div>
 
           {/* Verified Users Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-green-50">
                 <FiCheckCircle className="text-green-600 w-5 h-5" />
@@ -457,20 +457,20 @@ const NewRegistrations = () => {
             <h3 className="text-[23px] font-bold text-gray-900">{verifiedCount}</h3>
             <p className="text-sm text-gray-500 mt-1">Verified Users</p>
             <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
-              <div 
-                className="bg-green-600 h-1.5 rounded-full transition-all duration-500" 
+              <div
+                className="bg-green-600 h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${(verifiedCount / totalRegistrations) * 100 || 0}%` }}
               ></div>
             </div>
           </div>
 
           {/* First Booking Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-orange-50">
-                <FiShoppingBag className="text-orange-600 w-5 h-5" />
+              <div className="p-2 rounded-lg bg-blue-50">
+                <FiShoppingBag className="text-blue-900 w-5 h-5" />
               </div>
-              <span className="text-xs font-medium flex items-center gap-1 text-orange-600">
+              <span className="text-xs font-medium flex items-center gap-1 text-blue-900">
                 <FiAward size={12} />
                 {conversionRate}% conversion
               </span>
@@ -480,7 +480,7 @@ const NewRegistrations = () => {
           </div>
 
           {/* Pending Verification Card */}
-          <div className="stats-card bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4">
+          <div className="stats-card bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-blue-900/20 p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 rounded-lg bg-yellow-50">
                 <FiClock className="text-yellow-600 w-5 h-5" />
@@ -496,7 +496,7 @@ const NewRegistrations = () => {
 
         {/* Source Breakdown Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white rounded-xl border border-lime-200 p-5 hover:shadow-lg transition-shadow">
+          <div className="bg-white rounded-xl border border-blue-900/20 p-5 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-lg bg-blue-50">
                 <FiGlobe className="text-blue-600" size={20} />
@@ -511,10 +511,10 @@ const NewRegistrations = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-lime-200 p-5 hover:shadow-lg transition-shadow">
+          <div className="bg-white rounded-xl border border-blue-900/20 p-5 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-lg bg-purple-50">
-                <FiMail className="text-purple-600" size={20} />
+              <div className="p-3 rounded-lg bg-amber-50">
+                <FiMail className="text-amber-600" size={20} />
               </div>
               <div>
                 <p className="text-sm text-gray-500">Manual Signups</p>
@@ -526,7 +526,7 @@ const NewRegistrations = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-lime-200 p-5 hover:shadow-lg transition-shadow">
+          <div className="bg-white rounded-xl border border-blue-900/20 p-5 hover:shadow-lg transition-shadow">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-lg bg-indigo-50">
                 <FiFacebook className="text-indigo-600" size={20} />
@@ -544,17 +544,17 @@ const NewRegistrations = () => {
 
         {/* Filters Section */}
         {showFilters && (
-          <div className="bg-white rounded-xl border border-lime-200 p-6 animate-slideDown">
+          <div className="bg-white rounded-xl border border-blue-900/20 p-6 animate-slideDown">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                  <FiGlobe size={14} className="text-orange-500" />
+                  <FiGlobe size={14} className="text-blue-900" />
                   Signup Source
                 </label>
                 <select
                   value={selectedSource}
                   onChange={(e) => setSelectedSource(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900/40 text-sm"
                 >
                   <option value="all">All Sources</option>
                   <option value="google">Google</option>
@@ -565,13 +565,13 @@ const NewRegistrations = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                  <FiCheckCircle size={14} className="text-orange-500" />
+                  <FiCheckCircle size={14} className="text-blue-900" />
                   Verification Status
                 </label>
                 <select
                   value={selectedVerification}
                   onChange={(e) => setSelectedVerification(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900/40 text-sm"
                 >
                   <option value="all">All Status</option>
                   <option value="verified">Verified</option>
@@ -599,10 +599,10 @@ const NewRegistrations = () => {
         )}
 
         {/* Registrations Table */}
-        <div className="bg-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-white rounded-xl border border-blue-900/20 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <FiUserPlus className="text-orange-500" />
+              <FiUserPlus className="text-blue-900" />
               Recent Signups
             </h2>
             <div className="text-sm text-gray-500">
@@ -615,7 +615,7 @@ const NewRegistrations = () => {
               <TableSkeleton />
             ) : (
               <table className="w-full">
-                <thead className="bg-[#daf1e5]">
+                <thead className="bg-[#959190]/10">
                   <tr>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">User</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Signup Source</th>
@@ -630,7 +630,7 @@ const NewRegistrations = () => {
                     <tr key={user.id} className="table-row-hover">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-semibold text-sm">
+                          <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center text-blue-900 font-semibold text-sm">
                             {user.avatar}
                           </div>
                           <div>
@@ -645,7 +645,7 @@ const NewRegistrations = () => {
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium
                           ${user.signupSource === 'Google' ? 'bg-blue-100 text-blue-700 border border-blue-200' : ''}
-                          ${user.signupSource === 'Manual' ? 'bg-purple-100 text-purple-700 border border-purple-200' : ''}
+                          ${user.signupSource === 'Manual' ? 'bg-amber-100 text-amber-700 border border-amber-200' : ''}
                           ${user.signupSource === 'Facebook' ? 'bg-indigo-100 text-indigo-700 border border-indigo-200' : ''}
                         `}>
                           {user.signupSource === 'Google' && <FiGlobe size={10} />}
@@ -661,12 +661,12 @@ const NewRegistrations = () => {
                       </td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border
-                          ${user.verificationStatus === 'verified' 
-                            ? 'bg-green-100 text-green-700 border-green-200' 
+                          ${user.verificationStatus === 'verified'
+                            ? 'bg-green-100 text-green-700 border-green-200'
                             : 'bg-yellow-100 text-yellow-700 border-yellow-200'
                           }`}>
-                          {user.verificationStatus === 'verified' 
-                            ? <FiCheckCircle size={10} /> 
+                          {user.verificationStatus === 'verified'
+                            ? <FiCheckCircle size={10} />
                             : <FiClock size={10} />
                           }
                           {user.verificationStatus}
@@ -687,10 +687,10 @@ const NewRegistrations = () => {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <button className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-200" title="View Details">
+                          <button className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer" title="View Details">
                             <FiEye size={16} />
                           </button>
-                          <button className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200" title="More Options">
+                          <button className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200 cursor-pointer" title="More Options">
                             <FiMoreVertical size={16} />
                           </button>
                         </div>
@@ -709,16 +709,16 @@ const NewRegistrations = () => {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">No registrations found</h3>
                 <p className="text-gray-500 mb-4">Try adjusting your filters or time range</p>
-                <button
-                  onClick={() => {
-                    setSelectedSource('all');
-                    setSelectedVerification('all');
-                    setTimeRange('7days');
-                  }}
-                  className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-                >
-                  Clear all filters
-                </button>
+                  <button
+                    onClick={() => {
+                      setSelectedSource('all');
+                      setSelectedVerification('all');
+                      setTimeRange('7days');
+                    }}
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-md"
+                  >
+                    Clear all filters
+                  </button>
               </div>
             )}
           </div>
@@ -734,13 +734,13 @@ const NewRegistrations = () => {
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                   className={`p-2 rounded-lg border transition-all duration-200
-                    ${currentPage === 1 
-                      ? 'border-gray-200 text-gray-400 cursor-not-allowed' 
+                    ${currentPage === 1
+                      ? 'border-gray-200 text-gray-400 cursor-not-allowed'
                       : 'border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-orange-300'}`}
                 >
                   <FiChevronLeft size={16} />
                 </button>
-                
+
                 {[...Array(totalPages)].map((_, i) => {
                   const pageNum = i + 1;
                   if (
@@ -766,7 +766,7 @@ const NewRegistrations = () => {
                   }
                   return null;
                 })}
-                
+
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
@@ -783,9 +783,9 @@ const NewRegistrations = () => {
         </div>
 
         {/* Growth Insights */}
-        <div className="bg-linear-to-r from-[#daf1e5] to-white rounded-xl border border-lime-200 p-6">
+        <div className="bg-gradient-to-r from-[#959190]/10 to-white rounded-xl border border-blue-900/20 p-6">
           <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
-            <FiTrendingUp className="text-orange-500" />
+            <FiTrendingUp className="text-blue-900" />
             Growth Insights
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -794,18 +794,17 @@ const NewRegistrations = () => {
               <p className="text-3xl font-bold text-gray-900">{conversionRate}%</p>
               <p className="text-xs text-gray-400 mt-1">of new users make first booking</p>
               <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
-                <div 
-                  className="bg-orange-500 h-1.5 rounded-full" 
-                  style={{ width: `${conversionRate}%` }}
-                ></div>
+                  <div className="bg-green-600 h-1.5 rounded-full"
+                    style={{ width: `${conversionRate}%` }}
+                  ></div>
               </div>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Top Source</p>
               <p className="text-3xl font-bold text-gray-900">
                 {googleCount >= manualCount && googleCount >= facebookCount ? 'Google' :
-                 manualCount >= googleCount && manualCount >= facebookCount ? 'Manual' : 'Facebook'}
+                  manualCount >= googleCount && manualCount >= facebookCount ? 'Manual' : 'Facebook'}
               </p>
               <p className="text-xs text-gray-400 mt-1">highest signup source</p>
               <div className="mt-2 flex items-center gap-1">
@@ -815,7 +814,7 @@ const NewRegistrations = () => {
                 </span>
               </div>
             </div>
-            
+
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <p className="text-sm text-gray-500 mb-1">Verification Rate</p>
               <p className="text-3xl font-bold text-gray-900">

@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { FiImage, FiPlus, FiEdit2, FiTrash2, FiSave, FiX, FiCheckSquare, FiSquare, FiEye } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { 
-  useGetAllBannersQuery, 
-  useCreateBannerMutation, 
-  useUpdateBannerMutation, 
-  useDeleteBannerMutation 
+import {
+  useGetAllBannersQuery,
+  useCreateBannerMutation,
+  useUpdateBannerMutation,
+  useDeleteBannerMutation
 } from "../../../../../services/heroBannerApi";
 import { useGetNavbarItemsQuery } from "../../../../../services/navbarApi";
+import { BACKEND_URL } from "../../../../../config/apiConfig";
 
 const CarouselManager = () => {
   const { data: banners = [], isLoading: bannersLoading } = useGetAllBannersQuery();
   const { data: navItemsData = [], isLoading: navLoading, error: navError } = useGetNavbarItemsQuery();
-  
+
   useEffect(() => {
     if (navError) {
       toast.error("Failed to load pages! Please check server/database.");
     }
   }, [navError]);
-  
+
   const [createBanner] = useCreateBannerMutation();
   const [updateBanner] = useUpdateBannerMutation();
   const [deleteBanner] = useDeleteBannerMutation();
@@ -124,7 +125,7 @@ const CarouselManager = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex items-center gap-3 mb-8">
-        <div className="p-3 bg-yellow-400 rounded-xl shadow-md text-white">
+        <div className="p-3 bg-gray-100 rounded-xl shadow-md text-blue-900 border border-blue-900/20">
           <FiImage size={24} />
         </div>
         <div>
@@ -136,7 +137,7 @@ const CarouselManager = () => {
       {/* Form Section */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
         <h2 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-          {isEditing ? <FiEdit2 className="text-yellow-500" /> : <FiPlus className="text-yellow-500" />}
+          {isEditing ? <FiEdit2 className="text-blue-900" /> : <FiPlus className="text-blue-900" />}
           {isEditing ? 'Edit Hero Banner' : 'Add New Hero Banner'}
         </h2>
 
@@ -156,7 +157,7 @@ const CarouselManager = () => {
                     setCurrentBanner({ ...currentBanner, pagePath: p.href || '/' });
                   }
                 }}
-                className="w-full px-4 py-2 border border-yellow-200 rounded-lg focus:ring-2 focus:ring-yellow-400 bg-white"
+                className="w-full px-4 py-2 border border-blue-900/20 rounded-lg focus:ring-2 focus:ring-blue-900/40 bg-white"
               >
                 <option value="home">Home Page ( / )</option>
                 {navLoading ? (
@@ -175,7 +176,7 @@ const CarouselManager = () => {
                 <select
                   value={currentBanner.pagePath}
                   onChange={(e) => setCurrentBanner({ ...currentBanner, pagePath: e.target.value })}
-                  className="w-full px-4 py-2 border border-yellow-200 rounded-lg focus:ring-2 focus:ring-yellow-400 bg-white"
+                  className="w-full px-4 py-2 border border-blue-900/20 rounded-lg focus:ring-2 focus:ring-blue-900/40 bg-white"
                 >
                   <option value={selectedParentObj.href}>-- Use Main Page Banner --</option>
                   {selectedParentObj.children.map((child, idx) => (
@@ -193,16 +194,16 @@ const CarouselManager = () => {
               <input
                 type="text" required value={currentBanner.badge}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, badge: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Title Part 1 (Default: Experience)</label>
+              <label className="text-sm font-medium text-gray-700">Title Part 1 (Optional)</label>
               <input
-                type="text" required value={currentBanner.titleHighlight1}
+                type="text" value={currentBanner.titleHighlight1}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight1: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
@@ -211,7 +212,7 @@ const CarouselManager = () => {
               <input
                 type="text" required value={currentBanner.titleHighlight2}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight2: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
@@ -220,7 +221,7 @@ const CarouselManager = () => {
               <input
                 type="text" required value={currentBanner.titleHighlight3}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight3: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
@@ -229,7 +230,7 @@ const CarouselManager = () => {
               <input
                 type="text" required value={currentBanner.titleEnd}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleEnd: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
@@ -238,7 +239,7 @@ const CarouselManager = () => {
               <input
                 type="text" value={currentBanner.linkText || ''}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, linkText: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
@@ -247,7 +248,7 @@ const CarouselManager = () => {
               <input
                 type="text" value={currentBanner.linkUrl || ''}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, linkUrl: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
@@ -258,7 +259,7 @@ const CarouselManager = () => {
             <textarea
               required value={currentBanner.subtitle}
               onChange={(e) => setCurrentBanner({ ...currentBanner, subtitle: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               rows="2"
             />
           </div>
@@ -280,7 +281,7 @@ const CarouselManager = () => {
                 onClick={() => setCurrentBanner({ ...currentBanner, isActive: !currentBanner.isActive })}
                 className="flex items-center gap-2 text-gray-700 focus:outline-none"
               >
-                {currentBanner.isActive ? <FiCheckSquare className="text-yellow-500" size={20} /> : <FiSquare className="text-gray-400" size={20} />}
+                {currentBanner.isActive ? <FiCheckSquare className="text-blue-900" size={20} /> : <FiSquare className="text-gray-400" size={20} />}
                 <span className="font-medium text-sm">Active (Show on Website)</span>
               </button>
             </div>
@@ -289,13 +290,13 @@ const CarouselManager = () => {
           <div className="flex justify-end gap-3 pt-4 border-t border-gray-50">
             <button
               type="button" onClick={resetForm}
-              className="px-6 py-2 text-sm font-semibold text-gray-500 hover:text-gray-700 transition-all flex items-center gap-2"
+              className="px-6 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all flex items-center gap-2 shadow-md cursor-pointer"
             >
               <FiX /> Cancel
             </button>
             <button
               type="submit"
-              className="px-8 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2"
+              className="px-8 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2"
             >
               <FiSave /> {isEditing ? 'Update Banner' : 'Save Banner'}
             </button>
@@ -311,7 +312,7 @@ const CarouselManager = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#faf9f0]">
+            <thead className="bg-[#959190]/10">
               <tr>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">S.No</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Image</th>
@@ -330,7 +331,7 @@ const CarouselManager = () => {
                   <td className="px-6 py-4">
                     {banner.imageUrl && (
                       <img
-                        src={`${import.meta.env.VITE_BACKEND_URL}${banner.imageUrl}`}
+                        src={`${BACKEND_URL}${banner.imageUrl}`}
                         alt="Banner"
                         className="w-16 h-10 object-cover rounded shadow-sm"
                       />
@@ -346,7 +347,7 @@ const CarouselManager = () => {
                     {banner.linkUrl && <div className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded inline-block">{banner.linkUrl}</div>}
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-[10px] text-white bg-purple-500 rounded px-2 py-0.5 inline-block font-bold">{banner.pagePath || '/'}</div>
+                    <div className="text-[10px] text-amber-800 bg-amber-100 rounded px-2 py-0.5 inline-block font-bold border border-amber-200">{banner.pagePath || '/'}</div>
                   </td>
                   <td className="px-6 py-4">
                     {banner.isActive ? (
@@ -357,13 +358,13 @@ const CarouselManager = () => {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => openViewModal(banner)} className="p-2 text-emerald-500 hover:bg-emerald-50 rounded-lg">
+                      <button onClick={() => openViewModal(banner)} className="p-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg transition-all border border-green-200">
                         <FiEye size={16} />
                       </button>
-                      <button onClick={() => handleEdit(banner)} className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg">
+                      <button onClick={() => handleEdit(banner)} className="p-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg transition-all border border-green-200">
                         <FiEdit2 size={16} />
                       </button>
-                      <button onClick={() => handleDelete(banner._id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg">
+                      <button onClick={() => handleDelete(banner._id)} className="p-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-all border border-red-200">
                         <FiTrash2 size={16} />
                       </button>
                     </div>
@@ -384,7 +385,7 @@ const CarouselManager = () => {
       {isViewModalOpen && viewBanner && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
-            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-4 flex justify-between items-center text-white">
+            <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4 flex justify-between items-center text-white">
               <div className="flex items-center gap-3">
                 <FiEye size={20} />
                 <h3 className="font-bold text-lg">Banner Details</h3>
@@ -397,7 +398,7 @@ const CarouselManager = () => {
             <div className="p-6 max-h-[70vh] overflow-y-auto">
               {viewBanner.imageUrl && (
                 <div className="mb-6 rounded-xl overflow-hidden shadow-sm border border-gray-100">
-                  <img src={`${import.meta.env.VITE_BACKEND_URL}${viewBanner.imageUrl}`} alt="Banner" className="w-full h-48 object-cover object-center" />
+                  <img src={`${BACKEND_URL}${viewBanner.imageUrl}`} alt="Banner" className="w-full h-48 object-cover object-center" />
                 </div>
               )}
 
@@ -416,7 +417,7 @@ const CarouselManager = () => {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Page Assignment</p>
-                  <code className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-sm font-semibold">{viewBanner.pagePath || '/'}</code>
+                  <code className="bg-blue-50 text-blue-900 px-2 py-0.5 rounded text-sm font-semibold">{viewBanner.pagePath || '/'}</code>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Button Details</p>
@@ -438,7 +439,7 @@ const CarouselManager = () => {
                   </div>
                   <div>
                     <p className="text-[10px] text-gray-500">Part 3 (Yellow Highlight)</p>
-                    <p className="font-semibold text-yellow-600">{viewBanner.titleHighlight3}</p>
+                    <p className="font-semibold text-blue-900">{viewBanner.titleHighlight3}</p>
                   </div>
                   <div>
                     <p className="text-[10px] text-gray-500">Part 4 (Ending)</p>
@@ -459,13 +460,13 @@ const CarouselManager = () => {
                   setIsViewModalOpen(false);
                   handleEdit(viewBanner);
                 }}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg font-bold text-sm shadow-md hover:bg-blue-600 transition-all flex items-center gap-2"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition-all flex items-center gap-2"
               >
                 <FiEdit2 size={14} /> Edit This Banner
               </button>
               <button
                 onClick={() => setIsViewModalOpen(false)}
-                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-bold text-sm hover:bg-gray-300 transition-all"
+                className="px-6 py-2 bg-red-600 text-white rounded-lg font-bold text-sm hover:bg-red-700 transition-all shadow-md"
               >
                 Close
               </button>

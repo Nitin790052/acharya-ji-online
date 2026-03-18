@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  FiUsers, 
-  FiUserCheck, 
-  FiCalendar, 
+import {
+  FiUsers,
+  FiUserCheck,
+  FiCalendar,
   FiDollarSign,
   FiClock,
   FiActivity,
@@ -41,8 +41,8 @@ const Dashboard = () => {
 
   // print logic 
   const handleprint = useReactToPrint({
-    contentRef:printref,
-    documentTitle:"print pdf"
+    contentRef: printref,
+    documentTitle: "print pdf"
   });
 
 
@@ -64,8 +64,8 @@ const Dashboard = () => {
       value: "234",
       change: "+8.2%",
       icon: <FiUserCheck className="w-6 h-6" />,
-      bgLight: "bg-purple-50",
-      textColor: "text-purple-600"
+      bgLight: "bg-amber-50",
+      textColor: "text-amber-600"
     },
     {
       id: 3,
@@ -169,8 +169,8 @@ const Dashboard = () => {
       title: 'Vendor Approval Pending',
       count: 12,
       icon: <FiUserCheck />,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
+      color: 'text-amber-600',
+      bgColor: 'bg-amber-100'
     },
     {
       id: 2,
@@ -221,15 +221,15 @@ const Dashboard = () => {
 
   // Recent Orders with complete data
   const recentOrders = [
-    { 
-      id: '#12345', 
-      customer: 'Rajesh K.', 
+    {
+      id: '#12345',
+      customer: 'Rajesh K.',
       customerFull: 'Rajesh Kumar',
       customerEmail: 'rajesh.k@email.com',
       customerPhone: '+91 98765 43210',
-      puja: 'Ganesh Puja', 
+      puja: 'Ganesh Puja',
       pujaDetails: 'Ganesh Chaturthi Special Puja with 108 chants',
-      amount: '₹2,500', 
+      amount: '₹2,500',
       status: 'completed',
       date: '2024-03-15',
       time: '10:00 AM',
@@ -244,15 +244,15 @@ const Dashboard = () => {
       totalItems: 3,
       icon: <FiCheckCircle className="text-green-500" />
     },
-    { 
-      id: '#12346', 
-      customer: 'Priya S.', 
+    {
+      id: '#12346',
+      customer: 'Priya S.',
       customerFull: 'Priya Singh',
       customerEmail: 'priya.s@email.com',
       customerPhone: '+91 98765 43211',
-      puja: 'Lakshmi Puja', 
+      puja: 'Lakshmi Puja',
       pujaDetails: 'Lakshmi Puja for wealth and prosperity',
-      amount: '₹3,500', 
+      amount: '₹3,500',
       status: 'pending',
       date: '2024-03-16',
       time: '06:00 PM',
@@ -267,15 +267,15 @@ const Dashboard = () => {
       totalItems: 3,
       icon: <FiClock className="text-yellow-500" />
     },
-    { 
-      id: '#12347', 
-      customer: 'Amit P.', 
+    {
+      id: '#12347',
+      customer: 'Amit P.',
       customerFull: 'Amit Patel',
       customerEmail: 'amit.p@email.com',
       customerPhone: '+91 98765 43212',
-      puja: 'Satyanarayan', 
+      puja: 'Satyanarayan',
       pujaDetails: 'Satyanarayan Katha for family peace',
-      amount: '₹4,000', 
+      amount: '₹4,000',
       status: 'processing',
       date: '2024-03-16',
       time: '07:30 PM',
@@ -290,15 +290,15 @@ const Dashboard = () => {
       totalItems: 3,
       icon: <FiRefreshCw className="text-blue-500" />
     },
-    { 
-      id: '#12348', 
-      customer: 'Neha G.', 
+    {
+      id: '#12348',
+      customer: 'Neha G.',
       customerFull: 'Neha Gupta',
       customerEmail: 'neha.g@email.com',
       customerPhone: '+91 98765 43213',
-      puja: 'Durga Puja', 
+      puja: 'Durga Puja',
       pujaDetails: 'Durga Puja for protection and strength',
-      amount: '₹5,500', 
+      amount: '₹5,500',
       status: 'cancelled',
       date: '2024-03-14',
       time: '09:00 AM',
@@ -313,15 +313,15 @@ const Dashboard = () => {
       totalItems: 3,
       icon: <FiXCircle className="text-red-500" />
     },
-    { 
-      id: '#12349', 
-      customer: 'Vikram S.', 
+    {
+      id: '#12349',
+      customer: 'Vikram S.',
       customerFull: 'Vikram Singh',
       customerEmail: 'vikram.s@email.com',
       customerPhone: '+91 98765 43214',
-      puja: 'Shiv Puja', 
+      puja: 'Shiv Puja',
       pujaDetails: 'Shiv Puja for spiritual growth',
-      amount: '₹2,000', 
+      amount: '₹2,000',
       status: 'completed',
       date: '2024-03-15',
       time: '05:00 PM',
@@ -360,11 +360,11 @@ const Dashboard = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                <FiHome className="text-orange-500" />
+                <FiHome className="text-blue-900" />
                 Dashboard Overview
               </h1>
             </div>
-            
+
             {/* Action Buttons - Only Time Range Selector */}
             <div className="flex items-center gap-3">
               {/* Time Range Selector */}
@@ -374,8 +374,8 @@ const Dashboard = () => {
                     key={range}
                     onClick={() => setTimeRange(range)}
                     className={`px-3 py-1.5 text-sm font-medium rounded-md capitalize transition-colors flex items-center gap-1
-                      ${timeRange === range 
-                        ? 'bg-[#daf1e5] text-black' 
+                      ${timeRange === range
+                        ? 'bg-[#959190]/20 text-black'
                         : 'text-gray-600 hover:bg-gray-100'
                       }`}
                   >
@@ -398,15 +398,14 @@ const Dashboard = () => {
           {statsCards.map((card) => (
             <div
               key={card.id}
-              className="bg-white border-l-8 border-l-[#daf1e5] border-b-8 border-b-[#daf1e5] rounded-s-xl rounded-br border border-lime-200 p-4 hover:shadow-lg transition-shadow"
+              className="bg-white border-l-8 border-l-[#959190]/20 border-b-8 border-b-[#959190]/20 rounded-s-xl rounded-br border border-[#959190]/20 p-4 hover:shadow-lg transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className={`p-2 rounded-lg ${card.bgLight}`}>
                   <div className={card.textColor}>{card.icon}</div>
                 </div>
-                <span className={`text-xs font-medium flex items-center gap-1 ${
-                  card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'
-                }`}>
+                <span className={`text-xs font-medium flex items-center gap-1 ${card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'
+                  }`}>
                   {card.change.startsWith('+') ? <FiTrendingUp size={12} /> : <FiTrendingUp size={12} className="rotate-180" />}
                   {card.change}
                 </span>
@@ -420,10 +419,10 @@ const Dashboard = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Recent Activity - Takes 2 columns */}
-          <div className="lg:col-span-2 bg-white rounded-xl border border-lime-200 p-6">
+          <div className="lg:col-span-2 bg-white rounded-xl border border-[#959190]/20 p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <FiActivity className="text-orange-500" />
+                <FiActivity className="text-blue-900" />
                 Recent Activity
               </h2>
               <div className="flex items-center gap-2">
@@ -433,7 +432,7 @@ const Dashboard = () => {
                 <button className="p-1.5 hover:bg-gray-100 rounded-sm border border-gray-300 cursor-pointer">
                   <FiDownload size={16} className="text-gray-500" />
                 </button>
-                <button className="text-sm text-orange-600 hover:text-orange-700">
+                <button className="text-sm text-green-600 hover:text-green-700 font-bold">
                   View All
                 </button>
               </div>
@@ -463,9 +462,9 @@ const Dashboard = () => {
           {/* Right Column - Pending Actions & Top Astrologers */}
           <div className="space-y-6">
             {/* Pending Actions */}
-            <div className="bg-white rounded-xl border border-lime-200 p-6">
+            <div className="bg-white rounded-xl border border-[#959190]/20 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FiAlertCircle className="text-orange-500" />
+                <FiAlertCircle className="text-blue-900" />
                 Pending Actions
               </h2>
               <div className="space-y-4">
@@ -489,9 +488,9 @@ const Dashboard = () => {
             </div>
 
             {/* Top Astrologers */}
-            <div className="bg-white rounded-xl border border-lime-200 p-6">
+            <div className="bg-white rounded-xl border border-[#959190]/20 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FiStar className="text-orange-500" />
+                <FiStar className="text-blue-900" />
                 Top Astrologers
               </h2>
               <div className="space-y-4">
@@ -518,10 +517,10 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Orders Table */}
-        <div ref={printref} className="bg-white rounded-xl border border-lime-200 p-6 print:p-6">
+        <div ref={printref} className="bg-white rounded-xl border border-[#959190]/20 p-6 print:p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <FiShoppingBag className="text-orange-500" />
+              <FiShoppingBag className="text-blue-900" />
               Recent Orders
             </h2>
             <div className="flex items-center gap-2 print:hidden">
@@ -533,9 +532,9 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-          <div  className="overflow-x-auto">
+          <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#daf1e5]">
+              <thead className="bg-[#959190]/10">
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Order ID</th>
                   <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Customer</th>
@@ -564,9 +563,10 @@ const Dashboard = () => {
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <button 
+                      <button
                         onClick={() => openModal(order)}
-                        className="text-orange-600 hover:text-orange-700 transition-colors cursor-pointer"
+                        className="p-1.5 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg transition-colors border border-green-200 cursor-pointer"
+                        title="View Details"
                       >
                         <FiEye size={18} />
                       </button>
@@ -581,214 +581,214 @@ const Dashboard = () => {
 
       {/* Simple Modal - exactly as you wanted */}
       {isModalOpen && selectedOrder && (
-  <div 
-    className="fixed inset-0 z-9999 flex items-center justify-center p-4"
-    style={{
-      animation: 'fadeIn 0.2s ease-out'
-    }}
-  >
-    
-    {/* Overlay with blur effect */}
-    <div
-      className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-      onClick={closeModal}
-    />
-
-    {/* Modal Panel with animation */}
-    <div 
-      className="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-3xl transform transition-all duration-300 scale-100"
-      style={{
-        animation: 'slideUp 0.3s ease-out'
-      }}
-    >
-      
-      {/* Modal Header with gradient */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-5 text-white flex justify-between items-center rounded-t-2xl">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-white/20 rounded-lg">
-            <FiShoppingBag className="text-white" size={20} />
-          </div>
-          <div>
-            <h3 className="font-semibold text-lg">Order Details</h3>
-            <p className="text-sm text-orange-100">{selectedOrder.id}</p>
-          </div>
-        </div>
-        <button 
-          onClick={closeModal} 
-          className="hover:bg-white/20 p-2 rounded-lg transition-all duration-200"
+        <div
+          className="fixed inset-0 z-9999 flex items-center justify-center p-4"
+          style={{
+            animation: 'fadeIn 0.2s ease-out'
+          }}
         >
-          <FiX size={20} />
-        </button>
-      </div>
 
-      {/* Modal Content with better spacing */}
-      <div className="p-6 max-h-[70vh] overflow-y-auto">
-        
-        {/* Status Badge - Floating at top */}
-        <div className="flex justify-end mb-4">
-          <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow-sm
+          {/* Overlay with blur effect */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={closeModal}
+          />
+
+          {/* Modal Panel with animation */}
+          <div
+            className="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-3xl transform transition-all duration-300 scale-100"
+            style={{
+              animation: 'slideUp 0.3s ease-out'
+            }}
+          >
+
+            {/* Modal Header with gradient */}
+            <div className="bg-gradient-to-r from-green-600 to-green-700 px-6 py-5 text-white flex justify-between items-center rounded-t-2xl">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white/20 rounded-lg">
+                  <FiShoppingBag className="text-white" size={20} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">Order Details</h3>
+                  <p className="text-sm text-orange-50">{selectedOrder.id}</p>
+                </div>
+              </div>
+              <button
+                onClick={closeModal}
+                className="hover:bg-white/20 p-2 rounded-lg transition-all duration-200"
+              >
+                <FiX size={20} />
+              </button>
+            </div>
+
+            {/* Modal Content with better spacing */}
+            <div className="p-6 max-h-[70vh] overflow-y-auto">
+
+              {/* Status Badge - Floating at top */}
+              <div className="flex justify-end mb-4">
+                <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow-sm
             ${selectedOrder.status === 'completed' ? 'bg-green-100 text-green-700 border border-green-200' : ''}
             ${selectedOrder.status === 'pending' ? 'bg-yellow-100 text-yellow-700 border border-yellow-200' : ''}
             ${selectedOrder.status === 'processing' ? 'bg-blue-100 text-blue-700 border border-blue-200' : ''}
             ${selectedOrder.status === 'cancelled' ? 'bg-red-100 text-red-700 border border-red-200' : ''}
           `}>
-            {selectedOrder.icon}
-            <span className="capitalize">{selectedOrder.status}</span>
-          </span>
-        </div>
+                  {selectedOrder.icon}
+                  <span className="capitalize">{selectedOrder.status}</span>
+                </span>
+              </div>
 
-        {/* Two Column Layout for better organization */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          
-          {/* Customer Info Card */}
-          <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
-            <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-              <FiUserCheck className="text-orange-500" size={16} />
-              Customer Information
-            </h4>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                  <span className="text-orange-600 font-semibold text-sm">
-                    {selectedOrder.customerFull.charAt(0)}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">{selectedOrder.customerFull}</p>
-                  <p className="text-xs text-gray-500">Customer</p>
-                </div>
-              </div>
-              <div className="pl-2 space-y-2">
-                <p className="text-sm flex items-center gap-2">
-                  <FiMail className="text-gray-400" size={14} />
-                  <span className="text-gray-600">{selectedOrder.customerEmail}</span>
-                </p>
-                <p className="text-sm flex items-center gap-2">
-                  <FiPhone className="text-gray-400" size={14} />
-                  <span className="text-gray-600">{selectedOrder.customerPhone}</span>
-                </p>
-              </div>
-            </div>
-          </div>
+              {/* Two Column Layout for better organization */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-          {/* Puja Details Card */}
-          <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
-            <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-              <FiCalendar className="text-orange-500" size={16} />
-              Puja Details
-            </h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">Type</span>
-                <span className="font-medium text-gray-900">{selectedOrder.puja}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">Astrologer</span>
-                <span className="font-medium text-gray-900">{selectedOrder.astrologer}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">Date</span>
-                <span className="font-medium text-gray-900">{selectedOrder.date}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">Time</span>
-                <span className="font-medium text-gray-900">{selectedOrder.time}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Puja Details Description */}
-        <div className="mt-5 bg-orange-50 p-4 rounded-xl border border-orange-100">
-          <p className="text-sm text-gray-700 italic">"{selectedOrder.pujaDetails}"</p>
-        </div>
-
-        {/* Payment & Items Section */}
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
-          
-          {/* Payment Card */}
-          <div className="md:col-span-1 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
-            <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-              <FiCreditCard className="text-orange-500" size={16} />
-              Payment
-            </h4>
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs text-gray-500">Amount</p>
-                <p className="text-xl font-bold text-gray-900">{selectedOrder.amount}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Method</p>
-                <p className="text-sm font-medium text-gray-700">{selectedOrder.paymentMethod}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Items Card */}
-          <div className="md:col-span-2 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
-            <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-              <FiPackage className="text-orange-500" size={16} />
-              Order Items ({selectedOrder.totalItems})
-            </h4>
-            <div className="space-y-2">
-              {selectedOrder.items?.map((item, index) => (
-                <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                  <div>
-                    <span className="text-sm font-medium text-gray-900">{item.name}</span>
-                    <span className="text-xs text-gray-500 ml-2">x{item.quantity}</span>
+                {/* Customer Info Card */}
+                <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                  <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                    <FiUserCheck className="text-orange-500" size={16} />
+                    Customer Information
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                        <span className="text-orange-600 font-semibold text-sm">
+                          {selectedOrder.customerFull.charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{selectedOrder.customerFull}</p>
+                        <p className="text-xs text-gray-500">Customer</p>
+                      </div>
+                    </div>
+                    <div className="pl-2 space-y-2">
+                      <p className="text-sm flex items-center gap-2">
+                        <FiMail className="text-gray-400" size={14} />
+                        <span className="text-gray-600">{selectedOrder.customerEmail}</span>
+                      </p>
+                      <p className="text-sm flex items-center gap-2">
+                        <FiPhone className="text-gray-400" size={14} />
+                        <span className="text-gray-600">{selectedOrder.customerPhone}</span>
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-sm font-semibold text-gray-900">{item.price}</span>
                 </div>
-              ))}
-              <div className="flex justify-between items-center pt-2 mt-2 border-t border-lime-200">
-                <span className="text-sm font-semibold text-gray-700">Total</span>
-                <span className="text-lg font-bold text-orange-600">{selectedOrder.amount}</span>
+
+                {/* Puja Details Card */}
+                <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                  <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                    <FiCalendar className="text-orange-500" size={16} />
+                    Puja Details
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Type</span>
+                      <span className="font-medium text-gray-900">{selectedOrder.puja}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Astrologer</span>
+                      <span className="font-medium text-gray-900">{selectedOrder.astrologer}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Date</span>
+                      <span className="font-medium text-gray-900">{selectedOrder.date}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Time</span>
+                      <span className="font-medium text-gray-900">{selectedOrder.time}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Puja Details Description */}
+              <div className="mt-5 bg-orange-50 p-4 rounded-xl border border-orange-100">
+                <p className="text-sm text-gray-700 italic">"{selectedOrder.pujaDetails}"</p>
+              </div>
+
+              {/* Payment & Items Section */}
+              <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                {/* Payment Card */}
+                <div className="md:col-span-1 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                  <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                    <FiCreditCard className="text-orange-500" size={16} />
+                    Payment
+                  </h4>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs text-gray-500">Amount</p>
+                      <p className="text-xl font-bold text-gray-900">{selectedOrder.amount}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Method</p>
+                      <p className="text-sm font-medium text-gray-700">{selectedOrder.paymentMethod}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Items Card */}
+                <div className="md:col-span-2 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                  <h4 className="font-semibold text-gray-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+                    <FiPackage className="text-orange-500" size={16} />
+                    Order Items ({selectedOrder.totalItems})
+                  </h4>
+                  <div className="space-y-2">
+                    {selectedOrder.items?.map((item, index) => (
+                      <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                        <div>
+                          <span className="text-sm font-medium text-gray-900">{item.name}</span>
+                          <span className="text-xs text-gray-500 ml-2">x{item.quantity}</span>
+                        </div>
+                        <span className="text-sm font-semibold text-gray-900">{item.price}</span>
+                      </div>
+                    ))}
+                    <div className="flex justify-between items-center pt-2 mt-2 border-t border-lime-200">
+                      <span className="text-sm font-semibold text-gray-700">Total</span>
+                      <span className="text-lg font-bold text-green-600">{selectedOrder.amount}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Address Card */}
+              <div className="mt-5 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2 text-sm uppercase tracking-wider">
+                  <FiMapPin className="text-orange-500" size={16} />
+                  Delivery Address
+                </h4>
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    <FiMapPin className="text-orange-600" size={18} />
+                  </div>
+                  <p className="text-sm text-gray-700 flex-1">{selectedOrder.address}</p>
+                </div>
+              </div>
+
+              {/* Additional Info */}
+              <div className="mt-4 text-xs text-gray-400 flex justify-end">
+                <span>Order placed on {selectedOrder.date}</span>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Address Card */}
-        <div className="mt-5 bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 shadow-sm">
-          <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2 text-sm uppercase tracking-wider">
-            <FiMapPin className="text-orange-500" size={16} />
-            Delivery Address
-          </h4>
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <FiMapPin className="text-orange-600" size={18} />
+            {/* Modal Footer with better buttons */}
+            <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-lime-200 rounded-b-2xl">
+              <button
+                onClick={closeModal}
+                className="px-5 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+              >
+                <FiX size={16} /> Close
+              </button>
+              <button className="px-5 py-2.5 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
+                <FiCheckCircle size={16} />
+                Update Status
+              </button>
+              <button className="px-5 py-2.5 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
+                <FiMessageCircle size={16} />
+                Contact
+              </button>
             </div>
-            <p className="text-sm text-gray-700 flex-1">{selectedOrder.address}</p>
           </div>
-        </div>
 
-        {/* Additional Info */}
-        <div className="mt-4 text-xs text-gray-400 flex justify-end">
-          <span>Order placed on {selectedOrder.date}</span>
-        </div>
-      </div>
-
-      {/* Modal Footer with better buttons */}
-      <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-lime-200 rounded-b-2xl">
-        <button
-          onClick={closeModal}
-          className="px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300"
-        >
-          Close
-        </button>
-        <button className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
-          <FiCheckCircle size={16} />
-          Update Status
-        </button>
-        <button className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
-          <FiMessageCircle size={16} />
-          Contact
-        </button>
-      </div>
-    </div>
-
-    {/* Animation styles inside component using style tag */}
-    <style>{`
+          {/* Animation styles inside component using style tag */}
+          <style>{`
       @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -805,8 +805,8 @@ const Dashboard = () => {
         }
       }
     `}</style>
-  </div>
-)}
+        </div>
+      )}
     </div>
   );
 };
