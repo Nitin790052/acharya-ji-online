@@ -1,64 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Heart, AlertCircle, Calendar, ArrowRight, Sparkles, Star, Zap, Shield } from 'lucide-react';
+import {
+  Book, Heart, AlertCircle, Calendar, ArrowRight, Sparkles, Star, Zap, Shield,
+  Home, Building2, Gem, Circle, Leaf
+} from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import GetFreeKundli from "../../assets/kundli/GetFreeKundli.webp"
-import KundliMatching from "../../assets/kundli/KundliMatching.webp"
-import ManglikDoshCheck from "../../assets/kundli/ManglikDoshCheck.webp"
-import ShaniSadeSati from "../../assets/kundli/ShaniSadeSati.webp"
+import { useGetActiveKundliServicesQuery, useGetKundliSettingsQuery } from '../../services/kundliApi';
+import { BACKEND_URL } from '../../config/apiConfig';
+
+const IconMap = {
+  Book, Heart, AlertCircle, Calendar, Star, Sparkles, Shield, Zap,
+  Home, Building2, Gem, Circle, Leaf
+};
 
 const KundliServices = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(0);
 
+  const { data: services = [], isLoading: isServicesLoading } = useGetActiveKundliServicesQuery(undefined, { pollingInterval: 3000 });
+  const { data: settings, isLoading: isSettingsLoading } = useGetKundliSettingsQuery(undefined, { pollingInterval: 3000 });
+
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 150);
-
-    const interval = setInterval(() => {
-      setActiveService((prev) => (prev + 1) % 4);
-    }, 3000);
-
-    return () => clearInterval(interval);
   }, []);
 
-  const services = [
-    {
-      id: 1,
-      icon: Book,
-      title: 'Get Free Kundli',
-      description: 'Complete birth chart analysis with detailed planetary positions',
-      features: ['Detailed Birth Chart', 'Planetary Positions', 'Dasha Predictions', 'Life Insights'],
-      price: 'FREE',
-      gradient: 'from-saffron to-orange-600',
-      bgImage: GetFreeKundli,
-      cta: 'Generate Free Kundli',
-      popular: true
-    },
-    {
-      id: 2,
-      icon: Heart,
-      title: 'Kundli Matching',
-      description: 'Check compatibility for marriage with detailed Guna Milan analysis',
-      features: ['36 Gunas Analysis', 'Manglik Check', 'Compatibility Score', 'Marriage Timing'],
-      price: '₹500',
-      gradient: 'from-maroon to-red-700',
-      bgImage: KundliMatching,
-      cta: 'Match Kundli Now',
-      popular: true
-    },
-    {
-      id: 3,
-      icon: AlertCircle,
-      title: 'Manglik Dosh Check',
-      description: 'Identify Manglik Dosha and get personalized remedies',
-      features: ['Manglik Analysis', 'Dosha Strength', 'Remedy Solutions', 'Expert Guidance'],
-      price: '₹299',
-      gradient: 'from-red-600 to-red-800',
-      bgImage: ManglikDoshCheck,
-      cta: 'Check Manglik Dosh',
-      popular: false
-    },
+  useEffect(() => {
+    if (services.length > 0) {
+      const interval = setInterval(() => {
+        setActiveService((prev) => (prev + 1) % services.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [services.length]);
 
-  ];
+  const getImg = (url) => !url ? '' : url.startsWith('http') ? url : `${BACKEND_URL}${url}`;
+
+  if (isServicesLoading || isSettingsLoading) {
+    return <div className="py-20 text-center text-gray-400">Loading services...</div>;
+  }
 
   return (
     <div className="relative py-10 px-3 overflow-hidden bg-white">
@@ -76,19 +54,19 @@ const KundliServices = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         <SectionHeader
-          badge="Accurate Vedic Astrology"
-          title="Kundli Services"
-          subtitle="Get detailed astrological insights with authentic Vedic calculations"
+          badge={settings?.badge || "Accurate Vedic Astrology"}
+          title={settings?.title || "Kundli Services"}
+          subtitle={settings?.subtitle || "Get detailed astrological insights with authentic Vedic calculations"}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
           {services.map((service, index) => {
-            const Icon = service.icon;
+            const Icon = IconMap[service.iconName] || Book;
             const isActive = activeService === index;
 
             return (
               <div
-                key={service.id}
+                key={service._id}
                 className={`relative transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}
                 style={{ transitionDelay: `${index * 120}ms` }}
                 onMouseEnter={() => setActiveService(index)}
@@ -109,7 +87,7 @@ const KundliServices = () => {
                     <div className="relative h-44 md:h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
                       <div
                         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                        style={{ backgroundImage: `url('${service.bgImage}')` }}
+                        style={{ backgroundImage: `url('${getImg(service.imageUrl)}')` }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
 
@@ -148,7 +126,7 @@ const KundliServices = () => {
 
                     {/* Features */}
                     <div className="w-full space-y-1 mb-4 text-left">
-                      {service.features.slice(0, 3).map((feature, idx) => (
+                      {(service.features || []).slice(0, 3).map((feature, idx) => (
                         <div key={idx} className="flex items-center gap-1.5 text-[10px] text-[#6D5B4F]">
                           <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-400/20">
                             <Shield className="w-2 h-2 text-amber-500" strokeWidth={2.5} />
@@ -160,7 +138,7 @@ const KundliServices = () => {
 
                     {/* Vedic Button */}
                     <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white group-hover:border-[#E8453C] transition-all duration-300 flex items-center justify-center gap-2">
-                      <span>{service.cta}</span>
+                      <span>{service.cta || "Generate Free Kundli"}</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>

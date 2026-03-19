@@ -1,77 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Building2, Gem, Circle, Leaf, ArrowRight, Sparkles, Shield, Star, CheckCircle } from 'lucide-react';
+import { 
+  Home, Building2, Gem, Circle, Leaf, ArrowRight, Sparkles, Shield, Star, CheckCircle,
+  Book, Heart, AlertCircle, Calendar, Zap
+} from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
-import Gemstones from "../../assets/vastuRamadies/Gemstones.webp"
-import healing from "../../assets/vastuRamadies/healing.webp"
-import HomeVastu from "../../assets/vastuRamadies/Home Vastu.webp"
-import OfficeVastu from "../../assets/vastuRamadies/Office Vastu.webp"
-import Rudraksha from "../../assets/vastuRamadies/Rudraksha.webp"
+import { useGetActiveVastuServicesQuery, useGetVastuSettingsQuery } from '../../services/vastuApi';
+import { BACKEND_URL } from '../../config/apiConfig';
+
+const IconMap = {
+  Home, Building2, Gem, Circle, Leaf, Shield, Sparkles, Star,
+  Book, Heart, AlertCircle, Calendar, Zap
+};
 
 const VastuRemediesHealing = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
 
+  const { data: services = [], isLoading: isServicesLoading } = useGetActiveVastuServicesQuery(undefined, { pollingInterval: 3000 });
+  const { data: settings, isLoading: isSettingsLoading } = useGetVastuSettingsQuery(undefined, { pollingInterval: 3000 });
+
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 150);
   }, []);
 
-  const services = [
-    {
-      id: 1,
-      icon: Home,
-      title: 'Home Vastu',
-      description: 'Transform your home into a sanctuary of positive energy and prosperity',
-      features: ['Direction Analysis', 'Room Placement', 'Energy Flow', 'Remedies'],
-      price: '₹2,999',
-      gradient: 'from-saffron to-orange-600',
-      bgImage: HomeVastu,
-      popular: true,
-      benefits: ['Harmony', 'Prosperity', 'Health']
-    },
-    {
-      id: 2,
-      icon: Building2,
-      title: 'Office Vastu',
-      description: 'Enhance productivity and business growth with optimal office energy',
-      features: ['Desk Placement', 'Cash Counter', 'Staff Seating', 'Success Zone'],
-      price: '₹4,999',
-      gradient: 'from-maroon to-red-800',
-      bgImage: OfficeVastu,
-      popular: true,
-      benefits: ['Growth', 'Wealth', 'Success']
-    },
-    {
-      id: 3,
-      icon: Gem,
-      title: 'Gemstones',
-      description: 'Certified gemstones to strengthen planetary positions and bring luck',
-      features: ['Personalized Selection', 'Certified Stones', 'Energized', 'Wearing Guide'],
-      price: 'From ₹1,500',
-      gradient: 'from-pink-600 to-rose-700',
-      bgImage: Gemstones,
-      popular: false,
-      benefits: ['Protection', 'Fortune', 'Power']
-    },
+  const getImg = (url) => !url ? '' : url.startsWith('http') ? url : `${BACKEND_URL}${url}`;
 
-  ];
+  if (isServicesLoading || isSettingsLoading) {
+    return <div className="py-20 text-center text-gray-400">Loading services...</div>;
+  }
 
   return (
     <div className="relative py-10 px-3 overflow-hidden bg-gray-50/40">
 
       <div className="max-w-6xl mx-auto relative z-10">
         <SectionHeader
-          badge="Transform Your Life"
-          title="Vastu, Remedies & Healing"
-          subtitle="Ancient wisdom meets modern solutions for holistic well-being and prosperity"
+          badge={settings?.badge || "Transform Your Life"}
+          title={settings?.title || "Vastu, Remedies & Healing"}
+          subtitle={settings?.subtitle || "Ancient wisdom meets modern solutions for holistic well-being and prosperity"}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
           {services.map((service, index) => {
-            const Icon = service.icon;
+            const Icon = IconMap[service.iconName] || Home;
 
             return (
               <div
-                key={service.id}
+                key={service._id}
                 className={`relative transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'} ${index === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
@@ -91,7 +65,7 @@ const VastuRemediesHealing = () => {
                     <div className="relative h-44 md:h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
                       <div
                         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                        style={{ backgroundImage: `url('${service.bgImage}')` }}
+                        style={{ backgroundImage: `url('${getImg(service.imageUrl)}')` }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
 
@@ -131,7 +105,7 @@ const VastuRemediesHealing = () => {
 
                     {/* Benefits Badges */}
                     <div className="flex flex-wrap justify-center gap-1.5 mb-3 w-full">
-                      {service.benefits.map((benefit, idx) => (
+                      {(service.benefits || []).map((benefit, idx) => (
                         <div key={idx} className="bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wide shadow-sm">
                           {benefit}
                         </div>
@@ -140,7 +114,7 @@ const VastuRemediesHealing = () => {
 
                     {/* Features */}
                     <div className="w-full grid grid-cols-2 gap-1.5 mb-4 text-left">
-                      {service.features.slice(0, 4).map((feature, idx) => (
+                      {(service.features || []).slice(0, 4).map((feature, idx) => (
                         <div key={idx} className="flex items-center gap-1.5 text-[10px] text-[#6D5B4F] ml-6">
                           <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-400/20">
                             <CheckCircle className="w-2 h-2 text-amber-500" strokeWidth={2.5} />

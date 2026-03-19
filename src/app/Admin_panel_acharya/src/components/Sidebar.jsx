@@ -105,6 +105,10 @@ const Sidebar = ({
         { key: "testimonials", icon: <FiMessageCircle />, label: "Testimonials", path: "/admin-acharya/dashboard/content/testimonials" },
 
         { key: "services", icon: <FiGrid />, label: "Service Manager", path: "/admin-acharya/dashboard/content/services" },
+        { key: "popular-pujas", icon: <FiStar />, label: "Popular Pujas", path: "/admin-acharya/dashboard/content/popular-pujas" },
+        { key: "astrologers", icon: <FiStar />, label: "Astrologers Section", path: "/admin-acharya/dashboard/content/astrologers" },
+        { key: "kundli", icon: <FiFileText />, label: "Kundli Services", path: "/admin-acharya/dashboard/content/kundli" },
+        { key: "vastu", icon: <FiHome />, label: "Vastu & Remedies", path: "/admin-acharya/dashboard/content/vastu" },
         { key: "faq", icon: <FiAlertCircle />, label: "FAQ", path: "/admin-acharya/dashboard/content/faq" },
       ]
     },

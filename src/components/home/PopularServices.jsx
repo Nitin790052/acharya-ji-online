@@ -1,32 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Book, Droplets, Star, Users, ArrowRight, Sparkles, Clock, IndianRupee, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SectionHeader from '../common/SectionHeader';
-import grahPravesh from "../../assets/popularServices/GrihaPraveshPuja.webp"
-import LakshmiPuja from "../../assets/popularServices/LakshmiPuja1.webp"
-import NavgrahaShanti from "../../assets/popularServices/NavgrahaShantiPuja.webp"
-import PitruDosh from "../../assets/popularServices/PitruDoshPuja1.webp"
-import Rudrabhishek from "../../assets/popularServices/Rudrabhishek1.webp"
-import satyaNarayankatha from "../../assets/popularServices/satyanarayankatha1.webp"
+import { useGetActivePujasQuery, useGetSettingsQuery } from '../../services/popularPujaApi';
+import { BACKEND_URL } from '../../config/apiConfig';
+
 const RED = '#E8453C';
 
+// Map icon strings to Lucide components
+const iconMap = {
+  Home,
+  Book,
+  Droplets,
+  Star,
+  Users,
+  Sparkles
+};
+
 const PopularPujaServices = () => {
-  const [activeCard, setActiveCard] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => { setTimeout(() => setIsVisible(true), 200); }, []);
+  // RTK Query
+  const { data: pujaServices = [], isLoading: isPujasLoading } = useGetActivePujasQuery(undefined, { pollingInterval: 3000 });
+  const { data: settings, isLoading: isSettingsLoading } = useGetSettingsQuery(undefined, { pollingInterval: 3000 });
 
-  const pujaServices = [
-    { id: 1, icon: Home, name: 'Griha Pravesh', description: 'Invoke divine blessings for your new home', duration: '2-3 hrs', price: '₹5,100', popular: true, Image: grahPravesh },
-    { id: 2, icon: Book, name: 'Satyanarayan Katha', description: 'Sacred storytelling for prosperity and harmony', duration: '1.5-2 hrs', price: '₹3,100', popular: true, Image: satyaNarayankatha },
-    { id: 3, icon: Droplets, name: 'Rudrabhishek', description: 'Sacred bathing ritual of Lord Shiva for peace', duration: '1-1.5 hrs', price: '₹2,100', popular: true, Image: Rudrabhishek },
-    { id: 4, icon: Star, name: 'Navgraha Shanti', description: 'Planetary peace ritual to harmonize influences', duration: '2-2.5 hrs', price: '₹4,100', popular: false, Image: NavgrahaShanti },
-    { id: 5, icon: Users, name: 'Pitru Dosh Puja', description: 'Ancestral peace ritual for family harmony', duration: '2-3 hrs', price: '₹5,500', popular: false, Image: PitruDosh },
-    { id: 6, icon: Sparkles, name: 'Lakshmi Puja', description: 'Invoke goddess of wealth for abundance', duration: '1.5-2 hrs', price: '₹3,500', popular: false, Image: LakshmiPuja },
-  ];
+  useEffect(() => { setTimeout(() => setIsVisible(true), 200); }, []);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % pujaServices.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + pujaServices.length) % pujaServices.length);
+
+  if (isPujasLoading || isSettingsLoading) {
+      return <div className="py-20 text-center">Loading popular pujas...</div>;
+  }
 
   return (
     <div className="relative py-10 px-3 sm:px-4 overflow-hidden bg-white">
@@ -39,19 +45,21 @@ const PopularPujaServices = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <SectionHeader
-          badge="Most Booked Services"
-          title="Popular Puja Services"
-          subtitle="Traditional rituals performed by experienced priests with authentic Vedic mantras"
+          badge={settings?.badge || ''}
+          title={settings?.title || ''}
+          subtitle={settings?.subtitle || ''}
         />
 
         {/* Desktop Grid */}
-        <div
-          className="hidden lg:grid lg:grid-cols-3 gap-6 md:gap-8 mb-8"
-        >
+        <div className="hidden lg:grid lg:grid-cols-3 gap-6 md:gap-8 mb-8">
           {pujaServices.map((puja, index) => {
-            const Icon = puja.icon;
+            const Icon = iconMap[puja.iconName] || Star;
+            const imageUrl = puja.imageUrl.startsWith('http') 
+              ? puja.imageUrl 
+              : `${BACKEND_URL}${puja.imageUrl}`;
+
             return (
-              <div key={puja.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.15}s`, animationFillMode: 'both' }}>
+              <div key={puja._id} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.15}s`, animationFillMode: 'both' }}>
                 <div className="relative block h-full bg-[#FFFCF5] rounded-3xl overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/50 shadow-sm hover:shadow-[0_22px_50px_-12px_rgba(255,193,7,0.25)] transition-all duration-500 group">
                   {puja.popular && (
                     <div className="absolute top-4 right-4 z-20">
@@ -62,9 +70,9 @@ const PopularPujaServices = () => {
                   {/* Decorative Header Area with Inset Image */}
                   <div className="relative p-3 pb-0">
                     <div className="relative h-44 md:h-52 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
-                      {puja.Image && (
+                      {puja.imageUrl && (
                         <img
-                          src={puja.Image}
+                          src={imageUrl}
                           alt={puja.name}
                           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                           loading="lazy"
@@ -133,9 +141,13 @@ const PopularPujaServices = () => {
           <div className="overflow-hidden">
             <div className="flex transition-transform duration-300 ease-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {pujaServices.map((puja) => {
-                const Icon = puja.icon;
+                const Icon = iconMap[puja.iconName] || Star;
+                const imageUrl = puja.imageUrl.startsWith('http') 
+                  ? puja.imageUrl 
+                  : `${BACKEND_URL}${puja.imageUrl}`;
+
                 return (
-                  <div key={puja.id} className="w-full flex-shrink-0 px-3">
+                  <div key={puja._id} className="w-full flex-shrink-0 px-3">
                     <div className="relative block h-full bg-[#FFFCF5] rounded-3xl overflow-hidden border-2 border-[#FFC107]/20 hover:border-[#FFC107]/50 shadow-sm transition-all duration-500 group">
 
                       {puja.popular && (
@@ -147,9 +159,9 @@ const PopularPujaServices = () => {
                       {/* Decorative Header Area with Inset Image */}
                       <div className="relative p-3 pb-0">
                         <div className="relative h-44 rounded-2xl overflow-hidden shadow-md bg-[#2A1D13]">
-                          {puja.Image && (
+                          {puja.imageUrl && (
                             <img
-                              src={puja.Image}
+                              src={imageUrl}
                               alt={puja.name}
                               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                               loading="lazy"
@@ -206,26 +218,32 @@ const PopularPujaServices = () => {
             </div>
           </div>
 
-          <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all z-10 hover:opacity-90 border border-[#FFC107]/20">
-            <ChevronLeft className="w-5 h-5 text-[#E8453C]" />
-          </button>
-          <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all z-10 hover:opacity-90 border border-[#FFC107]/20">
-            <ChevronRight className="w-5 h-5 text-[#E8453C]" />
-          </button>
-          <div className="flex justify-center gap-1.5 mt-4">
-            {[...Array(pujaServices.length)].map((_, idx) => (
-              <button key={idx} onClick={() => setCurrentSlide(idx)} className="h-1.5 rounded-full transition-all duration-300" style={{ backgroundColor: RED, width: idx === currentSlide ? '1.5rem' : '0.375rem', opacity: idx === currentSlide ? 1 : 0.3 }} />
-            ))}
-          </div>
+          {pujaServices.length > 1 && (
+            <>
+              <button onClick={prevSlide} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all z-10 hover:opacity-90 border border-[#FFC107]/20">
+                <ChevronLeft className="w-5 h-5 text-[#E8453C]" />
+              </button>
+              <button onClick={nextSlide} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all z-10 hover:opacity-90 border border-[#FFC107]/20">
+                <ChevronRight className="w-5 h-5 text-[#E8453C]" />
+              </button>
+              <div className="flex justify-center gap-1.5 mt-4">
+                {[...Array(pujaServices.length)].map((_, idx) => (
+                  <button key={idx} onClick={() => setCurrentSlide(idx)} className="h-1.5 rounded-full transition-all duration-300" style={{ backgroundColor: RED, width: idx === currentSlide ? '1.5rem' : '0.375rem', opacity: idx === currentSlide ? 1 : 0.3 }} />
+                ))}
+            </div>
+            </>
+          )}
         </div>
 
         {/* Bottom CTA */}
-        <div className={`text-center mt-10 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <button className="group inline-flex items-center gap-2 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs shadow-[0_8px_25px_rgba(232,69,60,0.3)] hover:shadow-lg transition-all duration-300 hover:opacity-90 hover:-translate-y-1" style={{ backgroundColor: RED }}>
-            View All Puja Services
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-          </button>
-        </div>
+        {settings?.buttonText && (
+          <div className={`text-center mt-10 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <Link to={settings.buttonLink || '/pujaServices'} className="group inline-flex items-center gap-2 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs shadow-[0_8px_25px_rgba(232,69,60,0.3)] hover:shadow-lg transition-all duration-300 hover:opacity-90 hover:-translate-y-1" style={{ backgroundColor: RED }}>
+              {settings.buttonText}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

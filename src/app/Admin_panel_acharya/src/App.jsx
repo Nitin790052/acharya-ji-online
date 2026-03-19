@@ -15,6 +15,10 @@ import NavbarManager from "./pages/content/NavbarManager";
 import CarouselManager from "./pages/content/CarouselManager";
 import AboutUsManager from "./pages/content/AboutUsManager";
 import ServiceManager from "./pages/content/ServiceManager";
+import PopularPujaManager from "./pages/content/PopularPujaManager";
+import AstrologerManager from "./pages/content/AstrologerManager";
+import KundliManager from "./pages/content/KundliManager";
+import VastuManager from "./pages/content/VastuManager";
 
 function AdminApp() {
   return (
@@ -49,6 +53,10 @@ function AdminApp() {
           <Route path="content/carousels" element={<CarouselManager />} />
           <Route path="content/about-us" element={<AboutUsManager />} />
           <Route path="content/services" element={<ServiceManager />} />
+          <Route path="content/popular-pujas" element={<PopularPujaManager />} />
+          <Route path="content/astrologers" element={<AstrologerManager />} />
+          <Route path="content/kundli" element={<KundliManager />} />
+          <Route path="content/vastu" element={<VastuManager />} />
           <Route path="content/faq" element={<PagePlaceholder title="FAQ Management" />} />
           <Route path="seo/settings" element={<PagePlaceholder title="SEO Settings" />} />
           <Route path="seo/meta" element={<PagePlaceholder title="Meta Tags Management" />} />
