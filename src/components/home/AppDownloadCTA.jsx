@@ -2,25 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Smartphone, Download, Star, Zap, Shield, Clock, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
 
+import { useGetAppDownloadSettingsQuery } from '../../services/appDownloadApi';
+
 const AppDownloadCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { data: settings, isLoading } = useGetAppDownloadSettingsQuery();
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 150);
   }, []);
 
-  const features = [
-    { icon: Zap, text: 'Instant Booking' },
-    { icon: Clock, text: '24/7 Support' },
-    { icon: Shield, text: 'Secure Payments' },
-    { icon: Star, text: 'Expert Pandits' }
-  ];
+  const iconMap = { Zap, Clock, Shield, Star, Smartphone, Download, ArrowRight, Sparkles, CheckCircle };
 
-  const stats = [
-    { number: '50K+', label: 'Downloads' },
-    { number: '4.8★', label: 'App Rating' },
-    { number: '10K+', label: 'Reviews' }
-  ];
+  if (isLoading || !settings) return null;
 
   return (
     <div className="relative py-8 px-3 overflow-hidden bg-gradient-to-br from-[#E8453C] via-[#ff5b52] to-[#ff8c85]">
@@ -44,9 +38,9 @@ const AppDownloadCTA = () => {
           {/* Left Content */}
           <div className={`transition-all duration-800 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
             <SectionHeader
-              badge="Download Our App Now"
-              title="Book Puja Anytime, Anywhere"
-              subtitle="Experience divine services at your fingertips. Book pandits and consultations with ease."
+              badge={settings.badge}
+              title={settings.title}
+              subtitle={settings.subtitle}
               light={true}
               compact={true}
               className="text-left mb-5"
@@ -54,8 +48,8 @@ const AppDownloadCTA = () => {
 
             {/* Features Grid - Glassmorphism */}
             <div className="grid grid-cols-2 gap-3 mb-5">
-              {features.map((feature, index) => {
-                const Icon = feature.icon;
+              {settings.features.map((feature, index) => {
+                const Icon = iconMap[feature.icon] || Zap;
                 return (
                   <div
                     key={index}
@@ -72,14 +66,14 @@ const AppDownloadCTA = () => {
 
             {/* App Store Buttons - Compact */}
             <div className="flex flex-wrap gap-3 mb-5">
-              <a href="#" className="flex items-center gap-2.5 bg-black hover:bg-gray-900 text-white px-5 py-2.5 rounded-xl transition-all duration-300 hover:scale-[1.03] shadow-lg border border-white/10">
+              <a href={settings.googlePlayUrl} className="flex items-center gap-2.5 bg-black hover:bg-gray-900 text-white px-5 py-2.5 rounded-xl transition-all duration-300 hover:scale-[1.03] shadow-lg border border-white/10">
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" /></svg>
                 <div className="text-left">
                   <div className="text-[10px] opacity-70">GET IT ON</div>
                   <div className="text-sm font-bold leading-tight">Google Play</div>
                 </div>
               </a>
-              <a href="#" className="flex items-center gap-2.5 bg-black hover:bg-gray-900 text-white px-5 py-2.5 rounded-xl transition-all duration-300 hover:scale-[1.03] shadow-lg border border-white/10">
+              <a href={settings.appStoreUrl} className="flex items-center gap-2.5 bg-black hover:bg-gray-900 text-white px-5 py-2.5 rounded-xl transition-all duration-300 hover:scale-[1.03] shadow-lg border border-white/10">
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z" /></svg>
                 <div className="text-left">
                   <div className="text-[10px] opacity-70">Download on the</div>
@@ -90,7 +84,7 @@ const AppDownloadCTA = () => {
 
             {/* Stats - Horizontal */}
             <div className="flex gap-6 border-t border-white/10 pt-4">
-              {stats.map((stat, index) => (
+              {settings.stats.map((stat, index) => (
                 <div key={index}>
                   <div className="text-xl font-black text-white">{stat.number}</div>
                   <div className="text-[10px] text-white/70 uppercase tracking-widest">{stat.label}</div>
@@ -168,11 +162,11 @@ const AppDownloadCTA = () => {
               <Smartphone className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 text-left md:text-center">
-              <h3 className="text-lg font-bold">Special App-Only Offer!</h3>
-              <p className="text-white/80 text-xs font-medium">Get <span className="text-yellow-300 font-black px-1.5 py-0.5 rounded bg-white/10">₹100 OFF</span> on your first booking through the app</p>
+              <h3 className="text-lg font-bold">{settings.offerTitle}</h3>
+              <p className="text-white/80 text-xs font-medium">{settings.offerDescription}</p>
             </div>
             <button className="bg-white text-[#E8453C] px-6 py-2.5 rounded-xl font-bold text-sm shadow-xl hover:shadow-white/20 hover:scale-105 transition-all flex items-center gap-1.5">
-              Get App Now
+              {settings.offerButtonText}
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

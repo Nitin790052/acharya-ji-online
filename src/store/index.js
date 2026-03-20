@@ -7,6 +7,11 @@ import { popularPujaApi } from '../services/popularPujaApi';
 import { astrologerApi } from '../services/astrologerApi';
 import { kundliApi } from '../services/kundliApi';
 import { vastuApi } from '../services/vastuApi';
+import { testimonialApi } from '../services/testimonialApi';
+import { blogApi } from '../services/blogApi';
+import { appDownloadApi } from '../services/appDownloadApi';
+import { faqApi } from '../services/faqApi';
+import { footerApi } from '../services/footerApi';
 
 export const store = configureStore({
     reducer: {
@@ -18,6 +23,11 @@ export const store = configureStore({
         [astrologerApi.reducerPath]: astrologerApi.reducer,
         [kundliApi.reducerPath]: kundliApi.reducer,
         [vastuApi.reducerPath]: vastuApi.reducer,
+        [testimonialApi.reducerPath]: testimonialApi.reducer,
+        [blogApi.reducerPath]: blogApi.reducer,
+        [appDownloadApi.reducerPath]: appDownloadApi.reducer,
+        [faqApi.reducerPath]: faqApi.reducer,
+        [footerApi.reducerPath]: footerApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -28,6 +38,11 @@ export const store = configureStore({
             popularPujaApi.middleware,
             astrologerApi.middleware,
             kundliApi.middleware,
-            vastuApi.middleware
+            vastuApi.middleware,
+            testimonialApi.middleware,
+            blogApi.middleware,
+            appDownloadApi.middleware,
+            faqApi.middleware,
+            footerApi.middleware
         ),
 });

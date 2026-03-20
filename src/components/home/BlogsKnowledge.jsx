@@ -10,87 +10,36 @@ import Meditation_Techniques_Ancient_to_Modern from "../../assets/blogs/Meditati
 import Navgraha_Shanti_Planetary_Harmony from "../../assets/blogs/Navgraha Shanti_ Planetary Harmony.webp"
 import Vastu_Shastra_Modern_Applications from "../../assets/blogs/Vastu Shastra_ Modern Applications.webp"
 
+import { useGetActiveBlogsQuery, useGetBlogSettingsQuery } from '../../services/blogApi';
+import { BACKEND_URL } from '../../config/apiConfig';
+
 const BlogsKnowledge = () => {
-  const blogs = [
-    {
-      id: 1,
-      title: 'Astrology vs Horoscope: Complete Guide',
-      excerpt: 'A comprehensive analysis distinguishing Vedic astrology from Western horoscope predictions with scientific perspectives.',
-      category: 'Astrology Knowledge',
-      readTime: '6 min',
-      date: 'Jan 12, 2026',
-      author: 'Dr. Priya Mishra',
-      image: Astrology_vs_Horoscope_Complete_Guide,
-      url: '/blog/astrology-vs-horoscope',
-      rating: 4.9
-    },
-    {
-      id: 2,
-      title: 'Griha Pravesh Puja: Ultimate Guide',
-      excerpt: 'Step-by-step guide to performing house warming ceremonies with authentic rituals and modern adaptations.',
-      category: 'Puja Masterclass',
-      readTime: '8 min',
-      date: 'Jan 14, 2026',
-      author: 'Acharya Vikram',
-      image: Griha_Pravesh_Puja_Ultimate_Guide,
-      url: '/blog/griha-pravesh-puja',
-      rating: 4.8
-    },
-    {
-      id: 3,
-      title: 'Navgraha Shanti: Planetary Harmony',
-      excerpt: 'Deep dive into nine planetary influences and powerful remedies for balancing cosmic energies in daily life.',
-      category: 'Advanced Rituals',
-      readTime: '7 min',
-      date: 'Jan 08, 2026',
-      Pandit: 'Suresh',
-      image: Navgraha_Shanti_Planetary_Harmony,
-      url: '/blog/navgraha-shanti-puja',
-      rating: 4.9
-    },
-    {
-      id: 4,
-      title: 'Vastu Shastra: Modern Applications',
-      excerpt: 'Integrating ancient architectural science with contemporary living spaces for enhanced prosperity and wellbeing.',
-      category: 'Vastu Science',
-      readTime: '9 min',
-      date: 'Jan 05, 2026',
-      image: Vastu_Shastra_Modern_Applications,
-      url: '/blog/vastu-shastra',
-      rating: 4.7
-    },
-    {
-      id: 5,
-      title: 'Gemstones: Celestial Healing',
-      excerpt: 'Scientific exploration of gemstones and their profound impact on physical, emotional, and spiritual wellbeing.',
-      category: 'Healing Remedies',
-      readTime: '7 min',
-      date: 'Jan 03, 2026',
-      image: Gemstones_Celestial_Healing,
-      url: '/blog/gemstones-powers',
-      rating: 4.8
-    },
-    {
-      id: 6,
-      title: 'Meditation Techniques: Ancient to Modern',
-      excerpt: 'Blending traditional meditation practices with neuroscience-backed techniques for optimal mental clarity.',
-      category: 'Mind & Spirit',
-      readTime: '5 min',
-      date: 'Jan 18, 2026',
-      image: Meditation_Techniques_Ancient_to_Modern,
-      url: '/blog/meditation-techniques',
-      rating: 4.9
-    }
-  ];
+  const { data: blogs = [], isLoading } = useGetActiveBlogsQuery(undefined, { pollingInterval: 5000 });
+  const { data: settings } = useGetBlogSettingsQuery();
+
+  const getImg = (url) => !url ? '' : url.startsWith('http') ? url : `${BACKEND_URL}${url}`;
+
+  const categoryIcons = {
+    'Astrology Knowledge': Sparkles,
+    'Puja Masterclass': Tag,
+    'Advanced Rituals': Star,
+    'Vastu Science': TrendingUp,
+    'Healing Remedies': Zap,
+    'Mind & Spirit': BookOpen
+  };
 
   const categories = [
-    { name: 'All Articles', count: 156, icon: BookOpen, color: 'from-purple-400 to-pink-400', bg: 'bg-purple-50' },
-    { name: 'Astrology', count: 42, icon: Sparkles, color: 'from-blue-400 to-indigo-400', bg: 'bg-blue-50' },
-    { name: 'Puja Guide', count: 38, icon: Tag, color: 'from-amber-400 to-orange-400', bg: 'bg-amber-50' },
-    { name: 'Vastu', count: 28, icon: TrendingUp, color: 'from-emerald-400 to-green-400', bg: 'bg-emerald-50' },
-    { name: 'Remedies', count: 32, icon: Zap, color: 'from-rose-400 to-pink-400', bg: 'bg-rose-50' },
-    { name: 'Spiritual', count: 16, icon: Star, color: 'from-indigo-400 to-purple-400', bg: 'bg-indigo-50' }
+    { name: 'All Articles', count: blogs.length, icon: BookOpen, bg: 'bg-purple-50' },
+    ...Array.from(new Set(blogs.map(b => b.category))).map(cat => ({
+      name: cat,
+      count: blogs.filter(b => b.category === cat).length,
+      icon: categoryIcons[cat] || Zap,
+      bg: 'bg-orange-50'
+    }))
   ];
+
+  if (isLoading && blogs.length === 0) return null;
+
 
   return (
     <section className="relative py-12 md:py-16 px-4 sm:px-6 overflow-hidden bg-gray-50/40">
@@ -105,9 +54,9 @@ const BlogsKnowledge = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <SectionHeader
-          badge="Knowledge Hub"
-          title="Discover Ancient Wisdom for Modern Life"
-          subtitle="Curated spiritual knowledge blending timeless traditions with contemporary insights"
+          badge={settings?.badge || "Knowledge Hub"}
+          title={settings?.title || "Discover Ancient Wisdom for Modern Life"}
+          subtitle={settings?.subtitle || "Curated spiritual knowledge blending timeless traditions with contemporary insights"}
         />
 
         {/* Featured Blogs Grid */}
@@ -115,14 +64,14 @@ const BlogsKnowledge = () => {
           {blogs.map((blog, index) => (
             <Link
                 to={blog.url}
-                key={blog.id} 
+                key={blog._id} 
                 className="group relative flex flex-col h-full rounded-2xl bg-white border border-slate-100 hover:border-orange-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl overflow-hidden animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
             >
                 {/* IMAGE */}
                 <div className="relative h-48 overflow-hidden">
                     <img
-                        src={blog.image}
+                        src={getImg(blog.imageUrl)}
                         alt={blog.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"

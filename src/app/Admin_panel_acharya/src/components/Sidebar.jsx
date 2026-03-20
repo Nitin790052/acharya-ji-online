@@ -26,6 +26,9 @@ import {
   FiRefreshCw,
   FiBookOpen,
   FiMessageCircle,
+  FiDownload,
+  FiHelpCircle,
+  FiLayout,
   FiMail,
   FiBell,
   FiAlertCircle,
@@ -33,7 +36,6 @@ import {
   FiImage,
   FiTrendingUp,
   FiPieChart,
-  FiDownload,
   FiSend,
   FiLock,
   FiShield,
@@ -96,20 +98,22 @@ const Sidebar = ({
     { key: "dashboard", icon: <FiHome />, label: "Dashboard", path: "/admin-acharya/dashboard", end: true },
 
     {
-      key: "website-content", icon: <FiFileText />, label: "Website Content",
+      key: "website-content", icon: <FiFileText />, label: "Home Page Content",
       children: [
         { key: "navbar", icon: <FiAlertCircle />, label: "Navbar", path: "/admin-acharya/dashboard/content/navbar" },
         { key: "carousels", icon: <FiImage />, label: "Carousels", path: "/admin-acharya/dashboard/content/carousels" },
         { key: "about us", icon: <FiUser />, label: "About Us", path: "/admin-acharya/dashboard/content/about-us" },
         { key: "blogs", icon: <FiBookOpen />, label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
         { key: "testimonials", icon: <FiMessageCircle />, label: "Testimonials", path: "/admin-acharya/dashboard/content/testimonials" },
+        { key: "app-download", icon: <FiDownload />, label: "App Download", path: "/admin-acharya/dashboard/content/app-download" },
+        { key: "faq", icon: <FiHelpCircle />, label: "FAQ Management", path: "/admin-acharya/dashboard/content/faq" },
+        { key: "footer", icon: <FiLayout />, label: "Footer Management", path: "/admin-acharya/dashboard/content/footer" },
 
         { key: "services", icon: <FiGrid />, label: "Service Manager", path: "/admin-acharya/dashboard/content/services" },
         { key: "popular-pujas", icon: <FiStar />, label: "Popular Pujas", path: "/admin-acharya/dashboard/content/popular-pujas" },
         { key: "astrologers", icon: <FiStar />, label: "Astrologers Section", path: "/admin-acharya/dashboard/content/astrologers" },
         { key: "kundli", icon: <FiFileText />, label: "Kundli Services", path: "/admin-acharya/dashboard/content/kundli" },
         { key: "vastu", icon: <FiHome />, label: "Vastu & Remedies", path: "/admin-acharya/dashboard/content/vastu" },
-        { key: "faq", icon: <FiAlertCircle />, label: "FAQ", path: "/admin-acharya/dashboard/content/faq" },
       ]
     },
 
@@ -367,7 +371,7 @@ const Sidebar = ({
               ${isMobile ? 'gap-3' : (isCollapsed ? 'justify-center' : 'gap-3')}
               px-3 py-2.5 text-sm rounded-xl
               text-gray-700 hover:text-white
-              hover:bg-gradient-to-r hover:from-rose-500 hover:to-pink-500
+              hover:bg-linear-to-r hover:from-rose-500 hover:to-pink-500
               transition-all duration-200 hover:shadow-md
               group
             `}

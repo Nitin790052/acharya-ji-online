@@ -1,42 +1,20 @@
 import { useState } from "react";
 import { HelpCircle, Minus, Plus } from "lucide-react";
 import SectionHeader from '../common/SectionHeader';
-
-const faqs = [
-  {
-    q: "How do I book a puja service?",
-    a: "You can book a puja service through our website by selecting the type of puja, choosing a date/time, and making the payment. Our team will verify and assign an experienced priest."
-  },
-  {
-    q: "Are your priests verified and experienced?",
-    a: "Absolutely. All our priests undergo a thorough verification process including background checks and Vedic knowledge assessment to ensure authentic rituals."
-  },
-  {
-    q: "How does the online puja work?",
-    a: "The puja is conducted via secure video call where our priests perform rituals at our sacred facility. You can witness the entire ceremony live and participate from home."
-  },
-  {
-    q: "Will I receive prasad for online pujas?",
-    a: "Yes, we courier the blessed prasad to your address within 3-5 business days after the puja completion, packed hygienically and with divine care."
-  },
-  {
-    q: "What payment methods do you accept?",
-    a: "We accept all major payment methods including credit/debit cards, UPI, net banking, and digital wallets. All transactions are 100% secure and encrypted."
-  },
-  {
-    q: "Can I consult with a priest before booking?",
-    a: "Yes! We offer free 15-minute consultations with our experienced priests to help you choose the right puja and understand the auspicious timings."
-  }
-];
+import { useGetActiveFAQsQuery, useGetFAQSettingsQuery } from '../../services/faqApi';
 
 const RED = '#E8453C';
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
+  const { data: faqs = [], isLoading } = useGetActiveFAQsQuery();
+  const { data: settings } = useGetFAQSettingsQuery();
 
   const toggleFAQ = (idx) => {
     setOpenIndex(openIndex === idx ? null : idx);
   };
+
+  if (isLoading && faqs.length === 0) return null;
 
   return (
     <section className="py-12 bg-white relative overflow-hidden">
@@ -51,9 +29,9 @@ export function FAQ() {
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         {/* Simplified Centered Header */}
         <SectionHeader
-          badge="Common Questions"
-          title="Frequently Asked Questions"
-          subtitle="Quick solutions to common queries about our divine services and process"
+          badge={settings?.badge || "Common Questions"}
+          title={settings?.title || "Frequently Asked Questions"}
+          subtitle={settings?.subtitle || "Quick solutions to common queries about our divine services and process"}
         />
 
         {/* Compact 2-Column FAQ Grid */}
@@ -61,7 +39,7 @@ export function FAQ() {
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={idx} className="group">
+              <div key={faq._id || idx} className="group">
                 <div className={`rounded-xl border transition-all duration-300 ${isOpen ? 'shadow-lg' : 'hover:shadow-md'}`}
                   style={{ borderColor: isOpen ? RED : '#f3f4f6', backgroundColor: 'white' }}>
                   <button
@@ -69,7 +47,7 @@ export function FAQ() {
                     className="w-full p-4 text-left flex items-center justify-between gap-4"
                   >
                     <span className={`text-sm font-bold transition-colors ${isOpen ? '' : 'text-gray-800'}`} style={isOpen ? { color: RED } : {}}>
-                      {faq.q}
+                      {faq.question}
                     </span>
                     <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all ${isOpen ? 'text-white' : 'bg-gray-200 text-gray-500'}`}
                       style={isOpen ? { backgroundColor: RED } : {}}>
@@ -82,7 +60,7 @@ export function FAQ() {
                       }`}
                   >
                     <div className="px-4 pb-4 text-xs text-gray-600 leading-relaxed border-t border-gray-50 pt-3">
-                      {faq.a}
+                      {faq.answer}
                     </div>
                   </div>
                 </div>
@@ -95,7 +73,7 @@ export function FAQ() {
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500 flex items-center justify-center gap-1.5">
             <HelpCircle className="w-3.5 h-3.5" style={{ color: RED }} />
-            Still have questions? <span className="font-bold underline cursor-pointer hover:opacity-80 transition-opacity" style={{ color: RED }}>Contact our support team</span>
+            {settings?.ctaText || "Still have questions? "} <a href={settings?.ctaLink || "#"} className="font-bold underline cursor-pointer hover:opacity-80 transition-opacity" style={{ color: RED }}>{settings?.ctaLinkText || "Contact our support team"}</a>
           </p>
         </div>
       </div>

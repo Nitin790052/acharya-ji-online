@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Star, Quote, ChevronLeft, ChevronRight, Sparkles, MapPin, Award, ThumbsUp, CheckCircle, Calendar, Phone, Users, TrendingUp, Shield, Clock, MessageCircle } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
 
+import { useGetActiveTestimonialsQuery, useGetTestimonialSettingsQuery } from '../../services/testimonialApi';
+import { BACKEND_URL } from '../../config/apiConfig';
+
 const Testimonials = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { data: testimonials = [], isLoading } = useGetActiveTestimonialsQuery(undefined, { pollingInterval: 5000 });
+  const { data: settings } = useGetTestimonialSettingsQuery();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -18,80 +23,9 @@ const Testimonials = () => {
     };
   }, []);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: 'Priya Sharma',
-      city: 'Mumbai',
-      rating: 5,
-      feedback: 'The Griha Pravesh puja was performed beautifully. The pandit ji was very knowledgeable and explained everything clearly. Highly recommended!',
-      service: 'Griha Pravesh Puja',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=face',
-      designation: 'Homeowner',
-      date: '2 weeks ago',
-      readTime: '2 min'
-    },
-    {
-      id: 2,
-      name: 'Rajesh Kumar',
-      city: 'Delhi',
-      rating: 5,
-      feedback: 'Excellent astrology consultation! The predictions were spot on and the remedies suggested really worked for my career growth.',
-      service: 'Astrology Consultation',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=face',
-      designation: 'Professional',
-      date: '3 weeks ago',
-      readTime: '3 min'
-    },
-    {
-      id: 3,
-      name: 'Anita Desai',
-      city: 'Bangalore',
-      rating: 5,
-      feedback: 'Amazing Vastu consultation for our new office. Within 3 months we saw significant improvement in business.',
-      service: 'Office Vastu',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&crop=face',
-      designation: 'Entrepreneur',
-      date: '1 month ago',
-      readTime: '4 min'
-    },
-    {
-      id: 4,
-      name: 'Vikram Singh',
-      city: 'Jaipur',
-      rating: 5,
-      feedback: 'The kundli matching service was very detailed and accurate. It helped us make the right decision for our son\'s marriage.',
-      service: 'Kundli Matching',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=face',
-      designation: 'Parent',
-      date: '2 weeks ago',
-      readTime: '5 min'
-    },
-    {
-      id: 5,
-      name: 'Meera Patel',
-      city: 'Ahmedabad',
-      rating: 5,
-      feedback: 'Very professional service. The Satyanarayan Katha was performed with complete authenticity. All family members were satisfied.',
-      service: 'Satyanarayan Katha',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=face',
-      designation: 'Homemaker',
-      date: '3 days ago',
-      readTime: '3 min'
-    },
-    {
-      id: 6,
-      name: 'Amit Verma',
-      city: 'Pune',
-      rating: 5,
-      feedback: 'The gemstone recommendation was perfect for my Rashi. Noticed positive changes within weeks. Great consultation!',
-      service: 'Gemstone Consultation',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face',
-      designation: 'Executive',
-      date: '1 week ago',
-      readTime: '4 min'
-    }
-  ];
+  const getImg = (url) => !url ? '' : url.startsWith('http') ? url : `${BACKEND_URL}${url}`;
+
+  if (isLoading && testimonials.length === 0) return null;
 
   return (
     <div className="relative py-12 md:py-16 px-4 bg-white overflow-hidden">
@@ -110,9 +44,9 @@ const Testimonials = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <SectionHeader
-          badge="Testimonials"
-          title="What Our Clients Say"
-          subtitle="Real experiences from people who have transformed their lives with our spiritual services"
+          badge={settings?.badge || "Testimonials"}
+          title={settings?.title || "What Our Clients Say"}
+          subtitle={settings?.subtitle || "Real experiences from people who have transformed their lives with our spiritual services"}
         />
 
         {/* Stats Row - Compact Style */}
@@ -166,7 +100,7 @@ const Testimonials = () => {
                         <div className="flex items-center gap-4 pt-4 border-t border-slate-100">
                             <div className="relative">
                                 <img
-                                    src={testimonial.image}
+                                    src={getImg(testimonial.imageUrl)}
                                     alt={testimonial.name}
                                     className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm transition-transform group-hover:scale-110"
                                 />

@@ -19,6 +19,11 @@ import PopularPujaManager from "./pages/content/PopularPujaManager";
 import AstrologerManager from "./pages/content/AstrologerManager";
 import KundliManager from "./pages/content/KundliManager";
 import VastuManager from "./pages/content/VastuManager";
+import TestimonialManager from "./pages/content/TestimonialManager";
+import BlogManager from "./pages/content/BlogManager";
+import AppDownloadManager from "./pages/content/AppDownloadManager";
+import FAQManager from "./pages/content/FAQManager";
+import FooterManager from "./pages/content/FooterManager";
 
 function AdminApp() {
   return (
@@ -48,8 +53,9 @@ function AdminApp() {
           <Route path="vendors/approved" element={<PagePlaceholder title="Approved Vendors" />} />
           <Route path="vendors/earnings" element={<PagePlaceholder title="Vendor Earnings" />} />
           <Route path="content/navbar" element={<NavbarManager />} />
-          <Route path="content/blogs" element={<PagePlaceholder title="Blogs Management" />} />
-          <Route path="content/testimonials" element={<PagePlaceholder title="Testimonials" />} />
+          <Route path="content/blogs" element={<BlogManager />} />
+          <Route path="content/testimonials" element={<TestimonialManager />} />
+          <Route path="content/app-download" element={<AppDownloadManager />} />
           <Route path="content/carousels" element={<CarouselManager />} />
           <Route path="content/about-us" element={<AboutUsManager />} />
           <Route path="content/services" element={<ServiceManager />} />
@@ -57,7 +63,8 @@ function AdminApp() {
           <Route path="content/astrologers" element={<AstrologerManager />} />
           <Route path="content/kundli" element={<KundliManager />} />
           <Route path="content/vastu" element={<VastuManager />} />
-          <Route path="content/faq" element={<PagePlaceholder title="FAQ Management" />} />
+          <Route path="content/faq" element={<FAQManager />} />
+          <Route path="content/footer" element={<FooterManager />} />
           <Route path="seo/settings" element={<PagePlaceholder title="SEO Settings" />} />
           <Route path="seo/meta" element={<PagePlaceholder title="Meta Tags Management" />} />
           <Route path="admin/staff" element={<PagePlaceholder title="Staff Management" />} />
