@@ -98,22 +98,34 @@ const Sidebar = ({
     { key: "dashboard", icon: <FiHome />, label: "Dashboard", path: "/admin-acharya/dashboard", end: true },
 
     {
-      key: "website-content", icon: <FiFileText />, label: "Home Page Content",
+      key: "home-content", icon: <FiFileText />, label: "Home Page Content",
       children: [
         { key: "navbar", icon: <FiAlertCircle />, label: "Navbar", path: "/admin-acharya/dashboard/content/navbar" },
         { key: "carousels", icon: <FiImage />, label: "Carousels", path: "/admin-acharya/dashboard/content/carousels" },
-        { key: "about us", icon: <FiUser />, label: "About Us", path: "/admin-acharya/dashboard/content/about-us" },
+        { key: "hero-banner", icon: <FiImage />, label: "Hero Banners", path: "/admin-acharya/dashboard/content/hero-banner" },
+        { key: "about-us", icon: <FiFileText />, label: "About Section", path: "/admin-acharya/dashboard/content/about-us" },
         { key: "blogs", icon: <FiBookOpen />, label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
-        { key: "testimonials", icon: <FiMessageCircle />, label: "Testimonials", path: "/admin-acharya/dashboard/content/testimonials" },
-        { key: "app-download", icon: <FiDownload />, label: "App Download", path: "/admin-acharya/dashboard/content/app-download" },
-        { key: "faq", icon: <FiHelpCircle />, label: "FAQ Management", path: "/admin-acharya/dashboard/content/faq" },
-        { key: "footer", icon: <FiLayout />, label: "Footer Management", path: "/admin-acharya/dashboard/content/footer" },
-
         { key: "services", icon: <FiGrid />, label: "Service Manager", path: "/admin-acharya/dashboard/content/services" },
         { key: "popular-pujas", icon: <FiStar />, label: "Popular Pujas", path: "/admin-acharya/dashboard/content/popular-pujas" },
         { key: "astrologers", icon: <FiStar />, label: "Astrologers Section", path: "/admin-acharya/dashboard/content/astrologers" },
         { key: "kundli", icon: <FiFileText />, label: "Kundli Services", path: "/admin-acharya/dashboard/content/kundli" },
         { key: "vastu", icon: <FiHome />, label: "Vastu & Remedies", path: "/admin-acharya/dashboard/content/vastu" },
+        { key: "testimonials", icon: <FiMessageCircle />, label: "Testimonials", path: "/admin-acharya/dashboard/content/testimonials" },
+        { key: "app-download", icon: <FiDownload />, label: "App Download", path: "/admin-acharya/dashboard/content/app-download" },
+        { key: "faq", icon: <FiHelpCircle />, label: "FAQ Management", path: "/admin-acharya/dashboard/content/faq" },
+        { key: "footer", icon: <FiLayout />, label: "Footer Management", path: "/admin-acharya/dashboard/content/footer" },
+      ]
+    },
+    {
+      key: "about-content", icon: <FiBookOpen />, label: "About Page Content",
+      children: [
+        { key: "about", icon: <FiBookOpen />, label: "About Page Manager", path: "/admin-acharya/dashboard/content/about" },
+      ]
+    },
+    {
+      key: "service-content", icon: <FiStar />, label: "Services Content",
+      children: [
+
       ]
     },
 
@@ -150,8 +162,6 @@ const Sidebar = ({
         { key: "vendor-earnings", icon: <FiDollarSign />, label: "Vendor Earnings", path: "/admin-acharya/dashboard/vendors/earnings" },
       ]
     },
-
-
 
     {
       key: "seo-management", icon: <FiTrendingUp />, label: "Marketing & SEO",
@@ -249,12 +259,11 @@ const Sidebar = ({
             {(() => {
               const sections = [
                 { title: "Overview", items: menuItems.slice(0, 1) },
-                { title: "User Control", items: menuItems.slice(1, 2) },
-                { title: "Service Categories", items: menuItems.slice(2, 3) },
-                { title: "Business Operations", items: menuItems.slice(3, 4) },
-                { title: "Content Manager", items: menuItems.slice(4, 5) },
-                { title: "SEO & Growth", items: menuItems.slice(5, 6) },
-                { title: "System Setup", items: menuItems.slice(6) },
+                { title: "User Control", items: menuItems.slice(1, 4) },
+                { title: "User Management", items: menuItems.slice(4, 5) },
+                { title: "Business Operations", items: menuItems.slice(5, 7) },
+                { title: "SEO & Growth", items: menuItems.slice(7, 8) },
+                { title: "System Setup", items: menuItems.slice(8, 9) },
               ];
 
               return sections.map((section, idx) => (

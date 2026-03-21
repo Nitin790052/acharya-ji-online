@@ -12,6 +12,7 @@ import { blogApi } from '../services/blogApi';
 import { appDownloadApi } from '../services/appDownloadApi';
 import { faqApi } from '../services/faqApi';
 import { footerApi } from '../services/footerApi';
+import { aboutPageApi } from '../services/aboutPageApi';
 
 export const store = configureStore({
     reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
         [appDownloadApi.reducerPath]: appDownloadApi.reducer,
         [faqApi.reducerPath]: faqApi.reducer,
         [footerApi.reducerPath]: footerApi.reducer,
+        [aboutPageApi.reducerPath]: aboutPageApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -43,6 +45,7 @@ export const store = configureStore({
             blogApi.middleware,
             appDownloadApi.middleware,
             faqApi.middleware,
-            footerApi.middleware
+            footerApi.middleware,
+            aboutPageApi.middleware
         ),
 });

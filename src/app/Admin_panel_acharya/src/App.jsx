@@ -24,6 +24,8 @@ import BlogManager from "./pages/content/BlogManager";
 import AppDownloadManager from "./pages/content/AppDownloadManager";
 import FAQManager from "./pages/content/FAQManager";
 import FooterManager from "./pages/content/FooterManager";
+import AboutPageManager from "./pages/content/AboutPageManager";
+import HeroBannerManager from "./pages/content/HeroBannerManager";
 
 function AdminApp() {
   return (
@@ -57,6 +59,8 @@ function AdminApp() {
           <Route path="content/testimonials" element={<TestimonialManager />} />
           <Route path="content/app-download" element={<AppDownloadManager />} />
           <Route path="content/carousels" element={<CarouselManager />} />
+          <Route path="content/hero-banner" element={<HeroBannerManager />} />
+          <Route path="content/about" element={<AboutPageManager />} />
           <Route path="content/about-us" element={<AboutUsManager />} />
           <Route path="content/services" element={<ServiceManager />} />
           <Route path="content/popular-pujas" element={<PopularPujaManager />} />

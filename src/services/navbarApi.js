@@ -3,7 +3,7 @@ import { API_URL } from '../config/apiConfig';
 
 export const navbarApi = createApi({
     reducerPath: 'navbarApi',
-    baseQuery: fetchBaseQuery({ 
+    baseQuery: fetchBaseQuery({
         baseUrl: API_URL
     }),
     endpoints: (builder) => ({
