@@ -85,11 +85,11 @@ export default function AboutPageManager() {
                 <form onSubmit={handleSettingsSubmit} className="space-y-6 bg-white p-6 rounded-xl border">
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Sacred Journey</h2>
                     <div className="grid grid-cols-2 gap-4">
-                        <input className="p-2 border rounded" placeholder="Badge" value={formSettings.journeyBadge} onChange={e=>setFormSettings({...formSettings, journeyBadge: e.target.value})} />
-                        <input className="p-2 border rounded" placeholder="Title" value={formSettings.journeyTitle} onChange={e=>setFormSettings({...formSettings, journeyTitle: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="e.g. SACRED JOURNEY" value={formSettings.journeyBadge} onChange={e=>setFormSettings({...formSettings, journeyBadge: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="e.g. Our Path of Enlightened Wisdom" value={formSettings.journeyTitle} onChange={e=>setFormSettings({...formSettings, journeyTitle: e.target.value})} />
                         <input className="p-2 border rounded" placeholder="Experience Years (e.g., 20+)" value={formSettings.journeyExpYears} onChange={e=>setFormSettings({...formSettings, journeyExpYears: e.target.value})} />
-                        <textarea className="p-2 border rounded col-span-2" placeholder="Description 1" value={formSettings.journeyDesc1} onChange={e=>setFormSettings({...formSettings, journeyDesc1: e.target.value})} />
-                        <textarea className="p-2 border rounded col-span-2" placeholder="Description 2" value={formSettings.journeyDesc2} onChange={e=>setFormSettings({...formSettings, journeyDesc2: e.target.value})} />
+                        <textarea className="p-2 border rounded col-span-2" placeholder="First paragraph of the journey description..." value={formSettings.journeyDesc1} onChange={e=>setFormSettings({...formSettings, journeyDesc1: e.target.value})} />
+                        <textarea className="p-2 border rounded col-span-2" placeholder="Second paragraph of the journey description..." value={formSettings.journeyDesc2} onChange={e=>setFormSettings({...formSettings, journeyDesc2: e.target.value})} />
                         
                         <div className="col-span-2 mt-2">
                             <label className="text-sm font-bold text-gray-600 mb-2 block">Journey Features</label>
@@ -107,29 +107,29 @@ export default function AboutPageManager() {
 
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 mt-6">Section Headers</h2>
                     <div className="grid grid-cols-2 gap-4">
-                        <input className="p-2 border rounded" placeholder="Offer Badge" value={formSettings.offerBadge} onChange={e=>setFormSettings({...formSettings, offerBadge: e.target.value})} />
-                        <input className="p-2 border rounded" placeholder="Offer Title" value={formSettings.offerTitle} onChange={e=>setFormSettings({...formSettings, offerTitle: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="Offer Badge (e.g. WHAT WE DO)" value={formSettings.offerBadge} onChange={e=>setFormSettings({...formSettings, offerBadge: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="Offer Title (e.g. Sacred Services)" value={formSettings.offerTitle} onChange={e=>setFormSettings({...formSettings, offerTitle: e.target.value})} />
                         
                         <input className="p-2 border rounded" placeholder="Why Choose Badge" value={formSettings.whyChooseBadge} onChange={e=>setFormSettings({...formSettings, whyChooseBadge: e.target.value})} />
                         <input className="p-2 border rounded" placeholder="Why Choose Title" value={formSettings.whyChooseTitle} onChange={e=>setFormSettings({...formSettings, whyChooseTitle: e.target.value})} />
                         
-                        <input className="p-2 border rounded" placeholder="Values Title" value={formSettings.valuesTitle} onChange={e=>setFormSettings({...formSettings, valuesTitle: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="Values Title (e.g. Our Core Principles)" value={formSettings.valuesTitle} onChange={e=>setFormSettings({...formSettings, valuesTitle: e.target.value})} />
                         
                         <input className="p-2 border rounded" placeholder="Testimonial Badge" value={formSettings.testimonialBadge} onChange={e=>setFormSettings({...formSettings, testimonialBadge: e.target.value})} />
                         <input className="p-2 border rounded" placeholder="Testimonial Title" value={formSettings.testimonialTitle} onChange={e=>setFormSettings({...formSettings, testimonialTitle: e.target.value})} />
                     </div>
 
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 mt-6">Belief Section</h2>
-                    <input className="p-2 border rounded w-full mb-2" placeholder="Belief Title" value={formSettings.beliefTitle} onChange={e=>setFormSettings({...formSettings, beliefTitle: e.target.value})} />
-                    <textarea className="p-2 border rounded w-full" rows={3} placeholder="Belief Text" value={formSettings.beliefText} onChange={e=>setFormSettings({...formSettings, beliefText: e.target.value})} />
+                    <input className="p-2 border rounded w-full mb-2" placeholder="Belief Section Title" value={formSettings.beliefTitle} onChange={e=>setFormSettings({...formSettings, beliefTitle: e.target.value})} />
+                    <textarea className="p-2 border rounded w-full" rows={3} placeholder="Describe the core belief or philosophy..." value={formSettings.beliefText} onChange={e=>setFormSettings({...formSettings, beliefText: e.target.value})} />
 
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 mt-6">CTA Section</h2>
                     <div className="grid grid-cols-3 gap-4 mb-2">
-                        <input className="p-2 border rounded" placeholder="CTA Title 1" value={formSettings.ctaTitle1} onChange={e=>setFormSettings({...formSettings, ctaTitle1: e.target.value})} />
-                        <input className="p-2 border rounded" placeholder="Highlight" value={formSettings.ctaHighlight} onChange={e=>setFormSettings({...formSettings, ctaHighlight: e.target.value})} />
-                        <input className="p-2 border rounded" placeholder="CTA Title 2" value={formSettings.ctaTitle2} onChange={e=>setFormSettings({...formSettings, ctaTitle2: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="Part 1 (e.g. Ready to)" value={formSettings.ctaTitle1} onChange={e=>setFormSettings({...formSettings, ctaTitle1: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="Highlight (e.g. Transform)" value={formSettings.ctaHighlight} onChange={e=>setFormSettings({...formSettings, ctaHighlight: e.target.value})} />
+                        <input className="p-2 border rounded" placeholder="Part 2 (e.g. Your Life?)" value={formSettings.ctaTitle2} onChange={e=>setFormSettings({...formSettings, ctaTitle2: e.target.value})} />
                     </div>
-                    <textarea className="p-2 border rounded w-full" rows={2} placeholder="CTA Description" value={formSettings.ctaDesc} onChange={e=>setFormSettings({...formSettings, ctaDesc: e.target.value})} />
+                    <textarea className="p-2 border rounded w-full" rows={2} placeholder="Write a compelling call to action description..." value={formSettings.ctaDesc} onChange={e=>setFormSettings({...formSettings, ctaDesc: e.target.value})} />
 
                     <button type="submit" className="w-full bg-amber-600 text-white font-bold py-3 pt-3 mt-4 rounded-xl flex justify-center items-center gap-2 hover:bg-amber-700">
                         <Save className="w-5 h-5" /> Save General Settings

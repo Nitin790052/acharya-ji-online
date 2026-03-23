@@ -10,13 +10,13 @@ import { useGetActiveTestimonialsQuery } from "@/services/testimonialApi";
 import fallbackAbout from "../assets/aboutImage/acharyaji.webp"
 
 const LucideIcon = ({ name, className }) => {
-    const IconComponent = PhosphorIcons[name] || PhosphorIcons.Star;
-    return <IconComponent className={className} />;
+  const IconComponent = PhosphorIcons[name] || PhosphorIcons.Star;
+  return <IconComponent className={className} />;
 };
 
 const AboutUs = () => {
   const banner = usePageBanner();
-  
+
   const { data: settings, isLoading: loadingSettings } = useGetAboutPageSettingsQuery(undefined, { pollingInterval: 3000 });
   const { data: servicesData, isLoading: loadingServices } = useGetActiveAboutPageItemsQuery('service', { pollingInterval: 3000 });
   const { data: whyChooseData, isLoading: loadingWhy } = useGetActiveAboutPageItemsQuery('whyChoose', { pollingInterval: 3000 });
@@ -24,13 +24,13 @@ const AboutUs = () => {
   const { data: testimonialsData } = useGetActiveTestimonialsQuery(undefined, { pollingInterval: 3000 });
 
   if (loadingSettings || loadingServices || loadingWhy || loadingValues) {
-      return (
-          <Layout>
-              <div className="min-h-[80vh] flex items-center justify-center">
-                  <span className="text-gray-500 font-bold">Loading About Page...</span>
-              </div>
-          </Layout>
-      );
+    return (
+      <Layout>
+        <div className="min-h-[80vh] flex items-center justify-center">
+          <span className="text-gray-500 font-bold">Loading About Page...</span>
+        </div>
+      </Layout>
+    );
   }
 
   const services = servicesData || [];
@@ -338,7 +338,7 @@ const AboutUs = () => {
             <div className="container mx-auto px-4 text-center max-w-5xl">
               <div className="animate-fade-in-up">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">
-                    {settings.ctaTitle1} <span className="text-[#E8453C]">{settings.ctaHighlight}</span> {settings.ctaTitle2}
+                  {settings.ctaTitle1} <span className="text-[#E8453C]">{settings.ctaHighlight}</span> {settings.ctaTitle2}
                 </h2>
                 <div className="flex items-center justify-center gap-3 mb-8">
                   <div className="w-10 h-[1.5px] bg-orange-200" />

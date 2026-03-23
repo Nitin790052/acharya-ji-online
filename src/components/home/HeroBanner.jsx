@@ -11,9 +11,9 @@ const HeroBanner = () => {
         pollingInterval: 3000,
         refetchOnMountOrArgChange: true
     });
-    
+
     // Filter banners based on the current page path
-    const banners = bannersData 
+    const banners = bannersData
         ? bannersData.filter(banner => {
             const currentPath = location.pathname;
             // Handle root path / and ensure exact matching

@@ -13,6 +13,7 @@ import { appDownloadApi } from '../services/appDownloadApi';
 import { faqApi } from '../services/faqApi';
 import { footerApi } from '../services/footerApi';
 import { aboutPageApi } from '../services/aboutPageApi';
+import { pujaOfferingApi } from '../services/pujaOfferingApi';
 
 export const store = configureStore({
     reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
         [faqApi.reducerPath]: faqApi.reducer,
         [footerApi.reducerPath]: footerApi.reducer,
         [aboutPageApi.reducerPath]: aboutPageApi.reducer,
+        [pujaOfferingApi.reducerPath]: pujaOfferingApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -46,6 +48,7 @@ export const store = configureStore({
             appDownloadApi.middleware,
             faqApi.middleware,
             footerApi.middleware,
-            aboutPageApi.middleware
+            aboutPageApi.middleware,
+            pujaOfferingApi.middleware
         ),
 });

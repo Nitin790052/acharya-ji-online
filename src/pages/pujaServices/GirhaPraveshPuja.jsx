@@ -1,24 +1,76 @@
 import React, { useState } from 'react';
-import { Home, Clock, CheckCircle, Star, Phone, Calendar, Users, Shield, ArrowRight, X, Sparkles, Award, BookOpen, MapPin, Heart, Sparkle, ChevronRight } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { Home, Clock, CheckCircle, Star, Phone, Calendar, Users, Shield, ArrowRight, X, Sparkles, Award, BookOpen, MapPin, Heart, Sparkle, ChevronRight, AlertCircle } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
+import { useGetAllOfferingsQuery } from '@/services/pujaOfferingApi';
+import { API_URL, BACKEND_URL } from '@/config/apiConfig';
 
 import homeImg from "@/assets/grihaPraveshPuja/home_visit.webp"
 import onlineImg from "@/assets/grihaPraveshPuja/online_puja.webp"
 import muhuratImg from "@/assets/grihaPraveshPuja/muhurat.webp"
-import { Link } from "react-router-dom";
 
 export default function GrihaPraveshPuja() {
+  const { data: offerings = [], isLoading, isError } = useGetAllOfferingsQuery(undefined, { pollingInterval: 3000 });
+  
+  // Find the offering that matches Griha or Girha Pravesh
+  const offering = offerings.find(o => 
+    o.slug === 'griha-pravesh-puja' || 
+    o.slug === 'girha-pravesh-puja' || 
+    o.slug?.includes('pravesh') ||
+    o.title?.toLowerCase().includes('pravesh') ||
+    o.title?.toLowerCase().includes('pooja')
+  );
+
+  console.log('--- FOUND OFFERING DEBUG ---', {
+    offerings_count: offerings.length,
+    found_title: offering?.title,
+    found_slug: offering?.slug,
+    found_image: offering?.imageUrl
+  });
+
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [showMuhuratModal, setShowMuhuratModal] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    city: '',
-    preferredDate: '',
-    pujaType: 'home',
-    message: ''
+    name: '', phone: '', email: '', city: '', preferredDate: '', pujaType: 'home', message: ''
   });
+
+  const [muhuratData, setMuhuratData] = useState({
+    name: '', phone: '', dob: '', time: '', place: ''
+  });
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="min-h-[80vh] flex items-center justify-center">
+          <div className="animate-pulse flex flex-col items-center gap-4">
+            <div className="w-16 h-16 bg-orange-200 rounded-full animate-bounce"></div>
+            <p className="font-black text-blue-900 uppercase tracking-[0.2em] text-xs">Purifying Sacred Content...</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (isError || !offering) {
+    return (
+      <Layout>
+        <div className="min-h-[70vh] flex flex-col items-center justify-center gap-8 px-6 bg-[#FAF9F6]">
+          <div className="p-8 bg-white rounded-full shadow-2xl">
+            <AlertCircle size={80} className="text-red-500" />
+          </div>
+          <div className="text-center max-w-lg">
+            <h2 className="text-4xl font-black text-gray-900 mb-4 uppercase tracking-tighter">Temple Closed?</h2>
+            <p className="text-gray-500 font-medium text-lg leading-relaxed">Griha Pravesh Puja details are currently being updated by our Acharyas.</p>
+          </div>
+          <Link to="/" className="px-10 py-4 bg-blue-900 text-white font-black rounded-2xl shadow-xl shadow-blue-200 hover:bg-orange-600 transition-all uppercase tracking-widest text-xs">
+            Return to Sanctuary
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
+
+  const { title, shortDescription, longDescription, benefits } = offering;
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,18 +80,7 @@ export default function GrihaPraveshPuja() {
     e.preventDefault();
     alert('Booking request submitted! Our team will contact you soon.');
     setShowBookingModal(false);
-    setFormData({
-      name: '', phone: '', email: '', city: '', preferredDate: '', pujaType: 'home', message: ''
-    });
   };
-
-  const [muhuratData, setMuhuratData] = useState({
-    name: '',
-    phone: '',
-    dob: '',
-    time: '',
-    place: ''
-  });
 
   const handleMuhuratChange = (e) => {
     setMuhuratData({ ...muhuratData, [e.target.name]: e.target.value });
@@ -56,11 +97,15 @@ export default function GrihaPraveshPuja() {
       <div className="min-h-[80vh]">
         <div className="min-h-screen bg-background">
 
-          {/* Hero Section - Matching About Us deeply */}
+          {/* Hero Section */}
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
-              <img src="" alt="Griha Pravesh" className="w-full h-full object-cover object-top" />
-              <div className="absolute inset-0 bg-black/30" />
+              <img 
+                src={offering.imageUrl?.startsWith('http') ? offering.imageUrl : `${BACKEND_URL}${offering.imageUrl}`} 
+                alt={title} 
+                className="w-full h-full object-cover object-top" 
+              />
+              <div className="absolute inset-0 bg-black/40" />
             </div>
             <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
               <div className="max-w-4xl mx-auto text-center">
@@ -69,17 +114,17 @@ export default function GrihaPraveshPuja() {
                   <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
                 </div>
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                  Invite Prosperity with <br />
-                  <span className="text-yellow-300">Authentic Griha Pravesh</span>
+                  {title.split(' ').slice(0, -1).join(' ')} <br />
+                  <span className="text-yellow-300">{title.split(' ').slice(-1).join(' ')}</span>
                 </h1>
                 <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
-                  Perform sacred vaidik rituals with experienced Acharyas to purify your new space and ensure a peaceful new beginning for your family.
+                  {shortDescription}
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Intro Section - Sacred Journey Style from About Us */}
+          {/* Intro Section */}
           <section className="py-12 md:py-16 overflow-x-hidden relative">
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -z-10" />
             <div className="container mx-auto px-4">
@@ -90,7 +135,7 @@ export default function GrihaPraveshPuja() {
                     <span>Sacred Introduction</span>
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 leading-tight">
-                    Why Perform <span className="text-orange-600">Griha Pravesh</span> Puja?
+                    Why Perform <span className="text-orange-600">{title}</span>?
                   </h2>
                   <div className="flex items-center gap-2 mb-5">
                     <div className="w-12 h-1 bg-orange-200 rounded-full" />
@@ -98,11 +143,10 @@ export default function GrihaPraveshPuja() {
                     <div className="w-12 h-1 bg-orange-200 rounded-full" />
                   </div>
                   <div className="space-y-3 text-gray-700 font-medium text-sm md:text-base">
-                    <p className="leading-relaxed"><strong className="text-orange-600 font-semibold">Ghar Pravesh</strong> is not just a ceremony; it's a spiritual purification process that removes negative energy and invites divine protection.</p>
-                    <p className="leading-relaxed">According to Vastu Shastra, performing this ritual on a shubh muhurat ensures that the residents live in harmony, health, and abundance.</p>
+                    <p className="leading-relaxed">{longDescription}</p>
                   </div>
                   <div className="mt-6 grid grid-cols-2 gap-3">
-                    {['Cleanses negative energy', 'Vastu Dosh correction', 'Invites Lakshmi ji', 'Family Happiness'].map((item) => (
+                    {benefits?.map((item) => (
                       <div key={item} className="flex items-center gap-2.5">
                         <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
                           <CheckCircle className="w-3.5 h-3.5 text-orange-600" />
@@ -115,10 +159,9 @@ export default function GrihaPraveshPuja() {
                 <div className="relative group flex justify-center animate-fade-in-right">
                   <div className="relative w-[96%] max-w-lg mx-auto p-1.5 md:p-2 bg-gradient-to-br from-amber-100 to-amber-300 rounded-[2rem] shadow-[0_20px_50px_-15px_rgba(217,119,6,0.25)]">
                     <div className="w-full h-[315px] sm:h-[375px] md:h-[445px] rounded-3xl overflow-hidden border-[3px] border-white relative z-10">
-                      <img src="" alt="Puja Vidhi" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                      <img src={offering.imageUrl?.startsWith('http') ? offering.imageUrl : `${BACKEND_URL}${offering.imageUrl}`} alt={title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13]/60 via-transparent to-transparent opacity-80" />
                     </div>
-                    {/* Achievement Badge style from About Us */}
                     <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-2.5 md:p-3 rounded-2xl shadow-xl border border-amber-100 z-20 flex items-center gap-3">
                       <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-50 flex items-center justify-center border border-amber-200">
                         <Shield className="w-5 h-5 md:w-6 md:h-6 text-amber-600" />
@@ -133,7 +176,7 @@ export default function GrihaPraveshPuja() {
             </div>
           </section>
 
-          {/* Offerings Section - Using the service card style from About Us */}
+          {/* Offerings Section */}
           <section className="py-12 md:py-16 bg-[#FAF9F6] relative overflow-hidden">
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #d97706 1px, transparent 0)', backgroundSize: '32px 32px' }} />
             <div className="container mx-auto px-4 max-w-7xl relative z-10">
@@ -142,7 +185,7 @@ export default function GrihaPraveshPuja() {
                   <Star className="w-3.5 h-3.5" />
                   <span>Our Service Modes</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Modes of <span className="text-orange-600">Griha Pravesh</span></h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">Modes of <span className="text-orange-600">{title}</span></h2>
                 <div className="flex items-center justify-center gap-2">
                   <div className="w-12 h-1 bg-orange-200 rounded-full" />
                   <Sparkles className="w-5 h-5 text-orange-400" />
@@ -150,29 +193,11 @@ export default function GrihaPraveshPuja() {
                 </div>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 max-w-[70rem] mx-auto">
-                {[
-                  {
-                    title: "Home Visit Puja",
-                    items: ["Experienced Acharya", "Full Samagri Included", "Traditional Mantra Vidhi", "Personal Connection"],
-                    icon: Home,
-                    image: homeImg,
-                    desc: "Pandit ji conducts the ritual at your home."
-                  },
-                  {
-                    title: "Online Video Puja",
-                    items: ["Live Interactive Session", "Step-by-Step Guidance", "Global Accessibility", "Perfect for Busy Schedules"],
-                    icon: Users,
-                    image: onlineImg,
-                    desc: "Perform rituals via HD live video call."
-                  },
-                  {
-                    title: "Muhurat Consultation",
-                    items: ["Personalized Kundli Check", "Nakshatra Alignment", "Exact Timing Guidance", "Family Shanti Analysis"],
-                    icon: Clock,
-                    image: muhuratImg,
-                    desc: "Find the most auspicious time for entry."
-                  }
-                ].map((service, idx) => (
+                {(offering.serviceModes?.length > 0 ? offering.serviceModes : [
+                  { title: "Home Visit Puja", points: ["Experienced Acharya", "Full Samagri Included", "Traditional Mantra Vidhi"], mode: 'Home Visit', image: homeImg },
+                  { title: "Online Video Puja", points: ["Live Interactive Session", "Step-by-Step Guidance", "Global Accessibility"], mode: 'Online', image: onlineImg },
+                  { title: "Muhurat Consultation", points: ["Personalized Kundli Check", "Nakshatra Alignment", "Exact Timing Guidance"], mode: 'Muhurat', image: muhuratImg }
+                ]).map((service, idx) => (
                   <div key={idx} className="group/card h-full animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
                     <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl flex flex-col">
                       <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
@@ -180,7 +205,7 @@ export default function GrihaPraveshPuja() {
 
                         <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-36 md:h-44 z-10 flex items-center justify-center bg-amber-50 group-hover/card:bg-white transition-all duration-500">
                           <img
-                            src={service.image}
+                            src={service.imageUrl ? (service.imageUrl.startsWith('http') ? service.imageUrl : `${BACKEND_URL}${service.imageUrl}`) : (service.mode?.toLowerCase().includes('online') ? onlineImg : service.mode?.toLowerCase().includes('muhurat') ? muhuratImg : homeImg)}
                             alt={service.title}
                             className="absolute inset-0 w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-[1.5s]"
                           />
@@ -197,7 +222,7 @@ export default function GrihaPraveshPuja() {
                             <div className="h-[1.5px] w-8 bg-gradient-to-l from-transparent via-amber-200 to-amber-500" />
                           </div>
                           <ul className="space-y-2 mb-5 text-left">
-                            {service.items.slice(0, 3).map((item, i) => (
+                            {service.points?.slice(0, 4).map((item, i) => (
                               <li key={i} className="flex items-center gap-3">
                                 <div className="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover/card:bg-amber-600">
                                   <CheckCircle className="w-3.5 h-3.5 text-amber-600 group-hover/card:text-white" />

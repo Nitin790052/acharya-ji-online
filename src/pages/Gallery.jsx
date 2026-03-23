@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Play, MapPin, Calendar, ChevronRight, MessageCircle, Phone, Star, Search, Check, Award, Sparkles, Camera, Video, Clock, Leaf } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 import image1 from "../assets/galleryPage/imageId1.webp";
 import image2 from "../assets/galleryPage/imageId2.webp";

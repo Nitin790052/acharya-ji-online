@@ -33,6 +33,7 @@ const Career = lazy(() => import("./pages/Career"));
 const GrihaPraveshPuja = lazy(() => import("./pages/pujaServices/GirhaPraveshPuja"));
 const Login = lazy(() => import("../src/app/vendor/login/Login"));
 const VendorRegister = lazy(() => import("../src/app/vendor/pages/VendorRegister"));
+const PujaDetails = lazy(() => import("./pages/PujaDetails"));
 
 // Vendor Pages
 const MyPujaServices = lazy(() => import("../src/app/vendor/pages/vendors/pandit/MyPujaServices"));
@@ -164,6 +165,7 @@ const App = () => (
                                         <Route path="/about" element={<AboutUs />} />
                                         <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
                                         <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
+                                        <Route path="/puja/:slug" element={<PujaDetails />} />
                                         <Route path="/samagri/essentials" element={<PujaSamagri />} />
                                         <Route path="/samagri/idols" element={<PujaSamagri />} />
                                         <Route path="/samagri/hawan" element={<PujaSamagri />} />

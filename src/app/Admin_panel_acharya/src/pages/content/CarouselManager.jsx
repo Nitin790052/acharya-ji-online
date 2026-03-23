@@ -5,7 +5,8 @@ import {
   useGetAllBannersQuery,
   useCreateBannerMutation,
   useUpdateBannerMutation,
-  useDeleteBannerMutation
+  useDeleteBannerMutation,
+  useSeedBannersMutation
 } from "../../../../../services/heroBannerApi";
 import { useGetNavbarItemsQuery } from "../../../../../services/navbarApi";
 import { BACKEND_URL } from "../../../../../config/apiConfig";
@@ -23,6 +24,7 @@ const CarouselManager = () => {
   const [createBanner] = useCreateBannerMutation();
   const [updateBanner] = useUpdateBannerMutation();
   const [deleteBanner] = useDeleteBannerMutation();
+  const [seedBanners, { isLoading: isSeeding }] = useSeedBannersMutation();
 
   const [isEditing, setIsEditing] = useState(false);
   const [currentBanner, setCurrentBanner] = useState({
@@ -134,6 +136,30 @@ const CarouselManager = () => {
         </div>
       </div>
 
+      {/* Seed Utility Section */}
+      <div className="bg-gradient-to-r from-blue-900/5 to-rose-400/5 rounded-2xl p-6 border border-blue-900/10 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+        <div>
+          <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+            <FiSave className="text-blue-900" /> Hero Banners Seed Utility
+          </h3>
+          <p className="text-xs text-gray-500 mt-1">Populate the carousel with high-quality sample data. Warning: This will overwrite existing banners.</p>
+        </div>
+        <button
+          onClick={async () => {
+            if (window.confirm("Restore sample hero banners? This will delete current banners.")) {
+              try {
+                await seedBanners().unwrap();
+                toast.success("Hero Banners Seeded!");
+              } catch (e) { toast.error("Seeding failed"); }
+            }
+          }}
+          disabled={isSeeding}
+          className="px-8 py-2.5 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 shadow-md shadow-blue-900/20 transition-all text-sm disabled:opacity-50 flex items-center gap-2"
+        >
+          {isSeeding ? "Syncing..." : "🔥 Seed Hero Banners"}
+        </button>
+      </div>
+
       {/* Form Section */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
         <h2 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
@@ -192,7 +218,7 @@ const CarouselManager = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Badge Text</label>
               <input
-                type="text" required value={currentBanner.badge}
+                type="text" value={currentBanner.badge}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, badge: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
@@ -210,7 +236,7 @@ const CarouselManager = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Title Part 2 (Highlight 1)</label>
               <input
-                type="text" required value={currentBanner.titleHighlight2}
+                type="text" value={currentBanner.titleHighlight2}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight2: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
@@ -219,7 +245,7 @@ const CarouselManager = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Title Part 3 (Highlight 2)</label>
               <input
-                type="text" required value={currentBanner.titleHighlight3}
+                type="text" value={currentBanner.titleHighlight3}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight3: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
@@ -228,7 +254,7 @@ const CarouselManager = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Title Part 4 (End)</label>
               <input
-                type="text" required value={currentBanner.titleEnd}
+                type="text" value={currentBanner.titleEnd}
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleEnd: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
@@ -257,7 +283,7 @@ const CarouselManager = () => {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Subtitle</label>
             <textarea
-              required value={currentBanner.subtitle}
+              value={currentBanner.subtitle}
               onChange={(e) => setCurrentBanner({ ...currentBanner, subtitle: e.target.value })}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               rows="2"
@@ -310,9 +336,9 @@ const CarouselManager = () => {
           <h2 className="text-lg font-semibold text-gray-800">Current Banners</h2>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-[#959190]/10">
+        <div className="overflow-x-auto overflow-y-auto max-h-[600px]">
+          <table className="w-full text-left border-collapse min-w-[1000px]">
+            <thead className="bg-gray-100 sticky top-0 z-20 shadow-sm border-b border-gray-200">
               <tr>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">S.No</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Image</th>

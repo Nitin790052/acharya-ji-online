@@ -102,7 +102,6 @@ const Sidebar = ({
       children: [
         { key: "navbar", icon: <FiAlertCircle />, label: "Navbar", path: "/admin-acharya/dashboard/content/navbar" },
         { key: "carousels", icon: <FiImage />, label: "Carousels", path: "/admin-acharya/dashboard/content/carousels" },
-        { key: "hero-banner", icon: <FiImage />, label: "Hero Banners", path: "/admin-acharya/dashboard/content/hero-banner" },
         { key: "about-us", icon: <FiFileText />, label: "About Section", path: "/admin-acharya/dashboard/content/about-us" },
         { key: "blogs", icon: <FiBookOpen />, label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
         { key: "services", icon: <FiGrid />, label: "Service Manager", path: "/admin-acharya/dashboard/content/services" },
@@ -123,9 +122,9 @@ const Sidebar = ({
       ]
     },
     {
-      key: "service-content", icon: <FiStar />, label: "Services Content",
+      key: "pooja-services", icon: <FiStar />, label: "Puja Services",
       children: [
-
+        { key: "puja-offerings", icon: <FiPackage />, label: "Puja Offerings", path: "/admin-acharya/dashboard/content/puja-offerings" },
       ]
     },
 

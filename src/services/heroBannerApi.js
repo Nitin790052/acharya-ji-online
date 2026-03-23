@@ -3,7 +3,7 @@ import { API_URL } from '../config/apiConfig';
 
 export const heroBannerApi = createApi({
     reducerPath: 'heroBannerApi',
-    baseQuery: fetchBaseQuery({ 
+    baseQuery: fetchBaseQuery({
         baseUrl: API_URL
     }),
     tagTypes: ['HeroBanner'],
@@ -40,13 +40,21 @@ export const heroBannerApi = createApi({
             }),
             invalidatesTags: ['HeroBanner'],
         }),
+        seedBanners: builder.mutation({
+            query: () => ({
+                url: 'hero-banners/seed',
+                method: 'POST',
+            }),
+            invalidatesTags: ['HeroBanner'],
+        }),
     }),
 });
 
-export const { 
-    useGetActiveBannersQuery, 
-    useGetAllBannersQuery, 
+export const {
+    useGetActiveBannersQuery,
+    useGetAllBannersQuery,
     useCreateBannerMutation,
     useUpdateBannerMutation,
-    useDeleteBannerMutation
+    useDeleteBannerMutation,
+    useSeedBannersMutation
 } = heroBannerApi;

@@ -44,6 +44,13 @@ export const serviceApi = createApi({
             }),
             invalidatesTags: ['Services'],
         }),
+        seedServices: builder.mutation({
+            query: () => ({
+                url: 'services/seed',
+                method: 'POST',
+            }),
+            invalidatesTags: ['Services'],
+        }),
     }),
 });
 
@@ -54,4 +61,5 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useToggleActiveServiceMutation,
+    useSeedServicesMutation
 } = serviceApi;

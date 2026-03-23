@@ -218,6 +218,7 @@ const AstrologerManager = () => {
                                     type="text" value={settings.badge}
                                     onChange={(e) => setSettings({ ...settings, badge: e.target.value })}
                                     className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                                    placeholder="e.g. Live Consultation Available"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -226,6 +227,7 @@ const AstrologerManager = () => {
                                     type="text" required value={settings.title}
                                     onChange={(e) => setSettings({ ...settings, title: e.target.value })}
                                     className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                                    placeholder="e.g. Talk to Expert Astrologers"
                                 />
                             </div>
                             <div className="space-y-2 md:col-span-2">
@@ -235,6 +237,7 @@ const AstrologerManager = () => {
                                     onChange={(e) => setSettings({ ...settings, subtitle: e.target.value })}
                                     className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
                                     rows="2"
+                                    placeholder="e.g. Get personalized guidance from verified astrologers available 24/7"
                                 />
                             </div>
                         </div>

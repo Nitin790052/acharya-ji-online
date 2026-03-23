@@ -9,7 +9,8 @@ import {
     useCreateServiceMutation,
     useUpdateServiceMutation,
     useDeleteServiceMutation,
-    useToggleActiveServiceMutation
+    useToggleActiveServiceMutation,
+    useSeedServicesMutation
 } from '../../../../../services/serviceApi';
 import { toast } from 'react-toastify';
 import { API_URL } from '../../../../../config/apiConfig';
@@ -22,6 +23,7 @@ const ServiceManager = () => {
     const [updateService] = useUpdateServiceMutation();
     const [deleteService] = useDeleteServiceMutation();
     const [toggleActive] = useToggleActiveServiceMutation();
+    const [seedServices, { isLoading: isSeeding }] = useSeedServicesMutation();
 
 
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -117,7 +119,6 @@ const ServiceManager = () => {
         });
         setImagePreview(service.imageUrl ? `${BACKEND_URL}${service.imageUrl}` : null);
         setEditingId(service._id);
-        setIsModalOpen(true);
     };
 
     const handleDelete = async (id) => {
@@ -152,14 +153,29 @@ const ServiceManager = () => {
                     <h1 className="text-2xl font-bold text-gray-800">Service Manager</h1>
                     <p className="text-gray-500 text-sm mt-1">Manage core and detailed services for the homepage</p>
                 </div>
-
+                <button
+                    onClick={async () => {
+                        if (window.confirm('Seed sample services? Current services will be deleted.')) {
+                            try {
+                                await seedServices().unwrap();
+                                toast.success('Services seeded successfully');
+                            } catch (err) {
+                                toast.error('Seeding failed');
+                            }
+                        }
+                    }}
+                    disabled={isSeeding}
+                    className="px-6 py-2.5 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 shadow-md transition-all text-sm disabled:opacity-50 flex items-center gap-2"
+                >
+                    {isSeeding ? 'Seeding...' : '🔥 Seed Services'}
+                </button>
             </div>
 
             <form onSubmit={handleSubmit} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-6">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-bold text-gray-800">{editingId ? 'Edit Service' : 'Add New Service'}</h2>
                     {editingId && (
-                        <button type="button" onClick={() => setIsModalOpen(false)} className="text-sm text-amber-600 font-bold hover:underline">
+                        <button type="button" onClick={resetForm} className="text-sm text-amber-600 font-bold hover:underline">
                             Cancel Edit
                         </button>
                     )}
@@ -309,7 +325,10 @@ const ServiceManager = () => {
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             {service.imageUrl ? (
-                                                <img src={`${BACKEND_URL}${service.imageUrl}`} className="w-10 h-10 rounded-lg object-cover border border-gray-100" />
+                                                <img 
+                                                    src={service.imageUrl.startsWith('http') ? service.imageUrl : `${BACKEND_URL}${service.imageUrl}`} 
+                                                    className="w-10 h-10 rounded-lg object-cover border border-gray-100" 
+                                                />
                                             ) : (
                                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center"><ImageIcon size={18} className="text-gray-400" /></div>
                                             )}
@@ -363,7 +382,10 @@ const ServiceManager = () => {
                     <div className="relative bg-white w-full max-w-lg rounded-3xl overflow-hidden animate-scale-in">
                         <div className="relative h-48">
                             {selectedService.imageUrl ? (
-                                <img src={`${BACKEND_URL}${selectedService.imageUrl}`} className="w-full h-full object-cover" />
+                                <img 
+                                    src={selectedService.imageUrl.startsWith('http') ? selectedService.imageUrl : `${BACKEND_URL}${selectedService.imageUrl}`} 
+                                    className="w-full h-full object-cover" 
+                                />
                             ) : (
                                 <div className="w-full h-full bg-blue-50 flex items-center justify-center text-blue-200"><ImageIcon size={64} /></div>
                             )}

@@ -114,9 +114,9 @@ export default function BlogManager() {
                 <h2 className="text-base font-bold text-gray-700 mb-4 border-b pb-2">Section Headers Settings</h2>
                 <form onSubmit={handleSettingsSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div><label className={labelCls}>Badge</label><input className={inputCls} value={settingsForm.badge} onChange={e => setSettingsForm(p => ({ ...p, badge: e.target.value }))} /></div>
-                        <div className="md:col-span-2"><label className={labelCls}>Title</label><input className={inputCls} value={settingsForm.title} onChange={e => setSettingsForm(p => ({ ...p, title: e.target.value }))} /></div>
-                        <div className="md:col-span-3"><label className={labelCls}>Subtitle</label><input className={inputCls} value={settingsForm.subtitle} onChange={e => setSettingsForm(p => ({ ...p, subtitle: e.target.value }))} /></div>
+                        <div><label className={labelCls}>Badge</label><input className={inputCls} value={settingsForm.badge} onChange={e => setSettingsForm(p => ({ ...p, badge: e.target.value }))} placeholder="e.g. BLOG HUB" /></div>
+                        <div className="md:col-span-2"><label className={labelCls}>Title</label><input className={inputCls} value={settingsForm.title} onChange={e => setSettingsForm(p => ({ ...p, title: e.target.value }))} placeholder="e.g. Ancient Wisdom & Blogs" /></div>
+                        <div className="md:col-span-3"><label className={labelCls}>Subtitle</label><input className={inputCls} value={settingsForm.subtitle} onChange={e => setSettingsForm(p => ({ ...p, subtitle: e.target.value }))} placeholder="e.g. Exploring the mysteries of the cosmos and ancient sciences" /></div>
                     </div>
                     <button type="submit" className="bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-black transition-colors">Save Section Settings</button>
                 </form>

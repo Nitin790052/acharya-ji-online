@@ -1,144 +1,35 @@
 import React, { useState } from 'react';
 import {
   Clock, CheckCircle, MessageCircle, Users, Award, Star, Home, Video,
-  Sparkles, Sparkle, Shield, Calendar, Phone, MapPin, ChevronRight, BookOpen, X
+  Sparkles, Sparkle, Shield, Calendar, Phone, MapPin, ChevronRight, BookOpen, X,
+  AlertCircle
 } from 'lucide-react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
+import { useGetAllOfferingsQuery } from "@/services/pujaOfferingApi";
+import { API_URL } from '@/config/apiConfig';
 
-import image1 from "../../assets/bookPooja/image1.webp"
-import image2 from "../../assets/bookPooja/image2.webp"
-import image3 from "../../assets/bookPooja/image3.webp"
-import image4 from "../../assets/bookPooja/image4.webp"
-import image5 from "../../assets/bookPooja/image5.webp"
-import image6 from "../../assets/bookPooja/image6.webp"
-import image7 from "../../assets/bookPooja/image7.webp"
-
-const pujaServices = [
-  {
-    id: 'griha-pravesh',
-    name: 'Griha Pravesh Puja',
-    description: 'नए घर में प्रवेश से पहले शांति और समृद्धि के लिए',
-    duration: '2-3 hours',
-    modes: ['Online', 'Home Visit'],
-    whenToPerform: 'नए घर में प्रवेश करने से पहले',
-    benefits: 'घर में सकारात्मक ऊर्जा, शांति और समृद्धि',
-    whoPerforms: 'नया घर लेने वाले परिवार',
-    price: 'Starting from ₹5,100',
-    image: image1,
-  },
-  {
-    id: 'satyanarayan-katha',
-    name: 'Satyanarayan Katha',
-    description: 'सुख, समृद्धि और मनोकामना पूर्ति के लिए',
-    duration: '1.5-2 hours',
-    modes: ['Online', 'Home Visit'],
-    whenToPerform: 'पूर्णिमा या शुभ दिन पर',
-    benefits: 'मनोकामना पूर्ति, परिवार में सुख-शांति',
-    whoPerforms: 'सभी परिवार जो भगवान की कृपा चाहते हैं',
-    price: 'Starting from ₹2,100',
-    image: image2,
-  },
-  {
-    id: 'rudrabhishek',
-    name: 'Rudrabhishek',
-    description: 'भगवान शिव की विशेष पूजा और अभिषेक',
-    duration: '2 hours',
-    modes: ['Online', 'Home Visit'],
-    whenToPerform: 'सोमवार, महाशिवरात्रि या श्रावण मास',
-    benefits: 'रोग निवारण, मानसिक शांति, शत्रु नाश',
-    whoPerforms: 'भगवान शिव के भक्त, रोग निवारण चाहने वाले',
-    price: 'Starting from ₹3,100',
-    image: image3,
-  },
-  {
-    id: 'navgraha-shanti',
-    name: 'Navgraha Shanti Puja',
-    description: 'नौ ग्रहों की शांति और दोष निवारण',
-    duration: '3-4 hours',
-    modes: ['Online', 'Home Visit'],
-    whenToPerform: 'जन्मदिन, ग्रह दोष होने पर',
-    benefits: 'ग्रह दोष निवारण, जीवन में संतुलन',
-    whoPerforms: 'कुंडली में ग्रह दोष वाले लोग',
-    price: 'Starting from ₹5,100',
-    image: image4,
-  },
-  {
-    id: 'pitru-dosh',
-    name: 'Pitru Dosh Puja',
-    description: 'पितरों की शांति और पितृ दोष निवारण',
-    duration: '2-3 hours',
-    benefits: 'पितृ दोष दूर होना, पारिवारिक समस्याओं का समाधान',
-    whenToPerform: 'अमावस्या, श्राद्ध पक्ष',
-    whoPerforms: 'कुंडली में पितृ दोष वाले लोग',
-    modes: ['Online', 'Home Visit'],
-    price: 'Starting from ₹4,100',
-    image: image5,
-  },
-  {
-    id: 'vivah-puja',
-    name: 'Marriage / Vivah Puja',
-    description: 'विवाह के शुभ मुहूर्त पर संपन्न होने वाली पूजा',
-    duration: '3-4 hours',
-    modes: ['Home Visit'],
-    whenToPerform: 'विवाह के दिन',
-    benefits: 'सुखी वैवाहिक जीवन, आशीर्वाद',
-    whoPerforms: 'विवाह करने वाले परिवार',
-    price: 'Starting from ₹11,000',
-    image: image6,
-  },
-  {
-    id: 'havan-yagya',
-    name: 'Havan & Yagya',
-    description: 'विशेष संकल्प और मनोकामना के लिए हवन',
-    duration: '2-3 hours',
-    modes: ['Online', 'Home Visit'],
-    whenToPerform: 'किसी भी शुभ अवसर पर',
-    benefits: 'वातावरण शुद्धि, इच्छा पूर्ति',
-    whoPerforms: 'सभी भक्तगण',
-    price: 'Starting from ₹3,100',
-    image: image7,
-  }
-];
+const BACKEND_URL = API_URL.replace(/\/api\/?$/, '');
 
 const acharyas = [
-  {
-    name: 'Pandit Raghunath Sharma',
-    experience: '25+ years',
-    expertise: 'Vedic Rituals & Havan',
-    rating: 4.9
-  },
-  {
-    name: 'Acharya Vishwanath Joshi',
-    experience: '18+ years',
-    expertise: 'Graha Dosh & Puja',
-    rating: 4.8
-  },
-  {
-    name: 'Pandit Hari Om Tiwari',
-    experience: '20+ years',
-    expertise: 'Marriage & Vivah Puja',
-    rating: 4.9
-  }
+  { name: 'Pandit Raghunath Sharma', experience: '25+ years', expertise: 'Vedic Rituals & Havan', rating: 4.9 },
+  { name: 'Acharya Vishwanath Joshi', experience: '18+ years', expertise: 'Graha Dosh & Puja', rating: 4.8 },
+  { name: 'Pandit Hari Om Tiwari', experience: '20+ years', expertise: 'Marriage & Vivah Puja', rating: 4.9 }
 ];
 
 export default function BookPuja() {
+  const navigate = useNavigate();
   const banner = usePageBanner();
+  const { data: pujaServices = [], isLoading, isError } = useGetAllOfferingsQuery(undefined, { pollingInterval: 3000 });
   const [selectedPuja, setSelectedPuja] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    mobile: '',
-    city: '',
-    pujaType: '',
-    date: '',
-    mode: '',
-    message: ''
+    name: '', mobile: '', city: '', pujaType: '', date: '', mode: '', message: ''
   });
   const [currentStep, setCurrentStep] = useState(1);
   const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
   const bookingSteps = [
     { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें" },
@@ -184,9 +75,9 @@ export default function BookPuja() {
 
   const handlePujaSelect = (puja) => {
     setSelectedPuja(puja);
-    setFormData({ ...formData, pujaType: puja.name });
+    setFormData({ ...formData, pujaType: puja.title, mode: puja.serviceModes?.[0]?.mode || '' });
     setErrors({});
-    setCurrentStep(2); // Start at Step 2 if coming from a specific puja card
+    setCurrentStep(2);
     setShowBookingForm(true);
   };
 
@@ -322,35 +213,39 @@ export default function BookPuja() {
               </div>
 
               <div className="relative">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar p-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[1200px] overflow-y-auto pr-2 custom-scrollbar p-2">
                   {pujaServices.map((puja, idx) => (
                     <div
-                      key={puja.id}
+                      key={puja._id}
                       className="bg-white rounded-none shadow-xl hover:shadow-2xl border border-orange-100 hover:border-orange-400 transition-all duration-500 overflow-hidden flex flex-col group animate-fade-in-up"
                       style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}
                     >
                       <div className="relative h-52 overflow-hidden shrink-0">
-                        <img src={puja.image} alt={puja.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                        <img 
+                          src={puja.imageUrl?.startsWith('http') ? puja.imageUrl : `${BACKEND_URL}${puja.imageUrl}`} 
+                          alt={puja.title} 
+                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
                         <div className="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg flex items-center gap-1.5">
                           <Star className="w-3 h-3 fill-white" /> Vedic
                         </div>
-                        <div className="absolute bottom-6 left-6 right-6">
-                          <h3 className="text-2xl font-bold text-white leading-tight uppercase tracking-tight group-hover:text-orange-300 transition-colors drop-shadow-lg">{puja.name}</h3>
+                        <div className="absolute bottom-6 left-6 right-6 text-left">
+                          <h3 className="text-2xl font-bold text-white leading-tight uppercase tracking-tight group-hover:text-orange-300 transition-colors drop-shadow-lg">{puja.title}</h3>
                         </div>
                       </div>
-                      <div className="p-6 flex flex-col flex-grow">
-                        <p className="text-gray-500 text-sm font-semibold mb-4 line-clamp-2 leading-relaxed italic">"{puja.description}"</p>
+                      <div className="p-6 flex flex-col flex-grow text-left">
+                        <p className="text-gray-500 text-sm font-semibold mb-4 line-clamp-2 leading-relaxed italic">"{puja.shortDescription}"</p>
                         <div className="flex flex-col gap-3 mb-6">
                           <div className="flex items-center gap-2 text-xs font-bold text-[#4A3427] bg-[#FFFAF3] w-max px-3 py-1.5 border border-orange-100 uppercase tracking-widest">
                             <Clock className="w-4 h-4 text-orange-600" />
                             <span>{puja.duration}</span>
                           </div>
                           <div className="flex flex-wrap gap-2">
-                            {puja.modes.map((mode, i) => (
-                              <span key={i} className={`inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 uppercase tracking-widest ${mode === 'Online' ? 'bg-blue-50 text-blue-700 border border-blue-100' : 'bg-green-50 text-green-700 border border-green-100'}`}>
-                                {mode === 'Online' ? <Video className="w-3 h-3" /> : <Home className="w-3 h-3" />}
-                                {mode}
+                            {(puja.serviceModes?.length > 0 ? puja.serviceModes : [{ mode: 'Home Visit' }]).map((sm, i) => (
+                              <span key={i} className={`inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 uppercase tracking-widest ${sm.mode === 'Online' ? 'bg-blue-50 text-blue-700 border border-blue-100' : 'bg-green-50 text-green-700 border border-green-100'}`}>
+                                {sm.mode === 'Online' ? <Video className="w-3 h-3" /> : <Home className="w-3 h-3" />}
+                                {sm.mode}
                               </span>
                             ))}
                           </div>
@@ -358,14 +253,22 @@ export default function BookPuja() {
                         <div className="mt-auto pt-5 border-t border-orange-50 flex items-center justify-between">
                           <div className="flex flex-col">
                             <span className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] mb-1">Starting From</span>
-                            <span className="text-xl font-black text-[#2A1D13] uppercase">{puja.price.replace('Starting from ', '')}</span>
+                            <span className="text-xl font-black text-[#2A1D13] uppercase">₹{puja.price}</span>
                           </div>
-                          <button
-                            onClick={() => handlePujaSelect(puja)}
-                            className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-6 py-3 shadow-lg transition-all duration-300 rounded-none"
-                          >
-                            Book Now
-                          </button>
+                          <div className="flex gap-2">
+                            <Link 
+                                to={`/puja/${puja.slug}`}
+                                className="bg-white border border-[#2A1D13] hover:bg-[#2A1D13] hover:text-white text-[#2A1D13] font-black text-[10px] uppercase tracking-wider px-4 py-3 transition-all duration-300 rounded-none no-underline"
+                            >
+                                Details
+                            </Link>
+                            <button
+                                onClick={() => handlePujaSelect(puja)}
+                                className="bg-[#E8453C] hover:bg-black text-white font-black text-[10px] uppercase tracking-wider px-4 py-3 shadow-lg transition-all duration-300 rounded-none"
+                            >
+                                Book Now
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
