@@ -28,6 +28,7 @@ const Gallery = lazy(() => import("./pages/Gallery"));
 const TwoBidders = lazy(() => import("./pages/TwoBidders"));
 const AboutUs = lazy(() => import("./pages/About"));
 const Media = lazy(() => import("./pages/Media"));
+const PujaServices = lazy(() => import("./pages/pujaServices/PujaServices"));
 const BookPuja = lazy(() => import("./pages/pujaServices/BookPuja"));
 const Career = lazy(() => import("./pages/Career"));
 const GrihaPraveshPuja = lazy(() => import("./pages/pujaServices/GirhaPraveshPuja"));
@@ -163,6 +164,7 @@ const App = () => (
                                     <Routes>
                                         <Route path="/" element={<Index />} />
                                         <Route path="/about" element={<AboutUs />} />
+                                        <Route path="/pujaServices" element={<PujaServices />} />
                                         <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
                                         <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
                                         <Route path="/puja/:slug" element={<PujaDetails />} />

@@ -347,12 +347,12 @@ const AboutUs = () => {
                 </div>
                 <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">{settings.ctaDesc}</p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Link to="/puja/online">
-                    <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
-                      <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                      <span className="relative flex items-center gap-2"><PhosphorIcons.Calendar className="w-3.5 h-3.5" /> Book Puja Now</span>
-                    </button>
-                  </Link>
+                  <button 
+                    onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
+                    className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative flex items-center gap-2"><PhosphorIcons.Calendar className="w-3.5 h-3.5" /> Book Puja Now</span>
+                  </button>
                   <Link to="/astrology">
                     <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-7 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                       <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

@@ -118,7 +118,9 @@ const PopularPujaServices = () => {
                     </div>
 
                     {/* Vedic Button */}
-                    <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white group-hover:border-[#E8453C] transition-all duration-300">
+                    <button 
+                      onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
+                      className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white group-hover:border-[#E8453C] transition-all duration-300">
                       <div className="flex items-center justify-center gap-2">
                         <span>Book Now</span>
                         <ArrowRight className="w-4 h-4" />
@@ -204,7 +206,9 @@ const PopularPujaServices = () => {
                         </div>
 
                         {/* Vedic Button */}
-                        <button className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white transition-all duration-300">
+                        <button 
+                          onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
+                          className="relative px-8 py-2.5 w-full bg-white border border-[#FFC107] text-[#E8453C] rounded-full font-bold text-[10px] uppercase tracking-[0.2em] shadow-sm group-hover:bg-[#E8453C] group-hover:text-white transition-all duration-300">
                           <div className="flex items-center justify-center gap-2">
                             <span>Book Now</span>
                             <ArrowRight className="w-4 h-4" />

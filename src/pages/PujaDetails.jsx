@@ -367,7 +367,7 @@ const PujaDetails = () => {
                         {/* Buttons - Compact and Squared */}
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <button
-                                onClick={() => setShowBookingModal(true)}
+                                onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
                                 className="flex items-center justify-center gap-3 bg-[#E8453C] text-white px-8 py-3.5  font-black text-xs uppercase tracking-widest shadow-lg hover:brightness-110 transition-all w-full sm:w-60"
                             >
                                 <MessageCircle size={18} />

@@ -192,7 +192,7 @@ export default function BookPuja() {
 
                 <div className="flex flex-wrap justify-center gap-4">
                   <button
-                    onClick={() => document.getElementById("puja-selection")?.scrollIntoView({ behavior: "smooth" })}
+                    onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
                     className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none"
                   >
                     <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -777,7 +777,7 @@ export default function BookPuja() {
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <button
-                    onClick={() => document.getElementById('puja-selection').scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
                     className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

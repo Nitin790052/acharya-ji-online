@@ -4,6 +4,12 @@ import BookPoojaDrawer from "./home/BookPoojaDrawer";
 
 const FloatingButtons = ({ isHomePage }) => {
   const [poojaOpen, setPoojaOpen] = useState(false);
+  
+  React.useEffect(() => {
+    const handleOpen = () => setPoojaOpen(true);
+    window.addEventListener('openPoojaDrawer', handleOpen);
+    return () => window.removeEventListener('openPoojaDrawer', handleOpen);
+  }, []);
 
   return (
     <>

@@ -342,14 +342,14 @@ const Blog = () => {
                 Get personalized guidance from experienced Acharyas following authentic Vedic traditions. Experience the profound impact of divine wisdom in your life.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/contact">
-                  <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
-                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                    <span className="relative flex items-center gap-2.5">
-                      <MessageCircle className="w-4 h-4" /> Talk to Expert
-                    </span>
-                  </button>
-                </Link>
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
+                  className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="relative flex items-center gap-2.5">
+                    <MessageCircle className="w-4 h-4" /> Book Puja Now
+                  </span>
+                </button>
                 <Link to="/contact">
                   <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                     <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
