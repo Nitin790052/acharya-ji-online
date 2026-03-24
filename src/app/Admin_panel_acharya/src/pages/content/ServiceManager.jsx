@@ -181,13 +181,13 @@ const ServiceManager = () => {
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {/* Row 1 */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Row 1: Title, Category, Href */}
                     <div className="space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Service Title</label>
                         <input
                             type="text" name="title" value={formData.title} onChange={handleInputChange} required
-                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold"
                             placeholder="e.g. Online Puja"
                         />
                     </div>
@@ -195,7 +195,7 @@ const ServiceManager = () => {
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Category</label>
                         <select
                             name="category" value={formData.category} onChange={handleInputChange}
-                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold"
                         >
                             <option value="core">Core Service (Top 6)</option>
                             <option value="detailed">Detailed Service (Bottom)</option>
@@ -205,29 +205,32 @@ const ServiceManager = () => {
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Link (Href)</label>
                         <input
                             type="text" name="href" value={formData.href} onChange={handleInputChange} required
-                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold"
                             placeholder="/puja/online"
                         />
                     </div>
 
-                    {/* Row 2 */}
+                    {/* Row 2: Description (2/3) and Order (1/3) */}
                     <div className="md:col-span-2 space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Description</label>
                         <textarea
                             name="description" value={formData.description} onChange={handleInputChange} required
-                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl h-20 resize-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl h-20 resize-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
                             placeholder="Enter short service overview..."
                         />
                     </div>
                     <div className="space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Display Order</label>
-                        <input
-                            type="number" name="order" value={formData.order} onChange={handleInputChange}
-                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                        />
+                        <div className="relative">
+                           <input
+                               type="number" name="order" value={formData.order} onChange={handleInputChange}
+                               className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold h-20"
+                           />
+                           <p className="absolute bottom-2 right-3 text-[9px] text-gray-400 font-bold">LOWER = FIRST</p>
+                        </div>
                     </div>
 
-                    {/* Row 3 */}
+                    {/* Row 3: Icons (2/3) and Image (1/3) */}
                     <div className="md:col-span-2 space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Icon Selection</label>
                         <div className="grid grid-cols-7 sm:grid-cols-10 md:grid-cols-14 gap-1.5 border border-gray-200 p-2 rounded-xl bg-gray-50">
@@ -246,7 +249,7 @@ const ServiceManager = () => {
                     </div>
                     <div className="space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Service Image</label>
-                        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden h-14">
+                        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden h-[46px]">
                             {imagePreview ? (
                                 <div className="relative group w-full h-full">
                                     <img src={imagePreview} className="w-full h-full object-cover" />
@@ -265,6 +268,7 @@ const ServiceManager = () => {
                         </div>
                     </div>
                 </div>
+
 
                 <div className="flex justify-end gap-3 mt-5 pt-4 border-t border-gray-50">
                     <button type="button" onClick={resetForm} className="px-5 py-2 text-xs font-bold text-white bg-red-400 hover:bg-red-700 rounded-xl transition-all uppercase tracking-wider">

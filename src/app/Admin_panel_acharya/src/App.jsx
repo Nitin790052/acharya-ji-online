@@ -26,6 +26,8 @@ import FAQManager from "./pages/content/FAQManager";
 import FooterManager from "./pages/content/FooterManager";
 import AboutPageManager from "./pages/content/AboutPageManager";
 import PujaOfferingManager from "./pages/content/PujaOfferingManager";
+import BookPujaManager from "./pages/content/BookPujaManager";
+import BookPujaContentManager from "./pages/content/BookPujaContentManager";
 
 function AdminApp() {
   return (
@@ -63,6 +65,8 @@ function AdminApp() {
           <Route path="content/about-us" element={<AboutUsManager />} />
           <Route path="content/services" element={<ServiceManager />} />
           <Route path="content/puja-offerings" element={<PujaOfferingManager />} />
+          <Route path="content/book-puja" element={<BookPujaManager />} />
+          <Route path="content/book-puja-content" element={<BookPujaContentManager />} />
           <Route path="content/popular-pujas" element={<PopularPujaManager />} />
           <Route path="content/astrologers" element={<AstrologerManager />} />
           <Route path="content/kundli" element={<KundliManager />} />

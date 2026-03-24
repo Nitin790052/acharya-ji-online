@@ -304,9 +304,9 @@ const PujaOfferingManager = () => {
                                 </div>
                             </div>
 
-                            {/* Main Image Selector */}
+                            {/* Intro Section Image Selector */}
                             <div className="space-y-2">
-                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block text-center">Hero Visual</label>
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block text-center">Intro Section Visual</label>
                                 <div className="relative h-44 w-full border-2 border-dashed border-gray-200 rounded-[2rem] bg-gray-50 hover:bg-blue-50/50 hover:border-blue-200 transition-all flex flex-col items-center justify-center overflow-hidden cursor-pointer group">
                                     {imagePreview ? (
                                         <>
@@ -318,7 +318,7 @@ const PujaOfferingManager = () => {
                                     ) : (
                                         <>
                                             <ImageIcon size={32} className="text-gray-300 mb-1" />
-                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Upload</p>
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Detail View<br />Upload</p>
                                         </>
                                     )}
                                     <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" />

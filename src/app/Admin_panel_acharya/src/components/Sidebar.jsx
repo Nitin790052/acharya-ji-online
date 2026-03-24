@@ -125,6 +125,8 @@ const Sidebar = ({
       key: "pooja-services", icon: <FiStar />, label: "Puja Services",
       children: [
         { key: "puja-offerings", icon: <FiPackage />, label: "Puja Offerings", path: "/admin-acharya/dashboard/content/puja-offerings" },
+        { key: "book-puja", icon: <FiCalendar />, label: "Book Puja Requests", path: "/admin-acharya/dashboard/content/book-puja" },
+        { key: "book-puja-content", icon: <FiFileText />, label: "Book Puja Manager", path: "/admin-acharya/dashboard/content/book-puja-content" },
       ]
     },
 
@@ -232,7 +234,7 @@ const Sidebar = ({
           <div className={`flex items-center ${isMobile ? 'justify-start' : (isCollapsed ? 'justify-center' : 'justify-start')}`}>
             <div className={`flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? '' : 'gap-3')}`}>
               <div className={`
-                bg-white/40 backdrop-blur-md border border-white/60
+                bg-white/10 backdrop-blur-md border border-white/10
                 rounded-xl flex items-center justify-center text-white shadow-sm
                 w-16 h-16
               `}>

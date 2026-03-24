@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Clock, CheckCircle, MessageCircle, Users, Award, Star, Home, Video,
   Sparkles, Sparkle, Shield, Calendar, Phone, MapPin, ChevronRight, BookOpen, X,
@@ -8,20 +8,63 @@ import { Link, useNavigate } from "react-router-dom";
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { useGetAllOfferingsQuery } from "@/services/pujaOfferingApi";
+import { useCreateBookingMutation } from "@/services/bookingApi";
+import { 
+    useGetStepsQuery, 
+    useGetExpertsQuery, 
+    useGetSamagriQuery, 
+    useGetFAQsQuery 
+} from "@/services/bookPujaContentApi";
 import { API_URL } from '@/config/apiConfig';
+import { toast } from 'react-toastify';
 
 const BACKEND_URL = API_URL.replace(/\/api\/?$/, '');
-
-const acharyas = [
-  { name: 'Pandit Raghunath Sharma', experience: '25+ years', expertise: 'Vedic Rituals & Havan', rating: 4.9 },
-  { name: 'Acharya Vishwanath Joshi', experience: '18+ years', expertise: 'Graha Dosh & Puja', rating: 4.8 },
-  { name: 'Pandit Hari Om Tiwari', experience: '20+ years', expertise: 'Marriage & Vivah Puja', rating: 4.9 }
-];
 
 export default function BookPuja() {
   const navigate = useNavigate();
   const banner = usePageBanner();
-  const { data: pujaServices = [], isLoading, isError } = useGetAllOfferingsQuery(undefined, { pollingInterval: 3000 });
+  
+  // Dynamic Content Queries
+  const { data: pujaServices = [] } = useGetAllOfferingsQuery(undefined, { pollingInterval: 3000 });
+  const { data: dbSteps = [] } = useGetStepsQuery();
+  const { data: dbExperts = [] } = useGetExpertsQuery();
+  const { data: dbSamagri = [] } = useGetSamagriQuery();
+  const { data: dbFAQs = [] } = useGetFAQsQuery();
+  const [createBooking] = useCreateBookingMutation();
+
+  // Mapping DB Steps to local format
+  const bookingSteps = useMemo(() => {
+    if (dbSteps && dbSteps.length > 0) {
+      return [...dbSteps].sort((a,b) => (a.order || 0) - (b.order || 0)).map(s => ({
+         n: s.number, t: s.title, s: s.subtitle, d: s.hindiTitle, f: s.fields || []
+      }));
+    }
+    return [
+      { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें", f: [] },
+      { n: "2", t: "Date & Time", s: "Pick a slot", d: "तारीख और समय", f: [] },
+      { n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें", f: [
+        { name: "name", label: "Full Name", placeholder: "Karan Singh", type: "text", required: true },
+        { name: "mobile", label: "Mobile Number", placeholder: "98XXXXXXXX", type: "tel", required: true },
+        { name: "city", label: "City / Location", placeholder: "Mumbai", type: "text", required: true },
+        { name: "message", label: "Personal Message", placeholder: "Any specific requirements for your puja?", type: "textarea", required: false }
+      ] },
+      { n: "4", t: "Priest Match", s: "Expert assigned", d: "आचार्य नियुक्ति", f: [] },
+      { n: "5", t: "Ritual Done", s: "Divine blessings", d: "पूजा संपन्न", f: [] }
+    ];
+  }, [dbSteps]);
+
+  const acharyas = dbExperts.length > 0 ? dbExperts : [
+    { name: 'Pandit Raghunath Sharma', experience: '25+ years', expertise: 'Vedic Rituals & Havan', rating: 4.9 },
+    { name: 'Acharya Vishwanath Joshi', experience: '18+ years', expertise: 'Graha Dosh & Puja', rating: 4.8 },
+    { name: 'Pandit Hari Om Tiwari', experience: '20+ years', expertise: 'Marriage & Vivah Puja', rating: 4.9 }
+  ];
+
+  const samagriList = dbSamagri.length > 0 ? dbSamagri : [
+    { title: "Samagri Included", subtitle: "सभी आवश्यक सामग्री शामिल", description: "Pure and authenticated samagri provided for every ritual type." },
+    { title: "Verified Sources", subtitle: "आचार्य द्वारा व्यवस्था", description: "Directly sourced from trusted Vedic material suppliers." },
+    { title: "On-Time Arrival", subtitle: "घर पर उपलब्धता", description: "Materials delivered to your doorstep 1 hour before the puja." }
+  ];
+
   const [selectedPuja, setSelectedPuja] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -31,38 +74,45 @@ export default function BookPuja() {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
-  const bookingSteps = [
-    { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें" },
-    { n: "2", t: "Date & Time", s: "Pick a slot", d: "तारीख और समय" },
-    { n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें" },
-    { n: "4", t: "Priest Match", s: "Expert assigned", d: "आचार्य नियुक्ति" },
-    { n: "5", t: "Ritual Done", s: "Divine blessings", d: "पूजा संपन्न" }
-  ];
-
   const validateStep = (step) => {
     let newErrors = {};
+    const stepData = bookingSteps.find(s => Number(s.n) === Number(step));
+    
     if (step === 1) {
       if (!formData.pujaType) newErrors.pujaType = "Please select a puja";
     } else if (step === 2) {
       if (!formData.date) newErrors.date = "Please select a date";
       if (!formData.mode) newErrors.mode = "Please select a mode";
-    } else if (step === 3) {
-      if (!formData.name) newErrors.name = "Name is required";
-      if (!formData.mobile || formData.mobile.length < 10) newErrors.mobile = "Valid mobile number is required";
-      if (!formData.city) newErrors.city = "City is required";
+    } else if (stepData && stepData.f && stepData.f.length > 0) {
+      // Dynamic validation for steps with fields
+      stepData.f.forEach(field => {
+        if (field.required && !formData[field.name]) {
+          newErrors[field.name] = `${field.label} is required`;
+        }
+        if (field.type === 'tel' && formData[field.name] && formData[field.name].length < 10) {
+          newErrors[field.name] = "Valid mobile number is required";
+        }
+      });
     }
+    
+    // Safety check: if we are at step 3 and have no errors but fields are missing, something is wrong
+    if (step === 3 && Object.keys(newErrors).length === 0 && (!stepData || stepData.f.length === 0)) {
+       console.error("Step 3 data not found or has no fields. Blocking submit.");
+       toast.error("Form configuration error. Please sync defaults in admin panel.");
+       return false;
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const nextStep = () => {
+    console.log("Current Booking Steps Data:", bookingSteps);
     if (validateStep(currentStep)) {
       if (currentStep === 3) {
         // Automatically move to step 4 (Simulated match)
         setCurrentStep(4);
-        setTimeout(() => {
-          handleSubmit();
-        }, 3000);
+        handleSubmit();
       } else {
         setCurrentStep(prev => prev + 1);
       }
@@ -75,28 +125,40 @@ export default function BookPuja() {
 
   const handlePujaSelect = (puja) => {
     setSelectedPuja(puja);
-    setFormData({ ...formData, pujaType: puja.title, mode: puja.serviceModes?.[0]?.mode || '' });
+    setFormData(prev => ({ ...prev, pujaType: puja.title, mode: puja.serviceModes?.[0]?.mode || '' }));
     setErrors({});
     setCurrentStep(2);
     setShowBookingForm(true);
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = () => {
-    setSubmitted(true);
-    setCurrentStep(5);
-    setTimeout(() => {
-      setSubmitted(false);
-      setShowBookingForm(false);
-      setSelectedPuja(null);
-      setCurrentStep(1);
-      setFormData({
-        name: '', mobile: '', city: '', pujaType: '', date: '', mode: '', message: ''
-      });
-    }, 4000);
+  const handleSubmit = async () => {
+    try {
+      // Final sanity check
+      if (!formData.name || !formData.mobile || !formData.city) {
+         throw new Error("Core fields are missing. Please ensure Step 3 is correctly populated.");
+      }
+      console.log('Sending final booking data:', formData);
+      await createBooking(formData).unwrap();
+      setSubmitted(true);
+      setCurrentStep(5);
+      setTimeout(() => {
+        setSubmitted(false);
+        setShowBookingForm(false);
+        setSelectedPuja(null);
+        setCurrentStep(1);
+        setFormData({
+          name: '', mobile: '', city: '', pujaType: '', date: '', mode: '', message: ''
+        });
+      }, 4000);
+    } catch (err) {
+      console.error('Submit Error Details:', err);
+      toast.error(err.message || err.data?.message || 'Booking failed. Please check all fields.');
+      setCurrentStep(3); // Go back to form
+    }
   };
 
   return (
@@ -120,11 +182,11 @@ export default function BookPuja() {
                   <Award className="w-4 h-4 text-[#FFC107]" />
                   <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase text-center">
                   {banner.titleHighlight1} <br />
                   <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
                 </h1>
-                <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-10">
+                <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-10 text-center">
                   {banner.subtitle}
                 </p>
 
@@ -166,13 +228,7 @@ export default function BookPuja() {
               <div className="relative max-w-5xl mx-auto">
                 <div className="hidden md:block absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-orange-200 to-transparent"></div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-8 md:gap-4">
-                  {[
-                    { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें" },
-                    { n: "2", t: "Date & Time", s: "Pick a slot", d: "तारीख और समय" },
-                    { n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें" },
-                    { n: "4", t: "Priest Match", s: "Expert assigned", d: "आचार्य नियुक्ति" },
-                    { n: "5", t: "Ritual Done", s: "Divine blessings", d: "पूजा संपन्न" }
-                  ].map((step, idx) => (
+                  {bookingSteps.map((step, idx) => (
                     <div key={idx} className="relative flex flex-col items-center animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
                       <div className="relative w-20 h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-none flex flex-col items-center justify-center mb-5 border-4 border-white shadow-xl z-10">
                         <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">{step.n}</span>
@@ -251,7 +307,7 @@ export default function BookPuja() {
                           </div>
                         </div>
                         <div className="mt-auto pt-5 border-t border-orange-50 flex items-center justify-between">
-                          <div className="flex flex-col">
+                          <div className="flex flex-col text-left">
                             <span className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] mb-1">Starting From</span>
                             <span className="text-xl font-black text-[#2A1D13] uppercase">₹{puja.price}</span>
                           </div>
@@ -287,296 +343,351 @@ export default function BookPuja() {
 
           {/* Booking Modal */}
           {showBookingForm && (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4">
               <div
-                onClick={() => setShowBookingForm(false)}
-                className="absolute inset-0 bg-black/70 backdrop-blur-md"
+                onClick={() => { if (currentStep < 4) setShowBookingForm(false); }}
+                className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
               />
               
               <div
-                className="relative w-full max-w-5xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[95vh] md:max-h-[90vh] rounded-none animate-scale-in"
+                className="relative w-full max-w-5xl bg-white shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col max-h-[98vh] md:max-h-[90vh] rounded-none animate-scale-in"
               >
                 {/* Close Button */}
-                <button 
+                {currentStep < 5 && (
+                  <button 
                   onClick={() => setShowBookingForm(false)}
-                  className="absolute top-4 right-4 z-50 text-gray-400 hover:text-orange-600 transition-colors bg-white/80 p-1 backdrop-blur-sm"
+                  className="absolute top-6 right-6 z-50 text-gray-400 hover:text-orange-600 transition-all p-2 bg-white/50 backdrop-blur-md border border-gray-100"
                 >
                   <X className="w-6 h-6" />
                 </button>
-
-                {/* Step Indicator Header - Matching User's Image */}
-                <div className="bg-[#FAF9F6] border-b border-orange-100 p-6 md:p-8 shrink-0">
-                  <div className="relative max-w-4xl mx-auto">
-                    {/* Progress Line */}
-                    <div className="absolute top-10 left-[10%] right-[10%] h-[1.5px] bg-orange-100 hidden md:block">
-                      <div 
-                        className="h-full bg-orange-500 transition-all duration-500"
-                        style={{ width: `${((currentStep - 1) / 4) * 100}%` }}
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-5 gap-2 relative z-10">
-                      {bookingSteps.map((step, idx) => {
-                        const stepNum = idx + 1;
-                        const isActive = currentStep === stepNum;
-                        const isCompleted = currentStep > stepNum;
-
-                        return (
-                          <div key={idx} className="flex flex-col items-center">
-                            <div 
-                              className={`w-10 h-10 md:w-16 md:h-16 flex items-center justify-center border-4 border-white shadow-lg relative transition-all duration-300 ${
-                                isActive ? 'bg-white' : isCompleted ? 'bg-orange-50' : 'bg-white/50'
-                              }`}
-                            >
-                              {isCompleted ? (
-                                <div className="absolute -bottom-1 -right-1 w-5 h-5 md:w-7 md:h-7 bg-green-500 flex items-center justify-center border-2 border-white shadow-md">
-                                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-white" />
-                                </div>
-                              ) : null}
-                              <span className={`text-lg md:text-2xl font-bold ${
-                                isActive ? 'text-orange-600' : isCompleted ? 'text-orange-400' : 'text-gray-300'
-                              }`}>
-                                {step.n}
-                              </span>
-                              {isActive && (
-                                <div className="absolute inset-0 border-2 border-orange-300 animate-pulse opacity-40"></div>
-                              )}
-                            </div>
-                            <div className="mt-3 text-center hidden md:block">
-                              <h4 className={`text-[10px] font-black uppercase tracking-widest mb-0.5 ${isActive ? 'text-orange-600' : 'text-[#4A3427]'}`}>
-                                {step.t}
-                              </h4>
-                              <p className="text-orange-600 text-[9px] font-bold uppercase mb-0.5">{step.d}</p>
-                              <p className="text-gray-400 text-[8px] font-bold uppercase tracking-[0.2em]">{step.s}</p>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
+                )}
 
                 <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-                  {/* Sidebar Info - Hidden on mobile for brevity */}
-                  <div className="hidden lg:block w-72 bg-[#2A1D13] p-10 text-white relative">
-                    <div className="relative z-10">
-                      <div className="w-12 h-12 bg-orange-600 flex items-center justify-center mb-8">
-                        <Award className="w-6 h-6 text-white" />
+                  {/* Sidebar Info - Persistent Summary */}
+                  <div className="hidden lg:flex w-80 bg-[#2A1D13] p-10 text-white flex-col relative overflow-hidden text-left">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full -mr-16 -mt-16 blur-3xl opacity-50" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-600/10 rounded-full -ml-16 -mb-16 blur-3xl opacity-50" />
+                    
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="w-14 h-14 bg-orange-600 flex items-center justify-center mb-10 shadow-xl border border-orange-500/20">
+                        <Award className="w-7 h-7 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold mb-8 uppercase tracking-tighter border-b border-white/10 pb-4">Booking Info</h3>
                       
-                      <div className="space-y-8">
-                        <div>
-                          <p className="text-orange-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
-                            <Star className="w-3 h-3" /> Selected
+                      <h3 className="text-2xl font-black mb-10 uppercase tracking-tighter border-b border-white/10 pb-6 flex items-center gap-3">
+                        <Sparkle className="w-6 h-6 text-orange-500" />
+                        Status
+                      </h3>
+                      
+                      <div className="space-y-10 flex-1">
+                        <div className={`transition-all duration-500 ${currentStep >= 1 ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
+                          <p className="text-orange-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
+                             Selected Ritual
                           </p>
-                          <p className="text-lg font-bold text-white uppercase leading-tight">{formData.pujaType || "Not Selected"}</p>
+                          <p className="text-lg font-black text-white uppercase leading-tight tracking-tight">
+                            {formData.pujaType || "Not Selected"}
+                          </p>
                         </div>
                         
-                        {formData.date && (
-                          <div>
-                            <p className="text-orange-400 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
-                              <Clock className="w-3 h-3" /> Scheduled
-                            </p>
-                            <p className="text-white font-bold">{formData.date}</p>
-                          </div>
-                        )}
-
-                        <div className="pt-10">
-                          <p className="text-[10px] text-amber-100/50 font-bold leading-relaxed italic uppercase tracking-[0.1em]">
-                            Vedic Rituals performed by verified Acharyas.
+                        <div className={`transition-all duration-500 delay-100 ${currentStep >= 2 ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
+                          <p className="text-orange-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
+                             Schedule
                           </p>
+                          <div className="space-y-1">
+                            <p className="text-sm font-bold text-white uppercase">{formData.date || "Date Not Set"}</p>
+                            <p className="text-xs font-bold text-amber-200/60 uppercase tracking-widest">{formData.mode || "--"}</p>
+                          </div>
                         </div>
+
+                        <div className={`transition-all duration-500 delay-200 ${currentStep >= 3 ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
+                          <p className="text-orange-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
+                             Details
+                          </p>
+                          <p className="text-sm font-bold text-white uppercase">{formData.name || "Awaiting Info"}</p>
+                          <p className="text-[10px] font-medium text-amber-100/50 uppercase tracking-widest mt-1">{formData.mobile}</p>
+                        </div>
+                      </div>
+
+                      <div className="pt-10 border-t border-white/10 mt-auto">
+                        <div className="flex items-center gap-3 text-orange-500 mb-2">
+                          <CheckCircle className="w-4 h-4" />
+                          <span className="text-[10px] font-black uppercase tracking-widest">Verified Expert Puja</span>
+                        </div>
+                        <p className="text-[9px] text-white/40 font-bold leading-relaxed uppercase tracking-wider">
+                          Vedic Traditions • Modern Tech
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Step Content Area */}
-                  <div className="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar bg-white">
-                    {currentStep === 1 && (
-                      <div className="space-y-6 animate-fade-in">
-                        <div className="mb-8">
-                          <h2 className="text-3xl font-bold text-[#2A1D13] uppercase tracking-tight">Select <span className="text-orange-600">Puja</span></h2>
-                          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Which service do you require?</p>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          {pujaServices.map((puja) => (
-                            <button
-                              key={puja.id}
-                              onClick={() => {
-                                setSelectedPuja(puja);
-                                setFormData(prev => ({ ...prev, pujaType: puja.name }));
-                                setErrors({});
-                              }}
-                              className={`p-4 text-left border-2 transition-all duration-300 flex items-center gap-4 group ${
-                                formData.pujaType === puja.name 
-                                ? 'border-orange-500 bg-orange-50/50' 
-                                : 'border-gray-100 hover:border-orange-200'
-                              }`}
-                            >
-                              <div className="w-12 h-12 shrink-0 bg-white shadow-md overflow-hidden">
-                                <img src={puja.image} alt="" className="w-full h-full object-cover" />
+                  {/* Main Interaction Area */}
+                  <div className="flex-1 flex flex-col min-h-0 bg-[#FAF9F6]">
+                    {/* Header Progress Header */}
+                    <div className="bg-white border-b border-orange-100 p-6 md:p-8 shrink-0 shadow-sm relative z-20">
+                      <div className="max-w-4xl mx-auto">
+                         <div className="flex justify-between items-center mb-6 text-left">
+                            <div>
+                               <h2 className="text-xl md:text-2xl font-black text-[#2A1D13] uppercase tracking-normal">
+                                  {bookingSteps[currentStep - 1]?.t}
+                               </h2>
+                               <p className="text-orange-600 text-[10px] font-black uppercase tracking-[0.2em]">{bookingSteps[currentStep - 1]?.d}</p>
+                            </div>
+                            <div className="text-right">
+                               <span className="text-2xl md:text-3xl font-black text-orange-100">{currentStep} / 5</span>
+                            </div>
+                         </div>
+                        
+                        <div className="relative flex justify-between items-center">
+                          <div className="absolute top-1/2 left-0 right-0 h-[1.5px] bg-orange-50 -translate-y-1/2 -z-10" />
+                          <div 
+                            className="absolute top-1/2 left-0 h-[1.5px] bg-orange-500 -translate-y-1/2 transition-all duration-1000 -z-10"
+                            style={{ width: `${Math.max(0, ((currentStep - 1) / 4) * 100)}%` }}
+                          />
+                          
+                          {bookingSteps.map((step, idx) => {
+                            const stepNum = idx + 1;
+                            const isActive = currentStep === stepNum;
+                            const isCompleted = currentStep > stepNum;
+                            return (
+                              <div key={idx} className="relative group">
+                                <div className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center transition-all duration-500 border-2 ${
+                                  isActive ? 'bg-orange-600 border-orange-600 scale-110 shadow-lg' : 
+                                  isCompleted ? 'bg-orange-100 border-orange-100' : 'bg-white border-orange-50'
+                                }`}>
+                                  {isCompleted ? (
+                                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
+                                  ) : (
+                                    <span className={`text-[10px] md:text-sm font-black ${isActive ? 'text-white' : 'text-orange-200'}`}>{step.n}</span>
+                                  )}
+                                </div>
+                                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 hidden lg:block w-max">
+                                   <p className={`text-[8px] font-black uppercase tracking-[0.15em] ${isActive ? 'text-orange-600' : 'text-gray-300'}`}>
+                                      {step.t}
+                                   </p>
+                                </div>
                               </div>
-                              <div className="flex-1">
-                                <h4 className={`text-sm font-black uppercase tracking-tight ${formData.pujaType === puja.name ? 'text-orange-600' : 'text-[#4A3427]'}`}>
-                                  {puja.name}
-                                </h4>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{puja.price}</p>
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                        {errors.pujaType && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.pujaType}</p>}
-                        <div className="pt-8 flex justify-end">
-                          <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-10 py-4 shadow-xl transition-all duration-300">Continue</button>
+                            );
+                          })}
                         </div>
                       </div>
-                    )}
+                    </div>
 
-                    {currentStep === 2 && (
-                      <div className="space-y-8 animate-fade-in">
-                        <div className="mb-8">
-                          <h2 className="text-3xl font-bold text-[#2A1D13] uppercase tracking-tight">Date & <span className="text-orange-600">Mode</span></h2>
-                          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Pick a slot for {selectedPuja?.name}</p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Select Preferred Date *</label>
-                            <input 
-                              type="date" 
-                              name="date" 
-                              value={formData.date} 
-                              onChange={handleChange} 
-                              className={`w-full bg-orange-50/30 border ${errors.date ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} 
-                            />
-                            {errors.date && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.date}</p>}
-                          </div>
-
-                          <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Puja Mode *</label>
-                            <div className="grid grid-cols-1 gap-3">
-                              {selectedPuja?.modes.map(mode => (
+                    {/* Step Content Area */}
+                    <div className="flex-1 overflow-y-auto p-6 md:p-14 custom-scrollbar text-left text-[#2A1D13]">
+                      <div className="max-w-3xl mx-auto">
+                        {currentStep === 1 && (
+                          <div className="space-y-8 animate-fade-in-up">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              {pujaServices.map((puja) => (
                                 <button
-                                  key={mode}
-                                  onClick={() => setFormData(prev => ({ ...prev, mode }))}
-                                  className={`flex items-center gap-4 p-4 border-2 transition-all duration-300 ${
-                                    formData.mode === mode 
-                                    ? 'border-orange-500 bg-orange-50/50' 
-                                    : 'border-gray-100 hover:border-orange-100'
+                                  key={puja._id}
+                                  onClick={() => handlePujaSelect(puja)}
+                                  className={`p-5 text-left transition-all duration-300 flex items-center gap-5 border-2 group relative overflow-hidden ${
+                                    formData.pujaType === puja.title 
+                                    ? 'border-orange-500 bg-white shadow-xl' 
+                                    : 'border-white bg-white/50 hover:border-orange-100'
                                   }`}
                                 >
-                                  <div className={`w-10 h-10 flex items-center justify-center ${formData.mode === mode ? 'bg-orange-600 text-white' : 'bg-white text-orange-600'}`}>
-                                    {mode === 'Online' ? <Video className="w-5 h-5" /> : <Home className="w-5 h-5" />}
+                                  <div className="w-14 h-14 shrink-0 shadow-lg overflow-hidden border-2 border-white">
+                                    <img src={puja.imageUrl?.startsWith('http') ? puja.imageUrl : `${BACKEND_URL}${puja.imageUrl}`} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                   </div>
-                                  <div className="text-left">
-                                    <h4 className="text-sm font-black uppercase tracking-tight">{mode}</h4>
-                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.2em]">{mode === 'Online' ? 'Connect via Video' : 'Acharya at Home'}</p>
+                                  <div className="flex-1">
+                                    <h4 className={`text-xs font-black uppercase tracking-tight transition-colors ${formData.pujaType === puja.title ? 'text-orange-600' : 'text-[#4A3427]'}`}>
+                                      {puja.title}
+                                    </h4>
+                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">₹{puja.price}</p>
                                   </div>
                                 </button>
                               ))}
                             </div>
-                            {errors.mode && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.mode}</p>}
-                          </div>
-                        </div>
-
-                        <div className="pt-8 flex justify-between">
-                          <button onClick={prevStep} className="text-gray-400 hover:text-orange-600 font-black text-xs uppercase tracking-[0.2em]">← Back</button>
-                          <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-10 py-4 shadow-xl">Continue</button>
-                        </div>
-                      </div>
-                    )}
-
-                    {currentStep === 3 && (
-                      <div className="space-y-6 animate-fade-in">
-                        <div className="mb-8">
-                          <h2 className="text-3xl font-bold text-[#2A1D13] uppercase tracking-tight">Your <span className="text-orange-600">Details</span></h2>
-                          <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.2em] mt-2">Enter your contact information</p>
-                        </div>
-
-                        <div className="space-y-4">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-1.5">
-                              <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Full Name *</label>
-                              <input type="text" name="name" value={formData.name} onChange={handleChange} className={`w-full bg-orange-50/30 border ${errors.name ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} placeholder="Yogesh Sharma" />
-                              {errors.name && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.name}</p>}
-                            </div>
-                            <div className="space-y-1.5">
-                              <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Mobile No *</label>
-                              <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} className={`w-full bg-orange-50/30 border ${errors.mobile ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} placeholder="9876543210" />
-                              {errors.mobile && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.mobile}</p>}
+                            {errors.pujaType && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><AlertCircle size={14}/> {errors.pujaType}</p>}
+                            <div className="pt-10 flex justify-end">
+                              <button onClick={nextStep} className="group bg-[#E8453C] hover:bg-black text-white font-black text-[10px] uppercase tracking-[0.25em] px-14 py-4 shadow-xl transition-all duration-500 flex items-center gap-3">
+                                Ritual Choice <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                              </button>
                             </div>
                           </div>
-                          <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">City/Location *</label>
-                            <input type="text" name="city" value={formData.city} onChange={handleChange} className={`w-full bg-orange-50/30 border ${errors.city ? 'border-red-300' : 'border-gray-100'} px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none`} placeholder="New Delhi" />
-                            {errors.city && <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{errors.city}</p>}
-                          </div>
-                          <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Special Requests (Optional)</label>
-                            <textarea name="message" value={formData.message} onChange={handleChange} rows="2" className="w-full bg-orange-50/30 border border-gray-100 px-5 py-4 font-bold text-[#4A3427] focus:border-orange-500 outline-none resize-none" placeholder="Any specific requirements?"></textarea>
-                          </div>
-                        </div>
+                        )}
 
-                        <div className="pt-8 flex justify-between">
-                          <button onClick={prevStep} className="text-gray-400 hover:text-orange-600 font-black text-xs uppercase tracking-[0.2em]">← Back</button>
-                          <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] px-10 py-4 shadow-xl">Submit Booking</button>
-                        </div>
-                      </div>
-                    )}
+                        {currentStep === 2 && (
+                          <div className="space-y-10 animate-fade-in-up">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                              <div className="space-y-3">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
+                                  <Calendar className="w-4 h-4 text-orange-600" /> Preferred Date *
+                                </label>
+                                <input 
+                                  type="date" 
+                                  name="date" 
+                                  min={new Date().toISOString().split('T')[0]}
+                                  value={formData.date} 
+                                  onChange={handleChange} 
+                                  className={`w-full bg-white border-2 ${errors.date ? 'border-red-300' : 'border-orange-50'} px-6 py-5 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all`} 
+                                />
+                                {errors.date && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors.date}</p>}
+                              </div>
 
-                    {currentStep === 4 && (
-                      <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in">
-                        <div className="relative mb-12">
-                          <div className="w-32 h-32 bg-orange-50 rounded-full flex items-center justify-center animate-[spin_4s_linear_infinite]">
-                            <div className="absolute inset-0 border-t-4 border-orange-600 rounded-full"></div>
-                          </div>
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Users className="w-12 h-12 text-orange-600 animate-pulse" />
-                          </div>
-                        </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-[#2A1D13] uppercase tracking-tighter mb-4">
-                          Matching <span className="text-orange-600">Expert Acharya</span>
-                        </h2>
-                        <p className="text-gray-400 text-xs font-bold uppercase tracking-[0.3em] max-w-sm mx-auto leading-relaxed">
-                          Finding the most suitable verified expert for your {formData.pujaType}...
-                        </p>
-                        
-                        <div className="mt-12 flex items-center gap-2 justify-center">
-                          <span className="w-2 h-2 bg-orange-600 animate-bounce"></span>
-                          <span className="w-2 h-2 bg-orange-600 animate-bounce [animation-delay:0.2s]"></span>
-                          <span className="w-2 h-2 bg-orange-600 animate-bounce [animation-delay:0.4s]"></span>
-                        </div>
-                      </div>
-                    )}
+                              <div className="space-y-3">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
+                                  <Shield className="w-4 h-4 text-orange-600" /> Puja Mode *
+                                </label>
+                                <div className="grid grid-cols-1 gap-3">
+                                  {['Online', 'Home Visit'].map(mode => (
+                                    <button
+                                      key={mode}
+                                      type="button"
+                                      onClick={() => setFormData(prev => ({ ...prev, mode }))}
+                                      className={`flex items-center gap-4 p-5 border-2 transition-all duration-300 ${
+                                        formData.mode === mode 
+                                        ? 'border-orange-500 bg-white shadow-xl' 
+                                        : 'border-white bg-white/50 hover:border-orange-50'
+                                      }`}
+                                    >
+                                      <div className={`w-10 h-10 flex items-center justify-center transition-all ${formData.mode === mode ? 'bg-orange-600 text-white' : 'bg-orange-50 text-orange-600'}`}>
+                                        {mode === 'Online' ? <Video className="w-5 h-5" /> : <Home className="w-5 h-5" />}
+                                      </div>
+                                      <div className="text-left">
+                                        <h4 className="text-[10px] font-black uppercase tracking-wider">{mode}</h4>
+                                        <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.1em] mt-0.5">{mode === 'Online' ? 'Sacred Video Call' : 'Acharya at Home'}</p>
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
+                                {errors.mode && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors.mode}</p>}
+                              </div>
+                            </div>
 
-                    {currentStep === 5 && (
-                      <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in">
-                        <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mb-8 shadow-inner">
-                          <CheckCircle className="w-14 h-14 text-green-600 animate-[bounce_1s_ease-in-out_infinite]" />
-                        </div>
-                        <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] uppercase tracking-tight mb-6">Booking <span className="text-green-600">Confirmed!</span></h2>
-                        <div className="space-y-4 mb-10">
-                          <p className="text-[#4A3427] font-bold text-lg leading-relaxed">
-                            आपकी पूजा सफलतापूर्वक बुक हो गई है।
-                          </p>
-                          <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] max-w-md mx-auto">
-                            Our spiritual desk will contact you at <span className="text-orange-600">{formData.mobile}</span> within 15-30 minutes for final scheduling and priest assignment.
-                          </p>
-                        </div>
-                        
-                        <div 
-                          className="bg-[#FFFAF3] p-4 border border-orange-100 w-full max-w-sm animate-fade-in"
-                          style={{ animationDelay: '0.5s', animationFillMode: 'both' }}
-                        >
-                          <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-[#2A1D13]">
-                            <span>Booking ID</span>
-                            <span className="text-orange-600">#{Math.random().toString(36).substr(2, 8).toUpperCase()}</span>
+                            <div className="pt-10 flex justify-between items-center border-t border-orange-50">
+                              <button onClick={prevStep} className="text-gray-400 hover:text-orange-600 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2 transition-colors">
+                                <ChevronRight className="w-4 h-4 rotate-180" /> Previous
+                              </button>
+                              <button onClick={nextStep} className="bg-[#E8453C] hover:bg-black text-white font-black text-[10px] uppercase tracking-[0.3em] px-14 py-4 shadow-xl transition-all flex items-center gap-3">
+                                Set Schedule <ChevronRight className="w-5 h-5" />
+                              </button>
+                            </div>
                           </div>
-                        </div>
+                        )}
+
+                        {currentStep === 3 && (
+                          <div className="space-y-8 animate-fade-in-up">
+                            <div className="space-y-6">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {(bookingSteps.find(s => Number(s.n) === 3)?.f || []).filter(f => f.type !== 'textarea').map((field, idx) => (
+                                  <div key={idx} className="space-y-2">
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">{field.label} {field.required && '*'}</label>
+                                    <div className="relative">
+                                       {field.type === 'tel' ? <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-200" /> : <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-200" />}
+                                       <input 
+                                          type={field.type === 'tel' ? 'tel' : 'text'} 
+                                          name={field.name} 
+                                          value={formData[field.name] || ''} 
+                                          onChange={handleChange} 
+                                          className={`w-full bg-white border-2 ${errors[field.name] ? 'border-red-300' : 'border-orange-50'} pl-12 pr-6 py-4 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all`} 
+                                          placeholder={field.placeholder} 
+                                       />
+                                    </div>
+                                    {errors[field.name] && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors[field.name]}</p>}
+                                  </div>
+                                ))}
+                              </div>
+                              
+                              {/* Textarea fields */}
+                              {(bookingSteps.find(s => Number(s.n) === 3)?.f || []).filter(f => f.type === 'textarea').map((field, idx) => (
+                                <div key={idx} className="space-y-2">
+                                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">{field.label} {field.required && '*'}</label>
+                                  <div className="relative">
+                                     <MessageCircle className="absolute left-4 top-6 w-4 h-4 text-orange-200" />
+                                     <textarea 
+                                        name={field.name} 
+                                        value={formData[field.name] || ''} 
+                                        onChange={handleChange} 
+                                        rows="3" 
+                                        className={`w-full bg-white border-2 ${errors[field.name] ? 'border-red-300' : 'border-orange-50'} pl-12 pr-6 py-4 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all resize-none font-medium`} 
+                                        placeholder={field.placeholder}
+                                     ></textarea>
+                                  </div>
+                                  {errors[field.name] && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors[field.name]}</p>}
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="pt-10 flex justify-between items-center border-t border-orange-50">
+                              <button onClick={prevStep} className="text-gray-400 hover:text-orange-600 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2 transition-colors">
+                                <ChevronRight className="w-4 h-4 rotate-180" /> Previous
+                              </button>
+                              <button onClick={nextStep} className="bg-orange-600 hover:bg-black text-white font-black text-[10px] uppercase tracking-[0.3em] px-14 py-4 shadow-xl transition-all flex items-center gap-3">
+                                Final Review <ChevronRight className="w-5 h-5" />
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {currentStep === 4 && (
+                          <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in">
+                            <div className="relative mb-12">
+                              <div className="w-40 h-40 bg-orange-50/50 rounded-full flex items-center justify-center animate-[spin_10s_linear_infinite] border-4 border-dashed border-orange-200">
+                                 <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
+                                    <Users className="w-16 h-16 text-orange-600 animate-pulse" />
+                                 </div>
+                              </div>
+                              <div className="absolute -top-2 -right-2 w-10 h-10 bg-white rounded-none flex items-center justify-center shadow-lg border border-orange-100 animate-bounce">
+                                 <Shield className="w-5 h-5 text-orange-600" />
+                              </div>
+                            </div>
+                            <h2 className="text-2xl font-black text-[#2A1D13] uppercase tracking-tighter mb-4">
+                              {bookingSteps[3]?.t || "Assigning Verified Acharya"}
+                            </h2>
+                            <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] max-w-sm mx-auto leading-relaxed">
+                              {bookingSteps[3]?.s || `Matching the most qualified specialist for your ${formData.pujaType}...`}
+                            </p>
+                            
+                            <div className="mt-16 bg-white p-5 border border-orange-50 inline-flex items-center gap-4">
+                              <span className="flex gap-1.5">
+                                <span className="w-2.5 h-2.5 bg-orange-600 animate-bounce" style={{ animationDelay: '0s' }}></span>
+                                <span className="w-2.5 h-2.5 bg-orange-600 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                                <span className="w-2.5 h-2.5 bg-orange-600 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+                              </span>
+                              <span className="text-[9px] font-black uppercase text-orange-600 tracking-[0.2em]">{bookingSteps[3]?.d || "Locating Expert"}</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {currentStep === 5 && (
+                          <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in-up">
+                            <div className="w-32 h-32 bg-green-50 rounded-full flex items-center justify-center mb-10 shadow-inner relative">
+                              <CheckCircle className="w-20 h-20 text-green-600 animate-[bounce_2s_ease-in-out_infinite]" />
+                              <div className="absolute inset-0 border-4 border-green-500/20 rounded-full animate-ping opacity-10" />
+                            </div>
+                            
+                            <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] uppercase tracking-tighter mb-8 bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
+                              {bookingSteps[4]?.t || "Booking Confirmed!"}
+                            </h2>
+                            
+                            <div className="space-y-4 mb-10">
+                              <p className="text-[#4A3427] font-black text-lg md:text-xl leading-relaxed uppercase">
+                                {bookingSteps[4]?.d || "आपकी पूजा सफलतापूर्वक बुक हो गई है।"}
+                              </p>
+                              <div className="w-16 h-[2px] bg-orange-600 mx-auto" />
+                              <p className="text-gray-500 text-[10px] font-bold uppercase tracking-[0.2em] max-w-md mx-auto leading-relaxed">
+                                {bookingSteps[4]?.s || `Our spiritual desk will reach you at ${formData.mobile} within 15-30 minutes to confirm final schedule details.`}
+                              </p>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-sm">
+                               <div className="bg-white p-5 border border-orange-50 flex flex-col items-center">
+                                  <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Ritual ID</p>
+                                  <p className="text-xs font-black text-[#2A1D13] tracking-tighter uppercase">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                               </div>
+                               <button 
+                                  onClick={() => setShowBookingForm(false)}
+                                  className="bg-[#2A1D13] hover:bg-black text-white p-5 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.2em] transition-all group"
+                               >
+                                  Exit Dashboard <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                               </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -586,77 +697,29 @@ export default function BookPuja() {
           {/* Puja Samagri Section */}
           <section className="py-12 md:py-16 bg-[#FFFDF7] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-orange-100/30 rounded-full blur-3xl -mr-32 -mt-32" />
-            <div className="container mx-auto px-4 max-w-7xl relative z-10">
-              <div className="text-center mb-12 animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                  <Shield className="w-3.5 h-3.5" />
-                  <span>Quality Assurance</span>
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Sacred Materials</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Puja <span className="text-orange-600">Samagri</span></h2>
-                <div className="flex items-center justify-center gap-3 mb-8">
-                  <div className="w-10 h-[1.5px] bg-orange-200" />
-                  <Sparkle className="w-5 h-5 text-orange-400" />
-                  <div className="w-10 h-[1.5px] bg-orange-200" />
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { t: "Samagri Included", s: "सभी आवश्यक सामग्री शामिल", d: "Pure and authenticated samagri provided for every ritual type." },
-                  { t: "Verified Sources", s: "आचार्य द्वारा व्यवस्था", d: "Directly sourced from trusted Vedic material suppliers." },
-                  { t: "On-Time Arrival", s: "घर पर उपलब्धता", d: "Materials delivered to your doorstep 1 hour before the puja." }
-                ].map((item, idx) => (
-                  <div key={idx} className="bg-white p-8 text-center border-b-4 border-orange-200 hover:border-orange-500 hover:shadow-2xl transition-all duration-500 group rounded-none animate-fade-in-up" style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}>
-                    <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-6 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-bold text-[#4A3427] mb-2 uppercase tracking-tight text-lg">{item.t}</h3>
-                    <p className="text-orange-600 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">{item.s}</p>
-                    <p className="text-gray-400 text-xs font-semibold leading-relaxed">{item.d}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-12 bg-white border-2 border-dashed border-orange-200 p-6 text-center max-w-3xl mx-auto rounded-none">
-                <p className="text-[#4A3427] text-lg font-bold italic tracking-wide uppercase text-sm">
-                  "All required puja samagri will be arranged as per strict Vedic guidelines"
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Our Acharyas Section */}
-          <section className="py-12 md:py-16 bg-white">
-            <div className="container mx-auto px-4 max-w-5xl">
-              <div className="text-center mb-12 animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                  <Users className="w-3.5 h-3.5" />
-                  <span>Verified Experts</span>
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Our Trusted <span className="text-orange-600">Acharyas</span></h2>
-                <div className="flex items-center justify-center gap-3 mb-8">
+                <h2 className="text-3xl md:text-4xl font-black text-[#2A1B13] mb-4 uppercase tracking-tight">Pure <span className="text-orange-600">Puja Samagri</span></h2>
+                <div className="flex items-center justify-center gap-3">
                   <div className="w-10 h-[1.5px] bg-orange-200" />
                   <Sparkles className="w-5 h-5 text-orange-400" />
                   <div className="w-10 h-[1.5px] bg-orange-200" />
                 </div>
               </div>
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {acharyas.map((acharya, index) => (
-                  <div
-                    key={index}
-                    className="bg-[#FFFAF3] p-6 text-center border border-orange-100 shadow-xl hover:shadow-2xl transition-all duration-500 relative group rounded-none animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
-                  >
-                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-orange-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="w-20 h-20 bg-white rounded-none mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform border-4 border-[#FFFAF3] outline outline-1 outline-orange-200">
-                      <Users className="w-10 h-10 text-orange-600" />
+                {samagriList.map((item, idx) => (
+                  <div key={idx} className="bg-white p-8 border border-orange-100 shadow-xl shadow-orange-900/5 hover:border-orange-500 transition-all duration-500 group rounded-none text-left">
+                    <div className="w-14 h-14 bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-600 group-hover:text-white transition-all rounded-none">
+                      <Shield className="w-6 h-6" />
                     </div>
-                    <h3 className="font-bold text-[#4A3427] mb-1.5 uppercase tracking-widest text-base">{acharya.name}</h3>
-                    <div className="flex items-center justify-center gap-1.5 mb-2 text-[9px] font-bold text-orange-600 uppercase tracking-widest bg-orange-50 py-1 px-3 w-max mx-auto border border-orange-100">
-                      <Award className="w-3.5 h-3.5" />
-                      <span>{acharya.experience} Exp</span>
-                    </div>
-                    <p className="text-gray-500 font-semibold text-[10px] mb-4 uppercase tracking-widest leading-relaxed h-8 flex items-center justify-center">{acharya.expertise}</p>
-                    <div className="flex items-center justify-center gap-1 relative z-10 pt-4 border-t border-orange-100">
-                      {[...Array(5)].map((_, i) => <Star key={i} className={`w-3.5 h-3.5 ${i < Math.floor(acharya.rating) ? "fill-amber-500 text-amber-500" : "text-gray-300"}`} />)}
-                      <span className="font-bold text-gray-800 ml-1 text-xs">{acharya.rating}</span>
-                    </div>
+                    <h3 className="text-xl font-black text-[#2A1D13] mb-2 uppercase tracking-tight leading-tight">{item.title}</h3>
+                    <p className="text-orange-600 text-[10px] font-black uppercase tracking-[0.2em] mb-4">{item.subtitle}</p>
+                    <p className="text-gray-400 text-xs font-medium leading-relaxed italic">{item.description}</p>
                   </div>
                 ))}
               </div>
@@ -664,34 +727,31 @@ export default function BookPuja() {
           </section>
 
           {/* FAQ Section */}
-          <section className="py-12 md:py-16 bg-[#FAF9F6] relative overflow-hidden">
-            <div className="container mx-auto px-4 max-w-5xl relative z-10">
-              <div className="text-center mb-12 animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span>Knowledge Base</span>
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B13] mb-4 uppercase tracking-tight">Got <span className="text-orange-600">Questions?</span></h2>
+          <section className="py-12 md:py-16 bg-[#FAF9F6]">
+            <div className="container mx-auto px-4 max-w-6xl">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-black text-[#2A1B13] mb-4 uppercase tracking-tight">Booking <span className="text-orange-600">FAQs</span></h2>
                 <div className="flex items-center justify-center gap-3 mb-8">
                   <div className="w-10 h-[1.5px] bg-orange-200" />
-                  <Sparkles className="w-5 h-5 text-orange-400" />
+                  <MessageCircle className="w-5 h-5 text-orange-400" />
                   <div className="w-10 h-[1.5px] bg-orange-200" />
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  { q: "Online puja kaise hoti hai?", a: "Online puja में आचार्य जी video call के माध्यम से पूजा करते हैं। आप अपने घर से ही देख सकते हैं और पूजा में शामिल हो सकते हैं।" },
-                  { q: "Home visit puja में क्या include होता है?", a: "Home visit में आचार्य जी आपके घर आकर पूजा करते हैं। सभी आवश्यक सामग्री और पूजा की पूर्ण विधि शामिल है।" },
-                  { q: "Kitne din pehle book karna chahiye?", a: "सामान्य पूजा के लिए 2-3 दिन पहले और विशेष आयोजनों के लिए 7-10 दिन पहले बुक करना बेहतर है।" },
-                  { q: "Puja के बाद क्या follow करना होता है?", a: "आचार्य जी पूजा के बाद आपको प्रसाद और विशेष आशीर्वाद निर्देश देंगे जिनका पालन करना शुभ होता है।" }
-                ].map((faq, idx) => (
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                {(dbFAQs.length > 0 ? dbFAQs : [
+                  { question: "Online puja kaise hoti hai?", answer: "Online puja में आचार्य जी video call के माध्यम से पूजा करते हैं। आप अपने घर से ही देख सकते हैं और पूजा में शामिल हो सकते हैं।" },
+                  { question: "Home visit puja में क्या include होता है?", answer: "Home visit में आचार्य जी आपके घर आकर पूजा करते हैं। सभी आवश्यक सामग्री और पूजा की पूर्ण विधि शामिल है।" },
+                  { question: "Kitne din pehle book karna chahiye?", answer: "सामान्य पूजा के लिए 2-3 दिन पहले और विशेष आयोजनों के लिए 7-10 दिन पहले बुक करना बेहतर है।" },
+                  { question: "Puja के बाद क्या follow karna hota hai?", answer: "आचार्य जी पूजा के बाद आपको प्रसाद और विशेष आशीर्वाद निर्देश देंगे जिनका पालन करना शुभ होता है।" }
+                ]).map((faq, idx) => (
                   <div
                     key={idx}
                     className={`group bg-white p-8 border border-orange-100 hover:border-orange-500 transition-all duration-500 relative rounded-none animate-fade-in-${idx % 2 === 0 ? 'left' : 'right'}`}
                   >
                     <div className="absolute top-0 right-0 w-8 h-8 bg-orange-50 flex items-center justify-center group-hover:bg-orange-600 transition-colors rounded-none" />
-                    <h3 className="text-base font-bold text-[#4A3427] mb-2 uppercase tracking-tight leading-tight group-hover:text-orange-600 transition-colors">"{faq.q}"</h3>
-                    <p className="text-gray-400 text-[10px] font-semibold uppercase tracking-[0.15em] leading-relaxed italic">{faq.a}</p>
+                    <h3 className="text-base font-bold text-[#4A3427] mb-2 uppercase tracking-tight leading-tight group-hover:text-orange-600 transition-colors">"{faq.question}"</h3>
+                    <p className="text-gray-400 text-[10px] font-semibold uppercase tracking-[0.15em] leading-relaxed italic">{faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -742,4 +802,3 @@ export default function BookPuja() {
     </Layout>
   );
 }
-
