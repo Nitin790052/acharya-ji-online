@@ -16,6 +16,7 @@ import { aboutPageApi } from '../services/aboutPageApi';
 import { pujaOfferingApi } from '../services/pujaOfferingApi';
 import { bookingApi } from '../services/bookingApi';
 import { bookPujaContentApi } from '../services/bookPujaContentApi';
+import { careerContentApi } from '../services/careerContentApi';
 
 export const store = configureStore({
     reducer: {
@@ -36,6 +37,7 @@ export const store = configureStore({
         [pujaOfferingApi.reducerPath]: pujaOfferingApi.reducer,
         [bookingApi.reducerPath]: bookingApi.reducer,
         [bookPujaContentApi.reducerPath]: bookPujaContentApi.reducer,
+        [careerContentApi.reducerPath]: careerContentApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -55,6 +57,7 @@ export const store = configureStore({
             aboutPageApi.middleware,
             pujaOfferingApi.middleware,
             bookingApi.middleware,
-            bookPujaContentApi.middleware
+            bookPujaContentApi.middleware,
+            careerContentApi.middleware
         ),
 });

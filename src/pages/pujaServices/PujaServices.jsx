@@ -14,12 +14,12 @@ import { BACKEND_URL } from "@/config/apiConfig";
 
 const PujaServices = () => {
   const banner = usePageBanner();
-  
+
   // --- FETCHING FROM ALL RELEVANT APIs ---
   const { data: offerings = [], isLoading: isOfferingsLoading } = useGetAllOfferingsQuery();
   const { data: popularPujas = [], isLoading: isPopularLoading } = useGetActivePujasQuery();
   const { data: generalServices = [], isLoading: isServicesLoading } = useGetActiveServicesQuery();
-  
+
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isVisible, setIsVisible] = useState(false);

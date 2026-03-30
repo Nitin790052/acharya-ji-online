@@ -10,11 +10,14 @@ import {
   FiHelpCircle,
   FiMail
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMobile }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [notifications] = useState(3);
-
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const theme = {
     primary: "#1e3a8a",
@@ -24,6 +27,11 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
     text: "#4D4441",
     ring: "#ffffff",
     gradient: "from-blue-900 to-[#959190]"
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -209,6 +217,7 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
 
                   <button
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-all"
+                    onClick={handleLogout}
                   >
                     <FiLogOut size={14} />
                     Logout

@@ -11,7 +11,6 @@ import {
   FiChevronDown,
   FiChevronRight,
   FiPackage,
-  FiClipboard,
   FiBarChart2,
   FiTruck,
   FiStar,
@@ -22,6 +21,7 @@ import {
   FiCalendar,
   FiClock,
   FiCheckCircle,
+  FiBriefcase,
   FiXCircle,
   FiRefreshCw,
   FiBookOpen,
@@ -129,7 +129,12 @@ const Sidebar = ({
         { key: "book-puja-content", icon: <FiFileText />, label: "Book Puja Manager", path: "/admin-acharya/dashboard/content/book-puja-content" },
       ]
     },
-
+    {
+      key: "career-content", icon: <FiBriefcase />, label: "Career Page Content",
+      children: [
+        { key: "career", icon: <FiTrendingUp />, label: "Career Page Manager", path: "/admin-acharya/dashboard/content/career" },
+      ]
+    },
     {
       key: "user-management", icon: <FiUsers />, label: "User Management",
       children: [
@@ -260,11 +265,11 @@ const Sidebar = ({
             {(() => {
               const sections = [
                 { title: "Overview", items: menuItems.slice(0, 1) },
-                { title: "User Control", items: menuItems.slice(1, 4) },
-                { title: "User Management", items: menuItems.slice(4, 5) },
-                { title: "Business Operations", items: menuItems.slice(5, 7) },
-                { title: "SEO & Growth", items: menuItems.slice(7, 8) },
-                { title: "System Setup", items: menuItems.slice(8, 9) },
+                { title: "User Control", items: menuItems.slice(1, 5) },
+                { title: "User Management", items: menuItems.slice(5, 6) },
+                { title: "Business Operations", items: menuItems.slice(6, 8) },
+                { title: "SEO & Growth", items: menuItems.slice(8, 9) },
+                { title: "System Setup", items: menuItems.slice(9, 10) },
               ];
 
               return sections.map((section, idx) => (
