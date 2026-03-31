@@ -34,8 +34,7 @@ const CarouselManager = () => {
     titleHighlight3: '',
     titleEnd: '',
     subtitle: '',
-    linkText: '',
-    linkUrl: '',
+    buttons: [{ text: '', link: '' }],
     pagePath: '/',
     isActive: true
   });
@@ -52,7 +51,11 @@ const CarouselManager = () => {
 
     const formData = new FormData();
     Object.keys(currentBanner).forEach(key => {
-      formData.append(key, currentBanner[key]);
+      if (key === 'buttons') {
+        formData.append(key, JSON.stringify(currentBanner[key]));
+      } else {
+        formData.append(key, currentBanner[key]);
+      }
     });
 
     if (imageFile) {
@@ -87,7 +90,11 @@ const CarouselManager = () => {
   };
 
   const handleEdit = (banner) => {
-    setCurrentBanner({ ...banner, pagePath: banner.pagePath || '/' });
+    setCurrentBanner({ 
+      ...banner, 
+      pagePath: banner.pagePath || '/',
+      buttons: banner.buttons && banner.buttons.length > 0 ? banner.buttons : [{ text: '', link: '' }]
+    });
     setImageFile(null);
     setIsEditing(true);
 
@@ -108,8 +115,7 @@ const CarouselManager = () => {
       titleHighlight3: '',
       titleEnd: '',
       subtitle: '',
-      linkText: '',
-      linkUrl: '',
+      buttons: [{ text: '', link: '' }],
       pagePath: '/',
       isActive: true
     });
@@ -219,71 +225,117 @@ const CarouselManager = () => {
               <label className="text-sm font-medium text-gray-700">Badge Text</label>
               <input
                 type="text" value={currentBanner.badge}
+                placeholder="e.g. AUTHENTIC VEDIC SERVICES"
                 onChange={(e) => setCurrentBanner({ ...currentBanner, badge: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Title Part 1 (Optional)</label>
+              <label className="text-sm font-medium text-gray-700">Title Part 1 (Optional/Regular)</label>
               <input
                 type="text" value={currentBanner.titleHighlight1}
+                placeholder="e.g. Experience"
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight1: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Title Part 2 (Highlight 1)</label>
+              <label className="text-sm font-medium text-gray-700">Title Part 2 (Highlight 1 - Red)</label>
               <input
                 type="text" value={currentBanner.titleHighlight2}
+                placeholder="e.g. Divine"
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight2: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Title Part 3 (Highlight 2)</label>
+              <label className="text-sm font-medium text-gray-700">Title Part 3 (Highlight 2 - Yellow)</label>
               <input
                 type="text" value={currentBanner.titleHighlight3}
+                placeholder="e.g. Blessings"
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleHighlight3: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Title Part 4 (End)</label>
+              <label className="text-sm font-medium text-gray-700">Title Part 4 (Optional/End)</label>
               <input
                 type="text" value={currentBanner.titleEnd}
+                placeholder="e.g. At Your Doorstep"
                 onChange={(e) => setCurrentBanner({ ...currentBanner, titleEnd: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               />
             </div>
+          </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Button Text (Optional)</label>
-              <input
-                type="text" value={currentBanner.linkText || ''}
-                onChange={(e) => setCurrentBanner({ ...currentBanner, linkText: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
-              />
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-bold text-gray-800">Action Buttons</label>
+              <button
+                type="button"
+                onClick={() => setCurrentBanner({
+                  ...currentBanner,
+                  buttons: [...currentBanner.buttons, { text: '', link: '' }]
+                })}
+                className="text-xs bg-blue-900 text-white px-3 py-1 rounded-lg hover:bg-blue-800 flex items-center gap-1"
+              >
+                <FiPlus size={12} /> Add Button
+              </button>
             </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Button Link URL (Optional)</label>
-              <input
-                type="text" value={currentBanner.linkUrl || ''}
-                onChange={(e) => setCurrentBanner({ ...currentBanner, linkUrl: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
-              />
-            </div>
-
+            
+            {currentBanner.buttons.map((btn, idx) => (
+              <div key={idx} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end bg-blue-50/50 p-4 rounded-xl border border-blue-900/10 relative">
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-gray-600">Button {idx + 1} Text</label>
+                  <input
+                    type="text" value={btn.text}
+                    placeholder="e.g. Explore Now"
+                    onChange={(e) => {
+                      const newBtns = [...currentBanner.buttons];
+                      newBtns[idx] = { ...newBtns[idx], text: e.target.value };
+                      setCurrentBanner({ ...currentBanner, buttons: newBtns });
+                    }}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none bg-white font-medium"
+                  />
+                </div>
+                <div className="space-y-2 pr-10">
+                  <label className="text-xs font-medium text-gray-600">Button {idx + 1} URL</label>
+                  <input
+                    type="text" value={btn.link}
+                    placeholder="e.g. /services"
+                    onChange={(e) => {
+                      const newBtns = [...currentBanner.buttons];
+                      newBtns[idx] = { ...newBtns[idx], link: e.target.value };
+                      setCurrentBanner({ ...currentBanner, buttons: newBtns });
+                    }}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none bg-white font-medium"
+                  />
+                </div>
+                {currentBanner.buttons.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newBtns = currentBanner.buttons.filter((_, i) => i !== idx);
+                      setCurrentBanner({ ...currentBanner, buttons: newBtns });
+                    }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-rose-600 hover:bg-rose-100 rounded-full transition-colors"
+                  >
+                    <FiTrash2 size={16} />
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Subtitle</label>
             <textarea
               value={currentBanner.subtitle}
+              placeholder="e.g. Connect with sacred traditions through authentic rituals..."
               onChange={(e) => setCurrentBanner({ ...currentBanner, subtitle: e.target.value })}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-900/40 outline-none"
               rows="2"
@@ -343,8 +395,8 @@ const CarouselManager = () => {
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">S.No</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Image</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Badge</th>
-                <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Titles</th>
-                <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Button</th>
+                <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Titles Pattern</th>
+                <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Buttons</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Page</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-xs font-bold text-gray-600 uppercase tracking-wider text-right">Actions</th>
@@ -365,12 +417,16 @@ const CarouselManager = () => {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">{banner.badge}</td>
                   <td className="px-6 py-4 font-semibold text-gray-800">
-                    <div className="text-xs">{banner.titleHighlight1} {banner.titleHighlight2}</div>
-                    <div className="text-[10px] text-gray-500">{banner.titleHighlight3} {banner.titleEnd}</div>
+                    <div className="text-xs truncate max-w-[150px]">{banner.titleHighlight1} <span className="text-red-500">{banner.titleHighlight2}</span> <span className="text-blue-900">{banner.titleHighlight3}</span> {banner.titleEnd}</div>
                   </td>
                   <td className="px-6 py-4">
-                    {banner.linkText && <div className="text-xs font-bold text-blue-600 mb-1">{banner.linkText}</div>}
-                    {banner.linkUrl && <div className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded inline-block">{banner.linkUrl}</div>}
+                    {banner.buttons && banner.buttons.map((btn, i) => (
+                      <div key={i} className="mb-1 last:mb-0">
+                        <div className="text-xs font-bold text-blue-600">{btn.text || 'Untitled'}</div>
+                        <div className="text-[9px] text-gray-400 truncate max-w-[100px]">{btn.link || 'No path'}</div>
+                      </div>
+                    ))}
+                    {(!banner.buttons || banner.buttons.length === 0) && <span className="text-gray-400 text-[10px]">No buttons</span>}
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-[10px] text-amber-800 bg-amber-100 rounded px-2 py-0.5 inline-block font-bold border border-amber-200">{banner.pagePath || '/'}</div>
@@ -446,9 +502,15 @@ const CarouselManager = () => {
                   <code className="bg-blue-50 text-blue-900 px-2 py-0.5 rounded text-sm font-semibold">{viewBanner.pagePath || '/'}</code>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Button Details</p>
-                  <p className="font-bold text-blue-600 text-sm">{viewBanner.linkText || 'No Text'}</p>
-                  <code className="text-[10px] text-gray-500">{viewBanner.linkUrl || 'No Link'}</code>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Button Config</p>
+                  <div className="flex flex-col gap-2">
+                    {viewBanner.buttons && viewBanner.buttons.map((btn, i) => (
+                      <div key={i} className="bg-white p-2 rounded border border-gray-100">
+                        <p className="font-bold text-blue-600 text-xs">{btn.text || 'No Text'}</p>
+                        <code className="text-[9px] text-gray-500">{btn.link || 'No Link'}</code>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 

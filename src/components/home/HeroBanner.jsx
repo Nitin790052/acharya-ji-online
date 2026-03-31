@@ -132,7 +132,10 @@ const HeroBanner = () => {
 
                     {/* Headline */}
                     <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold text-[#2A1D13] leading-[1.1] mb-6 font-serif uppercase drop-shadow-sm">
-                        {activeBanner.titleHighlight1} <span className="text-[#E8453C]">{activeBanner.titleHighlight2}</span> <span className="text-[#FFC107]">{activeBanner.titleHighlight3}</span> {activeBanner.titleEnd}
+                        {activeBanner.titleHighlight1}{' '}
+                        <span className="text-[#E8453C]">{activeBanner.titleHighlight2}</span>{' '}
+                        <span className="text-[#FFC107]">{activeBanner.titleHighlight3}</span>
+                        {activeBanner.titleEnd ? ` ${activeBanner.titleEnd}` : ''}
                     </h1>
 
                     {/* Subheadline with Glassmorphism */}
@@ -141,18 +144,36 @@ const HeroBanner = () => {
                     </p>
 
                     {/* CTA Section */}
-                    {(activeBanner.linkText || activeBanner.linkUrl) && (
-                        <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-wrap gap-4">
+                        {activeBanner.buttons && activeBanner.buttons.length > 0 ? (
+                            activeBanner.buttons.map((btn, idx) => (
+                                btn.text && (
+                                    <Link
+                                        key={idx}
+                                        to={btn.link || "#"}
+                                        className={`group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-base shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden ${
+                                            idx === 0 
+                                            ? "bg-[#E8453C] text-white hover:shadow-[0_20px_40px_-10px_rgba(232,69,60,0.4)]" 
+                                            : "bg-white text-[#2A1D13] hover:bg-gray-50 shadow-white/10"
+                                        }`}
+                                    >
+                                        <span className="relative z-10">{btn.text}</span>
+                                        <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                    </Link>
+                                )
+                            ))
+                        ) : (activeBanner.linkText && (
                             <Link
                                 to={activeBanner.linkUrl || "#"}
                                 className="group relative inline-flex items-center gap-2 px-6 py-3 bg-[#E8453C] text-white rounded-full font-bold text-base shadow-xl hover:shadow-[0_20px_40px_-10px_rgba(232,69,60,0.4)] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
                             >
-                                <span className="relative z-10">{activeBanner.linkText || 'Explore'}</span>
+                                <span className="relative z-10">{activeBanner.linkText}</span>
                                 <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
                                 <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                             </Link>
-                        </div>
-                    )}
+                        ))}
+                    </div>
                 </div>
             </div>
 
