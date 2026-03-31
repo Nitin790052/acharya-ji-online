@@ -119,6 +119,7 @@ const Sidebar = ({
       key: "about-content", icon: <FiBookOpen />, label: "About Page Content",
       children: [
         { key: "about", icon: <FiBookOpen />, label: "About Page Manager", path: "/admin-acharya/dashboard/content/about" },
+        { key: "media-manager", icon: <FiImage />, label: "Media Manager", path: "/admin-acharya/dashboard/content/media" },
       ]
     },
     {
@@ -377,7 +378,7 @@ const Sidebar = ({
         </nav>
 
         {/* Logout - Always show text on mobile */}
-        <div className={`${isMobile ? 'p-4' : (isCollapsed ? 'p-3' : 'p-4')}`}
+        <div className={` bg-gray-100 ${isMobile ? 'p-4' : (isCollapsed ? 'p-3' : 'px-4 py-2')}`}
           style={{ borderTop: `1px solid ${glassBorder}` }}>
           <button
             onClick={handleLogout}
@@ -385,13 +386,13 @@ const Sidebar = ({
               w-full flex items-center
               ${isMobile ? 'gap-3' : (isCollapsed ? 'justify-center' : 'gap-3')}
               px-3 py-2.5 text-sm rounded-xl
-              text-gray-700 hover:text-white
+              text-gray-700 hover:text-red-500
               hover:bg-linear-to-r hover:from-rose-500 hover:to-pink-500
-              transition-all duration-200 hover:shadow-md
+              transition-all duration-200 hover:shadow-md bg-red-100/50
               group
             `}
           >
-            <FiLogOut size={18} className="group-hover:text-white transition-colors" />
+            <FiLogOut size={18} className="group-hover:text-red-500 transition-colors" />
             {(isMobile || !isCollapsed) && <span className="font-medium">Logout</span>}
           </button>
         </div>

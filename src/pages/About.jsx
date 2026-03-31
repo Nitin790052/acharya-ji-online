@@ -15,7 +15,7 @@ const LucideIcon = ({ name, className }) => {
 };
 
 const AboutUs = () => {
-  const banner = usePageBanner();
+  const banner = usePageBanner({ pollingInterval: 3000 });
 
   const { data: settings, isLoading: loadingSettings } = useGetAboutPageSettingsQuery(undefined, { pollingInterval: 3000 });
   const { data: servicesData, isLoading: loadingServices } = useGetActiveAboutPageItemsQuery('service', { pollingInterval: 3000 });
@@ -347,7 +347,7 @@ const AboutUs = () => {
                 </div>
                 <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">{settings.ctaDesc}</p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <button 
+                  <button
                     onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
                     className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                     <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

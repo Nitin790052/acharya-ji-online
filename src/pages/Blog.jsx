@@ -5,6 +5,8 @@ import {
   MessageCircle, Phone, Bell, Moon, Shield, Leaf, Sparkles, Award, Sparkle
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 import image1 from "../assets/blogPage/imageId1.webp"
 import image2 from "../assets/blogPage/imageId2.webp"
@@ -26,6 +28,8 @@ const Blog = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMedia, setSelectMedia] = useState(null);
+
+  const banner = usePageBanner({ pollingInterval: 3000 });
 
   const categories = [
     "All", "Puja Vidhi", "Astrology", "Kundli & Dosh", "Vastu Shastra",
@@ -208,24 +212,40 @@ const Blog = () => {
         <div className="absolute top-[10%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
-        {/* Hero Section (Matching About Page Style) */}
+        {/* Hero Section (Dynamic) */}
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
-            <img src="" alt="Background" className="w-full h-full object-cover object-center" />
-            <div className="absolute inset-0 bg-black/30" />
+            {banner?.imageUrl ? (
+              <img
+                src={`${BACKEND_URL}${banner.imageUrl}`}
+                alt="Background"
+                className="w-full h-full object-cover object-center"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-orange-900 to-red-900 opacity-80" />
+            )}
+            <div className="absolute inset-0 bg-black/40" />
           </div>
+
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                 <Sparkles className="w-3.5 h-3.5 text-[#FFC107]" />
-                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">
+                  {banner?.badge || "DIVINE SERVICES HUB"}
+                </span>
               </div>
+
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                Explore Sacred<br />
-                <span className="text-yellow-300">Spiritual Insights</span>
+                {banner?.titleHighlight1}{" "}
+                <span className="text-yellow-300">
+                  {banner?.titleHighlight2}
+                </span>{" "}
+                {banner?.titleHighlight3} {banner?.titleEnd}
               </h1>
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed drop-shadow max-w-2xl mx-auto mb-8">
-                Authentic insights on Puja, Astrology & Vedic traditions curated for your spiritual growth.
+
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed drop-shadow max-w-2xl mx-auto mb-10">
+                {banner?.subtitle || "Authentic insights on Puja, Astrology & Vedic traditions curated for your spiritual growth."}
               </p>
 
               <div className="max-w-2xl mx-auto relative group">
@@ -234,13 +254,18 @@ const Blog = () => {
                   <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-orange-600" />
                   <input
                     type="text"
-                    placeholder="Search for puja vidhi, vastu tips..."
+                    placeholder="Search for puja vidhi, astrology tips..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-14 pr-10 py-2 rounded-xl bg-white/95 backdrop-blur-md text-gray-900 font-medium shadow-[0_15px_40px_-10px_rgba(0,0,0,0.3)] focus:outline-none border-2 border-amber-100/50 focus:border-amber-500 transition-all placeholder:text-gray-400"
+                    className="w-full pl-14 pr-10 py-1.5 md:py-2.5 rounded-xl bg-white/95 backdrop-blur-md text-gray-900 font-medium shadow-2xl focus:outline-none border-2 border-amber-100/50 focus:border-amber-500 transition-all placeholder:text-gray-400"
                   />
                   {searchQuery && (
-                    <button onClick={() => setSearchQuery("")} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600 font-black">✕</button>
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600 font-black"
+                    >
+                      ✕
+                    </button>
                   )}
                 </div>
               </div>
@@ -342,7 +367,7 @@ const Blog = () => {
                 Get personalized guidance from experienced Acharyas following authentic Vedic traditions. Experience the profound impact of divine wisdom in your life.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <button 
+                <button
                   onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
                   className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                   <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

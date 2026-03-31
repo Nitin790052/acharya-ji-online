@@ -9,207 +9,28 @@ import {
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { BACKEND_URL } from "@/config/apiConfig";
-
-import image1 from "../assets/mediaPage/imageM1.webp"
-import image2 from "../assets/mediaPage/imageM2.webp"
-import image3 from "../assets/mediaPage/imageM3.webp"
-import image4 from "../assets/mediaPage/imageM4.webp"
-import image5 from "../assets/mediaPage/imageM5.webp"
-import image6 from "../assets/mediaPage/imageM6.webp"
-import image7 from "../assets/mediaPage/imageM7.webp"
-import image8 from "../assets/mediaPage/imageM8.webp"
-import image9 from "../assets/mediaPage/imageM9.webp"
-
+import { useGetAllMediaQuery } from "@/services/mediaApi";
 
 const Media = () => {
   const banner = usePageBanner();
+  const { data: mediaItems = [], isLoading } = useGetAllMediaQuery();
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState(null);
-
-  // Sample Media Data
-  const mediaData = {
-    news: [
-      {
-        id: 1,
-        type: 'news',
-        title: 'Acharya Ji Explains Importance of Navgraha Shanti',
-        excerpt: 'Leading astrologer shares insights on planetary remedies and their significance in modern times.',
-        publication: 'Spiritual Times',
-        date: '15 Dec 2024',
-        image: image9,
-        link: '#'
-      },
-      {
-        id: 2,
-        type: 'news',
-        title: 'Vastu Remedies for Modern Homes - Expert Opinion',
-        excerpt: 'Practical Vastu solutions for contemporary living spaces without major renovations.',
-        publication: 'Home & Living Magazine',
-        date: '3 Jan 2025',
-        image:
-          image8,
-        link: '#'
-      },
-      {
-        id: 3,
-        type: 'news',
-        title: 'Ancient Wisdom Meets Modern Astrology',
-        excerpt: 'How traditional Vedic practices are helping people navigate contemporary challenges.',
-        publication: 'Daily Dharma',
-        date: '28 Nov 2024',
-        image:
-          image7,
-        link: '#'
-      }
-    ],
-    videos: [
-      {
-        id: 4,
-        type: 'video',
-        title: 'Understanding Shani Sade Sati - Complete Guide',
-        duration: '12:45',
-        views: '25K',
-        date: '10 Jan 2025',
-        thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80',
-        videoId: 'dQw4w9WgXcQ'
-      },
-      {
-        id: 5,
-        type: 'video',
-        title: 'Navratri Puja Vidhi - Step by Step',
-        duration: '18:30',
-        views: '42K',
-        date: '5 Oct 2024',
-        thumbnail: 'https://images.unsplash.com/photo-1604608672516-f1b9b1a4a0f5?w=800&q=80',
-        videoId: 'dQw4w9WgXcQ'
-      },
-      {
-        id: 6,
-        type: 'video',
-        title: 'Career Astrology Q&A Session',
-        duration: '22:15',
-        views: '18K',
-        date: '20 Dec 2024',
-        thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80',
-        videoId: 'dQw4w9WgXcQ'
-      },
-      {
-        id: 7,
-        type: 'video',
-        title: 'Marriage Matching & Kundli Analysis',
-        duration: '15:20',
-        views: '35K',
-        date: '2 Jan 2025',
-        thumbnail: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
-        videoId: 'dQw4w9WgXcQ'
-      }
-    ],
-    events: [
-      {
-        id: 8,
-        type: 'event',
-        title: 'Vedic Astrology Workshop - Delhi',
-        location: 'Connaught Place, New Delhi',
-        date: '18 Nov 2024',
-        attendees: '200+',
-        description: 'Two-day intensive workshop on Vedic astrology fundamentals and practical applications.',
-        image: image6
-      },
-      {
-        id: 9,
-        type: 'event',
-        title: 'Maha Shivaratri Special Seminar',
-        location: 'Community Hall, Dwarka',
-        date: '8 Mar 2024',
-        attendees: '350+',
-        description: 'Special discourse on significance of Maha Shivaratri and powerful remedies.',
-        image: image5
-      },
-      {
-        id: 10,
-        type: 'event',
-        title: 'Vastu for Prosperity - Public Talk',
-        location: 'India Habitat Centre',
-        date: '5 Sep 2024',
-        attendees: '150+',
-        description: 'Interactive session on Vastu principles for home and business prosperity.',
-        image: image4
-      }
-    ],
-    awards: [
-      {
-        id: 11,
-        type: 'award',
-        title: 'Best Vedic Astrologer Award 2024',
-        organization: 'Indian Astrology Council',
-        year: '2024',
-        image: image7
-      },
-      {
-        id: 12,
-        type: 'award',
-        title: 'Excellence in Traditional Knowledge',
-        organization: 'Spiritual Leaders Forum',
-        year: '2023',
-        image: image8
-      },
-      {
-        id: 13,
-        type: 'award',
-        title: 'Community Service Recognition',
-        organization: 'Delhi Cultural Society',
-        year: '2024',
-        image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&q=80'
-      }
-    ],
-    social: [
-      {
-        id: 14,
-        type: 'social',
-        platform: 'instagram',
-        title: 'Daily Astrology Tips',
-        engagement: '15K likes',
-        date: '2 days ago',
-        image: image3
-      },
-      {
-        id: 15,
-        type: 'social',
-        platform: 'youtube',
-        title: 'Remedies for Mercury Retrograde',
-        engagement: '8K views',
-        date: '1 week ago',
-        image: image2
-      },
-      {
-        id: 16,
-        type: 'social',
-        platform: 'facebook',
-        title: 'Live Session Announcement',
-        engagement: '12K reach',
-        date: '3 days ago',
-        image: image1
-      }
-    ]
-  };
 
   const filters = [
     { id: 'all', label: 'All Media', icon: Newspaper },
     { id: 'news', label: 'News & Press', icon: Newspaper },
     { id: 'videos', label: 'Videos', icon: Video },
-    { id: 'events', label: 'Events', icon: Users },
-    { id: 'awards', label: 'Awards', icon: Award },
+    { id: 'event', label: 'Events', icon: Users },
+    { id: 'award', label: 'Awards', icon: Award },
     { id: 'social', label: 'Social Media', icon: Instagram }
   ];
 
-  const getAllItems = () => {
-    return [...mediaData.news, ...mediaData.videos, ...mediaData.events, ...mediaData.awards, ...mediaData.social]
-      .sort((a, b) => b.id - a.id);
-  };
-
   const getFilteredItems = () => {
-    if (activeFilter === 'all') return getAllItems();
-    return mediaData[activeFilter] || [];
+    if (activeFilter === 'all') return mediaItems;
+    // Map 'videos' filter to 'video' type in backend
+    const filterType = activeFilter === 'videos' ? 'video' : activeFilter;
+    return mediaItems.filter(item => item.type === filterType);
   };
 
   const NewsCard = ({ item }) => (
@@ -219,7 +40,7 @@ const Media = () => {
           <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
 
           <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
-            <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
+            <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
             <div className="absolute top-3 left-3 px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 text-[10px] text-white font-bold uppercase tracking-wider">
               {item.publication}
@@ -265,7 +86,7 @@ const Media = () => {
       <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 flex flex-col">
         <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
           <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10 group/video">
-            <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+            <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover/video:bg-black/50 transition-all">
               <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full border border-white/40 flex items-center justify-center group-hover/video:scale-110 transition-transform shadow-2xl">
                 <Play className="w-6 h-6 text-white ml-1 fill-white" />
@@ -307,7 +128,7 @@ const Media = () => {
       <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 flex flex-col">
         <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
           <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
-            <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+            <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
             <div className="absolute top-3 left-3 px-3 py-1 bg-orange-600 text-white text-[10px] font-bold rounded-full border border-orange-400 shadow-lg uppercase tracking-wider">
               {item.attendees} attendees
@@ -383,14 +204,14 @@ const Media = () => {
       youtube: Youtube,
       facebook: Facebook
     };
-    const PlatformIcon = platformIcons[item.platform];
+    const PlatformIcon = platformIcons[item.platform] || Instagram;
 
     return (
       <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
         <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl flex flex-col">
           <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
             <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
-              <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+              <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
               <div className="absolute inset-0 bg-black/30 group-hover/card:bg-black/40 transition-all" />
               <div className="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 flex items-center justify-center">
                 <PlatformIcon className="w-4 h-4 text-white" />
@@ -419,11 +240,11 @@ const Media = () => {
 
   const renderCard = (item) => {
     switch (item.type) {
-      case 'news': return <NewsCard key={item.id} item={item} />;
-      case 'video': return <VideoCard key={item.id} item={item} />;
-      case 'event': return <EventCard key={item.id} item={item} />;
-      case 'award': return <AwardCard key={item.id} item={item} />;
-      case 'social': return <SocialCard key={item.id} item={item} />;
+      case 'news': return <NewsCard key={item._id} item={item} />;
+      case 'video': return <VideoCard key={item._id} item={item} />;
+      case 'event': return <EventCard key={item._id} item={item} />;
+      case 'award': return <AwardCard key={item._id} item={item} />;
+      case 'social': return <SocialCard key={item._id} item={item} />;
       default: return null;
     }
   };
@@ -431,7 +252,7 @@ const Media = () => {
   return (
     <Layout>
       <div className="min-h-screen bg-[#FAF9F6] relative overflow-hidden">
-        {/* Divine Background Ornaments (consistent with About page) */}
+        {/* Divine Background Ornaments */}
         <div className="absolute top-[20%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-[20%] left-0 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px] -z-10" />
 
@@ -446,24 +267,64 @@ const Media = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
           </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+          <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
+            <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                 <Newspaper className="w-4 h-4 text-[#FFC107]" />
-                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
+                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                {banner.titleHighlight1} <br />
-                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
+                {banner.titleHighlight1} {banner.titleEnd} <br />
+                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
               </h1>
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow">
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-8">
                 {banner.subtitle}
               </p>
+
+              <div className="flex flex-wrap justify-center gap-4">
+                {banner.buttons && banner.buttons.length > 0 ? (
+                  banner.buttons.map((btn, idx) => (
+                    btn.text && (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          if (btn.link === '#book-pooja') {
+                            window.dispatchEvent(new CustomEvent('openPoojaDrawer'));
+                          } else if (btn.link?.startsWith('#')) {
+                            document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+                          } else if (btn.link?.startsWith('http')) {
+                            window.location.href = btn.link;
+                          } else if (btn.link) {
+                            navigate(btn.link);
+                          }
+                        }}
+                        className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#1E293B] hover:bg-[#0F172A]'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
+                      >
+                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        <span className="relative flex items-center gap-2">
+                          {idx === 0 ? <Calendar className="w-4 h-4" /> : <Play className="w-4 h-4" />} {btn.text}
+                        </span>
+                      </button>
+                    )
+                  ))
+                ) : (
+                  <>
+                    <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                      <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="relative flex items-center gap-2"><Calendar className="w-4 h-4" /> Media Inquiry</span>
+                    </button>
+                    <button className="group relative bg-[#1E293B] hover:bg-[#0F172A] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                      <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="relative flex items-center gap-2"><Play className="w-4 h-4" /> View Channel</span>
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Stats Section (Premium Cards) */}
+        {/* Stats Section */}
         <section className="py-12 md:py-16 -mt-10 relative z-20">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
@@ -489,7 +350,7 @@ const Media = () => {
           </div>
         </section>
 
-        {/* Filter Tabs (Refined Style) */}
+        {/* Filter Tabs */}
         <div className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur-md border-b border-orange-100/50 mb-12">
           <div className="container mx-auto px-4 overflow-x-auto">
             <div className="flex justify-center gap-3 py-6 min-w-max">
@@ -517,24 +378,28 @@ const Media = () => {
         {/* Media Grid */}
         <section className="pb-20">
           <div className="container mx-auto px-4 max-w-7xl">
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {getFilteredItems().map(item => renderCard(item))}
-            </div>
-
-            {getFilteredItems().length === 0 && (
-              <div
-                className="text-center py-12 md:py-16 flex flex-col items-center animate-fade-in"
-              >
-                <Sparkles className="w-12 h-12 text-orange-200 mb-4" />
-                <p className="text-gray-400 font-bold uppercase tracking-widest">Divine content arriving soon...</p>
+            {isLoading ? (
+              <div className="flex justify-center py-20">
+                <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
               </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {getFilteredItems().map(item => renderCard(item))}
+                </div>
+
+                {getFilteredItems().length === 0 && (
+                  <div className="text-center py-12 md:py-16 flex flex-col items-center animate-fade-in">
+                    <Sparkles className="w-12 h-12 text-orange-200 mb-4" />
+                    <p className="text-gray-400 font-bold uppercase tracking-widest">Divine content arriving soon...</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </section>
 
-        {/* CTA Section (Matched to About page) */}
+        {/* CTA Section */}
         <section className="py-12 md:py-16 bg-white border-t border-orange-50">
           <div className="container mx-auto px-4 text-center max-w-5xl">
             <div className="animate-fade-in-up">
@@ -564,11 +429,11 @@ const Media = () => {
                     </span>
                   </button>
                 </Link>
-                <Link to="/contact">
+                <Link to="/talk-to-astrologer">
                   <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                     <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     <span className="relative flex items-center gap-2.5">
-                      <Phone className="w-4 h-4" /> professional Consultation
+                      <Phone className="w-4 h-4" /> Professional Consultation
                     </span>
                   </button>
                 </Link>
@@ -577,7 +442,7 @@ const Media = () => {
           </div>
         </section>
 
-        {/* Video Modal (Consistent styling) */}
+        {/* Video Modal */}
         {selectedVideo && (
           <div
             className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
@@ -592,10 +457,7 @@ const Media = () => {
                   <div className="w-2 h-8 bg-orange-600 rounded-full" />
                   <h3 className="font-black text-[#2A1D13] text-sm md:text-base uppercase tracking-wider">{selectedVideo.title}</h3>
                 </div>
-                <button
-                  onClick={() => setSelectedVideo(null)}
-                  className="p-2 hover:bg-orange-50 rounded-full transition-colors group"
-                >
+                <button onClick={() => setSelectedVideo(null)} className="p-2 hover:bg-orange-50 rounded-full transition-colors group">
                   <X className="w-6 h-6 text-gray-400 group-hover:text-orange-600 transition-colors" />
                 </button>
               </div>
@@ -629,4 +491,3 @@ const Media = () => {
 };
 
 export default Media;
-

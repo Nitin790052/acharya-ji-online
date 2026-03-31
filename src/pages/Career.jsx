@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from "react-router-dom";
 import {
-  Send, CheckCircle, Users, TrendingUp, Shield, Clock, 
+  Send, CheckCircle, Users, TrendingUp, Shield, Clock,
   X, Sparkles, Award, Star, Sparkle, BookOpen, MapPin, Phone, MessageCircle,
   Briefcase, GraduationCap, DollarSign, Globe, ChevronRight, Heart, AlertCircle
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { useGetCareerContentQuery } from "@/services/careerContentApi";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 // Static fallback images for eligibility cards when no backend image is uploaded
 import fallback1 from "../assets/careerPage/image1.webp";
@@ -20,14 +21,14 @@ const ELIGIBILITY_FALLBACK_IMAGES = [fallback1, fallback2, fallback3, fallback4]
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const LUCIDE_ICONS = {
-  Users, TrendingUp, Clock, Shield, Award, Heart, 
-  GraduationCap, Sparkles, Star, MapPin, Briefcase, 
+  Users, TrendingUp, Clock, Shield, Award, Heart,
+  GraduationCap, Sparkles, Star, MapPin, Briefcase,
   Globe, BookOpen
 };
 
 export default function Career() {
-  const banner = usePageBanner();
-  const { data: careerContent, isLoading } = useGetCareerContentQuery();
+  const banner = usePageBanner({ pollingInterval: 3000 });
+  const { data: careerContent, isLoading } = useGetCareerContentQuery(undefined, { pollingInterval: 3000 });
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -44,23 +45,23 @@ export default function Career() {
   const [errors, setErrors] = useState({});
 
   // Dynamic Data Processing
-  const eligibility = useMemo(() => 
-    careerContent?.filter(c => c.type === 'eligibility' && c.isActive).sort((a,b) => a.order - b.order) || [], 
-    [careerContent]
-  );
-  
-  const benefits = useMemo(() => 
-    careerContent?.filter(c => c.type === 'benefit' && c.isActive).sort((a,b) => a.order - b.order) || [], 
+  const eligibility = useMemo(() =>
+    careerContent?.filter(c => c.type === 'eligibility' && c.isActive).sort((a, b) => a.order - b.order) || [],
     [careerContent]
   );
 
-  const roles = useMemo(() => 
-    careerContent?.filter(c => c.type === 'role' && c.isActive).sort((a,b) => a.order - b.order) || [], 
+  const benefits = useMemo(() =>
+    careerContent?.filter(c => c.type === 'benefit' && c.isActive).sort((a, b) => a.order - b.order) || [],
     [careerContent]
   );
 
-  const testimonials = useMemo(() => 
-    careerContent?.filter(c => c.type === 'testimonial' && c.isActive).sort((a,b) => a.order - b.order) || [], 
+  const roles = useMemo(() =>
+    careerContent?.filter(c => c.type === 'role' && c.isActive).sort((a, b) => a.order - b.order) || [],
+    [careerContent]
+  );
+
+  const testimonials = useMemo(() =>
+    careerContent?.filter(c => c.type === 'testimonial' && c.isActive).sort((a, b) => a.order - b.order) || [],
     [careerContent]
   );
 
@@ -123,7 +124,7 @@ export default function Career() {
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
             {banner.imageUrl ? (
-              <img src={`${API_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+              <img src={banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
             ) : (
               <div className="absolute inset-0 bg-[#2A1D13]/90" />
             )}
@@ -174,10 +175,10 @@ export default function Career() {
 
                       <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-36 md:h-40 z-10 bg-orange-50">
                         {/* Use backend image if uploaded, else use static fallback based on card position */}
-                        <img 
-                          src={service.image ? `${API_URL}${service.image}` : ELIGIBILITY_FALLBACK_IMAGES[idx % ELIGIBILITY_FALLBACK_IMAGES.length]} 
-                          alt={service.title} 
-                          className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110 group-hover/card:rotate-1" 
+                        <img
+                          src={service.image ? `${API_URL}${service.image}` : ELIGIBILITY_FALLBACK_IMAGES[idx % ELIGIBILITY_FALLBACK_IMAGES.length]}
+                          alt={service.title}
+                          className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110 group-hover/card:rotate-1"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1A130F]/80 via-transparent to-transparent opacity-60 group-hover/card:opacity-40 transition-opacity duration-700" />
                         <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-white/60 rounded-tl-xl group-hover/card:border-amber-400 transition-all duration-500" />

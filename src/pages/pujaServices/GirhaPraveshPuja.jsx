@@ -11,11 +11,11 @@ import muhuratImg from "@/assets/grihaPraveshPuja/muhurat.webp"
 
 export default function GrihaPraveshPuja() {
   const { data: offerings = [], isLoading, isError } = useGetAllOfferingsQuery(undefined, { pollingInterval: 3000 });
-  
+
   // Find the offering that matches Griha or Girha Pravesh
-  const offering = offerings.find(o => 
-    o.slug === 'griha-pravesh-puja' || 
-    o.slug === 'girha-pravesh-puja' || 
+  const offering = offerings.find(o =>
+    o.slug === 'griha-pravesh-puja' ||
+    o.slug === 'girha-pravesh-puja' ||
     o.slug?.includes('pravesh') ||
     o.title?.toLowerCase().includes('pravesh') ||
     o.title?.toLowerCase().includes('pooja')
@@ -100,10 +100,10 @@ export default function GrihaPraveshPuja() {
           {/* Hero Section */}
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
-              <img 
-                src={offering.imageUrl?.startsWith('http') ? offering.imageUrl : `${BACKEND_URL}${offering.imageUrl}`} 
-                alt={title} 
-                className="w-full h-full object-cover object-top" 
+              <img
+                src={offering.imageUrl?.startsWith('http') ? offering.imageUrl : `${BACKEND_URL}${offering.imageUrl}`}
+                alt={title}
+                className="w-full h-full object-cover object-top"
               />
               <div className="absolute inset-0 bg-black/40" />
             </div>

@@ -17,6 +17,7 @@ import { pujaOfferingApi } from '../services/pujaOfferingApi';
 import { bookingApi } from '../services/bookingApi';
 import { bookPujaContentApi } from '../services/bookPujaContentApi';
 import { careerContentApi } from '../services/careerContentApi';
+import { mediaApi } from '../services/mediaApi';
 
 export const store = configureStore({
     reducer: {
@@ -38,6 +39,7 @@ export const store = configureStore({
         [bookingApi.reducerPath]: bookingApi.reducer,
         [bookPujaContentApi.reducerPath]: bookPujaContentApi.reducer,
         [careerContentApi.reducerPath]: careerContentApi.reducer,
+        [mediaApi.reducerPath]: mediaApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -58,6 +60,7 @@ export const store = configureStore({
             pujaOfferingApi.middleware,
             bookingApi.middleware,
             bookPujaContentApi.middleware,
-            careerContentApi.middleware
+            careerContentApi.middleware,
+            mediaApi.middleware
         ),
 });

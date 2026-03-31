@@ -29,6 +29,7 @@ import PujaOfferingManager from "./pages/content/PujaOfferingManager";
 import BookPujaManager from "./pages/content/BookPujaManager";
 import BookPujaContentManager from "./pages/content/BookPujaContentManager";
 import CareerContentManager from "./pages/content/CareerContentManager";
+import MediaManager from "./pages/content/MediaManager";
 
 function AdminApp() {
   return (
@@ -75,6 +76,7 @@ function AdminApp() {
           <Route path="content/faq" element={<FAQManager />} />
           <Route path="content/footer" element={<FooterManager />} />
           <Route path="content/career" element={<CareerContentManager />} />
+          <Route path="content/media" element={<MediaManager />} />
           <Route path="seo/settings" element={<PagePlaceholder title="SEO Settings" />} />
           <Route path="seo/meta" element={<PagePlaceholder title="Meta Tags Management" />} />
           <Route path="admin/staff" element={<PagePlaceholder title="Staff Management" />} />

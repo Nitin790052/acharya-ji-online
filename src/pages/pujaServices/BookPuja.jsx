@@ -9,11 +9,11 @@ import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { useGetAllOfferingsQuery } from "@/services/pujaOfferingApi";
 import { useCreateBookingMutation } from "@/services/bookingApi";
-import { 
-    useGetStepsQuery, 
-    useGetExpertsQuery, 
-    useGetSamagriQuery, 
-    useGetFAQsQuery 
+import {
+  useGetStepsQuery,
+  useGetExpertsQuery,
+  useGetSamagriQuery,
+  useGetFAQsQuery
 } from "@/services/bookPujaContentApi";
 import { API_URL } from '@/config/apiConfig';
 import { toast } from 'react-toastify';
@@ -22,8 +22,8 @@ const BACKEND_URL = API_URL.replace(/\/api\/?$/, '');
 
 export default function BookPuja() {
   const navigate = useNavigate();
-  const banner = usePageBanner();
-  
+  const banner = usePageBanner({ pollingInterval: 3000 });
+
   // Dynamic Content Queries
   const { data: pujaServices = [] } = useGetAllOfferingsQuery(undefined, { pollingInterval: 3000 });
   const { data: dbSteps = [] } = useGetStepsQuery();
@@ -35,19 +35,21 @@ export default function BookPuja() {
   // Mapping DB Steps to local format
   const bookingSteps = useMemo(() => {
     if (dbSteps && dbSteps.length > 0) {
-      return [...dbSteps].sort((a,b) => (a.order || 0) - (b.order || 0)).map(s => ({
-         n: s.number, t: s.title, s: s.subtitle, d: s.hindiTitle, f: s.fields || []
+      return [...dbSteps].sort((a, b) => (a.order || 0) - (b.order || 0)).map(s => ({
+        n: s.number, t: s.title, s: s.subtitle, d: s.hindiTitle, f: s.fields || []
       }));
     }
     return [
       { n: "1", t: "Select Puja", s: "Browse catalog", d: "अपनी पूजा चुनें", f: [] },
       { n: "2", t: "Date & Time", s: "Pick a slot", d: "तारीख और समय", f: [] },
-      { n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें", f: [
-        { name: "name", label: "Full Name", placeholder: "Karan Singh", type: "text", required: true },
-        { name: "mobile", label: "Mobile Number", placeholder: "98XXXXXXXX", type: "tel", required: true },
-        { name: "city", label: "City / Location", placeholder: "Mumbai", type: "text", required: true },
-        { name: "message", label: "Personal Message", placeholder: "Any specific requirements for your puja?", type: "textarea", required: false }
-      ] },
+      {
+        n: "3", t: "Provide Info", s: "Fill detail form", d: "जानकारी दें", f: [
+          { name: "name", label: "Full Name", placeholder: "Karan Singh", type: "text", required: true },
+          { name: "mobile", label: "Mobile Number", placeholder: "98XXXXXXXX", type: "tel", required: true },
+          { name: "city", label: "City / Location", placeholder: "Mumbai", type: "text", required: true },
+          { name: "message", label: "Personal Message", placeholder: "Any specific requirements for your puja?", type: "textarea", required: false }
+        ]
+      },
       { n: "4", t: "Priest Match", s: "Expert assigned", d: "आचार्य नियुक्ति", f: [] },
       { n: "5", t: "Ritual Done", s: "Divine blessings", d: "पूजा संपन्न", f: [] }
     ];
@@ -77,7 +79,7 @@ export default function BookPuja() {
   const validateStep = (step) => {
     let newErrors = {};
     const stepData = bookingSteps.find(s => Number(s.n) === Number(step));
-    
+
     if (step === 1) {
       if (!formData.pujaType) newErrors.pujaType = "Please select a puja";
     } else if (step === 2) {
@@ -94,12 +96,12 @@ export default function BookPuja() {
         }
       });
     }
-    
+
     // Safety check: if we are at step 3 and have no errors but fields are missing, something is wrong
     if (step === 3 && Object.keys(newErrors).length === 0 && (!stepData || stepData.f.length === 0)) {
-       console.error("Step 3 data not found or has no fields. Blocking submit.");
-       toast.error("Form configuration error. Please sync defaults in admin panel.");
-       return false;
+      console.error("Step 3 data not found or has no fields. Blocking submit.");
+      toast.error("Form configuration error. Please sync defaults in admin panel.");
+      return false;
     }
 
     setErrors(newErrors);
@@ -139,7 +141,7 @@ export default function BookPuja() {
     try {
       // Final sanity check
       if (!formData.name || !formData.mobile || !formData.city) {
-         throw new Error("Core fields are missing. Please ensure Step 3 is correctly populated.");
+        throw new Error("Core fields are missing. Please ensure Step 3 is correctly populated.");
       }
       console.log('Sending final booking data:', formData);
       await createBooking(formData).unwrap();
@@ -191,18 +193,47 @@ export default function BookPuja() {
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4">
-                  <button
-                    onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
-                    className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none"
-                  >
-                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                    <span className="relative flex items-center gap-2 font-black"><Calendar className="w-5 h-5" /> Book Puja Now</span>
-                  </button>
-                  <button
-                    className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none"
-                  >
-                    <span className="relative flex items-center gap-2 font-black"><Phone className="w-5 h-5 text-yellow-300" /> Talk to Expert</span>
-                  </button>
+                  {banner.buttons && banner.buttons.length > 0 ? (
+                    banner.buttons.map((btn, idx) => (
+                      btn.text && (
+                        <button
+                          key={idx}
+                          onClick={() => {
+                            if (btn.link === '#book-pooja') {
+                              window.dispatchEvent(new CustomEvent('openPoojaDrawer'));
+                            } else if (btn.link?.startsWith('#')) {
+                              document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+                            } else if (btn.link?.startsWith('http')) {
+                              window.location.href = btn.link;
+                            } else if (btn.link) {
+                              navigate(btn.link);
+                            }
+                          }}
+                          className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13]'} text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none`}
+                        >
+                          <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                          <span className="relative flex items-center gap-2 font-black">
+                            {idx === 0 ? <Calendar className="w-5 h-5" /> : <Phone className="w-5 h-5 text-yellow-300" />} {btn.text}
+                          </span>
+                        </button>
+                      )
+                    ))
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
+                        className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none"
+                      >
+                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        <span className="relative flex items-center gap-2 font-black"><Calendar className="w-5 h-5" /> Book Puja Now</span>
+                      </button>
+                      <button
+                        className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none"
+                      >
+                        <span className="relative flex items-center gap-2 font-black"><Phone className="w-5 h-5 text-yellow-300" /> Talk to Expert</span>
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -277,10 +308,10 @@ export default function BookPuja() {
                       style={{ animationDelay: `${idx * 0.1}s`, animationFillMode: 'both' }}
                     >
                       <div className="relative h-52 overflow-hidden shrink-0">
-                        <img 
-                          src={puja.imageUrl?.startsWith('http') ? puja.imageUrl : `${BACKEND_URL}${puja.imageUrl}`} 
-                          alt={puja.title} 
-                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                        <img
+                          src={puja.imageUrl?.startsWith('http') ? puja.imageUrl : `${BACKEND_URL}${puja.imageUrl}`}
+                          alt={puja.title}
+                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
                         <div className="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg flex items-center gap-1.5">
@@ -312,17 +343,17 @@ export default function BookPuja() {
                             <span className="text-xl font-black text-[#2A1D13] uppercase">₹{puja.price}</span>
                           </div>
                           <div className="flex gap-2">
-                            <Link 
-                                to={`/puja/${puja.slug}`}
-                                className="bg-white border border-[#2A1D13] hover:bg-[#2A1D13] hover:text-white text-[#2A1D13] font-black text-[10px] uppercase tracking-wider px-4 py-3 transition-all duration-300 rounded-none no-underline"
+                            <Link
+                              to={`/puja/${puja.slug}`}
+                              className="bg-white border border-[#2A1D13] hover:bg-[#2A1D13] hover:text-white text-[#2A1D13] font-black text-[10px] uppercase tracking-wider px-4 py-3 transition-all duration-300 rounded-none no-underline"
                             >
-                                Details
+                              Details
                             </Link>
                             <button
-                                onClick={() => handlePujaSelect(puja)}
-                                className="bg-[#E8453C] hover:bg-black text-white font-black text-[10px] uppercase tracking-wider px-4 py-3 shadow-lg transition-all duration-300 rounded-none"
+                              onClick={() => handlePujaSelect(puja)}
+                              className="bg-[#E8453C] hover:bg-black text-white font-black text-[10px] uppercase tracking-wider px-4 py-3 shadow-lg transition-all duration-300 rounded-none"
                             >
-                                Book Now
+                              Book Now
                             </button>
                           </div>
                         </div>
@@ -348,18 +379,18 @@ export default function BookPuja() {
                 onClick={() => { if (currentStep < 4) setShowBookingForm(false); }}
                 className="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
               />
-              
+
               <div
                 className="relative w-full max-w-5xl bg-white shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col max-h-[98vh] md:max-h-[90vh] rounded-none animate-scale-in"
               >
                 {/* Close Button */}
                 {currentStep < 5 && (
-                  <button 
-                  onClick={() => setShowBookingForm(false)}
-                  className="absolute top-6 right-6 z-50 text-gray-400 hover:text-orange-600 transition-all p-2 bg-white/50 backdrop-blur-md border border-gray-100"
-                >
-                  <X className="w-6 h-6" />
-                </button>
+                  <button
+                    onClick={() => setShowBookingForm(false)}
+                    className="absolute top-6 right-6 z-50 text-gray-400 hover:text-orange-600 transition-all p-2 bg-white/50 backdrop-blur-md border border-gray-100"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
                 )}
 
                 <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
@@ -367,30 +398,30 @@ export default function BookPuja() {
                   <div className="hidden lg:flex w-80 bg-[#2A1D13] p-10 text-white flex-col relative overflow-hidden text-left">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full -mr-16 -mt-16 blur-3xl opacity-50" />
                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-600/10 rounded-full -ml-16 -mb-16 blur-3xl opacity-50" />
-                    
+
                     <div className="relative z-10 flex flex-col h-full">
                       <div className="w-14 h-14 bg-orange-600 flex items-center justify-center mb-10 shadow-xl border border-orange-500/20">
                         <Award className="w-7 h-7 text-white" />
                       </div>
-                      
+
                       <h3 className="text-2xl font-black mb-10 uppercase tracking-tighter border-b border-white/10 pb-6 flex items-center gap-3">
                         <Sparkle className="w-6 h-6 text-orange-500" />
                         Status
                       </h3>
-                      
+
                       <div className="space-y-10 flex-1">
                         <div className={`transition-all duration-500 ${currentStep >= 1 ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
                           <p className="text-orange-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
-                             Selected Ritual
+                            Selected Ritual
                           </p>
                           <p className="text-lg font-black text-white uppercase leading-tight tracking-tight">
                             {formData.pujaType || "Not Selected"}
                           </p>
                         </div>
-                        
+
                         <div className={`transition-all duration-500 delay-100 ${currentStep >= 2 ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
                           <p className="text-orange-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
-                             Schedule
+                            Schedule
                           </p>
                           <div className="space-y-1">
                             <p className="text-sm font-bold text-white uppercase">{formData.date || "Date Not Set"}</p>
@@ -400,7 +431,7 @@ export default function BookPuja() {
 
                         <div className={`transition-all duration-500 delay-200 ${currentStep >= 3 ? 'opacity-100 translate-x-0' : 'opacity-30 translate-x-4'}`}>
                           <p className="text-orange-400 text-[10px] font-black uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
-                             Details
+                            Details
                           </p>
                           <p className="text-sm font-bold text-white uppercase">{formData.name || "Awaiting Info"}</p>
                           <p className="text-[10px] font-medium text-amber-100/50 uppercase tracking-widest mt-1">{formData.mobile}</p>
@@ -424,35 +455,34 @@ export default function BookPuja() {
                     {/* Header Progress Header */}
                     <div className="bg-white border-b border-orange-100 p-6 md:p-8 shrink-0 shadow-sm relative z-20">
                       <div className="max-w-4xl mx-auto">
-                         <div className="flex justify-between items-center mb-6 text-left">
-                            <div>
-                               <h2 className="text-xl md:text-2xl font-black text-[#2A1D13] uppercase tracking-normal">
-                                  {bookingSteps[currentStep - 1]?.t}
-                               </h2>
-                               <p className="text-orange-600 text-[10px] font-black uppercase tracking-[0.2em]">{bookingSteps[currentStep - 1]?.d}</p>
-                            </div>
-                            <div className="text-right">
-                               <span className="text-2xl md:text-3xl font-black text-orange-100">{currentStep} / 5</span>
-                            </div>
-                         </div>
-                        
+                        <div className="flex justify-between items-center mb-6 text-left">
+                          <div>
+                            <h2 className="text-xl md:text-2xl font-black text-[#2A1D13] uppercase tracking-normal">
+                              {bookingSteps[currentStep - 1]?.t}
+                            </h2>
+                            <p className="text-orange-600 text-[10px] font-black uppercase tracking-[0.2em]">{bookingSteps[currentStep - 1]?.d}</p>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-2xl md:text-3xl font-black text-orange-100">{currentStep} / 5</span>
+                          </div>
+                        </div>
+
                         <div className="relative flex justify-between items-center">
                           <div className="absolute top-1/2 left-0 right-0 h-[1.5px] bg-orange-50 -translate-y-1/2 -z-10" />
-                          <div 
+                          <div
                             className="absolute top-1/2 left-0 h-[1.5px] bg-orange-500 -translate-y-1/2 transition-all duration-1000 -z-10"
                             style={{ width: `${Math.max(0, ((currentStep - 1) / 4) * 100)}%` }}
                           />
-                          
+
                           {bookingSteps.map((step, idx) => {
                             const stepNum = idx + 1;
                             const isActive = currentStep === stepNum;
                             const isCompleted = currentStep > stepNum;
                             return (
                               <div key={idx} className="relative group">
-                                <div className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center transition-all duration-500 border-2 ${
-                                  isActive ? 'bg-orange-600 border-orange-600 scale-110 shadow-lg' : 
+                                <div className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center transition-all duration-500 border-2 ${isActive ? 'bg-orange-600 border-orange-600 scale-110 shadow-lg' :
                                   isCompleted ? 'bg-orange-100 border-orange-100' : 'bg-white border-orange-50'
-                                }`}>
+                                  }`}>
                                   {isCompleted ? (
                                     <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-orange-600" />
                                   ) : (
@@ -460,9 +490,9 @@ export default function BookPuja() {
                                   )}
                                 </div>
                                 <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 hidden lg:block w-max">
-                                   <p className={`text-[8px] font-black uppercase tracking-[0.15em] ${isActive ? 'text-orange-600' : 'text-gray-300'}`}>
-                                      {step.t}
-                                   </p>
+                                  <p className={`text-[8px] font-black uppercase tracking-[0.15em] ${isActive ? 'text-orange-600' : 'text-gray-300'}`}>
+                                    {step.t}
+                                  </p>
                                 </div>
                               </div>
                             );
@@ -481,11 +511,10 @@ export default function BookPuja() {
                                 <button
                                   key={puja._id}
                                   onClick={() => handlePujaSelect(puja)}
-                                  className={`p-5 text-left transition-all duration-300 flex items-center gap-5 border-2 group relative overflow-hidden ${
-                                    formData.pujaType === puja.title 
-                                    ? 'border-orange-500 bg-white shadow-xl' 
+                                  className={`p-5 text-left transition-all duration-300 flex items-center gap-5 border-2 group relative overflow-hidden ${formData.pujaType === puja.title
+                                    ? 'border-orange-500 bg-white shadow-xl'
                                     : 'border-white bg-white/50 hover:border-orange-100'
-                                  }`}
+                                    }`}
                                 >
                                   <div className="w-14 h-14 shrink-0 shadow-lg overflow-hidden border-2 border-white">
                                     <img src={puja.imageUrl?.startsWith('http') ? puja.imageUrl : `${BACKEND_URL}${puja.imageUrl}`} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -499,7 +528,7 @@ export default function BookPuja() {
                                 </button>
                               ))}
                             </div>
-                            {errors.pujaType && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><AlertCircle size={14}/> {errors.pujaType}</p>}
+                            {errors.pujaType && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><AlertCircle size={14} /> {errors.pujaType}</p>}
                             <div className="pt-10 flex justify-end">
                               <button onClick={nextStep} className="group bg-[#E8453C] hover:bg-black text-white font-black text-[10px] uppercase tracking-[0.25em] px-14 py-4 shadow-xl transition-all duration-500 flex items-center gap-3">
                                 Ritual Choice <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -515,13 +544,13 @@ export default function BookPuja() {
                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
                                   <Calendar className="w-4 h-4 text-orange-600" /> Preferred Date *
                                 </label>
-                                <input 
-                                  type="date" 
-                                  name="date" 
+                                <input
+                                  type="date"
+                                  name="date"
                                   min={new Date().toISOString().split('T')[0]}
-                                  value={formData.date} 
-                                  onChange={handleChange} 
-                                  className={`w-full bg-white border-2 ${errors.date ? 'border-red-300' : 'border-orange-50'} px-6 py-5 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all`} 
+                                  value={formData.date}
+                                  onChange={handleChange}
+                                  className={`w-full bg-white border-2 ${errors.date ? 'border-red-300' : 'border-orange-50'} px-6 py-5 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all`}
                                 />
                                 {errors.date && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors.date}</p>}
                               </div>
@@ -536,11 +565,10 @@ export default function BookPuja() {
                                       key={mode}
                                       type="button"
                                       onClick={() => setFormData(prev => ({ ...prev, mode }))}
-                                      className={`flex items-center gap-4 p-5 border-2 transition-all duration-300 ${
-                                        formData.mode === mode 
-                                        ? 'border-orange-500 bg-white shadow-xl' 
+                                      className={`flex items-center gap-4 p-5 border-2 transition-all duration-300 ${formData.mode === mode
+                                        ? 'border-orange-500 bg-white shadow-xl'
                                         : 'border-white bg-white/50 hover:border-orange-50'
-                                      }`}
+                                        }`}
                                     >
                                       <div className={`w-10 h-10 flex items-center justify-center transition-all ${formData.mode === mode ? 'bg-orange-600 text-white' : 'bg-orange-50 text-orange-600'}`}>
                                         {mode === 'Online' ? <Video className="w-5 h-5" /> : <Home className="w-5 h-5" />}
@@ -575,35 +603,35 @@ export default function BookPuja() {
                                   <div key={idx} className="space-y-2">
                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">{field.label} {field.required && '*'}</label>
                                     <div className="relative">
-                                       {field.type === 'tel' ? <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-200" /> : <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-200" />}
-                                       <input 
-                                          type={field.type === 'tel' ? 'tel' : 'text'} 
-                                          name={field.name} 
-                                          value={formData[field.name] || ''} 
-                                          onChange={handleChange} 
-                                          className={`w-full bg-white border-2 ${errors[field.name] ? 'border-red-300' : 'border-orange-50'} pl-12 pr-6 py-4 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all`} 
-                                          placeholder={field.placeholder} 
-                                       />
+                                      {field.type === 'tel' ? <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-200" /> : <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-200" />}
+                                      <input
+                                        type={field.type === 'tel' ? 'tel' : 'text'}
+                                        name={field.name}
+                                        value={formData[field.name] || ''}
+                                        onChange={handleChange}
+                                        className={`w-full bg-white border-2 ${errors[field.name] ? 'border-red-300' : 'border-orange-50'} pl-12 pr-6 py-4 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all`}
+                                        placeholder={field.placeholder}
+                                      />
                                     </div>
                                     {errors[field.name] && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors[field.name]}</p>}
                                   </div>
                                 ))}
                               </div>
-                              
+
                               {/* Textarea fields */}
                               {(bookingSteps.find(s => Number(s.n) === 3)?.f || []).filter(f => f.type === 'textarea').map((field, idx) => (
                                 <div key={idx} className="space-y-2">
                                   <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">{field.label} {field.required && '*'}</label>
                                   <div className="relative">
-                                     <MessageCircle className="absolute left-4 top-6 w-4 h-4 text-orange-200" />
-                                     <textarea 
-                                        name={field.name} 
-                                        value={formData[field.name] || ''} 
-                                        onChange={handleChange} 
-                                        rows="3" 
-                                        className={`w-full bg-white border-2 ${errors[field.name] ? 'border-red-300' : 'border-orange-50'} pl-12 pr-6 py-4 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all resize-none font-medium`} 
-                                        placeholder={field.placeholder}
-                                     ></textarea>
+                                    <MessageCircle className="absolute left-4 top-6 w-4 h-4 text-orange-200" />
+                                    <textarea
+                                      name={field.name}
+                                      value={formData[field.name] || ''}
+                                      onChange={handleChange}
+                                      rows="3"
+                                      className={`w-full bg-white border-2 ${errors[field.name] ? 'border-red-300' : 'border-orange-50'} pl-12 pr-6 py-4 font-black text-[#4A3427] text-sm focus:border-orange-500 outline-none transition-all resize-none font-medium`}
+                                      placeholder={field.placeholder}
+                                    ></textarea>
                                   </div>
                                   {errors[field.name] && <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">{errors[field.name]}</p>}
                                 </div>
@@ -625,12 +653,12 @@ export default function BookPuja() {
                           <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in">
                             <div className="relative mb-12">
                               <div className="w-40 h-40 bg-orange-50/50 rounded-full flex items-center justify-center animate-[spin_10s_linear_infinite] border-4 border-dashed border-orange-200">
-                                 <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
-                                    <Users className="w-16 h-16 text-orange-600 animate-pulse" />
-                                 </div>
+                                <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
+                                  <Users className="w-16 h-16 text-orange-600 animate-pulse" />
+                                </div>
                               </div>
                               <div className="absolute -top-2 -right-2 w-10 h-10 bg-white rounded-none flex items-center justify-center shadow-lg border border-orange-100 animate-bounce">
-                                 <Shield className="w-5 h-5 text-orange-600" />
+                                <Shield className="w-5 h-5 text-orange-600" />
                               </div>
                             </div>
                             <h2 className="text-2xl font-black text-[#2A1D13] uppercase tracking-tighter mb-4">
@@ -639,7 +667,7 @@ export default function BookPuja() {
                             <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] max-w-sm mx-auto leading-relaxed">
                               {bookingSteps[3]?.s || `Matching the most qualified specialist for your ${formData.pujaType}...`}
                             </p>
-                            
+
                             <div className="mt-16 bg-white p-5 border border-orange-50 inline-flex items-center gap-4">
                               <span className="flex gap-1.5">
                                 <span className="w-2.5 h-2.5 bg-orange-600 animate-bounce" style={{ animationDelay: '0s' }}></span>
@@ -657,11 +685,11 @@ export default function BookPuja() {
                               <CheckCircle className="w-20 h-20 text-green-600 animate-[bounce_2s_ease-in-out_infinite]" />
                               <div className="absolute inset-0 border-4 border-green-500/20 rounded-full animate-ping opacity-10" />
                             </div>
-                            
+
                             <h2 className="text-3xl md:text-4xl font-black text-[#2A1D13] uppercase tracking-tighter mb-8 bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
                               {bookingSteps[4]?.t || "Booking Confirmed!"}
                             </h2>
-                            
+
                             <div className="space-y-4 mb-10">
                               <p className="text-[#4A3427] font-black text-lg md:text-xl leading-relaxed uppercase">
                                 {bookingSteps[4]?.d || "आपकी पूजा सफलतापूर्वक बुक हो गई है।"}
@@ -671,18 +699,18 @@ export default function BookPuja() {
                                 {bookingSteps[4]?.s || `Our spiritual desk will reach you at ${formData.mobile} within 15-30 minutes to confirm final schedule details.`}
                               </p>
                             </div>
-                            
+
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-sm">
-                               <div className="bg-white p-5 border border-orange-50 flex flex-col items-center">
-                                  <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Ritual ID</p>
-                                  <p className="text-xs font-black text-[#2A1D13] tracking-tighter uppercase">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
-                               </div>
-                               <button 
-                                  onClick={() => setShowBookingForm(false)}
-                                  className="bg-[#2A1D13] hover:bg-black text-white p-5 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.2em] transition-all group"
-                               >
-                                  Exit Dashboard <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                               </button>
+                              <div className="bg-white p-5 border border-orange-50 flex flex-col items-center">
+                                <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">Ritual ID</p>
+                                <p className="text-xs font-black text-[#2A1D13] tracking-tighter uppercase">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                              </div>
+                              <button
+                                onClick={() => setShowBookingForm(false)}
+                                className="bg-[#2A1D13] hover:bg-black text-white p-5 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.2em] transition-all group"
+                              >
+                                Exit Dashboard <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                              </button>
                             </div>
                           </div>
                         )}

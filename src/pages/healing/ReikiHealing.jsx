@@ -13,9 +13,12 @@ import {
     BookOpen, Star, CheckCircle, Clock, MapPin, ChevronRight, Zap, Leaf, HelpCircle, MessageSquare, Sun, Moon, Wind, Feather, Activity, Coffee, Battery, Brain, Droplet, Flower2
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 import bgImage from "../../assets/healing/ReikiHealing.webp";
 
 const ReikiHealing = () => {
+    const banner = usePageBanner({ pollingInterval: 3000 });
     const [selectedFaq, setSelectedFaq] = useState(null);
     const [selectedSession, setSelectedSession] = useState(null);
 
@@ -193,24 +196,67 @@ const ReikiHealing = () => {
                     {/* Hero Section */}
                     <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                         <div className="absolute inset-0">
-                            <img src={bgImage} alt="Reiki Background" className="w-full h-full object-cover object-top" />
-                            <div className="absolute inset-0 bg-black/30" />
+                            {banner.imageUrl ? (
+                                <img src={banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+                            ) : (
+                                <img src={bgImage} alt="Reiki Background" className="w-full h-full object-cover object-top" />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+                            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
                         </div>
-                        <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
-                            <div className="max-w-4xl mx-auto text-center">
+                        <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up text-center">
+                            <div className="max-w-4xl mx-auto">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                                     <Award className="w-4 h-4 text-[#FFC107]" />
-                                    <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                                    <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                                 </div>
 
                                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                                    Restore Balance to Your <br />
-                                    <span className="text-yellow-300">Mind, Body & Soul</span>
+                                    {banner.titleHighlight1} <br />
+                                    <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
                                 </h1>
 
                                 <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
-                                    Experience divine universal energy healing to remove blocks, reduce stress, and restore natural harmony.
+                                    {banner.subtitle}
                                 </p>
+
+                                <div className="flex flex-wrap justify-center gap-4">
+                                    {banner.buttons && banner.buttons.length > 0 ? (
+                                        banner.buttons.map((btn, idx) => (
+                                            btn.text && (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link ? (btn.link.startsWith('http') ? window.location.href = btn.link : window.location.pathname = btn.link) : null)}
+                                                    className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#F59E0B] hover:bg-[#D97706]'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
+                                                >
+                                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                    <span className="relative flex items-center gap-2.5">
+                                                        {btn.text}
+                                                    </span>
+                                                </button>
+                                            )
+                                        ))
+                                    ) : (
+                                        <>
+                                            <button
+                                                onClick={() => document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' })}
+                                                className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                <span className="relative flex items-center gap-2.5">
+                                                    <Zap className="w-3.5 h-3.5" /> Book Session
+                                                </span>
+                                            </button>
+                                            <button
+                                                onClick={() => window.location.href = 'tel:+919910008432'}
+                                                className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                                <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                <span className="relative flex items-center gap-2.5">
+                                                    <Phone className="w-3.5 h-3.5" /> Free Consultation
+                                                </span>
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -537,7 +583,7 @@ const ReikiHealing = () => {
                                             <span className="font-extrabold text-[#2A1D13] text-sm md:text-base uppercase tracking-tight">Q. {faq.q}</span>
                                             <HelpCircle className={`w-5 h-5 transition-transform duration-300 ${selectedFaq === i ? 'rotate-180 text-orange-600' : 'text-gray-400'}`} />
                                         </button>
-                                        <div 
+                                        <div
                                             className={`bg-white transition-all duration-300 ease-in-out overflow-hidden ${selectedFaq === i ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
                                         >
                                             <p className="px-8 pb-8 pt-2 text-gray-600 font-medium leading-relaxed border-t border-orange-50">A. {faq.a}</p>

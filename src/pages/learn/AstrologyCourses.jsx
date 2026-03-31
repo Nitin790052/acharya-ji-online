@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Link } from 'react-router-dom';
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 import rudrakshaImg from '../../assets/vastuRamadies/Rudraksha.webp';
 import gemstoneImg from '../../assets/vastuRamadies/Gemstones.webp';
@@ -194,6 +196,8 @@ const categoryFilters = [
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 const AstrologyCourses = () => {
+    const banner = usePageBanner({ pollingInterval: 3000 });
+    const bannerImage = banner?.imageUrl ? (banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`) : "";
     const [activeCategory, setActiveCategory] = useState('all');
 
     const filteredCourses = activeCategory === 'all'
@@ -210,35 +214,56 @@ const AstrologyCourses = () => {
                 {/* ── Hero Section ─────────────────────────────────────────── */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[380px] flex items-center text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src="" alt="Astrology Courses Banner" className="w-full h-full object-cover object-top" />
+                        <img src={bannerImage} alt="Astrology Courses Banner" className="w-full h-full object-cover object-top" />
                         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
                         <div className="absolute inset-0 backdrop-blur-[1px]" />
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10">
                         <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                                 <Award className="w-4 h-4 text-[#FFC107]" />
-                                <span className="text-[#FFC107] text-xs md:text-sm font-serif font-bold uppercase tracking-[0.2em]">DIVINE SERVICES HUB</span>
+                                <span className="text-[#FFC107] text-xs md:text-sm font-serif font-bold uppercase tracking-[0.2em]">{banner.badge || "DIVINE SERVICES HUB"}</span>
                             </div>
                             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-4 leading-tight drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] uppercase tracking-wide">
-                                Learn Astrology From <br />
-                                <span className="text-amber-400 drop-shadow-[0_2px_10px_rgba(251,191,36,0.2)]">Acharya Ji</span>
+                                {banner.titleHighlight1} {banner.titleEnd} <br />
+                                <span className="text-amber-400 drop-shadow-[0_2px_10px_rgba(251,191,36,0.2)]">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                             </h1>
                             <p className="text-lg md:text-xl text-amber-50 leading-relaxed font-medium max-w-2xl mx-auto mb-8 italic opacity-90 drop-shadow-lg">
-                                Master Vedic Astrology, Kundli Reading & Spiritual Science with 25+ years of experience
+                                {banner.subtitle}
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
-                                <button
-                                    onClick={() => document.getElementById('courses-section')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2.5"><BookOpen className="w-4 h-4" /> Explore Courses</span>
-                                </button>
-                                <button className="group relative bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
-                                    <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2.5"><PlayCircle className="w-4 h-4" /> Free Webinar</span>
-                                </button>
+                                {banner.buttons && banner.buttons.length > 0 ? (
+                                    banner.buttons.map((btn, idx) => (
+                                        btn.text && (
+                                            <button
+                                                key={idx}
+                                                onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link === '#book-pooja' ? window.dispatchEvent(new CustomEvent('openPoojaDrawer')) : (btn.link ? window.location.href = btn.link : null))}
+                                                className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#25D366] hover:bg-[#128C7E]'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
+                                            >
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                <span className="relative flex items-center gap-2.5">
+                                                    {idx === 0 ? <BookOpen className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
+                                                    {btn.text}
+                                                </span>
+                                            </button>
+                                        )
+                                    ))
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => document.getElementById('courses-section')?.scrollIntoView({ behavior: 'smooth' })}
+                                            className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
+                                        >
+                                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2.5"><BookOpen className="w-4 h-4" /> Explore Courses</span>
+                                        </button>
+                                        <button className="group relative bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                            <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2.5"><PlayCircle className="w-4 h-4" /> Free Webinar</span>
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

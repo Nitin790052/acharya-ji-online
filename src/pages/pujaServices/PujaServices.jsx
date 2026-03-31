@@ -13,7 +13,8 @@ import { useGetActiveServicesQuery } from "@/services/serviceApi";
 import { BACKEND_URL } from "@/config/apiConfig";
 
 const PujaServices = () => {
-  const banner = usePageBanner();
+  const banner = usePageBanner({ pollingInterval: 3000 });
+  const bannerImage = banner?.imageUrl ? (banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`) : "";
 
   // --- FETCHING FROM ALL RELEVANT APIs ---
   const { data: offerings = [], isLoading: isOfferingsLoading } = useGetAllOfferingsQuery();
@@ -115,17 +116,13 @@ const PujaServices = () => {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #d97706 1px, transparent 0)', backgroundSize: '32px 32px' }} />
 
         {/* --- PREMIUM HERO SECTION --- */}
-        <section className="relative h-[320px] md:h-[400px] lg:h-[400px] flex items-center justify-center text-white overflow-hidden">
+        <section className="relative h-[320px] md:h-[400px] lg:h-[420px] flex items-center justify-center text-white overflow-hidden">
           <div className="absolute inset-0">
-            {banner.imageUrl ? (
-              <img
-                src={`${BACKEND_URL}${banner.imageUrl}`}
-                alt="Sacred Background"
-                className="w-full h-full object-cover object-center scale-105 animate-slow-zoom"
-              />
-            ) : (
-              <div className="absolute inset-0 bg-[#1A130F]" />
-            )}
+            <img
+              src={bannerImage}
+              alt="Sacred Background"
+              className="w-full h-full object-cover object-center scale-105 animate-slow-zoom"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(232,69,60,0.2),transparent_70%)]" />
           </div>
@@ -138,17 +135,53 @@ const PujaServices = () => {
               </div>
 
               <h1 className="text-lg md:text-2xl font-bold mb-2 uppercase tracking-[0.2em] opacity-90">
-                {banner.titleHighlight1 || "Welcome To"}
+                {banner.titleHighlight1}
               </h1>
               <div className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-none uppercase tracking-tighter drop-shadow-2xl">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-100 to-orange-500">
-                  {banner.titleHighlight2 || "Divine"} {banner.titleHighlight3 || "Services"}
+                  {banner.titleHighlight2} {banner.titleHighlight3} {banner.titleEnd}
                 </span>
               </div>
 
-              <p className="text-xs md:text-sm lg:text-base text-white/80 leading-relaxed max-w-xl mx-auto font-medium mb-8 drop-shadow-lg italic font-serif px-4">
-                {banner.subtitle || "Spiritual guidance and authentic Vedic traditions for your well-being."}
+              <p className="text-xs md:text-sm lg:text-base text-white/80 leading-relaxed max-w-xl mx-auto font-bold mb-8 drop-shadow-lg italic font-serif px-4">
+                {banner.subtitle}
               </p>
+
+              <div className="flex flex-wrap justify-center gap-4 mb-4">
+                {banner.buttons && banner.buttons.length > 0 ? (
+                  banner.buttons.map((btn, idx) => (
+                    btn.text && (
+                      <button
+                        key={idx}
+                        onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link === '#book-pooja' ? window.dispatchEvent(new CustomEvent('openPoojaDrawer')) : (btn.link ? (btn.link.startsWith('http') ? window.location.href = btn.link : window.location.pathname = btn.link) : null))}
+                        className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-black' : 'bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black'} px-8 py-3.5 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden border border-white/10`}
+                      >
+                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        <span className="relative flex items-center gap-2.5">
+                          {idx === 0 ? <Calendar className="w-4 h-4" /> : <Phone className="w-4 h-4" />}
+                          {btn.text}
+                        </span>
+                      </button>
+                    )
+                  ))
+                ) : (
+                  <>
+                    <button
+                      onClick={handleOpenDrawer}
+                      className="group relative bg-[#E8453C] hover:bg-black text-white px-8 py-3.5 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      <span className="relative flex items-center gap-2.5"><Calendar className="w-4 h-4" /> Book Your Puja</span>
+                    </button>
+                    <Link to="/contact">
+                      <button className="group relative bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black px-8 py-3.5 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden border border-white/10">
+                        <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                        <span className="relative flex items-center gap-2.5"><Phone className="w-4 h-4" /> Talk to Expert</span>
+                      </button>
+                    </Link>
+                  </>
+                )}
+              </div>
 
               {/* Enhanced Search Input */}
               <div className="max-w-xl mx-auto relative group">
@@ -160,7 +193,7 @@ const PujaServices = () => {
                     placeholder="Search for a specific puja by name or ritual..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-14 pr-10 py-4 rounded-2xl bg-white text-gray-900 font-bold shadow-2xl transition-all border-none focus:ring-2 focus:ring-orange-500/50 text-sm md:text-base placeholder:text-gray-400"
+                    className="w-full pl-14 pr-10 py-3.5 rounded-2xl bg-white text-gray-900 font-bold shadow-2xl transition-all border-none focus:ring-2 focus:ring-orange-500/50 text-sm md:text-base placeholder:text-gray-400"
                   />
                   {searchQuery && (
                     <button onClick={() => setSearchQuery("")} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600 font-black">✕</button>

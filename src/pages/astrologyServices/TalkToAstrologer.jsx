@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Calendar,
     Phone,
@@ -49,8 +49,9 @@ import {
     ChevronDown,
     X
 } from "lucide-react";
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 import { Layout } from '@/components/layout/Layout';
-
 
 // Import Astrologer Images from assets
 import rajSharmaImg from "../../assets/astrologors/PanditRajeshSharma.webp";
@@ -59,6 +60,10 @@ import sureshKumarImg from "../../assets/astrologors/PanditSureshPandey.webp";
 import lakshmiDeviImg from "../../assets/astrologors/AcharyaVikramJoshi.webp";
 
 const TalkToAstrologer = () => {
+    const navigate = useNavigate();
+    const banner = usePageBanner({ pollingInterval: 3000 });
+    const bannerImage = banner?.imageUrl ? (banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`) : "";
+
     const [selectedFaq, setSelectedFaq] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
@@ -190,24 +195,69 @@ const TalkToAstrologer = () => {
                     {/* Hero Section - Exact About Us Style */}
                     <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                         <div className="absolute inset-0">
-                            <img src="" alt="Astrologer Background" className="w-full h-full object-cover object-top" />
-                            <div className="absolute inset-0 bg-black/30" />
+                            <img src={bannerImage} alt="Astrologer Background" className="w-full h-full object-cover object-top" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+                            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
                         </div>
                         <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
                             <div className="max-w-4xl mx-auto text-center">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                                     <Award className="w-4 h-4 text-[#FFC107]" />
-                                    <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                                    <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                                 </div>
 
                                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                                    Talk to Expert <br />
-                                    <span className="text-yellow-300">Astrologers</span>
+                                    {banner.titleHighlight1} {banner.titleEnd} <br />
+                                    <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                                 </h1>
 
                                 <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
-                                    Get guidance on career, marriage, health, and life problems from India's best astrologers.
+                                    {banner.subtitle}
                                 </p>
+
+                                <div className="flex flex-wrap justify-center gap-4">
+                                    {banner.buttons && banner.buttons.length > 0 ? (
+                                        banner.buttons.map((btn, idx) => (
+                                            btn.text && (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => {
+                                                        if (btn.link === '#book-pooja') {
+                                                            window.dispatchEvent(new CustomEvent('openPoojaDrawer'));
+                                                        } else if (btn.link?.startsWith('#')) {
+                                                            const el = document.getElementById(btn.link.substring(1));
+                                                            if (el) el.scrollIntoView({ behavior: 'smooth' });
+                                                        } else if (btn.link?.startsWith('http')) {
+                                                            window.location.href = btn.link;
+                                                        } else if (btn.link) {
+                                                            navigate(btn.link);
+                                                        }
+                                                    }}
+                                                    className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13]'} text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none`}
+                                                >
+                                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                    <span className="relative flex items-center gap-2 font-black">
+                                                        {idx === 0 ? <MessageCircle className="w-5 h-5" /> : <Phone className="w-5 h-5 text-yellow-300" />} {btn.text}
+                                                    </span>
+                                                </button>
+                                            )
+                                        ))
+                                    ) : (
+                                        <>
+                                            <Link to="/chat">
+                                                <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none">
+                                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                    <span className="relative flex items-center gap-2 font-black"><MessageCircle className="w-5 h-5" /> Chat Now</span>
+                                                </button>
+                                            </Link>
+                                            <Link to="/call">
+                                                <button className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none">
+                                                    <span className="relative flex items-center gap-2 font-black"><Phone className="w-5 h-5 text-yellow-300" /> Call Expert</span>
+                                                </button>
+                                            </Link>
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -398,12 +448,12 @@ const TalkToAstrologer = () => {
 
                                                     {/* Status Badge - Matching Puja Theme */}
                                                     <div className={`absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full border shadow-lg backdrop-blur-md z-20 ${astrologer.status === 'online' ? 'bg-green-500/20 border-green-400/30 text-green-100' :
-                                                            astrologer.status === 'busy' ? 'bg-orange-500/20 border-orange-400/30 text-orange-200' :
-                                                                'bg-gray-500/20 border-gray-400/30 text-gray-300'
+                                                        astrologer.status === 'busy' ? 'bg-orange-500/20 border-orange-400/30 text-orange-200' :
+                                                            'bg-gray-500/20 border-gray-400/30 text-gray-300'
                                                         }`}>
                                                         <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${astrologer.status === 'online' ? 'bg-green-400' :
-                                                                astrologer.status === 'busy' ? 'bg-orange-400' :
-                                                                    'bg-gray-400'
+                                                            astrologer.status === 'busy' ? 'bg-orange-400' :
+                                                                'bg-gray-400'
                                                             }`} />
                                                         <span className="text-[9px] font-black uppercase tracking-widest">{astrologer.status}</span>
                                                     </div>
@@ -585,7 +635,7 @@ const TalkToAstrologer = () => {
                                                 <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${selectedFaq === i ? 'rotate-90' : ''}`} />
                                             </div>
                                         </button>
-                                        <div 
+                                        <div
                                             className={`bg-white transition-all duration-300 ease-in-out overflow-hidden ${selectedFaq === i ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
                                         >
                                             <div className="px-6 md:px-8 pb-6 md:pb-8 pt-0 border-t border-orange-50">
@@ -641,7 +691,7 @@ const TalkToAstrologer = () => {
                         className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in relative"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <button 
+                        <button
                             onClick={() => setSelectedAstrologer(null)}
                             className="absolute top-4 right-4 text-gray-400 hover:text-orange-600 transition-colors z-10"
                         >

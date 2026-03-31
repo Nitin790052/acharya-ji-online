@@ -5,10 +5,11 @@ import {
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 
 export default function ContactPage() {
-  const banner = usePageBanner();
+  const banner = usePageBanner({ pollingInterval: 3000 });
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -61,7 +62,7 @@ export default function ContactPage() {
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
             {banner.imageUrl ? (
-              <img src={`${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover" />
+              <img src={`${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
             ) : (
               <div className="absolute inset-0 bg-[#2A1D13]/90" />
             )}

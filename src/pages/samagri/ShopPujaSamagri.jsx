@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
 import { useCart } from "@/contexts/CartContext";
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 // Assets (Using available assets where possible)
 
@@ -35,6 +37,8 @@ import gemstoneImg from "../../assets/vastuRamadies/Gemstones.webp";
 
 const ShopPujaSamagri = () => {
     const { addItem } = useCart();
+    const banner = usePageBanner({ pollingInterval: 3000 });
+    const bannerImage = banner?.imageUrl ? (banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`) : "";
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [priceRange, setPriceRange] = useState(5000);
@@ -162,31 +166,49 @@ const ShopPujaSamagri = () => {
                 {/* 2️⃣ Hero Banner - Standardized Sizing */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src="" alt="Puja Samagri" className="w-full h-full object-cover object-top" />
-                        <div className="absolute inset-0 bg-black/40" />
+                        <img src={bannerImage} alt="Puja Samagri" className="w-full h-full object-cover object-top" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10 animate-fade-in-up text-center">
                         <div className="max-w-4xl mx-auto">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                                 <Award className="w-4 h-4 text-[#FFC107]" />
-                                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                             </div>
                             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                                Sacred Items For <br />
-                                <span className="text-yellow-300">Every Ritual</span>
+                                {banner.titleHighlight1} {banner.titleEnd} <br />
+                                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                             </h1>
                             <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
-                                Discover authentic puja materials, energized yantras, lab-certified rudraksha, and spiritual items for your daily worship.
+                                {banner.subtitle}
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
-                                <button className="group relative bg-[#E8453C] hover:bg-black text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
-                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2.5">Shop Now</span>
-                                </button>
-                                <button className="group relative bg-[#1A1A1A] hover:bg-orange-600 text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden border border-white/10">
-                                    <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative">Explore Categories</span>
-                                </button>
+                                {banner.buttons && banner.buttons.length > 0 ? (
+                                    banner.buttons.map((btn, idx) => (
+                                        btn.text && (
+                                            <button
+                                                key={idx}
+                                                onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link === '#book-pooja' ? window.dispatchEvent(new CustomEvent('openPoojaDrawer')) : (btn.link ? window.location.href = btn.link : null))}
+                                                className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-black' : 'bg-[#1A1A1A] hover:bg-orange-600'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden ${idx !== 0 ? 'border border-white/10' : ''}`}
+                                            >
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                <span className="relative flex items-center gap-2.5">{btn.text}</span>
+                                            </button>
+                                        )
+                                    ))
+                                ) : (
+                                    <>
+                                        <button className="group relative bg-[#E8453C] hover:bg-black text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2.5">Shop Now</span>
+                                        </button>
+                                        <button className="group relative bg-[#1A1A1A] hover:bg-orange-600 text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden border border-white/10">
+                                            <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative">Explore Categories</span>
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

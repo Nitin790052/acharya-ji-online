@@ -151,11 +151,10 @@ const HeroBanner = () => {
                                     <Link
                                         key={idx}
                                         to={btn.link || "#"}
-                                        className={`group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-base shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden ${
-                                            idx === 0 
-                                            ? "bg-[#E8453C] text-white hover:shadow-[0_20px_40px_-10px_rgba(232,69,60,0.4)]" 
-                                            : "bg-white text-[#2A1D13] hover:bg-gray-50 shadow-white/10"
-                                        }`}
+                                        className={`group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-base shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden ${idx === 0
+                                                ? "bg-[#E8453C] text-white hover:shadow-[0_20px_40px_-10px_rgba(232,69,60,0.4)]"
+                                                : "bg-white text-[#2A1D13] hover:bg-gray-50 shadow-white/10"
+                                            }`}
                                     >
                                         <span className="relative z-10">{btn.text}</span>
                                         <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />

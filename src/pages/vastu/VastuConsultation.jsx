@@ -35,6 +35,8 @@ import {
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
 import { Link } from "react-router-dom";
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 import homeVastuImg from "../../assets/vastuRamadies/Home Vastu.webp";
 import officeVastuImg from "../../assets/vastuRamadies/Office Vastu.webp";
@@ -45,6 +47,8 @@ import commercialVastuImg from "../../assets/vastuRamadies/commercialvastu.webp"
 import vastueAbout from "../../assets/vastuRamadies/vastueAbout.webp";
 
 const VastuConsultation = () => {
+    const banner = usePageBanner({ pollingInterval: 3000 });
+    const bannerImage = banner?.imageUrl ? (banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`) : "";
     const [selectedFaq, setSelectedFaq] = useState(null);
 
     // Benefits data
@@ -157,36 +161,55 @@ const VastuConsultation = () => {
                 {/* Hero Section */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src="" alt="Background" className="w-full h-full object-cover object-top" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
-                        <div className="absolute inset-0 backdrop-blur-[1px]" />
+                        <img src={bannerImage} alt="Background" className="w-full h-full object-cover object-top" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10">
                         <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                                 <Award className="w-4 h-4 text-[#FFC107]" />
-                                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                             </div>
                             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                                Vastu Consultation for <br />
-                                <span className="text-yellow-300">Harmony & Prosperity</span>
+                                {banner.titleHighlight1} {banner.titleEnd} <br />
+                                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                             </h1>
                             <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
-                                Get expert Vastu guidance from Acharya Ji to balance energy and preserve the sanctity of your home or workplace.
+                                {banner.subtitle}
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
-                                <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
-                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2.5">
-                                        <Calendar className="w-4 h-4" /> Book Consultation
-                                    </span>
-                                </button>
-                                <button className="group relative bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
-                                    <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2.5">
-                                        <Phone className="w-4 h-4" /> WhatsApp Now
-                                    </span>
-                                </button>
+                                {banner.buttons && banner.buttons.length > 0 ? (
+                                    banner.buttons.map((btn, idx) => (
+                                        btn.text && (
+                                            <button
+                                                key={idx}
+                                                onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link ? window.location.href = btn.link : null)}
+                                                className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#25D366] hover:bg-[#128C7E]'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
+                                            >
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                <span className="relative flex items-center gap-2.5">
+                                                    {idx === 0 ? <Calendar className="w-4 h-4" /> : <Phone className="w-4 h-4" />} {btn.text}
+                                                </span>
+                                            </button>
+                                        )
+                                    ))
+                                ) : (
+                                    <>
+                                        <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2.5">
+                                                <Calendar className="w-4 h-4" /> {banner.button1Text || "Book Consultation"}
+                                            </span>
+                                        </button>
+                                        <button className="group relative bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                            <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2.5">
+                                                <Phone className="w-4 h-4" /> {banner.button2Text || "WhatsApp Now"}
+                                            </span>
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

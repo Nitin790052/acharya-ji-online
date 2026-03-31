@@ -49,6 +49,8 @@ import {
 } from "lucide-react";
 import { Layout } from '@/components/layout/Layout';
 import { Link } from "react-router-dom";
+import { usePageBanner } from "@/hooks/usePageBanner";
+import { BACKEND_URL } from "@/config/apiConfig";
 
 // Assets
 
@@ -57,6 +59,8 @@ import officeVastuImg from "../../assets/vastuRamadies/Office Vastu.webp";
 import vastueAbout from "../../assets/vastuRamadies/vastueAbout.webp";
 
 const HomeOfficeVastu = () => {
+    const banner = usePageBanner({ pollingInterval: 3000 });
+    const bannerImage = banner?.imageUrl ? (banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`) : "";
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -94,13 +98,13 @@ const HomeOfficeVastu = () => {
         } else {
             suggestions.push({ type: 'warning', text: "Main door orientation may hinder energy flow. Correction recommended." });
         }
-        
+
         if (checkerData.kitchen === "southeast") {
             suggestions.push({ type: 'success', text: "Kitchen in Southeast is ideal according to Agni Kona." });
         } else {
             suggestions.push({ type: 'warning', text: "Kitchen placement could cause health and energy clash." });
         }
-        
+
         if (checkerData.bedroom === "southwest") {
             suggestions.push({ type: 'success', text: "Master bedroom in Southwest ensures stability and leadership." });
         } else {
@@ -144,40 +148,58 @@ const HomeOfficeVastu = () => {
                 {/* Section 1 — Hero (Styled like TalkToAstrologer) */}
                 <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
                     <div className="absolute inset-0">
-                        <img src="" alt="Vastu Background" className="w-full h-full object-cover object-top" />
-                        <div className="absolute inset-0 bg-black/40" />
+                        <img src={bannerImage} alt="Vastu Background" className="w-full h-full object-cover object-top" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_50%,rgba(217,119,6,0.2),transparent_50%)]" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up text-center">
                         <div className="max-w-4xl mx-auto">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                                 <Award className="w-4 h-4 text-[#FFC107]" />
-                                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">DIVINE SERVICES HUB</span>
+                                <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                             </div>
 
                             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                                Home & Office <br />
-                                <span className="text-yellow-300">Vastu Solutions</span>
+                                {banner.titleHighlight1} {banner.titleEnd} <br />
+                                <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                             </h1>
 
-                            <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-10 drop-shadow">
-                                Create balance, harmony, and success with expert Vastu guidance from India's most trusted consultant.
+                            <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
+                                {banner.subtitle}
                             </p>
 
                             <div className="flex flex-wrap justify-center gap-5">
-                                <button 
-                                    onClick={() => document.getElementById('checker-tool').scrollIntoView({behavior: 'smooth'})}
-                                    className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2">Check My Home Vastu</span>
-                                </button>
-                                <button 
-                                    onClick={() => document.getElementById('booking-form').scrollIntoView({behavior: 'smooth'})}
-                                    className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2">Book Office Consultation</span>
-                                </button>
+                                {banner.buttons && banner.buttons.length > 0 ? (
+                                    banner.buttons.map((btn, idx) => (
+                                        btn.text && (
+                                            <button
+                                                key={idx}
+                                                onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link ? window.location.href = btn.link : null)}
+                                                className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#F59E0B] hover:bg-[#D97706]'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
+                                            >
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                                <span className="relative flex items-center gap-2">{btn.text}</span>
+                                            </button>
+                                        )
+                                    ))
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => document.getElementById('checker-tool').scrollIntoView({ behavior: 'smooth' })}
+                                            className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
+                                        >
+                                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2">{banner.button1Text || "Check My Home Vastu"}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' })}
+                                            className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
+                                        >
+                                            <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <span className="relative flex items-center gap-2">{banner.button2Text || "Book Office Consultation"}</span>
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -323,7 +345,7 @@ const HomeOfficeVastu = () => {
                     <div className="container mx-auto px-4 max-w-5xl relative z-10">
                         <div className="bg-white border-4 border-orange-100 p-8 md:p-12 shadow-[0_30px_60px_-15px_rgba(217,119,6,0.15)] relative group">
                             <div className="absolute top-0 right-0 w-3 h-0 group-hover:h-full bg-orange-600 transition-all duration-700" />
-                            
+
                             <div className="text-center mb-10">
                                 <h2 className="text-3xl font-black text-gray-900 mb-4 uppercase tracking-tighter">Vastu <span className="text-orange-600">Checker Tool</span></h2>
                                 <p className="text-gray-500 font-bold uppercase text-[10px] tracking-widest italic">Get a basic diagnostic report instantly.</p>
@@ -365,7 +387,7 @@ const HomeOfficeVastu = () => {
                                     </select>
                                 </div>
                             </form>
-                            
+
                             <button type="submit" className="w-full bg-orange-600 hover:bg-black text-white font-black text-xs uppercase tracking-[0.4em] py-5 shadow-xl transition-all duration-500 flex items-center justify-center gap-4">
                                 Generate basic Report <ArrowRight className="w-5 h-5" />
                             </button>
@@ -406,7 +428,7 @@ const HomeOfficeVastu = () => {
                                 <p className="text-gray-600 font-bold mb-10 text-sm leading-relaxed uppercase tracking-widest italic">
                                     Upload your property blueprints or a hand-drawn layout. Our team will perform a 16-zone seismic scan for precise energy remedies.
                                 </p>
-                                
+
                                 <div className="space-y-6">
                                     {[
                                         { title: "5000+ Happy Clients", icon: Users },
@@ -421,7 +443,7 @@ const HomeOfficeVastu = () => {
                                         </div>
                                     ))}
                                 </div>
-                                
+
                                 <div className="mt-12 p-6 bg-orange-600 text-white font-black text-xs uppercase tracking-widest text-center shadow-xl">
                                     Limited Offer: Free 15-min Consultation On First Map Upload!
                                 </div>
@@ -470,7 +492,7 @@ const HomeOfficeVastu = () => {
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-900 uppercase tracking-widest flex items-center gap-2">
                                             <Upload className="w-4 h-4 text-orange-600" /> Upload Property Map
@@ -622,7 +644,7 @@ const HomeOfficeVastu = () => {
                                             <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${selectedFaq === i ? 'rotate-180' : ''}`} />
                                         </div>
                                     </button>
-                                    <div 
+                                    <div
                                         className={`overflow-hidden transition-all duration-300 ${selectedFaq === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
                                     >
                                         <div className="px-8 pb-8 pt-0 border-t border-orange-50 text-gray-600 font-medium text-sm leading-relaxed mt-6">
