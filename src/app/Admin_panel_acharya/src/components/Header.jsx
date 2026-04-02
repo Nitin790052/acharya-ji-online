@@ -22,7 +22,7 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
   const theme = {
     primary: "#1e3a8a",
     secondary: "#959190",
-    bg: "#f7f6f5",
+    bg: "#ffffff",
     hover: "#e3e1e0",
     text: "#4D4441",
     ring: "#ffffff",
@@ -62,7 +62,7 @@ const Header = ({ toggleSidebar, sidebarOpen, isCollapsed, toggleCollapse, isMob
               onClick={toggleCollapse}
               className="p-1.5 hover:bg-white/60 rounded-lg transition-all border"
               style={{
-                color: theme.primary,
+                color: "#1e3a8a",
                 borderColor: `${theme.primary}20`
               }}
               aria-label={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}

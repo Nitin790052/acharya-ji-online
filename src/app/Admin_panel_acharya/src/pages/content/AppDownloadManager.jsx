@@ -51,10 +51,8 @@ export default function AppDownloadManager() {
         <div className="p-6 max-w-5xl mx-auto">
             <ToastContainer position="top-right" autoClose={2500} />
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                    <Smartphone className="w-6 h-6 text-red-500" /> App Download Section
-                </h1>
-                <p className="text-sm text-gray-500">Manage APP CTA content, links, and features</p>
+                <h1 className="text-2xl font-black text-gray-900 uppercase">App Download <span className="text-orange-600">Manager</span></h1>
+                <p className="text-sm text-gray-500 font-medium">Manage APP CTA content, download links, and stats markers</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">

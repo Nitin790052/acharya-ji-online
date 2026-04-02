@@ -184,8 +184,8 @@ const AstrologerManager = () => {
         <div className="p-6 bg-gray-50 min-h-screen">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Talk to Astrologer Manager</h1>
-                    <p className="text-sm text-gray-500">Manage the dynamic 'Talk to Astrologer' section on the homepage.</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Astrologer <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium italic-none">Manage expert astrologer profiles and consultation settings in the divine community</p>
                 </div>
                 <button
                     onClick={handleSeed} disabled={isSeeding}

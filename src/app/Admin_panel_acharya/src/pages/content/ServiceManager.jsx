@@ -150,8 +150,8 @@ const ServiceManager = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Service Manager</h1>
-                    <p className="text-gray-500 text-sm mt-1">Manage core and detailed services for the homepage</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Service <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium mt-1">Manage core and detailed services for the homepage</p>
                 </div>
                 <button
                     onClick={async () => {

@@ -99,13 +99,13 @@ export default function BlogManager() {
     return (
         <div className="p-6 max-w-7xl mx-auto">
             <ToastContainer position="top-right" autoClose={2500} />
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex justify-between items-center mb-10 pb-6 border-b border-gray-100">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Knowledge Hub Manager</h1>
-                    <p className="text-sm text-gray-500">Manage blog articles and ancient wisdom content</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Blog Content <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium italic-none">Create, edit and manage articles and section headers in the divine community</p>
                 </div>
-                <button onClick={handleSeed} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors">
-                    <Database className="w-4 h-4" /> Seed Sample Data
+                <button onClick={handleSeed} className="flex items-center gap-2 bg-orange-50 text-orange-600 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-orange-100 border border-orange-100 transition-all active:scale-95">
+                    <Database className="w-4 h-4" /> Seed Sample Blogs
                 </button>
             </div>
 

@@ -101,8 +101,8 @@ export default function TestimonialManager() {
             <ToastContainer position="top-right" autoClose={2500} />
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Testimonial Manager</h1>
-                    <p className="text-sm text-gray-500">Manage client reviews and testimonials</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Testimonial <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium">Manage and organize sacred reviews and divine experiences</p>
                 </div>
                 <button onClick={handleSeed} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">
                     <Database className="w-4 h-4" /> Seed Data

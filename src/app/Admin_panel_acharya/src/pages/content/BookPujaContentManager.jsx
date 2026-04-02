@@ -202,8 +202,8 @@ const BookPujaContentManager = () => {
         <div className="p-6 bg-gray-50/50 min-h-screen font-sans">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tight">Book Puja Settings</h1>
-                    <p className="text-gray-500 text-sm font-medium">Manage steps, experts, and FAQs for the book puja page</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Book Puja Content <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium">Manage steps, experts, and FAQs for the book puja page</p>
                 </div>
                 <button
                     onClick={async () => {

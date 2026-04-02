@@ -64,10 +64,8 @@ export default function AboutPageManager() {
             
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                        <Layout className="w-6 h-6 text-amber-600" /> About Page Manager
-                    </h1>
-                    <p className="text-sm text-gray-500">Manage settings, services, core values, and features</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase italic-none">About Page <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium italic-none">Manage sacred journey, core values, and features of your about page</p>
                 </div>
                 <button type="button" onClick={onSeed} className="flex items-center gap-2 bg-amber-50 text-amber-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-amber-100">
                     <Database className="w-4 h-4" /> Seed Features

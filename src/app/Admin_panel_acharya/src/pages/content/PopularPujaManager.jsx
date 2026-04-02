@@ -174,8 +174,8 @@ const PopularPujaManager = () => {
         <div className="p-6 bg-gray-50 min-h-screen">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Popular Puja Manager</h1>
-                    <p className="text-sm text-gray-500">Manage the dynamic 'Popular Puja Services' section on the homepage.</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Popular Puja <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium">Manage the dynamic 'Popular Puja Services' section on the homepage.</p>
                 </div>
                 <button
                     onClick={handleSeed} disabled={isSeeding}

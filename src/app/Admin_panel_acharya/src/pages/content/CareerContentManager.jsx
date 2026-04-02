@@ -150,8 +150,8 @@ export default function CareerContentManager() {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
           <div>
-            <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Career Page Manager</h1>
-            <p className="text-gray-500 text-sm font-medium">Manage all dynamic sections of your Career Page</p>
+            <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Career Content <span className="text-orange-600">Manager</span></h1>
+            <p className="text-sm text-gray-500 font-medium">Manage eligibility, benefits, roles and testimonials for careers</p>
           </div>
           <div className="flex gap-3 w-full md:w-auto">
             <button 

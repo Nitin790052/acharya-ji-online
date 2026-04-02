@@ -389,8 +389,8 @@ const AllUsers = () => {
                 <FiUsers className="text-blue-900 w-6 h-6" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">All Users</h1>
-                <p className="text-sm text-gray-500">Manage and view all registered users</p>
+                <h1 className="text-2xl font-black text-gray-900 uppercase">All Users <span className="text-orange-600">Overview</span></h1>
+                <p className="text-sm text-gray-500 font-medium">Manage and view all registered users in the divine community</p>
               </div>
             </div>
 

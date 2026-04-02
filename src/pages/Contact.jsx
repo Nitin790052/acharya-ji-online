@@ -6,10 +6,13 @@ import {
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { BACKEND_URL } from "@/config/apiConfig";
+import { useGetContactSettingsQuery } from "@/services/contactApi";
 
 
 export default function ContactPage() {
   const banner = usePageBanner({ pollingInterval: 3000 });
+  const { data: contactSettings, isLoading } = useGetContactSettingsQuery();
+  
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -46,6 +49,39 @@ export default function ContactPage() {
   const toggleFaq = (index) => {
     setExpandedFaq(expandedFaq === index ? null : index);
   };
+
+  const getIcon = (type) => {
+    switch (type) {
+      case 'phone': return Phone;
+      case 'message': return MessageCircle;
+      case 'award': return Award;
+      case 'mail': return Mail;
+      default: return Phone;
+    }
+  };
+
+  const quickContacts = contactSettings?.quickContacts || [
+    { title: 'Call / WhatsApp', desc: 'Talk to our support team directly.', icon: Phone, action: '+91 98765 43210' },
+    { title: 'Talk to Astrologer', desc: 'Instant or scheduled consultation.', icon: MessageCircle, action: 'Book Now' },
+    { title: 'Book Puja', desc: 'Online or home-visit puja booking.', icon: Award, action: 'Book Puja' },
+    { title: 'Email Support', desc: 'Detailed queries & documents.', icon: Mail, action: 'support@acharyajionline.com' }
+  ];
+
+  const supportInfo = contactSettings?.supportInfo || {
+    location: 'Delhi NCR, India',
+    supportHours1: 'Monday - Sunday',
+    supportHours2: '8 AM - 10 PM',
+    serviceArea: 'Pan-India & International (Online)'
+  };
+
+  const commitments = contactSettings?.commitments || [
+    "100% Confidentiality",
+    "No spam calls",
+    "Authentic Guidance",
+    "Transparent pricing"
+  ];
+
+  const mapEmbedUrl = contactSettings?.mapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.06889754720782!3d28.52758200617607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1709999999999!5m2!1sen!2sin";
 
   const faqs = [
     { q: "How soon will I get a callback?", a: "Hum 24 hours ke andar aapko contact karenge. Urgent cases ke liye directly call ya WhatsApp karein." },
@@ -90,27 +126,25 @@ export default function ContactPage() {
         <section className="py-12 md:py-16 bg-white">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-              {[
-                { title: 'Call / WhatsApp', desc: 'Talk to our support team directly.', icon: Phone, action: '+91 98765 43210' },
-                { title: 'Talk to Astrologer', desc: 'Instant or scheduled consultation.', icon: MessageCircle, action: 'Book Now' },
-                { title: 'Book Puja', desc: 'Online or home-visit puja booking.', icon: Award, action: 'Book Puja' },
-                { title: 'Email Support', desc: 'Detailed queries & documents.', icon: Mail, action: 'support@acharyajionline.com' }
-              ].map((value, index) => (
-                <div
-                  key={value.title}
-                  className="bg-[#FFFAF3] p-4 py-8 text-center border-b-[6px] border-orange-500 shadow-md hover:shadow-2xl transition-all duration-500 rounded-none relative group overflow-hidden flex flex-col items-center animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
-                >
-                  <div className="absolute top-4 right-4 text-orange-200/50 group-hover:text-orange-400 transition-all duration-700"><Sparkles className="w-5 h-5" /></div>
-                  <div className="w-14 h-14 rounded-sm bg-white mx-auto mb-5 flex items-center justify-center shadow-md group-hover:shadow-xl transition-all duration-500 border border-orange-100/50 relative">
-                    <div className="absolute inset-0 bg-orange-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left opacity-10" />
-                    <value.icon className="w-7 h-7 text-orange-600 group-hover:scale-110 transition-transform duration-500" />
+              {quickContacts.map((value, index) => {
+                const IconComponent = value.icon || getIcon(value.iconType);
+                return (
+                  <div
+                    key={value.title}
+                    className="bg-[#FFFAF3] p-4 py-8 text-center border-b-[6px] border-orange-500 shadow-md hover:shadow-2xl transition-all duration-500 rounded-none relative group overflow-hidden flex flex-col items-center animate-fade-in-up"
+                    style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+                  >
+                    <div className="absolute top-4 right-4 text-orange-200/50 group-hover:text-orange-400 transition-all duration-700"><Sparkles className="w-5 h-5" /></div>
+                    <div className="w-14 h-14 rounded-sm bg-white mx-auto mb-5 flex items-center justify-center shadow-md group-hover:shadow-xl transition-all duration-500 border border-orange-100/50 relative">
+                      <div className="absolute inset-0 bg-orange-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left opacity-10" />
+                      <IconComponent className="w-7 h-7 text-orange-600 group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <h3 className="text-lg font-black text-[#4A3427] mb-3 uppercase tracking-wider group-hover:text-orange-600 transition-colors">{value.title}</h3>
+                    <p className="text-gray-600 font-semibold leading-relaxed text-xs mb-4 flex-grow">{value.desc}</p>
+                    <span className="text-orange-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] cursor-pointer hover:underline">{value.action}</span>
                   </div>
-                  <h3 className="text-lg font-black text-[#4A3427] mb-3 uppercase tracking-wider group-hover:text-orange-600 transition-colors">{value.title}</h3>
-                  <p className="text-gray-600 font-semibold leading-relaxed text-xs mb-4 flex-grow">{value.desc}</p>
-                  <span className="text-orange-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] cursor-pointer hover:underline">{value.action}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -195,7 +229,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-extrabold text-[#4A3427] text-sm uppercase tracking-wider mb-1">Location</p>
-                        <p className="text-xs text-gray-600 font-bold">Delhi NCR, India</p>
+                        <p className="text-xs text-gray-600 font-bold">{supportInfo.location}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -204,8 +238,8 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-extrabold text-[#4A3427] text-sm uppercase tracking-wider mb-1">Support Hours</p>
-                        <p className="text-xs text-gray-600 font-bold mb-0.5">Monday - Sunday</p>
-                        <p className="text-xs text-gray-600 font-bold">8 AM - 10 PM</p>
+                        <p className="text-xs text-gray-600 font-bold mb-0.5">{supportInfo.supportHours1}</p>
+                        <p className="text-xs text-gray-600 font-bold">{supportInfo.supportHours2}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -214,7 +248,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-extrabold text-[#4A3427] text-sm uppercase tracking-wider mb-1">Service Area</p>
-                        <p className="text-xs text-gray-600 font-bold">Pan-India & International (Online)</p>
+                        <p className="text-xs text-gray-600 font-bold">{supportInfo.serviceArea}</p>
                       </div>
                     </div>
                   </div>
@@ -225,12 +259,7 @@ export default function ContactPage() {
                   <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #f97316 1px, transparent 0)', backgroundSize: '24px 24px' }} />
                   <h3 className="text-lg font-black text-[#FFC107] mb-5 uppercase tracking-wider relative z-10 w-full text-center">Our Commitment</h3>
                   <div className="space-y-4 relative z-10">
-                    {[
-                      "100% Confidentiality",
-                      "No spam calls",
-                      "Authentic Guidance",
-                      "Transparent pricing"
-                    ].map((text, i) => (
+                    {commitments.map((text, i) => (
                       <div key={i} className="flex items-center gap-3 border-b border-white/10 pb-3 last:border-0 last:pb-0">
                         <CheckCircle className="w-4 h-4 text-[#25D366] flex-shrink-0" />
                         <span className="text-xs text-amber-50 font-semibold tracking-wider uppercase">{text}</span>
@@ -257,7 +286,7 @@ export default function ContactPage() {
           </div>
           <div className="w-full h-[400px] md:h-[500px]">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.06889754720782!3d28.52758200617607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1709999999999!5m2!1sen!2sin"
+              src={mapEmbedUrl}
               width="100%"
               height="100%"
               style={{ border: 0 }}

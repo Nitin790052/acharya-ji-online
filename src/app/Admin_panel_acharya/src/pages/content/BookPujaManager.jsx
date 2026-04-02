@@ -128,8 +128,8 @@ const BookPujaManager = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tight">Book Puja Manager</h1>
-                    <p className="text-gray-500 text-sm font-medium">Manage and monitor customer puja bookings</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight italic-none">Puja Bookings <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium italic-none">Monitor and manage all customer puja reservation requests</p>
                 </div>
             </div>
 

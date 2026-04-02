@@ -359,9 +359,11 @@ const Dashboard = () => {
         <div className="px-6 py-2">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                <FiHome className="text-blue-900" />
-                Dashboard Overview
+              <h1 className="text-2xl font-black text-gray-900 uppercase flex items-center gap-3">
+                <div className="p-2 bg-orange-50 rounded-lg">
+                  <FiHome className="text-orange-600 w-6 h-6" />
+                </div>
+                <span>Dashboard <span className="text-orange-600">Overview</span></span>
               </h1>
             </div>
 

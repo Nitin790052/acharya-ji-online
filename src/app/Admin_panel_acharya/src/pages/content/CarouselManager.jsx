@@ -137,8 +137,8 @@ const CarouselManager = () => {
           <FiImage size={24} />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Carousel / Hero Banner Manager</h1>
-          <p className="text-sm text-gray-500">Manage dynamic hero banners shown on the homepage</p>
+          <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight italic-none">Hero Banners <span className="text-orange-600">Manager</span></h1>
+          <p className="text-sm text-gray-500 font-medium italic-none">Manage dynamic hero banners and page-specific sliders</p>
         </div>
       </div>
 

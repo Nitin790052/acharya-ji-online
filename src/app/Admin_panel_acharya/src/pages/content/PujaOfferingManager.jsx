@@ -222,8 +222,8 @@ const PujaOfferingManager = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-2xl font-black text-gray-800 uppercase tracking-tight">Puja Offerings</h1>
-                    <p className="text-gray-500 text-sm font-medium">Create dynamic pages for all Puja services</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Puja Offerings <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium italic-none">Manage and curate sacred puja services and dynamic rituals in the divine community</p>
                 </div>
                 <div className="flex gap-3">
                     <button

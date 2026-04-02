@@ -413,8 +413,8 @@ const ActiveUsers = () => {
                 <FiActivity className="text-blue-900 w-6 h-6" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Active Users</h1>
-                <p className="text-sm text-gray-500">Monitor user activity and engagement</p>
+                <h1 className="text-2xl font-black text-gray-900 uppercase">Active Users <span className="text-orange-600">Monitor</span></h1>
+                <p className="text-sm text-gray-500 font-medium">Monitor user activity and engagement in the divine community</p>
               </div>
             </div>
 

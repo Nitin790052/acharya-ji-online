@@ -7,22 +7,7 @@ import {
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { BACKEND_URL } from "@/config/apiConfig";
-
-import image1 from "../assets/blogPage/imageId1.webp"
-import image2 from "../assets/blogPage/imageId2.webp"
-import image3 from "../assets/blogPage/imageId3.webp"
-import image4 from "../assets/blogPage/imageId4.webp"
-import image5 from "../assets/blogPage/imageId5.webp"
-import image6 from "../assets/blogPage/imageId6.webp"
-import image7 from "../assets/blogPage/imageId7.webp"
-import image8 from "../assets/blogPage/imageId8.webp"
-import image9 from "../assets/blogPage/imageId9.webp"
-import image10 from "../assets/blogPage/imageId10.webp"
-import image11 from "../assets/blogPage/imageId11.webp"
-import image12 from "../assets/blogPage/imageId12.webp"
-import image13 from "../assets/blogPage/imageId13.webp"
-import image14 from "../assets/blogPage/imageId14.webp"
-import image15 from "../assets/blogPage/imageId15.webp"
+import { useGetActiveBlogsQuery, useGetBlogSettingsQuery } from "@/services/blogApi";
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -30,108 +15,14 @@ const Blog = () => {
   const [selectedMedia, setSelectMedia] = useState(null);
 
   const banner = usePageBanner({ pollingInterval: 3000 });
+  const { data: blogData = [], isLoading } = useGetActiveBlogsQuery(undefined, { pollingInterval: 60000 });
+  const { data: blogSettings } = useGetBlogSettingsQuery();
 
-  const categories = [
-    "All", "Puja Vidhi", "Astrology", "Kundli & Dosh", "Vastu Shastra",
-    "Healing & Spirituality", "Gemstones & Remedies", "Festivals & Muhurat", "Mantras & Rituals"
-  ];
+  // Dynamically extract categories
+  const categories = ["All", ...new Set(blogData.map(b => b.category))];
 
-  const featuredBlogs = [
-    {
-      id: 1,
-      title: "Griha Pravesh Puja Vidhi & Shubh Muhurat",
-      excerpt: "Complete guide on performing Griha Pravesh with proper vidhi, samagri list, and auspicious dates for 2026.",
-      image: image1,
-      category: "Puja Vidhi",
-      readTime: "8 min",
-      date: "Jan 15, 2026"
-    },
-    {
-      id: 2,
-      title: "Satyanarayan Katha Benefits & Complete Rules",
-      excerpt: "Learn the spiritual significance, proper procedure, and divine benefits of performing Satyanarayan Puja.",
-      image: image2,
-      category: "Puja Vidhi",
-      readTime: "6 min",
-      date: "Jan 12, 2026"
-    },
-    {
-      id: 3,
-      title: "How Kundli Matching Works in Marriage",
-      excerpt: "Understanding Ashtakoot Milan, Guna matching, and importance of horoscope compatibility in Vedic astrology.",
-      image: image3,
-      category: "Kundli & Dosh",
-      readTime: "10 min",
-      date: "Jan 10, 2026"
-    }
-  ];
-
-  const latestArticles = [
-    {
-      id: 7,
-      title: "Rudrabhishek Puja: Complete Vidhi & Benefits",
-      excerpt: "Powerful Shiva puja for peace, prosperity and dosh nivaran. Learn the authentic procedure.",
-      image: image7,
-      category: "Puja Vidhi",
-      readTime: "7 min",
-      date: "Jan 8, 2026"
-    },
-    {
-      id: 8,
-      title: "Navgraha Shanti: When & Why to Perform",
-      excerpt: "Understanding planetary doshas and their remedies through Navgraha Shanti Puja.",
-      image: image8,
-      category: "Astrology",
-      readTime: "9 min",
-      date: "Jan 6, 2026"
-    },
-    {
-      id: 9,
-      title: "Pitru Dosh: Lakshan aur Upaay",
-      excerpt: "Complete guide on identifying Pitru Dosh symptoms and effective remedies as per Vedic astrology.",
-      image: image9,
-      category: "Kundli & Dosh",
-      readTime: "8 min",
-      date: "Jan 4, 2026"
-    }
-  ];
-
-  const knowledgeSections = [
-    {
-      Icon: Bell,
-      title: "Puja & Rituals",
-      topics: ["Puja ka importance", "Vidhi & samagri", "Benefits & dosh nivaran"],
-      color: "from-orange-500 to-red-600",
-      iconBg: "bg-orange-50",
-      iconColor: "text-orange-600"
-    },
-    {
-      Icon: Moon,
-      title: "Astrology & Kundli",
-      topics: ["Kundli banana ka process", "Manglik / Kaal Sarp Dosh", "Dasha analysis"],
-      color: "from-purple-500 to-indigo-600",
-      iconBg: "bg-purple-50",
-      iconColor: "text-purple-600"
-    },
-    {
-      Icon: Shield,
-      title: "Vastu Shastra",
-      topics: ["Home vastu tips", "Office vastu mistakes", "Remedies without demolition"],
-      color: "from-blue-500 to-cyan-600",
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600"
-    },
-    {
-      Icon: Leaf,
-      title: "Healing & Mantras",
-      topics: ["Reiki basics", "Chakra imbalance signs", "Powerful daily mantras"],
-      color: "from-green-500 to-emerald-600",
-      iconBg: "bg-green-50",
-      iconColor: "text-green-600"
-    }
-  ];
-
-  const allArticles = useMemo(() => [...featuredBlogs, ...latestArticles], []);
+  // For visual separation, just split them up arbitrarily (first 3 vs rest)
+  const allArticles = useMemo(() => blogData, [blogData]);
 
   const filteredArticles = useMemo(() => {
     let result = allArticles;
@@ -147,8 +38,9 @@ const Blog = () => {
     return result;
   }, [activeCategory, searchQuery, allArticles]);
 
-  const filteredFeaturedBlogs = filteredArticles.filter(article => featuredBlogs.some(fb => fb.id === article.id));
-  const filteredLatestArticles = filteredArticles.filter(article => latestArticles.some(la => la.id === article.id));
+  // Split logic dynamically based on filtered results
+  const filteredFeaturedBlogs = filteredArticles.slice(0, 3);
+  const filteredLatestArticles = filteredArticles.slice(3);
   const noResultsFound = filteredArticles.length === 0;
 
   const resetFilters = () => {
@@ -167,7 +59,7 @@ const Blog = () => {
           <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
 
           <div className={`relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg ${isFeatured ? 'h-48' : 'h-40'} z-10`}>
-            <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
+            <img src={blog.imageUrl ? `${BACKEND_URL}${blog.imageUrl}` : 'https://placehold.co/600x400/FFF8F0/D97706?text=Blog+Image'} alt={blog.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
             <div className="absolute top-3 left-3 px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 text-[10px] text-white font-medium uppercase tracking-wider">
               {blog.category}
@@ -232,20 +124,24 @@ const Blog = () => {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
                 <Sparkles className="w-3.5 h-3.5 text-[#FFC107]" />
                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">
-                  {banner?.badge || "DIVINE SERVICES HUB"}
+                  {banner?.badge || blogSettings?.badge || "KNOWLEDGE HUB"}
                 </span>
               </div>
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
-                {banner?.titleHighlight1}{" "}
-                <span className="text-yellow-300">
-                  {banner?.titleHighlight2}
-                </span>{" "}
-                {banner?.titleHighlight3} {banner?.titleEnd}
+                {banner?.titleHighlight1 ? (
+                  <>
+                    {banner?.titleHighlight1}{" "}
+                    <span className="text-yellow-300">{banner?.titleHighlight2}</span>{" "}
+                    {banner?.titleHighlight3} {banner?.titleEnd}
+                  </>
+                ) : (
+                  blogSettings?.title || "Discover Ancient Wisdom for Modern Life"
+                )}
               </h1>
 
               <p className="text-lg md:text-xl text-amber-100 leading-relaxed drop-shadow max-w-2xl mx-auto mb-10">
-                {banner?.subtitle || "Authentic insights on Puja, Astrology & Vedic traditions curated for your spiritual growth."}
+                {banner?.subtitle || blogSettings?.subtitle || "Curated spiritual knowledge blending timeless traditions with contemporary insights."}
               </p>
 
               <div className="max-w-2xl mx-auto relative group">
@@ -321,7 +217,7 @@ const Blog = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredFeaturedBlogs.map((blog, idx) => (
-                      <BlogCard key={blog.id} blog={blog} isFeatured={true} index={idx} />
+                      <BlogCard key={blog._id} blog={blog} isFeatured={true} index={idx} />
                     ))}
                   </div>
                 </section>
@@ -341,7 +237,7 @@ const Blog = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredLatestArticles.map((article, idx) => (
-                    <BlogCard key={article.id} blog={article} index={idx} />
+                    <BlogCard key={article._id} blog={article} index={idx} />
                   ))}
                 </div>
               </section>
@@ -396,7 +292,7 @@ const Blog = () => {
             </button>
             <div onClick={(e) => e.stopPropagation()} className="bg-[#FCFBF7] rounded-[2rem] w-full max-w-4xl overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-amber-200 animate-scale-in">
               <div className="relative h-64 sm:h-80 md:h-[400px]">
-                <img src={selectedMedia.image} alt={selectedMedia.title} className="w-full h-full object-cover" />
+                <img src={selectedMedia.imageUrl ? `${BACKEND_URL}${selectedMedia.imageUrl}` : 'https://placehold.co/1200x800/FFF8F0/D97706?text=Blog+Image'} alt={selectedMedia.title} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#2A1D13] to-transparent" />
                 <div className="absolute bottom-10 left-10 right-10">
                   <span className="bg-amber-500 text-white px-3 py-1 text-[10px] font-medium uppercase tracking-widest mb-4 inline-block rounded-full">Vedic Insight</span>

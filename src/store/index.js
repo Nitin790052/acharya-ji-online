@@ -18,6 +18,8 @@ import { bookingApi } from '../services/bookingApi';
 import { bookPujaContentApi } from '../services/bookPujaContentApi';
 import { careerContentApi } from '../services/careerContentApi';
 import { mediaApi } from '../services/mediaApi';
+import { galleryApi } from '../services/galleryApi';
+import { contactApi } from '../services/contactApi';
 
 export const store = configureStore({
     reducer: {
@@ -40,6 +42,8 @@ export const store = configureStore({
         [bookPujaContentApi.reducerPath]: bookPujaContentApi.reducer,
         [careerContentApi.reducerPath]: careerContentApi.reducer,
         [mediaApi.reducerPath]: mediaApi.reducer,
+        [galleryApi.reducerPath]: galleryApi.reducer,
+        [contactApi.reducerPath]: contactApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -61,6 +65,8 @@ export const store = configureStore({
             bookingApi.middleware,
             bookPujaContentApi.middleware,
             careerContentApi.middleware,
-            mediaApi.middleware
+            mediaApi.middleware,
+            galleryApi.middleware,
+            contactApi.middleware
         ),
 });

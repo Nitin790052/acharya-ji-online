@@ -44,6 +44,18 @@ export const mediaApi = createApi({
             }),
             invalidatesTags: ['Media'],
         }),
+        getMediaSettings: builder.query({
+            query: () => '/settings',
+            providesTags: ['Media'],
+        }),
+        updateMediaSettings: builder.mutation({
+            query: (settings) => ({
+                url: '/settings',
+                method: 'PUT',
+                body: settings,
+            }),
+            invalidatesTags: ['Media'],
+        }),
     }),
 });
 
@@ -54,4 +66,6 @@ export const {
     useUpdateMediaMutation,
     useDeleteMediaMutation,
     useSeedMediaMutation,
+    useGetMediaSettingsQuery,
+    useUpdateMediaSettingsMutation,
 } = mediaApi;

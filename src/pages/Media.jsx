@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import {
   Play, ExternalLink, Calendar, MapPin, Award, Newspaper,
   Video, Users, Instagram, Facebook, Youtube, X,
@@ -9,13 +9,105 @@ import {
 import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { BACKEND_URL } from "@/config/apiConfig";
-import { useGetAllMediaQuery } from "@/services/mediaApi";
+import { useGetAllMediaQuery, useGetMediaSettingsQuery } from "@/services/mediaApi";
+
+const fallbackStats = [
+  { value: '50K+', label: 'Subscribers', iconType: 'youtube' },
+  { value: '35K+', label: 'Followers', iconType: 'instagram' },
+  { value: '100+', label: 'Features', iconType: 'newspaper' },
+  { value: '25+', label: 'Public Events', iconType: 'users' }
+];
+
+const AnimatedCounter = React.memo(({ value, duration = 1500 }) => {
+  const parts = value.match(/(\d+)(.*)/) || ["0", "0", ""];
+  const target = parseInt(parts[1], 10);
+  const suffix = parts[2];
+
+  const [displayCount, setDisplayCount] = useState(0);
+  const prevTargetRef = useRef(0);
+
+  useEffect(() => {
+    if (prevTargetRef.current === target) {
+      setDisplayCount(target);
+      return;
+    }
+
+    let start = prevTargetRef.current;
+    const end = target;
+    const range = end - start;
+
+    let startTime = null;
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const currentCount = Math.floor(progress * range + start);
+
+      setDisplayCount(currentCount);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        prevTargetRef.current = end;
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [target, duration]);
+
+  return (
+    <div className="text-2xl font-black text-[#2A1D13] tabular-nums">
+      {displayCount}{suffix}
+    </div>
+  );
+}, (prev, next) => prev.value === next.value);
+
+const StatCard = React.memo(({ item, index }) => {
+  const iconMap = {
+    youtube: Youtube,
+    instagram: Instagram,
+    newspaper: Newspaper,
+    users: Users
+  };
+  const Icon = iconMap[item.iconType] || Youtube;
+
+  return (
+    <div
+      className="bg-white/80 backdrop-blur-xl px-8 py-5 rounded-2xl border-b-4 border-orange-500 shadow-xl flex flex-col items-center min-w-[160px] group hover:-translate-y-2 transition-transform animate-fade-in-up"
+      style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+    >
+      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3 group-hover:bg-orange-600 transition-colors">
+        <Icon className="w-5 h-5 text-orange-600 group-hover:text-white" />
+      </div>
+      <AnimatedCounter value={item.value} />
+      <div className="text-orange-600 text-[10px] font-black uppercase tracking-widest">{item.label}</div>
+    </div>
+  );
+}, (prev, next) => {
+  return prev.item.value === next.item.value &&
+    prev.item.label === next.item.label &&
+    prev.item.iconType === next.item.iconType;
+});
 
 const Media = () => {
   const banner = usePageBanner();
-  const { data: mediaItems = [], isLoading } = useGetAllMediaQuery();
+  const navigate = useNavigate();
+  const { data: mediaItems = [], isLoading, refetch: refetchMedia } = useGetAllMediaQuery();
+  // Using a longer polling interval (fallback) but we'll use storage events for instant updates
+  const { data: settings, refetch: refetchSettings } = useGetMediaSettingsQuery(undefined, { pollingInterval: 60000 });
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState(null);
+
+  // Listen for updates from Admin Panel (different tab/window on same origin)
+  useEffect(() => {
+    const handleStorageUpdate = (e) => {
+      if (e.key === 'media_data_updated') {
+        refetchSettings();
+        refetchMedia();
+      }
+    };
+    window.addEventListener('storage', handleStorageUpdate);
+    return () => window.removeEventListener('storage', handleStorageUpdate);
+  }, [refetchSettings, refetchMedia]);
 
   const filters = [
     { id: 'all', label: 'All Media', icon: Newspaper },
@@ -33,14 +125,14 @@ const Media = () => {
     return mediaItems.filter(item => item.type === filterType);
   };
 
-  const NewsCard = ({ item }) => (
+  const NewsCard = React.memo(({ item }) => (
     <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
       <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 hover:shadow-amber-200/30 flex flex-col">
         <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
           <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/40 rounded-full blur-[80px] -mr-24 -mt-24 group-hover/card:bg-amber-400/20 transition-all duration-1000" />
 
           <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10">
-            <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
+            <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full bg-cover transition-all duration-[2.5s] group-hover/card:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
             <div className="absolute top-3 left-3 px-2 py-1 bg-white/20 backdrop-blur-md rounded-lg border border-white/30 text-[10px] text-white font-bold uppercase tracking-wider">
               {item.publication}
@@ -48,7 +140,7 @@ const Media = () => {
           </div>
 
           <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
-            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
+            <h3 className="text-base font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
               {item.title}
             </h3>
 
@@ -67,7 +159,7 @@ const Media = () => {
                 <Calendar className="w-3.5 h-3.5 text-amber-600" />
                 {item.date}
               </span>
-              <a href={item.link} className="text-amber-600 hover:text-amber-700 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+              <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-amber-600 hover:text-amber-700 text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
                 Read More <ChevronRight className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -75,18 +167,45 @@ const Media = () => {
         </div>
       </div>
     </div>
-  );
+  ), (prev, next) => {
+    return prev.item._id === next.item._id &&
+      prev.item.title === next.item.title &&
+      prev.item.image === next.item.image;
+  });
 
-  const VideoCard = ({ item }) => (
+  const VideoCard = React.memo(({ item, onSelect }) => (
     <div
       className="group/card h-full cursor-pointer animate-fade-in-up"
       style={{ animationFillMode: 'both' }}
-      onClick={() => setSelectedVideo(item)}
+      onClick={() => onSelect(item)}
     >
       <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 flex flex-col">
         <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
           <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-44 z-10 group/video">
-            <img src={item.image?.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" />
+            {(item.image && item.image.trim().length > 5) ? (
+              <img src={item.image.startsWith('http') ? item.image : `${BACKEND_URL}${item.image}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" onError={(e) => { e.target.style.display = 'none'; if (item.videoId) e.target.nextSibling.style.display = 'block'; }} />
+            ) : item.videoId ? (
+              <img src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" onError={(e) => e.target.src = `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`} />
+            ) : item.video ? (
+              <div className="w-full h-full bg-black relative">
+                <video 
+                  src={`${BACKEND_URL}${item.video}#t=0.1`} 
+                  className="w-full h-full object-cover opacity-60 transition-transform duration-[2s] group-hover:scale-110" 
+                  muted 
+                  preload="metadata"
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-amber-400 gap-1 mt-2">
+                   <Video className="w-6 h-6 animate-pulse" />
+                   <span className="text-[8px] font-black uppercase tracking-widest opacity-40">Stored Asset</span>
+                </div>
+              </div>
+            ) : (
+              <div className="w-full h-full bg-[#2A1D13] flex flex-col items-center justify-center text-amber-100 italic gap-2">
+                <Play className="w-10 h-10 opacity-30 animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-30">Divine Record</span>
+              </div>
+            )}
+            {item.videoId && item.image && <img src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`} style={{ display: 'none' }} className="absolute inset-0 w-full h-full object-cover" onError={(e) => e.target.src = `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`} />}
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover/video:bg-black/50 transition-all">
               <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full border border-white/40 flex items-center justify-center group-hover/video:scale-110 transition-transform shadow-2xl">
                 <Play className="w-6 h-6 text-white ml-1 fill-white" />
@@ -98,7 +217,7 @@ const Media = () => {
           </div>
 
           <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
-            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
+            <h3 className="text-base font-black text-[#2A1D13] mb-2 line-clamp-2 uppercase group-hover/card:text-amber-600 transition-colors">
               {item.title}
             </h3>
 
@@ -121,9 +240,13 @@ const Media = () => {
         </div>
       </div>
     </div>
-  );
+  ), (prev, next) => {
+    return prev.item._id === next.item._id &&
+      prev.item.title === next.item.title &&
+      prev.item.views === next.item.views;
+  });
 
-  const EventCard = ({ item }) => (
+  const EventCard = React.memo(({ item }) => (
     <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
       <div className="relative h-full p-[1.5px] rounded-3xl bg-amber-400/40 hover:bg-amber-500 transition-all duration-700 shadow-xl shadow-amber-200/10 flex flex-col">
         <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col group-hover/card:bg-white transition-all duration-500">
@@ -136,7 +259,7 @@ const Media = () => {
           </div>
 
           <div className="flex flex-col flex-grow px-5 pb-5 text-center relative z-20">
-            <h3 className="text-base md:text-lg font-black text-[#2A1D13] mb-2 uppercase group-hover/card:text-amber-600 transition-colors">
+            <h3 className="text-base font-black text-[#2A1D13] mb-2 uppercase group-hover/card:text-amber-600 transition-colors">
               {item.title}
             </h3>
 
@@ -164,9 +287,13 @@ const Media = () => {
         </div>
       </div>
     </div>
-  );
+  ), (prev, next) => {
+    return prev.item._id === next.item._id &&
+      prev.item.title === next.item.title &&
+      prev.item.attendees === next.item.attendees;
+  });
 
-  const AwardCard = ({ item }) => (
+  const AwardCard = React.memo(({ item }) => (
     <div className="group/card h-full animate-fade-in-up" style={{ animationFillMode: 'both' }}>
       <div className="relative h-full p-[1.5px] rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 hover:shadow-2xl transition-all duration-500 flex flex-col">
         <div className="relative flex-grow bg-[#FCFBF7] rounded-[1.4rem] overflow-hidden flex flex-col p-6 group-hover/card:bg-white transition-all">
@@ -196,9 +323,13 @@ const Media = () => {
         </div>
       </div>
     </div>
-  );
+  ), (prev, next) => {
+    return prev.item._id === next.item._id &&
+      prev.item.title === next.item.title &&
+      prev.item.year === next.item.year;
+  });
 
-  const SocialCard = ({ item }) => {
+  const SocialCard = React.memo(({ item }) => {
     const platformIcons = {
       instagram: Instagram,
       youtube: Youtube,
@@ -236,15 +367,19 @@ const Media = () => {
         </div>
       </div>
     );
-  };
+  }, (prev, next) => {
+    return prev.item._id === next.item._id &&
+      prev.item.title === next.item.title &&
+      prev.item.engagement === next.item.engagement;
+  });
 
   const renderCard = (item) => {
     switch (item.type) {
-      case 'news': return <NewsCard key={item._id} item={item} />;
-      case 'video': return <VideoCard key={item._id} item={item} />;
-      case 'event': return <EventCard key={item._id} item={item} />;
-      case 'award': return <AwardCard key={item._id} item={item} />;
-      case 'social': return <SocialCard key={item._id} item={item} />;
+      case 'news': return <NewsCard item={item} />;
+      case 'video': return <VideoCard item={item} onSelect={setSelectedVideo} />;
+      case 'event': return <EventCard item={item} />;
+      case 'award': return <AwardCard item={item} />;
+      case 'social': return <SocialCard item={item} />;
       default: return null;
     }
   };
@@ -328,23 +463,8 @@ const Media = () => {
         <section className="py-12 md:py-16 -mt-10 relative z-20">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-              {[
-                { value: '50K+', label: 'Subscribers', icon: Youtube },
-                { value: '35K+', label: 'Followers', icon: Instagram },
-                { value: '100+', label: 'Features', icon: Newspaper },
-                { value: '25+', label: 'Public Events', icon: Users }
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="bg-white/80 backdrop-blur-xl px-8 py-5 rounded-2xl border-b-4 border-orange-500 shadow-xl flex flex-col items-center min-w-[160px] group hover:-translate-y-2 transition-transform animate-fade-in-up"
-                  style={{ animationDelay: `${i * 0.1}s`, animationFillMode: 'both' }}
-                >
-                  <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3 group-hover:bg-orange-600 transition-colors">
-                    <item.icon className="w-5 h-5 text-orange-600 group-hover:text-white" />
-                  </div>
-                  <div className="text-2xl font-black text-[#2A1D13]">{item.value}</div>
-                  <div className="text-orange-600 text-[10px] font-black uppercase tracking-widest">{item.label}</div>
-                </div>
+              {(settings?.stats || fallbackStats).map((item, i) => (
+                <StatCard key={item._id || `stat-${i}`} item={item} index={i} />
               ))}
             </div>
           </div>
@@ -385,7 +505,11 @@ const Media = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {getFilteredItems().map(item => renderCard(item))}
+                  {getFilteredItems().map(item => (
+                    <React.Fragment key={item._id}>
+                      {renderCard(item)}
+                    </React.Fragment>
+                  ))}
                 </div>
 
                 {getFilteredItems().length === 0 && (
@@ -403,12 +527,12 @@ const Media = () => {
         <section className="py-12 md:py-16 bg-white border-t border-orange-50">
           <div className="container mx-auto px-4 text-center max-w-5xl">
             <div className="animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50/50 text-orange-600 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-orange-100">
                 <Heart className="w-3.5 h-3.5" />
-                <span>Spiritual Connection</span>
+                <span>{settings?.cta?.badge || 'Spiritual Connection'}</span>
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2A1B13] mb-4 tracking-tight uppercase">
-                Experience the <span className="text-[#E8453C]">Divine Grace</span>
+                {settings?.cta?.title || 'Experience the'} <span className="text-[#E8453C]">{settings?.cta?.titleHighlight || 'Divine Grace'}</span>
               </h2>
               <div className="flex items-center justify-center gap-3 mb-8">
                 <div className="w-10 h-[1.5px] bg-orange-200" />
@@ -416,24 +540,23 @@ const Media = () => {
                 <div className="w-10 h-[1.5px] bg-orange-200" />
               </div>
               <p className="text-gray-600 mb-10 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">
-                Join Acharya Ji's spiritual family and discover the profound impact of
-                authentic Vedic rituals and divine guidance in your life.
+                {settings?.cta?.description || "Join Acharya Ji's spiritual family and discover the profound impact of authentic Vedic rituals and divine guidance in your life."}
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/puja/online">
+                <Link to={settings?.cta?.primaryBtnLink || "/puja/online"}>
                   <button className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                     <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     <span className="relative flex items-center gap-2.5">
-                      <Calendar className="w-4 h-4" /> Book Sacred Puja
+                      <Calendar className="w-4 h-4" /> {settings?.cta?.primaryBtnText || 'Book Sacred Puja'}
                     </span>
                   </button>
                 </Link>
-                <Link to="/talk-to-astrologer">
+                <Link to={settings?.cta?.secondaryBtnLink || "/talk-to-astrologer"}>
                   <button className="group relative bg-[#F59E0B] hover:bg-[#D97706] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
                     <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     <span className="relative flex items-center gap-2.5">
-                      <Phone className="w-4 h-4" /> Professional Consultation
+                      <Phone className="w-4 h-4" /> {settings?.cta?.secondaryBtnText || 'Professional Consultation'}
                     </span>
                   </button>
                 </Link>
@@ -462,14 +585,54 @@ const Media = () => {
                 </button>
               </div>
               <div className="aspect-video bg-black flex items-center justify-center">
-                <iframe
-                  className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                  title={selectedVideo.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                {selectedVideo.video ? (
+                  <video
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full"
+                    src={selectedVideo.video.startsWith('http') ? selectedVideo.video : `${BACKEND_URL}${selectedVideo.video}`}
+                    onError={(e) => {
+                      console.error('Video loading failed:', e);
+                      const parent = e.target.parentElement;
+                      parent.innerHTML = `
+                         <div class="flex flex-col items-center justify-center text-white p-10 text-center gap-4">
+                            <div class="w-16 h-16 bg-red-600/20 rounded-full flex items-center justify-center">
+                              <span class="text-3xl">⚠️</span>
+                            </div>
+                            <div>
+                              <p class="text-lg font-black uppercase tracking-widest text-red-500 mb-2">Manifestation Failed</p>
+                              <p class="text-xs opacity-60 italic max-w-xs mx-auto">This sacred visual could not be materialized. The file may have moved to another universal plane or is still manifestating.</p>
+                            </div>
+                         </div>
+                      `;
+                    }}
+                  />
+                ) : selectedVideo.videoId ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                    title={selectedVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : selectedVideo.link ? (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-white bg-amber-950 p-10 text-center gap-6">
+                    <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center animate-pulse">
+                      <ExternalLink className="w-10 h-10 text-amber-500" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-black uppercase tracking-widest mb-2">Sacred External Portal</p>
+                      <p className="text-sm opacity-60 italic mb-8">This manifestation exists on an external universal plane.</p>
+                      <a href={selectedVideo.link} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-orange-600 text-white rounded-none font-black text-xs uppercase tracking-widest hover:bg-orange-700 shadow-2xl transition-all inline-block hover:-translate-y-1">
+                        Go to Manifestation <ChevronRight className="w-4 h-4 inline ml-1" />
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-white text-xs font-black uppercase tracking-[0.5em] animate-pulse">Asset Materializing...</div>
+                )}
               </div>
               <div className="p-6 bg-white flex items-center justify-between">
                 <div className="flex items-center gap-4">

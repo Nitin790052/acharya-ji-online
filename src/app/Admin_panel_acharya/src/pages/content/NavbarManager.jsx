@@ -127,8 +127,8 @@ const NavbarManager = () => {
                     <FiMenu size={24} />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Navbar Manager</h1>
-                    <p className="text-sm text-gray-500">Add, edit and organize website navigation</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight italic-none">Navbar <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium italic-none">Add, edit and organize website navigation and dropdowns</p>
                 </div>
             </div>
 

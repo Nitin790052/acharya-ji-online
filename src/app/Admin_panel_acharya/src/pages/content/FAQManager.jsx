@@ -67,10 +67,8 @@ export default function FAQManager() {
             
             <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                        <HelpCircle className="w-6 h-6 text-red-500" /> FAQ Management
-                    </h1>
-                    <p className="text-sm text-gray-500">Manage frequently asked questions and section settings</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Faq <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium">Manage frequently asked questions and section settings</p>
                 </div>
                 <button onClick={onSeed} className="flex items-center gap-2 bg-amber-50 text-amber-600 px-4 py-2 rounded-lg font-bold text-sm border border-amber-100 hover:bg-amber-100 transition-all">
                     <Database className="w-4 h-4" /> Seed Sample Data

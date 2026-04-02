@@ -366,8 +366,8 @@ const NewRegistrations = () => {
                 <FiUserPlus className="text-blue-900 w-6 h-6" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">New Registrations</h1>
-                <p className="text-sm text-gray-500">Track and manage user signups</p>
+                <h1 className="text-2xl font-black text-gray-900 uppercase">New Registrations <span className="text-orange-600">Track</span></h1>
+                <p className="text-sm text-gray-500 font-medium">Track and manage user signups in the divine community</p>
               </div>
             </div>
 

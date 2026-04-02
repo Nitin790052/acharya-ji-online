@@ -165,8 +165,8 @@ const AboutUsManager = () => {
                         <FiUser size={22} />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-800">About Us Manager</h1>
-                        <p className="text-sm text-gray-500">Manage About Us section content displayed on the homepage</p>
+                        <h1 className="text-2xl font-black text-gray-900 uppercase">About Us <span className="text-orange-600">Manager</span></h1>
+                        <p className="text-sm text-gray-500 font-medium tracking-tight">Manage About Us section content displayed on the homepage</p>
                     </div>
                 </div>
             </div>

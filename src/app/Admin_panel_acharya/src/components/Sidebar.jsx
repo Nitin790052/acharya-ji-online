@@ -103,7 +103,6 @@ const Sidebar = ({
         { key: "navbar", icon: <FiAlertCircle />, label: "Navbar", path: "/admin-acharya/dashboard/content/navbar" },
         { key: "carousels", icon: <FiImage />, label: "Carousels", path: "/admin-acharya/dashboard/content/carousels" },
         { key: "about-us", icon: <FiFileText />, label: "About Section", path: "/admin-acharya/dashboard/content/about-us" },
-        { key: "blogs", icon: <FiBookOpen />, label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
         { key: "services", icon: <FiGrid />, label: "Service Manager", path: "/admin-acharya/dashboard/content/services" },
         { key: "popular-pujas", icon: <FiStar />, label: "Popular Pujas", path: "/admin-acharya/dashboard/content/popular-pujas" },
         { key: "astrologers", icon: <FiStar />, label: "Astrologers Section", path: "/admin-acharya/dashboard/content/astrologers" },
@@ -119,7 +118,6 @@ const Sidebar = ({
       key: "about-content", icon: <FiBookOpen />, label: "About Page Content",
       children: [
         { key: "about", icon: <FiBookOpen />, label: "About Page Manager", path: "/admin-acharya/dashboard/content/about" },
-        { key: "media-manager", icon: <FiImage />, label: "Media Manager", path: "/admin-acharya/dashboard/content/media" },
       ]
     },
     {
@@ -134,6 +132,30 @@ const Sidebar = ({
       key: "career-content", icon: <FiBriefcase />, label: "Career Page Content",
       children: [
         { key: "career", icon: <FiTrendingUp />, label: "Career Page Manager", path: "/admin-acharya/dashboard/content/career" },
+      ]
+    },
+    {
+      key: "media-content", icon: <FiBookOpen />, label: "Media Page Content",
+      children: [
+        { key: "media-manager", icon: <FiImage />, label: "Media Manager", path: "/admin-acharya/dashboard/content/media" },
+      ]
+    },
+    {
+      key: "gallery-content", icon: <FiImage />, label: "Gallery Page Content",
+      children: [
+        { key: "gallery-manager", icon: <FiImage />, label: "Gallery Manager", path: "/admin-acharya/dashboard/content/gallery" },
+      ]
+    },
+    {
+      key: "blog-content", icon: <FiBookOpen />, label: "Blog Page Content",
+      children: [
+        { key: "blogs", label: "Blogs", path: "/admin-acharya/dashboard/content/blogs" },
+      ]
+    },
+    {
+      key: "contact-content", icon: <FiPhone />, label: "Contact Page Content",
+      children: [
+        { key: "contact-manager", label: "Contact Manager", path: "/admin-acharya/dashboard/content/contact" },
       ]
     },
     {
@@ -266,11 +288,11 @@ const Sidebar = ({
             {(() => {
               const sections = [
                 { title: "Overview", items: menuItems.slice(0, 1) },
-                { title: "User Control", items: menuItems.slice(1, 5) },
-                { title: "User Management", items: menuItems.slice(5, 6) },
-                { title: "Business Operations", items: menuItems.slice(6, 8) },
-                { title: "SEO & Growth", items: menuItems.slice(8, 9) },
-                { title: "System Setup", items: menuItems.slice(9, 10) },
+                { title: "User Control", items: menuItems.slice(1, 10) },
+                { title: "User Management", items: menuItems.slice(10, 11) },
+                { title: "Business Operations", items: menuItems.slice(11, 13) },
+                { title: "SEO & Growth", items: menuItems.slice(13, 14) },
+                { title: "System Setup", items: menuItems.slice(13, 14) },
               ];
 
               return sections.map((section, idx) => (

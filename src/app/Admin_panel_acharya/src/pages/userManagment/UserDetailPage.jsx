@@ -325,8 +325,8 @@ const UserDetailPage = () => {
               <FiUser className="text-blue-900 w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">User Profile</h1>
-              <p className="text-sm text-gray-500">View detailed user information and activity</p>
+              <h1 className="text-2xl font-black text-gray-900 uppercase">User Profile <span className="text-orange-600">Overview</span></h1>
+              <p className="text-sm text-gray-500 font-medium italic-none">View detailed user information and activity history in the divine community</p>
             </div>
 
           </div>

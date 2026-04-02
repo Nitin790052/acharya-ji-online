@@ -401,10 +401,10 @@ const BlockedUsers = () => {
               <div className="p-2 bg-red-100 rounded-lg">
                 <FiUserX className="text-red-600 w-6 h-6" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Blocked / Suspended Users</h1>
-                <p className="text-sm text-gray-500">Manage and review restricted user accounts</p>
-              </div>
+                <div>
+                  <h1 className="text-2xl font-black text-gray-900 uppercase">Blocked & Suspended <span className="text-orange-600">Accounts</span></h1>
+                  <p className="text-sm text-gray-500 font-medium">Manage and review restricted user accounts in the divine community</p>
+                </div>
             </div>
 
             {/* Action Buttons */}

@@ -30,6 +30,8 @@ import BookPujaManager from "./pages/content/BookPujaManager";
 import BookPujaContentManager from "./pages/content/BookPujaContentManager";
 import CareerContentManager from "./pages/content/CareerContentManager";
 import MediaManager from "./pages/content/MediaManager";
+import GalleryManager from "./pages/content/GalleryManager";
+import ContactManager from "./pages/content/ContactManager";
 
 function AdminApp() {
   return (
@@ -77,6 +79,8 @@ function AdminApp() {
           <Route path="content/footer" element={<FooterManager />} />
           <Route path="content/career" element={<CareerContentManager />} />
           <Route path="content/media" element={<MediaManager />} />
+          <Route path="content/gallery" element={<GalleryManager />} />
+          <Route path="content/contact" element={<ContactManager />} />
           <Route path="seo/settings" element={<PagePlaceholder title="SEO Settings" />} />
           <Route path="seo/meta" element={<PagePlaceholder title="Meta Tags Management" />} />
           <Route path="admin/staff" element={<PagePlaceholder title="Staff Management" />} />

@@ -55,10 +55,8 @@ export default function FooterManager() {
             <ToastContainer position="top-right" autoClose={2500} />
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                        <Layout className="w-6 h-6 text-amber-600" /> Footer Management
-                    </h1>
-                    <p className="text-sm text-gray-500">Manage footer description, social links, contact info, and navigation columns</p>
+                    <h1 className="text-2xl font-black text-gray-900 uppercase">Footer <span className="text-orange-600">Manager</span></h1>
+                    <p className="text-sm text-gray-500 font-medium">Manage footer description, social links, contact info, and navigation columns</p>
                 </div>
                 <button type="button" onClick={onSeed} className="flex items-center gap-2 bg-amber-50 text-amber-600 px-4 py-2 rounded-lg font-bold text-sm border border-amber-100 hover:bg-amber-100 transition-all">
                     <Database className="w-4 h-4" /> Seed Default Data
