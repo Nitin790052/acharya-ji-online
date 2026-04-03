@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Layout, Save, Plus, Trash2, Edit, Eye, Database, Check, X } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import { BACKEND_URL } from '../../../../../config/apiConfig';
 import { 
     useGetAboutPageSettingsQuery, 
@@ -86,8 +87,22 @@ export default function AboutPageManager() {
                         <input className="p-2 border rounded" placeholder="e.g. SACRED JOURNEY" value={formSettings.journeyBadge} onChange={e=>setFormSettings({...formSettings, journeyBadge: e.target.value})} />
                         <input className="p-2 border rounded" placeholder="e.g. Our Path of Enlightened Wisdom" value={formSettings.journeyTitle} onChange={e=>setFormSettings({...formSettings, journeyTitle: e.target.value})} />
                         <input className="p-2 border rounded" placeholder="Experience Years (e.g., 20+)" value={formSettings.journeyExpYears} onChange={e=>setFormSettings({...formSettings, journeyExpYears: e.target.value})} />
-                        <textarea className="p-2 border rounded col-span-2" placeholder="First paragraph of the journey description..." value={formSettings.journeyDesc1} onChange={e=>setFormSettings({...formSettings, journeyDesc1: e.target.value})} />
-                        <textarea className="p-2 border rounded col-span-2" placeholder="Second paragraph of the journey description..." value={formSettings.journeyDesc2} onChange={e=>setFormSettings({...formSettings, journeyDesc2: e.target.value})} />
+                        <div className="col-span-2">
+                             <label className="text-sm font-bold text-gray-600 mb-1 block">Journey Description — Paragraph 1 (HTML)</label>
+                             <RichTextEditor 
+                                 value={formSettings.journeyDesc1} 
+                                 onChange={(content) => setFormSettings({...formSettings, journeyDesc1: content})} 
+                                 placeholder="First paragraph of the journey description..."
+                             />
+                        </div>
+                        <div className="col-span-2">
+                             <label className="text-sm font-bold text-gray-600 mb-1 block">Journey Description — Paragraph 2 (HTML)</label>
+                             <RichTextEditor 
+                                 value={formSettings.journeyDesc2} 
+                                 onChange={(content) => setFormSettings({...formSettings, journeyDesc2: content})} 
+                                 placeholder="Second paragraph of the journey description..."
+                             />
+                        </div>
                         
                         <div className="col-span-2 mt-2">
                             <label className="text-sm font-bold text-gray-600 mb-2 block">Journey Features</label>
@@ -118,8 +133,14 @@ export default function AboutPageManager() {
                     </div>
 
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 mt-6">Belief Section</h2>
-                    <input className="p-2 border rounded w-full mb-2" placeholder="Belief Section Title" value={formSettings.beliefTitle} onChange={e=>setFormSettings({...formSettings, beliefTitle: e.target.value})} />
-                    <textarea className="p-2 border rounded w-full" rows={3} placeholder="Describe the core belief or philosophy..." value={formSettings.beliefText} onChange={e=>setFormSettings({...formSettings, beliefText: e.target.value})} />
+                    <div className="mb-4">
+                        <label className="text-sm font-bold text-gray-600 mb-1 block">Philosophy / Belief Text (HTML)</label>
+                        <RichTextEditor 
+                            value={formSettings.beliefText} 
+                            onChange={(content) => setFormSettings({...formSettings, beliefText: content})} 
+                            placeholder="Describe the core belief or philosophy..."
+                        />
+                    </div>
 
                     <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2 mt-6">CTA Section</h2>
                     <div className="grid grid-cols-3 gap-4 mb-2">
@@ -127,7 +148,14 @@ export default function AboutPageManager() {
                         <input className="p-2 border rounded" placeholder="Highlight (e.g. Transform)" value={formSettings.ctaHighlight} onChange={e=>setFormSettings({...formSettings, ctaHighlight: e.target.value})} />
                         <input className="p-2 border rounded" placeholder="Part 2 (e.g. Your Life?)" value={formSettings.ctaTitle2} onChange={e=>setFormSettings({...formSettings, ctaTitle2: e.target.value})} />
                     </div>
-                    <textarea className="p-2 border rounded w-full" rows={2} placeholder="Write a compelling call to action description..." value={formSettings.ctaDesc} onChange={e=>setFormSettings({...formSettings, ctaDesc: e.target.value})} />
+                    <div className="mt-4">
+                        <label className="text-sm font-bold text-gray-600 mb-1 block">CTA Description (HTML)</label>
+                        <RichTextEditor 
+                            value={formSettings.ctaDesc} 
+                            onChange={(content) => setFormSettings({...formSettings, ctaDesc: content})} 
+                            placeholder="Write a compelling call to action description..."
+                        />
+                    </div>
 
                     <button type="submit" className="w-full bg-amber-600 text-white font-bold py-3 pt-3 mt-4 rounded-xl flex justify-center items-center gap-2 hover:bg-amber-700">
                         <Save className="w-5 h-5" /> Save General Settings
@@ -210,7 +238,16 @@ function ItemsManager({ tag }) {
                     
                     {tag === 'service' && <input className="p-2 border rounded" type="file" accept="image/*" onChange={e=>setImageFile(e.target.files[0])} />}
                     {(tag === 'whyChoose' || tag === 'value') && <input className="p-2 border rounded" placeholder="Lucide Icon Name" value={form.icon} onChange={e=>setForm({...form, icon: e.target.value})} />}
-                    {(tag === 'whyChoose' || tag === 'value') && <textarea className="p-2 border rounded col-span-2" placeholder="Description" value={form.description} onChange={e=>setForm({...form, description: e.target.value})} />}
+                    {(tag === 'whyChoose' || tag === 'value') && (
+                        <div className="col-span-2">
+                             <label className="text-sm font-bold text-gray-600 mb-1 block">Description (HTML)</label>
+                             <RichTextEditor 
+                                 value={form.description} 
+                                 onChange={(content) => setForm({...form, description: content})} 
+                                 placeholder="Enter detailed description..."
+                             />
+                        </div>
+                    )}
                     {tag === 'service' && <input className="p-2 border rounded w-full" placeholder="Color Gradient (e.g. from-orange-500 to-red-600)" value={form.color} onChange={e=>setForm({...form, color: e.target.value})} />}
                     {tag === 'service' && (
                         <div className="col-span-2">

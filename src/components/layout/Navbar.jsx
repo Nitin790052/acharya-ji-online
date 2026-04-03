@@ -142,10 +142,10 @@ export default function Navbar() {
         <div
           className={cn(
             "lg:hidden overflow-hidden border-t border-orange-100 bg-white transition-all duration-300 ease-in-out",
-            mobileMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+            mobileMenuOpen ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
           )}
         >
-          <div className="py-3 space-y-1 overflow-y-auto">
+          <div className="py-2 pb-10 space-y-1 overflow-y-auto">
             {!isLoading && navItems.map((item) => (
               <MobileNavItem
                 key={item.label}
@@ -171,7 +171,7 @@ function MobileNavItem({ item, onClose, isActive }) {
         to={item.href || '#'}
         onClick={onClose}
         className={cn(
-          "block px-4 py-3 mx-2 rounded-lg font-semibold text-sm transition-all",
+          "block px-4 py-2.5 mx-2 rounded-lg font-semibold text-sm transition-all",
           active
             ? "bg-orange-50 text-red-700 shadow-sm"
             : "text-gray-700 hover:bg-orange-50/50 hover:text-red-700"
@@ -187,7 +187,7 @@ function MobileNavItem({ item, onClose, isActive }) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full flex items-center justify-between px-4 py-3 rounded-lg font-semibold text-sm transition-all",
+          "w-full flex items-center justify-between px-4 py-2.5 rounded-lg font-semibold text-sm transition-all",
           isOpen ? "bg-orange-50 text-red-700" : "text-gray-700 hover:bg-orange-50/50"
         )}
       >
@@ -212,7 +212,7 @@ function MobileNavItem({ item, onClose, isActive }) {
               key={child.label}
               to={child.href}
               onClick={onClose}
-              className="flex flex-col px-4 py-2.5 rounded-md hover:bg-white/80 transition-all group"
+              className="flex flex-col px-4 py-2 rounded-md hover:bg-white/80 transition-all group"
             >
               <span className="text-sm font-semibold text-gray-700 group-hover:text-red-700">
                 {child.label}

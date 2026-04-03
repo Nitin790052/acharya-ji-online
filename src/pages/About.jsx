@@ -6,6 +6,7 @@ import { usePageBanner } from "@/hooks/usePageBanner";
 import { BACKEND_URL } from "@/config/apiConfig";
 import { useGetAboutPageSettingsQuery, useGetActiveAboutPageItemsQuery } from "@/services/aboutPageApi";
 import { useGetActiveTestimonialsQuery } from "@/services/testimonialApi";
+import SEO from "@/components/layout/SEO";
 
 import fallbackAbout from "../assets/aboutImage/acharyaji.webp"
 
@@ -40,13 +41,20 @@ const AboutUs = () => {
 
   return (
     <Layout>
+      <SEO 
+        pageName="about"
+        title={banner.metaTitle} 
+        description={banner.metaDescription} 
+        keywords={banner.metaKeywords}
+        canonical={banner.canonicalUrl}
+      />
       <div className="min-h-[80vh]">
         <div className="min-h-screen bg-background">
           {/* Hero Section */}
           <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
             <div className="absolute inset-0">
               {banner.imageUrl ? (
-                <img src={`${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+                <img src={`${BACKEND_URL}${banner.imageUrl}`} alt={banner.imageAlt || "About Acharya Ji Online"} className="w-full h-full object-cover object-top" />
               ) : (
                 <div className="absolute inset-0 bg-[#2A1D13]/90" />
               )}
@@ -55,11 +63,11 @@ const AboutUs = () => {
             </div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 mb-4 md:mb-7  shadow-2xl">
                   <PhosphorIcons.Award className="w-4 h-4 text-[#FFC107]" />
                   <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                   {banner.titleHighlight1} <br />
                   <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
                 </h1>

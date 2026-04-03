@@ -20,6 +20,7 @@ import { careerContentApi } from '../services/careerContentApi';
 import { mediaApi } from '../services/mediaApi';
 import { galleryApi } from '../services/galleryApi';
 import { contactApi } from '../services/contactApi';
+import { seoApi } from '../services/seoApi';
 
 export const store = configureStore({
     reducer: {
@@ -44,6 +45,7 @@ export const store = configureStore({
         [mediaApi.reducerPath]: mediaApi.reducer,
         [galleryApi.reducerPath]: galleryApi.reducer,
         [contactApi.reducerPath]: contactApi.reducer,
+        [seoApi.reducerPath]: seoApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -67,6 +69,7 @@ export const store = configureStore({
             careerContentApi.middleware,
             mediaApi.middleware,
             galleryApi.middleware,
-            contactApi.middleware
+            contactApi.middleware,
+            seoApi.middleware
         ),
 });

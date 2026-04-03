@@ -221,15 +221,15 @@ const AstrologyCourses = () => {
                     </div>
                     <div className="container mx-auto px-4 relative z-10">
                         <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-4 md:mb-8 shadow-2xl">
                                 <Award className="w-4 h-4 text-[#FFC107]" />
                                 <span className="text-[#FFC107] text-xs md:text-sm font-serif font-bold uppercase tracking-[0.2em]">{banner.badge || "DIVINE SERVICES HUB"}</span>
                             </div>
-                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-4 leading-tight drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] uppercase tracking-wide">
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl  font-bold mb-2 md:mb-4 leading-tight drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] uppercase tracking-wide">
                                 {banner.titleHighlight1} {banner.titleEnd} <br />
                                 <span className="text-amber-400 drop-shadow-[0_2px_10px_rgba(251,191,36,0.2)]">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                             </h1>
-                            <p className="text-lg md:text-xl text-amber-50 leading-relaxed font-medium max-w-2xl mx-auto mb-8 italic opacity-90 drop-shadow-lg">
+                            <p className="text-lg md:text-xl text-amber-50 leading-relaxed font-medium max-w-2xl mx-auto mb-2 md:mb-8 italic opacity-90 drop-shadow-lg">
                                 {banner.subtitle}
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
@@ -239,7 +239,7 @@ const AstrologyCourses = () => {
                                             <button
                                                 key={idx}
                                                 onClick={() => btn.link?.startsWith('#') ? document.getElementById(btn.link.substring(1))?.scrollIntoView({ behavior: 'smooth' }) : (btn.link === '#book-pooja' ? window.dispatchEvent(new CustomEvent('openPoojaDrawer')) : (btn.link ? window.location.href = btn.link : null))}
-                                                className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#25D366] hover:bg-[#128C7E]'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
+                                                className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34] w-72 md:w-auto' : 'bg-[#25D366] hover:bg-[#128C7E] hidden md:flex'} text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden`}
                                             >
                                                 <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                                                 <span className="relative flex items-center gap-2.5">
@@ -253,12 +253,12 @@ const AstrologyCourses = () => {
                                     <>
                                         <button
                                             onClick={() => document.getElementById('courses-section')?.scrollIntoView({ behavior: 'smooth' })}
-                                            className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
+                                            className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white w-72 md:w-auto px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden"
                                         >
                                             <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                            <span className="relative flex items-center gap-2.5"><BookOpen className="w-4 h-4" /> Explore Courses</span>
+                                            <span className="relative flex items-center justify-center gap-2.5"><BookOpen className="w-4 h-4" /> Explore Courses</span>
                                         </button>
-                                        <button className="group relative bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden">
+                                        <button className="group relative bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl transition-all duration-300 overflow-hidden hidden md:block">
                                             <div className="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                                             <span className="relative flex items-center gap-2.5"><PlayCircle className="w-4 h-4" /> Free Webinar</span>
                                         </button>

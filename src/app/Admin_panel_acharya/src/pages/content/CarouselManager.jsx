@@ -36,7 +36,11 @@ const CarouselManager = () => {
     subtitle: '',
     buttons: [{ text: '', link: '' }],
     pagePath: '/',
-    isActive: true
+    isActive: true,
+    metaTitle: '',
+    metaDescription: '',
+    metaKeywords: '',
+    canonicalUrl: ''
   });
   const [imageFile, setImageFile] = useState(null);
   const [selectedParentObj, setSelectedParentObj] = useState(null);
@@ -106,7 +110,6 @@ const CarouselManager = () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
   const resetForm = () => {
     setCurrentBanner({
       badge: '',
@@ -117,7 +120,11 @@ const CarouselManager = () => {
       subtitle: '',
       buttons: [{ text: '', link: '' }],
       pagePath: '/',
-      isActive: true
+      isActive: true,
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: '',
+      canonicalUrl: ''
     });
     setImageFile(null);
     setSelectedParentObj(null);
@@ -364,6 +371,7 @@ const CarouselManager = () => {
               </button>
             </div>
           </div>
+
 
           <div className="flex justify-end gap-3 pt-4 border-t border-gray-50">
             <button

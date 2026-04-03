@@ -46,8 +46,9 @@ export function About() {
               {/* Main Image */}
               <img
                 src={displayImage}
-                alt={title || "About Acharya Ji"}
+                alt={aboutData.imageAlt || title || "About Acharya Ji"}
                 className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
               />
 
               {/* Overlay Gradient */}

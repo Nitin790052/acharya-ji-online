@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Eye, Edit, Trash2, X, Plus, Database, Star } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import {
     useGetAllTestimonialsQuery, useCreateTestimonialMutation,
     useUpdateTestimonialMutation, useDeleteTestimonialMutation,
@@ -136,7 +137,14 @@ export default function TestimonialManager() {
                         <div><label className={labelCls}>Date / Time Ago</label><input className={inputCls} value={form.date} onChange={e => setForm(p => ({ ...p, date: e.target.value }))} placeholder="e.g. 2 weeks ago" /></div>
                         <div><label className={labelCls}>Read Time</label><input className={inputCls} value={form.readTime} onChange={e => setForm(p => ({ ...p, readTime: e.target.value }))} placeholder="e.g. 2 min" /></div>
                         
-                        <div className="md:col-span-3"><label className={labelCls}>Feedback Statement *</label><textarea className={inputCls} rows={2} value={form.feedback} onChange={e => setForm(p => ({ ...p, feedback: e.target.value }))} required placeholder="Client feedback..." /></div>
+                        <div className="md:col-span-3">
+                            <label className={labelCls}>Feedback Statement (HTML Content) *</label>
+                            <RichTextEditor 
+                                value={form.feedback} 
+                                onChange={(content) => setForm(p => ({ ...p, feedback: content }))}
+                                placeholder="Enter detailed feedback..."
+                            />
+                        </div>
                         <div className="md:col-span-1">
                             <label className={labelCls}>Order</label><input type="number" className={inputCls} value={form.order} onChange={e => setForm(p => ({ ...p, order: e.target.value }))} placeholder="e.g. 1" />
                             <div className="mt-4 flex items-center gap-2 cursor-pointer">

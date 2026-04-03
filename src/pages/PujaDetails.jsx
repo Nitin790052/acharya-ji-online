@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { API_URL, BACKEND_URL } from '../config/apiConfig';
 import { usePageBanner } from '../hooks/usePageBanner';
+import SEO from '../components/layout/SEO';
 
 
 const PujaDetails = () => {
@@ -85,16 +86,36 @@ const PujaDetails = () => {
         setShowMuhuratModal(false);
     };
 
+    const faqSchema = faqs && faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
     return (
         <Layout>
+            <SEO 
+                title={offering.metaTitle || banner.metaTitle} 
+                description={offering.metaDescription || banner.metaDescription} 
+                keywords={offering.metaKeywords || banner.metaKeywords}
+                canonical={offering.canonicalUrl || banner.canonicalUrl}
+                schemaData={faqSchema}
+            />
             <div className="min-h-screen bg-white">
                 {/* Hero Section - Matching Griha Pravesh deeply */}
-                <section className="relative h-[300px] sm:h-[300px] md:h-[380px] lg:h-[390px] flex items-center py-[20px] text-white overflow-hidden">
+                <section className="relative h-[300px] sm:h-[300px] md:h-[380px] lg:h-[390px] flex items-center pt-16 pb-4 sm:pt-20 sm:pb-20 text-white overflow-hidden">
                     <div className="absolute inset-0">
                         {banner.imageUrl ? (
                             <img
                                 src={banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`}
-                                alt={banner.titleHighlight1 || title}
+                                alt={banner.imageAlt || offering.title}
                                 className="w-full h-full object-cover"
                             />
                         ) : (
@@ -106,12 +127,12 @@ const PujaDetails = () => {
                     </div>
                     <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
                         <div className="max-w-4xl mx-auto text-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-4 md:mb-8 shadow-2xl">
                                 <Award className="w-4 h-4 text-[#FFC107]" />
                                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || 'DIVINE SERVICES HUB'}</span>
                             </div>
 
-                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                                 {(banner.titleHighlight1 || banner.titleHighlight2 || banner.titleHighlight3) ? (
                                     <>
                                         {banner.titleHighlight1 && <span>{banner.titleHighlight1} </span>}
@@ -131,7 +152,7 @@ const PujaDetails = () => {
                                 )}
                             </h1>
 
-                            <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
+                            <p className="text-sm md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-6 md:mb-8 drop-shadow">
                                 {banner.subtitle || shortDescription}
                             </p>
                         </div>

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Eye, Edit, Trash2, X, Plus, Database, Star, Calendar, Clock, User } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import {
     useGetAllBlogsQuery, useCreateBlogMutation,
     useUpdateBlogMutation, useDeleteBlogMutation,
@@ -10,7 +11,7 @@ import {
 } from '../../../../../services/blogApi';
 import { BACKEND_URL } from '../../../../../config/apiConfig';
 
-const emptyForm = { title: '', excerpt: '', category: '', readTime: '', date: '', author: '', url: '', rating: '', isActive: true, order: '' };
+const emptyForm = { title: '', excerpt: '', category: '', readTime: '', date: '', author: '', url: '', rating: '', isActive: true, order: '', metaTitle: '', metaDescription: '', metaKeywords: '', slug: '' };
 
 export default function BlogManager() {
     const [form, setForm] = useState(emptyForm);
@@ -66,7 +67,10 @@ export default function BlogManager() {
     };
 
     const handleEdit = (b) => {
-        setForm({ title: b.title, excerpt: b.excerpt, category: b.category, readTime: b.readTime, date: b.date, author: b.author || '', url: b.url, rating: b.rating, isActive: b.isActive !== false, order: b.order || '' });
+        setForm({
+            title: b.title, excerpt: b.excerpt, category: b.category, readTime: b.readTime, date: b.date, author: b.author || '', url: b.url, rating: b.rating, isActive: b.isActive !== false, order: b.order || '',
+            metaTitle: b.metaTitle || '', metaDescription: b.metaDescription || '', metaKeywords: b.metaKeywords || '', slug: b.slug || ''
+        });
         setImagePreview(getImg(b.imageUrl));
         setEditId(b._id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -131,7 +135,14 @@ export default function BlogManager() {
                         <div><label className={labelCls}>Category *</label><input className={inputCls} value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))} required placeholder="e.g. Astrology Science" /></div>
                         <div><label className={labelCls}>Rating</label><input type="number" step="0.1" min="0" max="5" className={inputCls} value={form.rating} onChange={e => setForm(p => ({ ...p, rating: e.target.value }))} placeholder="Enter rating (0-5)" /></div>
 
-                        <div className="md:col-span-4"><label className={labelCls}>Excerpt (Short Summary) *</label><textarea className={inputCls} rows={2} value={form.excerpt} onChange={e => setForm(p => ({ ...p, excerpt: e.target.value }))} required placeholder="Enter short summary of the blog" /></div>
+                        <div className="md:col-span-4">
+                            <label className={labelCls}>Article Content / Excerpt *</label>
+                            <RichTextEditor 
+                                value={form.excerpt} 
+                                onChange={(content) => setForm(p => ({ ...p, excerpt: content }))} 
+                                placeholder="Enter the main content or short summary of the blog" 
+                            />
+                        </div>
 
                         <div><label className={labelCls}>Read Time</label><input className={inputCls} value={form.readTime} onChange={e => setForm(p => ({ ...p, readTime: e.target.value }))} placeholder="e.g. 5 min" /></div>
                         <div><label className={labelCls}>Date</label><input className={inputCls} value={form.date} onChange={e => setForm(p => ({ ...p, date: e.target.value }))} placeholder="e.g. Jan 12, 2026" /></div>
@@ -151,6 +162,37 @@ export default function BlogManager() {
                             <label className={labelCls}>Article Image {!editId && '*'}</label>
                             <input ref={fileRef} type="file" accept="image/*" onChange={handleImage} className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100" />
                             {imagePreview && <img src={imagePreview} alt="preview" className="mt-2 h-20 w-32 object-cover rounded-lg border shadow-sm" />}
+                        </div>
+
+                        {/* Professional SEO Infrastructure for Child Pages */}
+                        <div className="md:col-span-4 mt-6 pt-6 border-t border-dashed border-gray-200">
+                            <h3 className="text-xs font-black text-orange-600 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                <Database className="w-4 h-4" /> SEO Metadata (Specific to this Article)
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="md:col-span-2">
+                                    <label className={labelCls}>
+                                        Meta Title 
+                                        <span className={`ml-2 normal-case font-medium ${form.metaTitle?.length > 65 ? 'text-red-500' : 'text-green-500'}`}>({form.metaTitle?.length || 0}/65)</span>
+                                    </label>
+                                    <input className={inputCls} value={form.metaTitle} onChange={e => setForm(p => ({ ...p, metaTitle: e.target.value }))} placeholder="Optimal length is around 60 characters" />
+                                </div>
+                                <div className="md:col-span-2">
+                                    <label className={labelCls}>
+                                        Meta Description 
+                                        <span className={`ml-2 normal-case font-medium ${form.metaDescription?.length > 160 ? 'text-red-500' : 'text-green-500'}`}>({form.metaDescription?.length || 0}/160)</span>
+                                    </label>
+                                    <textarea className={inputCls} rows={2} value={form.metaDescription} onChange={e => setForm(p => ({ ...p, metaDescription: e.target.value }))} placeholder="Provide a compelling summary for search engine results" />
+                                </div>
+                                <div>
+                                    <label className={labelCls}>URL Slug (Keyword in URL)</label>
+                                    <input className={inputCls} value={form.slug} onChange={e => setForm(p => ({ ...p, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') }))} placeholder="e.g. how-to-learn-astrology" />
+                                </div>
+                                <div>
+                                    <label className={labelCls}>Focus Keywords</label>
+                                    <input className={inputCls} value={form.metaKeywords} onChange={e => setForm(p => ({ ...p, metaKeywords: e.target.value }))} placeholder="e.g. astrology, vedic learning, kundli" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="flex gap-3">

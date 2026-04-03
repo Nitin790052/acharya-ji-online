@@ -11,6 +11,7 @@ import {
   Users, TrendingUp, Clock, Shield, Award, Heart, GraduationCap,
   Sparkles, Star, MapPin, Briefcase, Globe, BookOpen, Database
 } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import { toast } from 'react-toastify';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -329,11 +330,11 @@ export default function CareerContentManager() {
 
               {(activeTab === 'testimonial' || activeTab === 'benefit' || activeTab === 'role') && (
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Description / Feedback Text</label>
-                  <textarea 
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Description / Feedback Text (HTML Content)</label>
+                  <RichTextEditor 
                     value={formData.description || ''} 
-                    onChange={(e) => setFormData({...formData, description: e.target.value})} 
-                    className="w-full px-4 py-3 bg-gray-50 border border-orange-100 rounded-xl focus:border-orange-500 outline-none font-bold min-h-[100px]"
+                    onChange={(content) => setFormData({...formData, description: content})} 
+                    placeholder="Enter detailed description..."
                   />
                 </div>
               )}

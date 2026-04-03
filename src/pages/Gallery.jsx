@@ -19,7 +19,7 @@ import image12 from "../assets/bookPooja/image3.webp";
 import image13 from "../assets/bookPooja/image4.webp";
 
 const fallbackImages = [
-  image1, image2, image3, image4, image5, image6, image7, 
+  image1, image2, image3, image4, image5, image6, image7,
   image8, image9, image10, image11, image12, image13
 ];
 
@@ -42,7 +42,7 @@ const Gallery = () => {
   // Only show active items and ensure no duplicate titles
   const activeItems = useMemo(() => {
     const active = galleryData.filter(item => item.isActive !== false);
-    return active.filter((item, index, self) => 
+    return active.filter((item, index, self) =>
       index === self.findIndex((t) => t.title.toLowerCase().trim() === item.title.toLowerCase().trim())
     );
   }, [galleryData]);
@@ -98,15 +98,15 @@ const Gallery = () => {
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-4 md:mb-7 shadow-2xl">
                 <Award className="w-4 h-4 text-[#FFC107]" />
                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                 {banner.titleHighlight1} <br />
                 <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
               </h1>
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-8">
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-4 md:mb-8">
                 {banner.subtitle}
               </p>
 

@@ -13,7 +13,10 @@ export const usePageBanner = (options = {}) => {
             titleHighlight3: 'Journey',
             titleEnd: '',
             subtitle: 'Discover the story behind Acharya Ji Online — our mission to bring authentic Vedic traditions and spiritual guidance to seekers worldwide.',
-            imageUrl: null
+            imageUrl: null,
+            metaTitle: 'About Us - Sacred Vedic Spiritual Journey',
+            metaDescription: 'Learn about the mission and history of Acharya Ji Online, bringing authentic Vedic puja and astrology guidance to the modern world.',
+            metaKeywords: 'about acharya ji, vedic path, spiritual mission'
         },
         '/career': {
             badge: 'DIVINE SERVICES HUB',
@@ -40,7 +43,10 @@ export const usePageBanner = (options = {}) => {
             titleHighlight3: 'Public',
             titleEnd: 'Platforms',
             subtitle: 'Spreading Vedic wisdom, performing sacred rituals, and guiding thousands through traditional wisdom and spiritual enlightenment.',
-            imageUrl: null
+            imageUrl: null,
+            metaTitle: 'Media & Press - Acharya Ji in the Spotlight',
+            metaDescription: 'Explore Acharya Ji\'s appearances in news, events, and spiritual conferences across the globe.',
+            metaKeywords: 'acharya ji media, astrology news, vedic events'
         },
         '/pujaServices': {
             badge: 'DIVINE SERVICES HUB',
@@ -159,7 +165,10 @@ export const usePageBanner = (options = {}) => {
         titleHighlight3: 'Services',
         titleEnd: '',
         subtitle: 'Spiritual guidance and authentic Vedic traditions for your well-being.',
-        imageUrl: null
+        imageUrl: null,
+        metaTitle: 'Acharya Ji Online - Divine Spiritual Guidance',
+        metaDescription: 'Your trusted partner for Puja, Astrology, and Vedic rituals. Experience authentic spiritual wellbeing with our learned Acharyas.',
+        metaKeywords: 'spiritual guidance, puja online, astrology expert'
     };
 
     return banner;

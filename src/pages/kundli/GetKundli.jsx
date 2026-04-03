@@ -199,12 +199,12 @@ const GetKundli = () => {
                         </div>
                         <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
                             <div className="max-w-4xl mx-auto text-center">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-4 md:mb-8 shadow-2xl">
                                     <Award className="w-4 h-4 text-[#FFC107]" />
                                     <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                                 </div>
 
-                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                                     {banner.titleHighlight1} {banner.titleEnd} <br />
                                     <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                                 </h1>

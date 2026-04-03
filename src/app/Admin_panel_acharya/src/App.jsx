@@ -32,6 +32,7 @@ import CareerContentManager from "./pages/content/CareerContentManager";
 import MediaManager from "./pages/content/MediaManager";
 import GalleryManager from "./pages/content/GalleryManager";
 import ContactManager from "./pages/content/ContactManager";
+import SEOManager from "./pages/content/SEOManager";
 
 function AdminApp() {
   return (
@@ -81,7 +82,7 @@ function AdminApp() {
           <Route path="content/media" element={<MediaManager />} />
           <Route path="content/gallery" element={<GalleryManager />} />
           <Route path="content/contact" element={<ContactManager />} />
-          <Route path="seo/settings" element={<PagePlaceholder title="SEO Settings" />} />
+          <Route path="seo/settings" element={<SEOManager />} />
           <Route path="seo/meta" element={<PagePlaceholder title="Meta Tags Management" />} />
           <Route path="admin/staff" element={<PagePlaceholder title="Staff Management" />} />
           <Route path="admin/settings" element={<PagePlaceholder title="General Settings" />} />

@@ -12,6 +12,7 @@ import {
     Instagram,
     Users
 } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import {
     useGetAllMediaQuery,
     useCreateMediaMutation,
@@ -333,7 +334,14 @@ export default function MediaManager() {
                             <>
                                 <div><label className={labelCls}>Publication</label><input name="publication" value={formData.publication} onChange={handleInputChange} className={inputCls} placeholder="e.g. Divine Times" /></div>
                                 <div><label className={labelCls}>Link</label><input name="link" value={formData.link} onChange={handleInputChange} className={inputCls} placeholder="https://..." /></div>
-                                <div className="md:col-span-3"><label className={labelCls}>Excerpt</label><textarea name="excerpt" value={formData.excerpt} onChange={handleInputChange} className={inputCls} rows={2} placeholder="Article summary..." /></div>
+                                <div className="md:col-span-3">
+                                    <label className={labelCls}>Excerpt (HTML Content)</label>
+                                    <RichTextEditor 
+                                        value={formData.excerpt} 
+                                        onChange={(content) => setFormData(p => ({ ...p, excerpt: content }))}
+                                        placeholder="Article summary..."
+                                    />
+                                </div>
                             </>
                         )}
 
@@ -377,7 +385,14 @@ export default function MediaManager() {
                             <>
                                 <div><label className={labelCls}>Location</label><input name="location" value={formData.location} onChange={handleInputChange} className={inputCls} placeholder="e.g. New Delhi" /></div>
                                 <div><label className={labelCls}>Attendees</label><input name="attendees" value={formData.attendees} onChange={handleInputChange} className={inputCls} placeholder="e.g. 500+" /></div>
-                                <div className="md:col-span-3"><label className={labelCls}>Event Brief</label><textarea name="description" value={formData.description} onChange={handleInputChange} className={inputCls} rows={2} placeholder="Brief about the event..." /></div>
+                                <div className="md:col-span-3">
+                                    <label className={labelCls}>Event Brief (HTML Content)</label>
+                                    <RichTextEditor 
+                                        value={formData.description} 
+                                        onChange={(content) => setFormData(p => ({ ...p, description: content }))}
+                                        placeholder="Brief about the event..."
+                                    />
+                                </div>
                             </>
                         )}
 

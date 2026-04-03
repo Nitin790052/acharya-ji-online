@@ -121,14 +121,14 @@ const Blog = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-4 md:mb-8 shadow-2xl">
                 <Sparkles className="w-3.5 h-3.5 text-[#FFC107]" />
                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">
                   {banner?.badge || blogSettings?.badge || "KNOWLEDGE HUB"}
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                 {banner?.titleHighlight1 ? (
                   <>
                     {banner?.titleHighlight1}{" "}
@@ -140,7 +140,7 @@ const Blog = () => {
                 )}
               </h1>
 
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed drop-shadow max-w-2xl mx-auto mb-10">
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed drop-shadow max-w-2xl mx-auto mb-4 md:mb-7">
                 {banner?.subtitle || blogSettings?.subtitle || "Curated spiritual knowledge blending timeless traditions with contemporary insights."}
               </p>
 

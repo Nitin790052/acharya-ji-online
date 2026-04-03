@@ -9,6 +9,7 @@ import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { useGetCareerContentQuery } from "@/services/careerContentApi";
 import { BACKEND_URL } from "@/config/apiConfig";
+import SEO from "@/components/layout/SEO";
 
 // Static fallback images for eligibility cards when no backend image is uploaded
 import fallback1 from "../assets/careerPage/image1.webp";
@@ -118,13 +119,20 @@ export default function Career() {
 
   return (
     <Layout>
+      <SEO 
+        pageName="career"
+        title={banner.metaTitle} 
+        description={banner.metaDescription} 
+        keywords={banner.metaKeywords}
+        canonical={banner.canonicalUrl}
+      />
       <div className="min-h-screen bg-background">
 
         {/* Hero Section */}
         <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
           <div className="absolute inset-0">
             {banner.imageUrl ? (
-              <img src={banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
+              <img src={banner.imageUrl.startsWith('http') ? banner.imageUrl : `${BACKEND_URL}${banner.imageUrl}`} alt={banner.imageAlt || "Divine Career Opportunity"} className="w-full h-full object-cover object-top" />
             ) : (
               <div className="absolute inset-0 bg-[#2A1D13]/90" />
             )}
@@ -133,11 +141,11 @@ export default function Career() {
           </div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-4 md:mb-8 shadow-2xl">
                 <Award className="w-4 h-4 text-[#FFC107]" />
                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                 {banner.titleHighlight1} <br />
                 <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight1}</span> {banner.titleEnd}
               </h1>

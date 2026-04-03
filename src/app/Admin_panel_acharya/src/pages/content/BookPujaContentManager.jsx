@@ -4,6 +4,7 @@ import {
     Layers, Users, Shield, HelpCircle, Star,
     ArrowUp, ArrowDown, Check, Sparkles, Award
 } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import {
     useGetStepsQuery, useCreateStepMutation, useUpdateStepMutation, useDeleteStepMutation,
     useGetExpertsQuery, useCreateExpertMutation, useUpdateExpertMutation, useDeleteExpertMutation,
@@ -175,9 +176,13 @@ const BookPujaContentManager = () => {
                     <label className="text-[10px] font-black uppercase text-gray-400">Hindi Tagline</label>
                     <input type="text" value={itemFormData.subtitle || ''} onChange={e => setItemFormData({...itemFormData, subtitle: e.target.value})} className="w-full px-4 py-2 border rounded-xl font-bold" required />
                 </div>
-                <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase text-gray-400">Description</label>
-                    <input type="text" value={itemFormData.description || ''} onChange={e => setItemFormData({...itemFormData, description: e.target.value})} className="w-full px-4 py-2 border rounded-xl font-bold" required />
+                <div className="space-y-1 md:col-span-3">
+                    <label className="text-[10px] font-black uppercase text-gray-400">Description (HTML)</label>
+                    <RichTextEditor 
+                        value={itemFormData.description || ''} 
+                        onChange={(content) => setItemFormData({...itemFormData, description: content})} 
+                        placeholder="Enter item description..."
+                    />
                 </div>
             </div>
         );
@@ -189,8 +194,12 @@ const BookPujaContentManager = () => {
                     <input type="text" value={itemFormData.question || ''} onChange={e => setItemFormData({...itemFormData, question: e.target.value})} className="w-full px-4 py-2 border rounded-xl font-bold" required />
                 </div>
                 <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase text-gray-400">Answer</label>
-                    <textarea value={itemFormData.answer || ''} onChange={e => setItemFormData({...itemFormData, answer: e.target.value})} className="w-full px-4 py-2 border rounded-xl font-bold resize-none h-20" required />
+                    <label className="text-[10px] font-black uppercase text-gray-400">Answer (HTML)</label>
+                    <RichTextEditor 
+                        value={itemFormData.answer || ''} 
+                        onChange={(content) => setItemFormData({...itemFormData, answer: content})} 
+                        placeholder="Enter faq answer..."
+                    />
                 </div>
             </div>
         );

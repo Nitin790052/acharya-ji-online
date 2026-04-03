@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { HelpCircle, Plus, Trash2, Edit, Eye, Save, ToggleLeft, ToggleRight, Database } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import { 
     useGetFAQsQuery, useCreateFAQMutation, useUpdateFAQMutation, useDeleteFAQMutation,
     useGetFAQSettingsQuery, useUpdateFAQSettingsMutation, useSeedFAQsMutation 
@@ -114,8 +115,12 @@ export default function FAQManager() {
                             <input type="number" className={inputCls} value={form.order} onChange={e => setForm(p => ({ ...p, order: e.target.value }))} />
                         </div>
                         <div className="md:col-span-4">
-                            <label className={labelCls}>Answer *</label>
-                            <textarea className={inputCls} rows={3} value={form.answer} onChange={e => setForm(p => ({ ...p, answer: e.target.value }))} required placeholder="Enter answer..." />
+                            <label className={labelCls}>Answer (HTML Content) *</label>
+                            <RichTextEditor 
+                                value={form.answer} 
+                                onChange={(content) => setForm(p => ({ ...p, answer: content }))}
+                                placeholder="Enter faq answer..."
+                            />
                         </div>
                     </div>
                     <div className="flex justify-between items-center">

@@ -2,8 +2,9 @@ import React, { useState, useMemo } from 'react';
 import {
     Plus, Search, Edit2, Trash2, Eye, X, Check, AlertCircle,
     Image as ImageIcon, Flame, Moon, ScrollText, Shield, Leaf,
-    ShoppingCart, Video, Home, Star, Package, Truck, Gift, ArrowRight, Sparkles
+    ShoppingCart, Video, Home, Star, Package, Truck, Gift, ArrowRight, Sparkles, Database
 } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import {
     useGetAllServicesQuery,
     useCreateServiceMutation,
@@ -38,7 +39,13 @@ const ServiceManager = () => {
         href: '',
         category: 'core',
         icon: 'Sparkles',
-        order: 0
+        order: 0,
+        slug: '',
+        metaTitle: '',
+        metaDescription: '',
+        metaKeywords: '',
+        canonicalUrl: '',
+        imageAlt: ''
     });
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -73,6 +80,12 @@ const ServiceManager = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleTitleChange = (e) => {
+        const title = e.target.value;
+        const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+        setFormData(prev => ({ ...prev, title, slug }));
+    };
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -82,7 +95,7 @@ const ServiceManager = () => {
     };
 
     const resetForm = () => {
-        setFormData({ title: '', description: '', href: '', category: 'core', icon: 'Sparkles', order: 0 });
+        setFormData({ title: '', description: '', href: '', category: 'core', icon: 'Sparkles', order: 0, slug: '', metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', imageAlt: '' });
         setImageFile(null);
         setImagePreview(null);
         setEditingId(null);
@@ -115,7 +128,13 @@ const ServiceManager = () => {
             href: service.href,
             category: service.category,
             icon: service.icon || 'Sparkles',
-            order: service.order || 0
+            order: service.order || 0,
+            slug: service.slug || '',
+            metaTitle: service.metaTitle || '',
+            metaDescription: service.metaDescription || '',
+            metaKeywords: service.metaKeywords || '',
+            canonicalUrl: service.canonicalUrl || '',
+            imageAlt: service.imageAlt || ''
         });
         setImagePreview(service.imageUrl ? `${BACKEND_URL}${service.imageUrl}` : null);
         setEditingId(service._id);
@@ -186,9 +205,17 @@ const ServiceManager = () => {
                     <div className="space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Service Title</label>
                         <input
-                            type="text" name="title" value={formData.title} onChange={handleInputChange} required
+                            type="text" name="title" value={formData.title} onChange={handleTitleChange} required
                             className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold"
                             placeholder="e.g. Online Puja"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">URL Slug (SEO Friendly)</label>
+                        <input
+                            type="text" name="slug" value={formData.slug} onChange={handleInputChange}
+                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-mono text-blue-600"
+                            placeholder="e.g. online-puja"
                         />
                     </div>
                     <div className="space-y-1.5">
@@ -212,11 +239,11 @@ const ServiceManager = () => {
 
                     {/* Row 2: Description (2/3) and Order (1/3) */}
                     <div className="md:col-span-2 space-y-1.5">
-                        <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Description</label>
-                        <textarea
-                            name="description" value={formData.description} onChange={handleInputChange} required
-                            className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl h-20 resize-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
-                            placeholder="Enter short service overview..."
+                        <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Service Overview (HTML Description)</label>
+                        <RichTextEditor 
+                            value={formData.description} 
+                            onChange={(content) => setFormData(p => ({ ...prev, description: content }))}
+                            placeholder="Enter service overview..."
                         />
                     </div>
                     <div className="space-y-1.5">
@@ -247,24 +274,74 @@ const ServiceManager = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="space-y-1.5">
-                        <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Service Image</label>
-                        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden h-[46px]">
-                            {imagePreview ? (
-                                <div className="relative group w-full h-full">
-                                    <img src={imagePreview} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <p className="text-white text-[10px] font-bold tracking-wider">CHANGE</p>
+                    <div className="space-y-1.5 flex flex-col">
+                        <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Service Image & Alt Text</label>
+                        <div className="flex gap-2 items-start">
+                            <div className="w-24 h-[46px] border-2 border-dashed border-gray-200 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden flex items-center justify-center">
+                                {imagePreview ? (
+                                    <div className="relative group w-full h-full">
+                                        <img src={imagePreview} className="w-full h-full object-cover" />
+                                        <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
                                     </div>
-                                    <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
-                                </div>
-                            ) : (
-                                <div className="flex items-center gap-2">
-                                    <ImageIcon className="text-gray-400" size={16} />
-                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Upload Image</p>
-                                    <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
-                                </div>
-                            )}
+                                ) : (
+                                    <div className="flex items-center gap-2">
+                                        <ImageIcon className="text-gray-400" size={16} />
+                                        <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
+                                    </div>
+                                )}
+                            </div>
+                            <input 
+                                type="text" name="imageAlt" value={formData.imageAlt} onChange={handleInputChange}
+                                className="flex-1 px-3 py-2 text-[10px] bg-gray-50 border border-gray-200 rounded-xl h-[46px]"
+                                placeholder="Image Alt Description..."
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Professional SEO Infrastructure for Child Pages */}
+                <div className="mt-6 pt-6 border-t border-dashed border-gray-200">
+                    <h3 className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                        <Database size={14} className="fill-current" /> SEO Metadata (Specific to this Service)
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="md:col-span-2 space-y-1.5">
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wide flex justify-between">
+                                Meta Title 
+                                <span className={`text-[10px] ${formData.metaTitle?.length > 65 ? 'text-red-500' : 'text-green-600'}`}>({formData.metaTitle?.length || 0}/65)</span>
+                            </label>
+                            <input 
+                                type="text" name="metaTitle" value={formData.metaTitle} onChange={handleInputChange}
+                                className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 font-medium"
+                                placeholder="Page title as it appears in Google..."
+                            />
+                        </div>
+                        <div className="md:col-span-2 space-y-1.5">
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wide flex justify-between">
+                                Meta Description 
+                                <span className={`text-[10px] ${formData.metaDescription?.length > 160 ? 'text-red-500' : 'text-green-600'}`}>({formData.metaDescription?.length || 0}/160)</span>
+                            </label>
+                            <textarea 
+                                name="metaDescription" value={formData.metaDescription} onChange={handleInputChange}
+                                className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl h-20 resize-none font-medium"
+                                placeholder="Compelling summary for search results..."
+                            />
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wide">Focus Keywords</label>
+                            <input 
+                                type="text" name="metaKeywords" value={formData.metaKeywords} onChange={handleInputChange}
+                                className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20"
+                                placeholder="e.g. Reiki, Healing, Energy"
+                            />
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wide">Canonical URL</label>
+                            <input 
+                                type="text" name="canonicalUrl" value={formData.canonicalUrl} onChange={handleInputChange}
+                                className="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20"
+                                placeholder="https://acharya-ji.com/services/reiki"
+                            />
                         </div>
                     </div>
                 </div>

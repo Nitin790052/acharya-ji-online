@@ -201,17 +201,17 @@ const TalkToAstrologer = () => {
                         </div>
                         <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
                             <div className="max-w-4xl mx-auto text-center">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-2 md:mb-8 shadow-2xl">
                                     <Award className="w-4 h-4 text-[#FFC107]" />
                                     <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
                                 </div>
 
-                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                                     {banner.titleHighlight1} {banner.titleEnd} <br />
                                     <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
                                 </h1>
 
-                                <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-8 drop-shadow">
+                                <p className="text-lg md:text-xl text-amber-100 leading-relaxed font-medium max-w-2xl mx-auto mb-4 md:mb-7 drop-shadow">
                                     {banner.subtitle}
                                 </p>
 
@@ -233,7 +233,7 @@ const TalkToAstrologer = () => {
                                                             navigate(btn.link);
                                                         }
                                                     }}
-                                                    className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13]'} text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none`}
+                                                    className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] hidden md:flex'} text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none`}
                                                 >
                                                     <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                                                     <span className="relative flex items-center gap-2 font-black">
@@ -250,8 +250,8 @@ const TalkToAstrologer = () => {
                                                     <span className="relative flex items-center gap-2 font-black"><MessageCircle className="w-5 h-5" /> Chat Now</span>
                                                 </button>
                                             </Link>
-                                            <Link to="/call">
-                                                <button className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none">
+                                            <Link to="/call" className="hidden md:block">
+                                                <button className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none w-full">
                                                     <span className="relative flex items-center gap-2 font-black"><Phone className="w-5 h-5 text-yellow-300" /> Call Expert</span>
                                                 </button>
                                             </Link>

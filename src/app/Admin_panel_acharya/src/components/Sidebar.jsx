@@ -61,7 +61,7 @@ const Sidebar = ({
   const navigate = useNavigate();
   // Force isCollapsed to false on mobile, otherwise use prop
   const [isCollapsed, setIsCollapsed] = useState(isMobile ? false : (propIsCollapsed || false));
-  const [openDropdowns, setOpenDropdowns] = useState({});
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   // Premium Glassmorphism Theme
   const bgColor = "rgba(255, 255, 255, 0.6)";
@@ -84,10 +84,7 @@ const Sidebar = ({
   };
 
   const toggleDropdown = (key) => {
-    setOpenDropdowns(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
+    setOpenDropdown(prev => (prev === key ? null : key));
   };
 
   const handleNavClick = () => {
@@ -195,8 +192,7 @@ const Sidebar = ({
     {
       key: "seo-management", icon: <FiTrendingUp />, label: "Marketing & SEO",
       children: [
-        { key: "seo-settings", icon: <FiActivity />, label: "SEO Settings", path: "/admin-acharya/dashboard/seo/settings" },
-        { key: "meta-tags", icon: <FiTag />, label: "Meta Tags", path: "/admin-acharya/dashboard/seo/meta" },
+        { key: "seo-settings", icon: <FiActivity />, label: "SEO Hub Manager", path: "/admin-acharya/dashboard/seo/settings" },
       ]
     },
 
@@ -288,10 +284,10 @@ const Sidebar = ({
             {(() => {
               const sections = [
                 { title: "Overview", items: menuItems.slice(0, 1) },
-                { title: "User Control", items: menuItems.slice(1, 10) },
-                { title: "User Management", items: menuItems.slice(10, 11) },
-                { title: "Business Operations", items: menuItems.slice(11, 13) },
-                { title: "SEO & Growth", items: menuItems.slice(13, 14) },
+                { title: "Content Management", items: menuItems.slice(1, 9) },
+                { title: "User Management", items: menuItems.slice(9, 10) },
+                { title: "Business Operations", items: menuItems.slice(10, 12) },
+                { title: "SEO & Growth", items: menuItems.slice(12, 13) },
                 { title: "System Setup", items: menuItems.slice(13, 14) },
               ];
 
@@ -329,12 +325,12 @@ const Sidebar = ({
                               </div>
                               {(isMobile || !isCollapsed) && (
                                 <span className="text-gray-400">
-                                  {openDropdowns[item.key] ? <FiChevronDown size={14} /> : <FiChevronRight size={14} />}
+                                  {openDropdown === item.key ? <FiChevronDown size={14} /> : <FiChevronRight size={14} />}
                                 </span>
                               )}
                             </button>
 
-                            {(isMobile || !isCollapsed) && openDropdowns[item.key] && (
+                            {(isMobile || !isCollapsed) && openDropdown === item.key && (
                               <ul className="ml-8 mt-0.5 space-y-0.5 border-l border-gray-100 pl-1">
                                 {item.children.map((child) => (
                                   <li key={child.key}>

@@ -10,6 +10,7 @@ import { Layout } from '@/components/layout/Layout';
 import { usePageBanner } from "@/hooks/usePageBanner";
 import { BACKEND_URL } from "@/config/apiConfig";
 import { useGetAllMediaQuery, useGetMediaSettingsQuery } from "@/services/mediaApi";
+import SEO from "@/components/layout/SEO";
 
 const fallbackStats = [
   { value: '50K+', label: 'Subscribers', iconType: 'youtube' },
@@ -188,15 +189,15 @@ const Media = () => {
               <img src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110" onError={(e) => e.target.src = `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`} />
             ) : item.video ? (
               <div className="w-full h-full bg-black relative">
-                <video 
-                  src={`${BACKEND_URL}${item.video}#t=0.1`} 
-                  className="w-full h-full object-cover opacity-60 transition-transform duration-[2s] group-hover:scale-110" 
-                  muted 
+                <video
+                  src={`${BACKEND_URL}${item.video}#t=0.1`}
+                  className="w-full h-full object-cover opacity-60 transition-transform duration-[2s] group-hover:scale-110"
+                  muted
                   preload="metadata"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-amber-400 gap-1 mt-2">
-                   <Video className="w-6 h-6 animate-pulse" />
-                   <span className="text-[8px] font-black uppercase tracking-widest opacity-40">Stored Asset</span>
+                  <Video className="w-6 h-6 animate-pulse" />
+                  <span className="text-[8px] font-black uppercase tracking-widest opacity-40">Stored Asset</span>
                 </div>
               </div>
             ) : (
@@ -386,6 +387,13 @@ const Media = () => {
 
   return (
     <Layout>
+      <SEO 
+        pageName="media"
+        title={banner.metaTitle} 
+        description={banner.metaDescription} 
+        keywords={banner.metaKeywords}
+        canonical={banner.canonicalUrl}
+      />
       <div className="min-h-screen bg-[#FAF9F6] relative overflow-hidden">
         {/* Divine Background Ornaments */}
         <div className="absolute top-[20%] right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-[120px] -z-10" />
@@ -404,15 +412,15 @@ const Media = () => {
           </div>
           <div className="container mx-auto px-4 relative z-10 w-full animate-fade-in-up">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 mb-2 md:mb-7 shadow-2xl">
                 <Newspaper className="w-4 h-4 text-[#FFC107]" />
                 <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge || "DIVINE SERVICES HUB"}</span>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-5 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase">
                 {banner.titleHighlight1} {banner.titleEnd} <br />
                 <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span>
               </h1>
-              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-8">
+              <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-2 md:mb-7">
                 {banner.subtitle}
               </p>
 

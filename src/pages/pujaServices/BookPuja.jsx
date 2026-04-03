@@ -168,7 +168,7 @@ export default function BookPuja() {
       <div className="min-h-[80vh]">
         <div className="min-h-screen bg-background">
           {/* Hero Section */}
-          <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center py-[20px] text-white overflow-hidden">
+          <section className="relative h-[320px] sm:h-[320px] md:h-[360px] lg:h-[370px] flex items-center pt-20 md:pt-7 lg:pt-7 pb-6 text-white overflow-hidden">
             <div className="absolute inset-0">
               {banner.imageUrl ? (
                 <img src={`${BACKEND_URL}${banner.imageUrl}`} alt="Background" className="w-full h-full object-cover object-top" />
@@ -180,15 +180,15 @@ export default function BookPuja() {
             </div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 mb-8 shadow-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/30 mb-4 md:mb-8 shadow-2xl">
                   <Award className="w-4 h-4 text-[#FFC107]" />
                   <span className="text-[#FFC107] text-xs md:text-sm font-black uppercase tracking-widest">{banner.badge}</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase text-center">
+                <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] uppercase text-center">
                   {banner.titleHighlight1} <br />
                   <span className="text-yellow-300">{banner.titleHighlight2} {banner.titleHighlight3}</span> {banner.titleEnd}
                 </h1>
-                <p className="text-lg md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-10 text-center">
+                <p className="text-sm md:text-xl text-amber-100 leading-relaxed max-w-2xl mx-auto font-medium drop-shadow mb-6 md:mb-10 text-center">
                   {banner.subtitle}
                 </p>
 
@@ -209,11 +209,11 @@ export default function BookPuja() {
                               navigate(btn.link);
                             }
                           }}
-                          className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13]'} text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none`}
+                          className={`group relative ${idx === 0 ? 'bg-[#E8453C] hover:bg-[#CC3B34]' : 'bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13]'} text-white px-6 py-3 md:px-10 md:py-4 font-black text-[10px] md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none`}
                         >
                           <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                          <span className="relative flex items-center gap-2 font-black">
-                            {idx === 0 ? <Calendar className="w-5 h-5" /> : <Phone className="w-5 h-5 text-yellow-300" />} {btn.text}
+                          <span className="relative flex items-center gap-1.5 md:gap-2 font-black">
+                            {idx === 0 ? <Calendar className="w-4 h-4 md:w-5 md:h-5" /> : <Phone className="w-4 h-4 md:w-5 md:h-5 text-yellow-300" />} {btn.text}
                           </span>
                         </button>
                       )
@@ -222,15 +222,15 @@ export default function BookPuja() {
                     <>
                       <button
                         onClick={() => window.dispatchEvent(new CustomEvent('openPoojaDrawer'))}
-                        className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none"
+                        className="group relative bg-[#E8453C] hover:bg-[#CC3B34] text-white px-6 py-3 md:px-10 md:py-4 font-black text-[10px] md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 overflow-hidden rounded-none"
                       >
                         <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                        <span className="relative flex items-center gap-2 font-black"><Calendar className="w-5 h-5" /> Book Puja Now</span>
+                        <span className="relative flex items-center gap-1.5 md:gap-2 font-black"><Calendar className="w-4 h-4 md:w-5 md:h-5" /> Book Puja Now</span>
                       </button>
                       <button
-                        className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-10 py-4 font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none"
+                        className="group relative bg-[#2A1D13]/80 backdrop-blur-md border border-white/20 hover:bg-[#2A1D13] text-white px-6 py-3 md:px-10 md:py-4 font-black text-[10px] md:text-sm uppercase tracking-[0.2em] shadow-2xl transition-all duration-300 rounded-none"
                       >
-                        <span className="relative flex items-center gap-2 font-black"><Phone className="w-5 h-5 text-yellow-300" /> Talk to Expert</span>
+                        <span className="relative flex items-center gap-1.5 md:gap-2 font-black"><Phone className="w-4 h-4 md:w-5 md:h-5 text-yellow-300" /> Talk to Expert</span>
                       </button>
                     </>
                   )}

@@ -4,6 +4,7 @@ import {
     AlertCircle, Image as ImageIcon, PlusCircle, MinusCircle,
     List, HelpCircle, Save, Database, Clock, Star
 } from 'lucide-react';
+import RichTextEditor from '../../components/RichTextEditor';
 import {
     useGetAllOfferingsQuery,
     useCreateOfferingMutation,
@@ -39,7 +40,12 @@ const PujaOfferingManager = () => {
             { mode: 'Home Visit', title: 'Home Visit Puja', description: 'Experienced Pandit visits your home', price: 0, points: ['Experienced Acharya', 'Full Samagri Included', 'Traditional Mantra Vidhi', 'Personal Connection'], imageUrl: '' },
             { mode: 'Online', title: 'Online Video Puja', description: 'Live interactive session via video call', price: 0, points: ['Live Interactive Session', 'Step-by-Step Guidance', 'Global Accessibility', 'Perfect for Busy Schedules'], imageUrl: '' },
             { mode: 'Muhurat', title: 'Muhurat Consultation', description: 'Find the most auspicious time', price: 0, points: ['Personalized Kundli Check', 'Nakshatra Alignment', 'Exact Timing Guidance', 'Family Shanti Analysis'], imageUrl: '' }
-        ]
+        ],
+        metaTitle: '',
+        metaDescription: '',
+        metaKeywords: '',
+        canonicalUrl: '',
+        imageAlt: ''
     });
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -73,7 +79,12 @@ const PujaOfferingManager = () => {
                 { mode: 'Home Visit', title: 'Home Visit Puja', description: 'Experienced Pandit visits your home', price: 0, points: ['Experienced Acharya', 'Full Samagri Included', 'Traditional Mantra Vidhi', 'Personal Connection'], imageUrl: '' },
                 { mode: 'Online', title: 'Online Video Puja', description: 'Live interactive session via video call', price: 0, points: ['Live Interactive Session', 'Step-by-Step Guidance', 'Global Accessibility', 'Perfect for Busy Schedules'], imageUrl: '' },
                 { mode: 'Muhurat', title: 'Muhurat Consultation', description: 'Find the most auspicious time', price: 0, points: ['Personalized Kundli Check', 'Nakshatra Alignment', 'Exact Timing Guidance', 'Family Shanti Analysis'], imageUrl: '' }
-            ]
+            ],
+            metaTitle: item.metaTitle || '',
+            metaDescription: item.metaDescription || '',
+            metaKeywords: item.metaKeywords || '',
+            canonicalUrl: item.canonicalUrl || '',
+            imageAlt: item.imageAlt || ''
         });
         setEditId(item._id);
         setImagePreview(item.imageUrl.startsWith('http') ? item.imageUrl : `${BACKEND_URL}${item.imageUrl}`);
@@ -207,7 +218,8 @@ const PujaOfferingManager = () => {
                 { mode: 'Home Visit', title: 'Home Visit Puja', description: 'Experienced Pandit visits your home', price: 0, points: ['Experienced Acharya', 'Full Samagri Included', 'Traditional Mantra Vidhi', 'Personal Connection'], imageUrl: '' },
                 { mode: 'Online', title: 'Online Video Puja', description: 'Live interactive session via video call', price: 0, points: ['Live Interactive Session', 'Step-by-Step Guidance', 'Global Accessibility', 'Perfect for Busy Schedules'], imageUrl: '' },
                 { mode: 'Muhurat', title: 'Muhurat Consultation', description: 'Find the most auspicious time', price: 0, points: ['Personalized Kundli Check', 'Nakshatra Alignment', 'Exact Timing Guidance', 'Family Shanti Analysis'], imageUrl: '' }
-            ]
+            ],
+            metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', imageAlt: ''
         });
         setEditId(null);
         setImageFile(null);
@@ -305,23 +317,33 @@ const PujaOfferingManager = () => {
                             </div>
 
                             {/* Intro Section Image Selector */}
-                            <div className="space-y-2">
-                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block text-center">Intro Section Visual</label>
-                                <div className="relative h-44 w-full border-2 border-dashed border-gray-200 rounded-[2rem] bg-gray-50 hover:bg-blue-50/50 hover:border-blue-200 transition-all flex flex-col items-center justify-center overflow-hidden cursor-pointer group">
-                                    {imagePreview ? (
-                                        <>
-                                            <img src={imagePreview} className="absolute inset-0 w-full h-full object-cover rounded-[2rem]" />
-                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                <p className="text-white text-[10px] font-black uppercase tracking-widest">Change visual</p>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <ImageIcon size={32} className="text-gray-300 mb-1" />
-                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Detail View<br />Upload</p>
-                                        </>
-                                    )}
-                                    <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" />
+                            <div className="space-y-4">
+                                <div className="space-y-1">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block text-center">Intro Section Visual</label>
+                                    <div className="relative h-44 w-full border-2 border-dashed border-gray-200 rounded-[2rem] bg-gray-50 hover:bg-blue-50/50 hover:border-blue-200 transition-all flex flex-col items-center justify-center overflow-hidden cursor-pointer group">
+                                        {imagePreview ? (
+                                            <>
+                                                <img src={imagePreview} className="absolute inset-0 w-full h-full object-cover rounded-[2rem]" />
+                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <p className="text-white text-[10px] font-black uppercase tracking-widest">Change visual</p>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <ImageIcon size={32} className="text-gray-300 mb-1" />
+                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Detail View<br />Upload</p>
+                                            </>
+                                        )}
+                                        <input type="file" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" />
+                                    </div>
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-[10px] font-bold text-slate-400 pl-1">Image Alt Text (SEO)</label>
+                                    <input 
+                                        type="text" name="imageAlt" value={formData.imageAlt} onChange={handleInputChange}
+                                        className="w-full px-3 py-1.5 text-[10px] bg-white border border-gray-200 rounded-lg focus:ring-1 focus:ring-blue-500/30"
+                                        placeholder="e.g. Traditional Hawan Vidhi at home..."
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -329,9 +351,9 @@ const PujaOfferingManager = () => {
                         {/* Long Description Area */}
                         <div className="space-y-2">
                             <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider pl-1">Detailed Content (Full Story)</label>
-                            <textarea
-                                name="longDescription" value={formData.longDescription} onChange={handleInputChange}
-                                className="w-full px-5 py-4 rounded-2xl bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all h-28 resize-none leading-relaxed font-medium text-gray-600 text-sm"
+                            <RichTextEditor 
+                                value={formData.longDescription} 
+                                onChange={(content) => setFormData(prev => ({ ...prev, longDescription: content }))}
                                 placeholder="Write the complete details about what happens in this puja..."
                             />
                         </div>
@@ -384,9 +406,9 @@ const PujaOfferingManager = () => {
                                                     className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all font-bold"
                                                     placeholder="The Question..."
                                                 />
-                                                <textarea
-                                                    value={faq.answer} onChange={(e) => updateFAQ(idx, 'answer', e.target.value)}
-                                                    className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-xl h-16 resize-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all"
+                                                <RichTextEditor
+                                                    value={faq.answer} 
+                                                    onChange={(content) => updateFAQ(idx, 'answer', content)}
                                                     placeholder="The Answer..."
                                                 />
                                             </div>
@@ -474,7 +496,59 @@ const PujaOfferingManager = () => {
                             </div>
                         </div>
 
-                        <div className="flex justify-end gap-3 pt-6 border-t border-gray-50">
+                        {/* Professional SEO Infrastructure for Child Pages */}
+                        <div className="pt-8 border-t border-gray-100">
+                             <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 bg-orange-50 rounded-xl shadow-sm">
+                                    <Database className="text-orange-600 w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xs font-black text-orange-600 uppercase tracking-[0.2em]">SEO Metadata (Specific to this Puja)</h3>
+                                    <p className="text-[10px] text-gray-400 font-medium">Character-calibrated fields for guaranteed search visibility</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="md:col-span-2 space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider pl-1 flex justify-between">
+                                        Meta Title 
+                                        <span className={`text-[10px] font-medium ${formData.metaTitle?.length > 65 ? 'text-red-500' : 'text-green-600'}`}>({formData.metaTitle?.length || 0}/65)</span>
+                                    </label>
+                                    <input 
+                                        type="text" name="metaTitle" value={formData.metaTitle} onChange={handleInputChange}
+                                        className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all font-medium"
+                                        placeholder="Enter the title exactly as it should appear in Google..."
+                                    />
+                                </div>
+                                <div className="md:col-span-2 space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider pl-1 flex justify-between">
+                                        Meta Description 
+                                        <span className={`text-[10px] font-medium ${formData.metaDescription?.length > 160 ? 'text-red-500' : 'text-green-600'}`}>({formData.metaDescription?.length || 0}/160)</span>
+                                    </label>
+                                    <textarea 
+                                        name="metaDescription" value={formData.metaDescription} onChange={handleInputChange}
+                                        className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all h-24 resize-none leading-relaxed"
+                                        placeholder="Provide a click-worthy summary that includes your main keywords..."
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider pl-1 font-black">Focus Keywords</label>
+                                    <input 
+                                        type="text" name="metaKeywords" value={formData.metaKeywords} onChange={handleInputChange}
+                                        className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all"
+                                        placeholder="e.g. Mahalakshmi Puja, Wealth, Blessings"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider pl-1">Canonical URL</label>
+                                    <input 
+                                        type="text" name="canonicalUrl" value={formData.canonicalUrl} onChange={handleInputChange}
+                                        className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-900 transition-all"
+                                        placeholder="https://acharya-ji.com/puja/mhalakshmi-puja"
+                                    />
+                                </div>
+                            </div>
+                        </div>                        <div className="flex justify-end gap-3 pt-6 border-t border-gray-50">
                             <button type="button" onClick={resetForm} className="px-5 py-2 text-[11px] font-black uppercase tracking-wider text-white bg-red-400 hover:bg-red-500 rounded-xl transition-all">
                                 Clear Form
                             </button>

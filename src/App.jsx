@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import ScrollToTop from "./components/ScrollToTop";
 import FloatingButtons from "./components/FloatingButtons";
@@ -146,144 +146,142 @@ const App = () => (
             theme="light"
         />
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <ScrollToTop />
-                <GlobalFloatingButtons />
-                <VendorAuthProvider>
-                    <UserAuthProvider>
-                        <CartProvider>
-                            <TooltipProvider>
-                                <Suspense fallback={
-                                    <div className="flex items-center justify-center min-h-screen bg-orange-50/30">
-                                        <div className="relative">
-                                            <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
-                                            <div className="mt-4 text-orange-800 font-medium">Loading...</div>
-                                        </div>
+            <ScrollToTop />
+            <GlobalFloatingButtons />
+            <VendorAuthProvider>
+                <UserAuthProvider>
+                    <CartProvider>
+                        <TooltipProvider>
+                            <Suspense fallback={
+                                <div className="flex items-center justify-center min-h-screen bg-orange-50/30">
+                                    <div className="relative">
+                                        <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
+                                        <div className="mt-4 text-orange-800 font-medium">Loading...</div>
                                     </div>
-                                }>
-                                    <Routes>
-                                        <Route path="/" element={<Index />} />
-                                        <Route path="/about" element={<AboutUs />} />
-                                        <Route path="/pujaServices" element={<PujaServices />} />
-                                        <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
-                                        <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
-                                        <Route path="/puja/:slug" element={<PujaDetails />} />
-                                        <Route path="/samagri/essentials" element={<PujaSamagri />} />
-                                        <Route path="/samagri/idols" element={<PujaSamagri />} />
-                                        <Route path="/samagri/hawan" element={<PujaSamagri />} />
-                                        <Route path="/products" element={<PujaSamagri />} />
-                                        <Route path="/puja-samagri" element={<PujaSamagri />} />
-                                        <Route path="/products/prasad" element={<PujaSamagri />} />
-                                        <Route path="/products/kits" element={<PujaSamagri />} />
-                                        <Route path="/products/festival" element={<PujaSamagri />} />
-                                        <Route path="/bidders" element={<TwoBidders />} />
-                                        <Route path="/career" element={<Career />} />
-                                        <Route path="/media" element={<Media />} />
-                                        <Route path="/gallery" element={<Gallery />} />
-                                        <Route path="/blog" element={<Blog />} />
-                                        <Route path="/blog/:id" element={<Blog />} />
-                                        <Route path="/contact" element={<Contact />} />
-                                        <Route path="/astrologer" element={<TalkToAstrologer />} />
-                                        <Route path="/astrologer/:id" element={<TalkToAstrologer />} />
-                                        <Route path="/kundli" element={<GetKundli />} />
-                                        <Route path="/reiki-healing" element={<ReikiHealing />} />
-                                        <Route path="/crystal-healing" element={<CrystalHealing />} />
-                                        <Route path="/vastu-consultation" element={<VastuConsultation />} />
-                                        <Route path="/home-office-vastu" element={<HomeOfficeVastu />} />
-                                        <Route path="/shop-puja-samagri" element={<ShopPujaSamagri />} />
-                                        <Route path="/learn-astrology-courses" element={<AstrologyCourses />} />
-                                        <Route path="/learn/astrology/:slug" element={<CourseDetail />} />
+                                </div>
+                            }>
+                                <Routes>
+                                    <Route path="/" element={<Index />} />
+                                    <Route path="/about" element={<AboutUs />} />
+                                    <Route path="/pujaServices" element={<PujaServices />} />
+                                    <Route path="/pujaServices/bookPuja" element={<BookPuja />} />
+                                    <Route path="/pujaServices/girhaPraveshPuja" element={<GrihaPraveshPuja />} />
+                                    <Route path="/puja/:slug" element={<PujaDetails />} />
+                                    <Route path="/samagri/essentials" element={<PujaSamagri />} />
+                                    <Route path="/samagri/idols" element={<PujaSamagri />} />
+                                    <Route path="/samagri/hawan" element={<PujaSamagri />} />
+                                    <Route path="/products" element={<PujaSamagri />} />
+                                    <Route path="/puja-samagri" element={<PujaSamagri />} />
+                                    <Route path="/products/prasad" element={<PujaSamagri />} />
+                                    <Route path="/products/kits" element={<PujaSamagri />} />
+                                    <Route path="/products/festival" element={<PujaSamagri />} />
+                                    <Route path="/bidders" element={<TwoBidders />} />
+                                    <Route path="/career" element={<Career />} />
+                                    <Route path="/media" element={<Media />} />
+                                    <Route path="/gallery" element={<Gallery />} />
+                                    <Route path="/blog" element={<Blog />} />
+                                    <Route path="/blog/:id" element={<Blog />} />
+                                    <Route path="/contact" element={<Contact />} />
+                                    <Route path="/astrologer" element={<TalkToAstrologer />} />
+                                    <Route path="/astrologer/:id" element={<TalkToAstrologer />} />
+                                    <Route path="/kundli" element={<GetKundli />} />
+                                    <Route path="/reiki-healing" element={<ReikiHealing />} />
+                                    <Route path="/crystal-healing" element={<CrystalHealing />} />
+                                    <Route path="/vastu-consultation" element={<VastuConsultation />} />
+                                    <Route path="/home-office-vastu" element={<HomeOfficeVastu />} />
+                                    <Route path="/shop-puja-samagri" element={<ShopPujaSamagri />} />
+                                    <Route path="/learn-astrology-courses" element={<AstrologyCourses />} />
+                                    <Route path="/learn/astrology/:slug" element={<CourseDetail />} />
 
-                                        <Route path="/user_login" element={<UserLogin />} />
-                                        <Route path="/user_login/registeration" element={<RegistrationForm />} />
+                                    <Route path="/user_login" element={<UserLogin />} />
+                                    <Route path="/user_login/registeration" element={<RegistrationForm />} />
 
-                                        <Route
-                                            path="/user/dashboard"
-                                            element={
-                                                <ProtectedRoute>
-                                                    <UserDashboardLayout />
-                                                </ProtectedRoute>
-                                            }
-                                        >
-                                            <Route index element={<UserDashboard />} />
-                                            <Route path="order-user/order-all" element={<UserOrders />} />
-                                            <Route path="order-user/order-pendings" element={<PendingOrders />} />
-                                            <Route path="order-user/order-processing" element={<ProcessingOrders />} />
-                                            <Route path="order-user/order-cancelled" element={<CancelledOrders />} />
-                                            <Route path="order-user/order-completed" element={<CompletedOrders />} />
-                                            <Route path="profile-user" element={<UserProfile />} />
-                                            <Route path="history-user" element={<UserHistory />} />
-                                            <Route path="payments-user" element={<UserPayments />} />
-                                            <Route path="invoice/:id" element={<Invoice />} />
-                                            <Route path="modal/invoice/:id" element={<ViewInvoice />} />
-                                        </Route>
+                                    <Route
+                                        path="/user/dashboard"
+                                        element={
+                                            <ProtectedRoute>
+                                                <UserDashboardLayout />
+                                            </ProtectedRoute>
+                                        }
+                                    >
+                                        <Route index element={<UserDashboard />} />
+                                        <Route path="order-user/order-all" element={<UserOrders />} />
+                                        <Route path="order-user/order-pendings" element={<PendingOrders />} />
+                                        <Route path="order-user/order-processing" element={<ProcessingOrders />} />
+                                        <Route path="order-user/order-cancelled" element={<CancelledOrders />} />
+                                        <Route path="order-user/order-completed" element={<CompletedOrders />} />
+                                        <Route path="profile-user" element={<UserProfile />} />
+                                        <Route path="history-user" element={<UserHistory />} />
+                                        <Route path="payments-user" element={<UserPayments />} />
+                                        <Route path="invoice/:id" element={<Invoice />} />
+                                        <Route path="modal/invoice/:id" element={<ViewInvoice />} />
+                                    </Route>
 
-                                        <Route path="/login" element={<Login />} />
-                                        <Route path="/vendorRegister" element={<VendorRegister />} />
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/vendorRegister" element={<VendorRegister />} />
 
-                                        <Route
-                                            path="/vendor/dashboard"
-                                            element={
-                                                <VendorRouteGuard>
-                                                    <VendorDashboardLayout />
-                                                </VendorRouteGuard>
-                                            }
-                                        >
-                                            <Route index element={<VendorDashboardRouter />} />
-                                            <Route path="services" element={<MyPujaServices />} />
-                                            <Route path="bookings" element={<Bookings />} />
-                                            <Route path="calendar" element={<AvailabilityCalendar />} />
-                                            <Route path="wallet" element={<WalletEarning />} />
-                                            <Route path="reviews" element={<ReviewsRating />} />
-                                            <Route path="notifications" element={<Notifications />} />
-                                            <Route path="settings" element={<ProfileKyc />} />
+                                    <Route
+                                        path="/vendor/dashboard"
+                                        element={
+                                            <VendorRouteGuard>
+                                                <VendorDashboardLayout />
+                                            </VendorRouteGuard>
+                                        }
+                                    >
+                                        <Route index element={<VendorDashboardRouter />} />
+                                        <Route path="services" element={<MyPujaServices />} />
+                                        <Route path="bookings" element={<Bookings />} />
+                                        <Route path="calendar" element={<AvailabilityCalendar />} />
+                                        <Route path="wallet" element={<WalletEarning />} />
+                                        <Route path="reviews" element={<ReviewsRating />} />
+                                        <Route path="notifications" element={<Notifications />} />
+                                        <Route path="settings" element={<ProfileKyc />} />
 
-                                            <Route path="consultations" element={<MyConsultations />} />
-                                            <Route path="reports" element={<ReportsKundli />} />
-                                            <Route path="generate" element={<GeneratorKundliReports />} />
-                                            <Route path="availability" element={<AvailabilitySchedule />} />
-                                            <Route path="wallet" element={<WalletEarnings />} />
-                                            <Route path="reviews" element={<ReviewsRatings />} />
-                                            <Route path="chatCenter" element={<ChatCenter />} />
-                                            <Route path="astroNotifications" element={<AstroNotifications />} />
-                                            <Route path="profile" element={<ProfileBranding />} />
+                                        <Route path="consultations" element={<MyConsultations />} />
+                                        <Route path="reports" element={<ReportsKundli />} />
+                                        <Route path="generate" element={<GeneratorKundliReports />} />
+                                        <Route path="availability" element={<AvailabilitySchedule />} />
+                                        <Route path="wallet" element={<WalletEarnings />} />
+                                        <Route path="reviews" element={<ReviewsRatings />} />
+                                        <Route path="chatCenter" element={<ChatCenter />} />
+                                        <Route path="astroNotifications" element={<AstroNotifications />} />
+                                        <Route path="profile" element={<ProfileBranding />} />
 
-                                            <Route path="orders_puja" element={<Orders />} />
-                                            <Route path="products_puja" element={<Products />} />
-                                            <Route path="pujaKits_puja" element={<PujaKits />} />
-                                            <Route path="inventory_puja" element={<Inventory />} />
-                                            <Route path="offers_puja" element={<OffersCoupons />} />
-                                            <Route path="delivery_puja" element={<ShippingDelivery />} />
-                                            <Route path="settlement_puja" element={<WalletPuja />} />
-                                            <Route path="ratings_puja" element={<ReviewsPuja />} />
-                                            <Route path="notifications_puja" element={<NotificationPuja />} />
-                                            <Route path="settings_puja" element={<StoreProfile />} />
+                                        <Route path="orders_puja" element={<Orders />} />
+                                        <Route path="products_puja" element={<Products />} />
+                                        <Route path="pujaKits_puja" element={<PujaKits />} />
+                                        <Route path="inventory_puja" element={<Inventory />} />
+                                        <Route path="offers_puja" element={<OffersCoupons />} />
+                                        <Route path="delivery_puja" element={<ShippingDelivery />} />
+                                        <Route path="settlement_puja" element={<WalletPuja />} />
+                                        <Route path="ratings_puja" element={<ReviewsPuja />} />
+                                        <Route path="notifications_puja" element={<NotificationPuja />} />
+                                        <Route path="settings_puja" element={<StoreProfile />} />
 
-                                            <Route path="sevas_temple" element={<SevasPujas />} />
-                                            <Route path="bookings_temple" element={<BookingsTemple />} />
-                                            <Route path="donations_temple" element={<Donations />} />
-                                            <Route path="events_temple" element={<EventsTemple />} />
-                                            <Route path="staff_temple" element={<StaffManagement />} />
-                                            <Route path="wallet_temple" element={<WalletTemple />} />
-                                            <Route path="settings_temple" element={<SettingsTemple />} />
+                                        <Route path="sevas_temple" element={<SevasPujas />} />
+                                        <Route path="bookings_temple" element={<BookingsTemple />} />
+                                        <Route path="donations_temple" element={<Donations />} />
+                                        <Route path="events_temple" element={<EventsTemple />} />
+                                        <Route path="staff_temple" element={<StaffManagement />} />
+                                        <Route path="wallet_temple" element={<WalletTemple />} />
+                                        <Route path="settings_temple" element={<SettingsTemple />} />
 
-                                            <Route path="events_Organizer" element={<OrganizerEvents />} />
-                                            <Route path="bookings_Organizer" element={<Bookings_Organizer />} />
-                                            <Route path="attendees_Organizer" element={<Attendees_Organizer />} />
-                                            <Route path="wallet_Organizer" element={<WalletPayments_Organizer />} />
-                                            <Route path="analytics_Organizer" element={<Analytics_Oraganizer />} />
-                                            <Route path="settings_Organizer" element={<ProfileSettings_Organizer />} />
-                                        </Route>
+                                        <Route path="events_Organizer" element={<OrganizerEvents />} />
+                                        <Route path="bookings_Organizer" element={<Bookings_Organizer />} />
+                                        <Route path="attendees_Organizer" element={<Attendees_Organizer />} />
+                                        <Route path="wallet_Organizer" element={<WalletPayments_Organizer />} />
+                                        <Route path="analytics_Organizer" element={<Analytics_Oraganizer />} />
+                                        <Route path="settings_Organizer" element={<ProfileSettings_Organizer />} />
+                                    </Route>
 
-                                        <Route path="/admin-acharya/*" element={<AdminApp />} />
-                                        <Route path="*" element={<NotFound />} />
-                                    </Routes>
-                                </Suspense>
-                            </TooltipProvider>
-                        </CartProvider>
-                    </UserAuthProvider>
-                </VendorAuthProvider>
-            </BrowserRouter>
+                                    <Route path="/admin-acharya/*" element={<AdminApp />} />
+                                    <Route path="*" element={<NotFound />} />
+                                </Routes>
+                            </Suspense>
+                        </TooltipProvider>
+                    </CartProvider>
+                </UserAuthProvider>
+            </VendorAuthProvider>
         </QueryClientProvider>
     </>
 );

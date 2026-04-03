@@ -3,6 +3,7 @@ import {
     FiSave, FiImage, FiUpload, FiRefreshCw, FiPlus, FiEdit2,
     FiTrash2, FiEye, FiX, FiUser, FiMinus
 } from 'react-icons/fi';
+import RichTextEditor from '../../components/RichTextEditor';
 import { toast } from 'react-toastify';
 import {
     useGetAllAboutUsQuery,
@@ -205,18 +206,22 @@ const AboutUsManager = () => {
 
                     {/* Row 3: Description Paragraph 1 */}
                     <div className="space-y-1">
-                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Description — Paragraph 1</label>
-                        <textarea name="description1" value={formData.description1} onChange={handleInputChange} rows="3"
+                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Description — Paragraph 1 (HTML)</label>
+                        <RichTextEditor 
+                            value={formData.description1} 
+                            onChange={(content) => setFormData(p => ({ ...p, description1: content }))}
                             placeholder="First paragraph about Acharya Ji..."
-                            className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-blue-900/30 focus:border-blue-900 transition-all text-sm resize-none" />
+                        />
                     </div>
 
                     {/* Row 4: Description Paragraph 2 */}
                     <div className="space-y-1">
-                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Description — Paragraph 2</label>
-                        <textarea name="description2" value={formData.description2} onChange={handleInputChange} rows="3"
+                        <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Description — Paragraph 2 (HTML)</label>
+                        <RichTextEditor 
+                            value={formData.description2} 
+                            onChange={(content) => setFormData(p => ({ ...p, description2: content }))}
                             placeholder="Second paragraph about services..."
-                            className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-blue-900/30 focus:border-blue-900 transition-all text-sm resize-none" />
+                        />
                     </div>
 
                     {/* Row 5: Features List */}
