@@ -97,7 +97,7 @@ export default function Navbar() {
                     className="absolute top-full left-0 mt-0.5 w-64 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-amber-500/10 overflow-hidden z-50 animate-scale-in"
                   >
                     <div className="h-1 bg-gradient-to-r from-amber-400 via-orange-500 to-amber-600" />
-                    <div className="p-2 space-y-1">
+                    <div className="p-2 space-y-1 max-h-[340px] overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-amber-200 hover:[&::-webkit-scrollbar-thumb]:bg-amber-400 [&::-webkit-scrollbar-thumb]:rounded-full">
                       {item.children.map((child) => (
                         <Link
                           key={child.label}

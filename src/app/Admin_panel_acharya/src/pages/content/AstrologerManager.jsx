@@ -46,8 +46,8 @@ const AstrologerManager = () => {
     // Astrologer State
     const [isEditing, setIsEditing] = useState(false);
     const [currentAstrologer, setCurrentAstrologer] = useState({
-        name: '', experience: '', rating: 5.0, reviews: 0, 
-        specialization: '', languages: '', consultations: '0+', expertise: '', 
+        name: '', experience: '', rating: 5.0, reviews: 0,
+        specialization: '', languages: '', consultations: '0+', expertise: '',
         online: false, isActive: true, order: "", image: null
     });
 
@@ -144,9 +144,9 @@ const AstrologerManager = () => {
 
     const resetForm = () => {
         setIsEditing(false);
-        setCurrentAstrologer({ 
-            name: '', experience: '', rating: 5.0, reviews: 0, 
-            specialization: '', languages: '', consultations: '0+', expertise: '', 
+        setCurrentAstrologer({
+            name: '', experience: '', rating: 5.0, reviews: 0,
+            specialization: '', languages: '', consultations: '0+', expertise: '',
             online: false, isActive: true, order: "", image: null
         });
         setImagePreview(null);
@@ -359,7 +359,7 @@ const AstrologerManager = () => {
                                 <img src={imagePreview} alt="Preview" className="h-32 rounded-lg object-cover mt-2 shadow" />
                             )}
                         </div>
-                        
+
                         <div className="space-y-2 flex flex-col justify-center">
                             <label className="flex items-center space-x-3 cursor-pointer">
                                 <input

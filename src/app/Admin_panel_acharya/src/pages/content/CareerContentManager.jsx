@@ -13,8 +13,9 @@ import {
 } from 'lucide-react';
 import RichTextEditor from '../../components/RichTextEditor';
 import { toast } from 'react-toastify';
+import { BACKEND_URL } from '../../../../../config/apiConfig';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL;
+const API_URL = BACKEND_URL;
 
 const CONTENT_TYPES = [
   { id: 'eligibility', label: 'Eligibility', icon: Star },

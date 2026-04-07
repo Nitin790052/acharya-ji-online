@@ -18,7 +18,9 @@ import ServiceManager from "./pages/content/ServiceManager";
 import PopularPujaManager from "./pages/content/PopularPujaManager";
 import AstrologerManager from "./pages/content/AstrologerManager";
 import KundliManager from "./pages/content/KundliManager";
+import KundliPageManager from "./pages/content/KundliPageManager";
 import VastuManager from "./pages/content/VastuManager";
+import VastuPageManager from "./pages/content/VastuPageManager";
 import TestimonialManager from "./pages/content/TestimonialManager";
 import BlogManager from "./pages/content/BlogManager";
 import AppDownloadManager from "./pages/content/AppDownloadManager";
@@ -33,6 +35,7 @@ import MediaManager from "./pages/content/MediaManager";
 import GalleryManager from "./pages/content/GalleryManager";
 import ContactManager from "./pages/content/ContactManager";
 import SEOManager from "./pages/content/SEOManager";
+import AstrologyContentManager from "./pages/content/AstrologyContentManager";
 
 function AdminApp() {
   return (
@@ -75,7 +78,10 @@ function AdminApp() {
           <Route path="content/popular-pujas" element={<PopularPujaManager />} />
           <Route path="content/astrologers" element={<AstrologerManager />} />
           <Route path="content/kundli" element={<KundliManager />} />
+          <Route path="content/kundli-pages" element={<KundliPageManager />} />
           <Route path="content/vastu" element={<VastuManager />} />
+          <Route path="content/vastu-pages" element={<VastuPageManager />} />
+          <Route path="content/astrology-pages" element={<AstrologyContentManager />} />
           <Route path="content/faq" element={<FAQManager />} />
           <Route path="content/footer" element={<FooterManager />} />
           <Route path="content/career" element={<CareerContentManager />} />

@@ -19,7 +19,6 @@ import fallback4 from "../assets/careerPage/image4.webp";
 
 const ELIGIBILITY_FALLBACK_IMAGES = [fallback1, fallback2, fallback3, fallback4];
 
-const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const LUCIDE_ICONS = {
   Users, TrendingUp, Clock, Shield, Award, Heart,
@@ -184,7 +183,7 @@ export default function Career() {
                       <div className="relative m-2.5 mb-3 rounded-2xl overflow-hidden shadow-lg h-36 md:h-40 z-10 bg-orange-50">
                         {/* Use backend image if uploaded, else use static fallback based on card position */}
                         <img
-                          src={service.image ? `${API_URL}${service.image}` : ELIGIBILITY_FALLBACK_IMAGES[idx % ELIGIBILITY_FALLBACK_IMAGES.length]}
+                          src={service.image ? `${BACKEND_URL}${service.image}` : ELIGIBILITY_FALLBACK_IMAGES[idx % ELIGIBILITY_FALLBACK_IMAGES.length]}
                           alt={service.title}
                           className="w-full h-full object-cover transition-all duration-[2.5s] group-hover/card:scale-110 group-hover/card:rotate-1"
                         />

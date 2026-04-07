@@ -94,6 +94,7 @@ const ViewInvoice = lazy(() => import("./app/user/components/ViewInvoice"));
 
 // Service Pages
 const TalkToAstrologer = lazy(() => import("./pages/astrologyServices/TalkToAstrologer"));
+const AstrologyServicePage = lazy(() => import("./pages/astrologyServices/AstrologyServicePage"));
 const GetKundli = lazy(() => import("./pages/kundli/GetKundli"));
 const ReikiHealing = lazy(() => import("./pages/healing/ReikiHealing"));
 const CrystalHealing = lazy(() => import("./pages/healing/CrystalHealing"));
@@ -102,6 +103,8 @@ const HomeOfficeVastu = lazy(() => import("./pages/vastu/HomeOfficeVastu"));
 const ShopPujaSamagri = lazy(() => import("./pages/samagri/ShopPujaSamagri"));
 const AstrologyCourses = lazy(() => import("./pages/learn/AstrologyCourses"));
 const CourseDetail = lazy(() => import("./pages/learn/CourseDetail"));
+const CommonKundliPage = lazy(() => import("./pages/kundli/CommonKundliPage"));
+const CommonVastuPage = lazy(() => import("./pages/vastu/CommonVastuPage"));
 
 // Admin & Others
 const AdminApp = lazy(() => import("./app/Admin_panel_acharya/src/App"));
@@ -184,11 +187,21 @@ const App = () => (
                                     <Route path="/contact" element={<Contact />} />
                                     <Route path="/astrologer" element={<TalkToAstrologer />} />
                                     <Route path="/astrologer/:id" element={<TalkToAstrologer />} />
+                                    <Route path="/career-astrology" element={<AstrologyServicePage slug="career-astrology" />} />
+                                    <Route path="/marriage-astrology" element={<AstrologyServicePage slug="marriage-astrology" />} />
+                                    <Route path="/business-astrology" element={<AstrologyServicePage slug="business-astrology" />} />
+                                    <Route path="/health-astrology" element={<AstrologyServicePage slug="health-astrology" />} />
+                                    <Route path="/numerology" element={<AstrologyServicePage slug="numerology" />} />
+                                    <Route path="/tarot-reading" element={<AstrologyServicePage slug="tarot-reading" />} />
+                                    <Route path="/palmistry" element={<AstrologyServicePage slug="palmistry" />} />
+                                    <Route path="/gemstone-suggestion" element={<AstrologyServicePage slug="gemstone-suggestion" />} />
                                     <Route path="/kundli" element={<GetKundli />} />
+                                    <Route path="/kundli/:slug" element={<CommonKundliPage />} />
                                     <Route path="/reiki-healing" element={<ReikiHealing />} />
                                     <Route path="/crystal-healing" element={<CrystalHealing />} />
-                                    <Route path="/vastu-consultation" element={<VastuConsultation />} />
-                                    <Route path="/home-office-vastu" element={<HomeOfficeVastu />} />
+                                    <Route path="/vastu/:slug" element={<CommonVastuPage />} />
+                                    <Route path="/vastu-consultation" element={<CommonVastuPage slugOverride="vastu-consultation" />} />
+                                    <Route path="/home-office-vastu" element={<CommonVastuPage slugOverride="home-office-vastu" />} />
                                     <Route path="/shop-puja-samagri" element={<ShopPujaSamagri />} />
                                     <Route path="/learn-astrology-courses" element={<AstrologyCourses />} />
                                     <Route path="/learn/astrology/:slug" element={<CourseDetail />} />

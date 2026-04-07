@@ -126,6 +126,24 @@ const Sidebar = ({
       ]
     },
     {
+      key: "astrology-services-content", icon: <FiBriefcase />, label: "Astrology All Content",
+      children: [
+        { key: "astrology-pages", icon: <FiFileText />, label: "Astrology Pages Content", path: "/admin-acharya/dashboard/content/astrology-pages" },
+      ]
+    },
+    {
+      key: "kundli-content", icon: <FiBriefcase />, label: "Kundli Page Content",
+      children: [
+        { key: "kundli-pages", icon: <FiBookOpen />, label: "Kundli Pages Content", path: "/admin-acharya/dashboard/content/kundli-pages" },
+      ]
+    },
+    {
+      key: "vastu-content", icon: <FiBriefcase />, label: "Vastu Page Content",
+      children: [
+        { key: "vastu-pages", icon: <FiHome />, label: "Vastu Pages Content", path: "/admin-acharya/dashboard/content/vastu-pages" },
+      ]
+    },
+    {
       key: "career-content", icon: <FiBriefcase />, label: "Career Page Content",
       children: [
         { key: "career", icon: <FiTrendingUp />, label: "Career Page Manager", path: "/admin-acharya/dashboard/content/career" },
@@ -284,11 +302,11 @@ const Sidebar = ({
             {(() => {
               const sections = [
                 { title: "Overview", items: menuItems.slice(0, 1) },
-                { title: "Content Management", items: menuItems.slice(1, 9) },
-                { title: "User Management", items: menuItems.slice(9, 10) },
-                { title: "Business Operations", items: menuItems.slice(10, 12) },
-                { title: "SEO & Growth", items: menuItems.slice(12, 13) },
-                { title: "System Setup", items: menuItems.slice(13, 14) },
+                { title: "Content Management", items: menuItems.slice(1, 12) },
+                { title: "User Management", items: menuItems.slice(12, 13) },
+                { title: "Business Operations", items: menuItems.slice(13, 15) },
+                { title: "SEO & Growth", items: menuItems.slice(15, 16) },
+                { title: "System Setup", items: menuItems.slice(16, 17) },
               ];
 
               return sections.map((section, idx) => (
@@ -297,7 +315,7 @@ const Sidebar = ({
                   {(isMobile || !isCollapsed) && (
                     <div className="flex items-center gap-2 px-4 mt-3 mb-1.5 group/sec">
                       <div className="w-1 h-3 rounded-full bg-yellow-400 shadow-[0_0_8px_rgba(234,179,8,0.4)]"></div>
-                      <p className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">
+                      <p className="text-[11px] font-black text-gray-900 uppercase tracking-[0.1em]">
                         {section.title}
                       </p>
                     </div>
@@ -305,89 +323,99 @@ const Sidebar = ({
 
                   {/* Section Items */}
                   <ul className="space-y-1">
-                    {section.items.map((item) => (
-                      <li key={item.key}>
-                        {item.children ? (
-                          <>
-                            <button
-                              onClick={() => toggleDropdown(item.key)}
-                              className={`
-                                w-full flex items-center justify-between
-                                px-3 py-2 text-sm rounded-xl transition-all duration-300
-                                text-gray-700 hover:text-blue-900
-                                hover:bg-white/50 hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:backdrop-blur-md
-                                ${isMobile ? '' : (isCollapsed ? 'justify-center' : '')}
-                              `}
-                            >
-                              <div className={`flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? '' : 'gap-3')}`}>
-                                <span className="text-lg" style={{ color: accentColor }}>{item.icon}</span>
-                                {(isMobile || !isCollapsed) && <span className="font-medium">{item.label}</span>}
-                              </div>
-                              {(isMobile || !isCollapsed) && (
-                                <span className="text-gray-400">
-                                  {openDropdown === item.key ? <FiChevronDown size={14} /> : <FiChevronRight size={14} />}
-                                </span>
-                              )}
-                            </button>
+                    {section.items.map((item) => {
+                      const hasSingleChild = item.children && item.children.length === 1;
+                      const directPath = hasSingleChild ? item.children[0].path : item.path;
 
-                            {(isMobile || !isCollapsed) && openDropdown === item.key && (
-                              <ul className="ml-8 mt-0.5 space-y-0.5 border-l border-gray-100 pl-1">
-                                {item.children.map((child) => (
-                                  <li key={child.key}>
-                                    <NavLink to={child.path} onClick={handleNavClick}>
-                                      {({ isActive }) => (
-                                        <div className={`
-                                          flex items-center gap-3 px-3 py-1.5 text-sm rounded-xl transition-all duration-300
-                                          ${isActive
-                                            ? 'text-white shadow-[0_4px_12px_rgba(30, 58, 138,0.3)] backdrop-blur-md'
-                                            : 'text-gray-600 hover:text-blue-900 hover:bg-white/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:backdrop-blur-sm'}
-                                        `}
-                                          style={isActive ? {
-                                            background: `linear-gradient(to right, ${accentColor}, ${accentColor}dd)`
-                                          } : {}}
-                                        >
-                                          <span style={isActive ? { color: 'white' } : { color: accentColor }}>
-                                            {child.icon}
-                                          </span>
-                                          <span className="font-medium text-[13px]">{child.label}</span>
-                                          {isActive && (
-                                            <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-sm"></span>
-                                          )}
-                                        </div>
-                                      )}
-                                    </NavLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </>
-                        ) : (
-                          <NavLink to={item.path} end={item.end} onClick={handleNavClick}>
-                            {({ isActive }) => (
-                              <div className={`
-                                flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? 'justify-center' : 'gap-3')}
-                                px-3 py-2 text-sm rounded-xl transition-all duration-300
-                                ${isActive
-                                  ? 'text-white shadow-[0_4px_12px_rgba(30, 58, 138,0.3)] backdrop-blur-md'
-                                  : 'text-gray-700 hover:text-blue-900 hover:bg-white/50 hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:backdrop-blur-md'}
-                              `}
-                                style={isActive ? {
-                                  background: `linear-gradient(to right, ${accentColor}, ${accentColor}dd)`
-                                } : {}}
+                      return (
+                        <li key={item.key}>
+                          {(item.children && !hasSingleChild) ? (
+                            <>
+                              <button
+                                onClick={() => toggleDropdown(item.key)}
+                                className={`
+                                  w-full flex items-center justify-between
+                                  px-3 py-2 text-sm rounded-xl transition-all duration-300
+                                  text-gray-700 hover:text-blue-900
+                                  hover:bg-white/50 hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:backdrop-blur-md
+                                  ${isMobile ? '' : (isCollapsed ? 'justify-center' : '')}
+                                `}
                               >
-                                <span style={isActive ? { color: 'white' } : { color: accentColor }}>
-                                  {item.icon}
-                                </span>
-                                {(isMobile || !isCollapsed) && <span className="font-medium">{item.label}</span>}
-                                {isActive && (isMobile || !isCollapsed) && (
-                                  <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                                <div className={`flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? '' : 'gap-3')}`}>
+                                  <span className="text-lg" style={{ color: accentColor }}>{item.icon}</span>
+                                  {(isMobile || !isCollapsed) && <span className="font-medium">{item.label}</span>}
+                                </div>
+                                {(isMobile || !isCollapsed) && (
+                                  <span className="text-gray-400">
+                                    {openDropdown === item.key ? <FiChevronDown size={14} /> : <FiChevronRight size={14} />}
+                                  </span>
                                 )}
-                              </div>
-                            )}
-                          </NavLink>
-                        )}
-                      </li>
-                    ))}
+                              </button>
+
+                              {(isMobile || !isCollapsed) && openDropdown === item.key && (
+                                <ul className="ml-8 mt-0.5 space-y-0.5 border-l border-gray-100 pl-1">
+                                  {item.children.map((child) => (
+                                    <li key={child.key}>
+                                      <NavLink to={child.path} onClick={handleNavClick}>
+                                        {({ isActive }) => (
+                                          <div className={`
+                                            flex items-center gap-3 px-3 py-1.5 text-sm rounded-xl transition-all duration-300
+                                            ${isActive
+                                              ? 'text-white shadow-[0_4px_12px_rgba(30, 58, 138,0.3)] backdrop-blur-md'
+                                              : 'text-gray-600 hover:text-blue-900 hover:bg-white/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:backdrop-blur-sm'}
+                                          `}
+                                            style={isActive ? {
+                                              background: `linear-gradient(to right, ${accentColor}, ${accentColor}dd)`
+                                            } : {}}
+                                          >
+                                            <span style={isActive ? { color: 'white' } : { color: accentColor }}>
+                                              {child.icon}
+                                            </span>
+                                            <span className="font-medium text-[13px]">{child.label}</span>
+                                            {isActive && (
+                                              <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-sm"></span>
+                                            )}
+                                          </div>
+                                        )}
+                                      </NavLink>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </>
+                          ) : (
+                            <NavLink to={directPath} end={item.end} onClick={handleNavClick}>
+                              {({ isActive }) => {
+                                // If it's a single child, we decide isActive based on the child's path
+                                const effectivelyActive = isActive || (hasSingleChild && window.location.pathname === directPath);
+
+                                return (
+                                  <div className={`
+                                    flex items-center ${isMobile ? 'gap-3' : (isCollapsed ? 'justify-center' : 'gap-3')}
+                                    px-3 py-2 text-sm rounded-xl transition-all duration-300
+                                    ${effectivelyActive
+                                      ? 'text-white shadow-[0_4px_12px_rgba(30, 58, 138,0.3)] backdrop-blur-md'
+                                      : 'text-gray-700 hover:text-blue-900 hover:bg-white/50 hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:backdrop-blur-md'}
+                                  `}
+                                    style={effectivelyActive ? {
+                                      background: `linear-gradient(to right, ${accentColor}, ${accentColor}dd)`
+                                    } : {}}
+                                  >
+                                    <span style={effectivelyActive ? { color: 'white' } : { color: accentColor }}>
+                                      {item.icon}
+                                    </span>
+                                    {(isMobile || !isCollapsed) && <span className="font-medium">{item.label}</span>}
+                                    {effectivelyActive && (isMobile || !isCollapsed) && (
+                                      <span className="ml-auto w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                                    )}
+                                  </div>
+                                );
+                              }}
+                            </NavLink>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </li>
               ));

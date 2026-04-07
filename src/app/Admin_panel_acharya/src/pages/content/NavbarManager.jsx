@@ -10,7 +10,8 @@ import {
     FiX,
     FiArrowUp,
     FiArrowDown,
-    FiEye
+    FiEye,
+    FiRefreshCw
 } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { API_URL as BASE_API_URL } from "../../../../../config/apiConfig";
@@ -52,11 +53,17 @@ const NavbarManager = () => {
         const method = isEditing ? 'PUT' : 'POST';
         const url = isEditing ? `${API_URL}/${currentItem._id}` : API_URL;
 
+        // Filter out dynamic children before saving to database
+        const processedItem = {
+            ...currentItem,
+            children: currentItem.children ? currentItem.children.filter(c => !c.isDynamic) : []
+        };
+
         try {
             const response = await fetch(url, {
                 method: method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(currentItem)
+                body: JSON.stringify(processedItem)
             });
 
             if (response.ok) {
@@ -77,6 +84,19 @@ const NavbarManager = () => {
             fetchNavbarItems();
         } catch (error) {
             toast.error("Error deleting item");
+        }
+    };
+
+    const handleSeed = async () => {
+        if (!window.confirm("This will reset all navbar links to defaults. Are you sure?")) return;
+        try {
+            const response = await fetch(`${API_URL}/seed`, { method: 'POST' });
+            if (response.ok) {
+                toast.success("Navbar items restored to defaults!");
+                fetchNavbarItems();
+            }
+        } catch (error) {
+            toast.error("Error seeding navbar");
         }
     };
 
@@ -130,6 +150,12 @@ const NavbarManager = () => {
                     <h1 className="text-2xl font-black text-gray-900 uppercase tracking-tight italic-none">Navbar <span className="text-orange-600">Manager</span></h1>
                     <p className="text-sm text-gray-500 font-medium italic-none">Add, edit and organize website navigation and dropdowns</p>
                 </div>
+                <button
+                    onClick={handleSeed}
+                    className="ml-auto flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg text-xs font-bold hover:bg-orange-700 transition-all shadow-md active:scale-95"
+                >
+                    <FiRefreshCw size={14} /> Restore Defaults
+                </button>
             </div>
 
             {/* Form Section */}
@@ -203,7 +229,7 @@ const NavbarManager = () => {
                             </div>
 
                             <div className="space-y-3">
-                                {currentItem.children.map((child, idx) => (
+                                {currentItem.children.filter(c => !c.isDynamic).map((child, idx) => (
                                     <div key={idx} className="flex gap-3 items-center">
                                         <input
                                             type="text"
@@ -230,6 +256,11 @@ const NavbarManager = () => {
                                         </button>
                                     </div>
                                 ))}
+                                {currentItem.children.some(c => c.isDynamic) && (
+                                    <p className="text-[10px] text-orange-500 font-bold uppercase tracking-wider mt-2 px-1">
+                                        + {currentItem.children.filter(c => c.isDynamic).length} automanaged dynamic items will be merged in frontend
+                                    </p>
+                                )}
                                 {currentItem.children.length === 0 && (
                                     <p className="text-center text-xs text-gray-400 py-4 italic">No sub-menu items added yet</p>
                                 )}
@@ -393,7 +424,12 @@ const NavbarManager = () => {
                                                         {idx + 1}
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm font-bold text-gray-800">{child.label}</p>
+                                                        <p className="text-sm font-bold text-gray-800 flex items-center gap-2">
+                                                            {child.label}
+                                                            {child.isDynamic && (
+                                                                <span className="text-[9px] bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter border border-orange-200">Auto</span>
+                                                            )}
+                                                        </p>
                                                         <p className="text-xs text-gray-400">{child.href}</p>
                                                     </div>
                                                 </div>

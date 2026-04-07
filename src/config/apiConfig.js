@@ -13,7 +13,7 @@ const getApiUrl = () => {
     ? 'http://localhost:5000/api'
     : (import.meta.env.VITE_API_URL || 'https://acharya-ji-online-backend.onrender.com/api/');
 
-  return baseApiUrl.endsWith('/') ? baseApiUrl.slice(0, -1) : baseApiUrl;
+  return baseApiUrl.replace(/\/+$/, '');
 };
 
 const getBackendUrl = () => {
@@ -28,7 +28,7 @@ const getBackendUrl = () => {
     ? 'http://localhost:5000'
     : (import.meta.env.VITE_BACKEND_URL || 'https://acharya-ji-online-backend.onrender.com');
 
-  return baseBackendUrl.endsWith('/') ? baseBackendUrl.slice(0, -1) : baseBackendUrl;
+  return baseBackendUrl.replace(/\/+$/, '');
 };
 
 export const API_URL = getApiUrl();

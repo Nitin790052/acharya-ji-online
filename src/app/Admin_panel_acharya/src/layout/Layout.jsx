@@ -85,9 +85,9 @@ const Layout = () => {
 
           {/* Main Content */}
           <main className="flex-1 overflow-y-auto">
-
-            <Outlet />
-
+            <div key={location.pathname} className="min-h-full">
+              <Outlet />
+            </div>
           </main>
 
           {/* Footer */}

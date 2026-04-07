@@ -21,6 +21,9 @@ import { mediaApi } from '../services/mediaApi';
 import { galleryApi } from '../services/galleryApi';
 import { contactApi } from '../services/contactApi';
 import { seoApi } from '../services/seoApi';
+import { astrologyContentApi } from '../services/astrologyContentApi';
+import { kundliContentApi } from '../services/kundliContentApi';
+import { vastuContentApi } from '../services/vastuContentApi';
 
 export const store = configureStore({
     reducer: {
@@ -46,6 +49,9 @@ export const store = configureStore({
         [galleryApi.reducerPath]: galleryApi.reducer,
         [contactApi.reducerPath]: contactApi.reducer,
         [seoApi.reducerPath]: seoApi.reducer,
+        [astrologyContentApi.reducerPath]: astrologyContentApi.reducer,
+        [kundliContentApi.reducerPath]: kundliContentApi.reducer,
+        [vastuContentApi.reducerPath]: vastuContentApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -70,6 +76,9 @@ export const store = configureStore({
             mediaApi.middleware,
             galleryApi.middleware,
             contactApi.middleware,
-            seoApi.middleware
+            seoApi.middleware,
+            astrologyContentApi.middleware,
+            kundliContentApi.middleware,
+            vastuContentApi.middleware
         ),
 });
